@@ -80,11 +80,11 @@ const InventoryUI = {
   updateNitroButton() {
     const btn = document.getElementById("invNitroBtn");
     btn.className = `status-toggle-btn ${this.nitro ? 'active' : 'inactive'}`;
-    btn.textContent = this.nitro ? "🚀 Discord Nitro: ON (4000)" : "🚀 Discord Nitro: OFF (2000)";
+    btn.textContent = this.nitro ? "🚀 Nitro Limit: ON (4000)" : "🚀 Nitro Limit: OFF (2000)";
   },
 
   updateRoleTagButtons() {
-    const text = this.includeRoleTags ? "🏷️ Role Tags: ON" : "🏷️ Role Tags: OFF";
+    const text = this.includeRoleTags ? "🏷️ Role Labels: ON" : "🏷️ Role Labels: OFF";
     const cls = `status-toggle-btn ${this.includeRoleTags ? 'active' : 'inactive'}`;
 
     const bTop = document.getElementById("invRoleTagBtnTop");
@@ -97,7 +97,7 @@ const InventoryUI = {
     const btn = document.getElementById("btnInvToggleUnowned");
     if (btn) {
       btn.className = `status-toggle-btn ${this.showUnowned ? 'active' : 'inactive'}`;
-      btn.textContent = this.showUnowned ? "👁️ Show Unowned: ON" : "👁️ Show Unowned: OFF";
+      btn.textContent = this.showUnowned ? "👁️ Missing Units: SHOWN" : "👁️ Missing Units: HIDDEN";
     }
   },
 
@@ -230,7 +230,7 @@ const InventoryUI = {
     const headline = document.getElementById("invHeadline").value;
     const bannerSubtitle = document.getElementById("invBanner").value;
     const maxChars = this.nitro ? 4000 : 2000;
-    const bannerTitle = bannerSubtitle && bannerSubtitle.trim() ? bannerSubtitle.trim() : "=== INVENTORY ===";
+    const bannerTitle = bannerSubtitle && bannerSubtitle.trim() ? bannerSubtitle.trim() : "◆ UNIT VAULT ◆";
     const parts = chunkInventoryMessages(headline, bannerTitle, "", this.inv, userColors, this.includeRoleTags, maxChars, this.sortMode);
 
     const previewContainer = document.getElementById("invPreviewContainer");

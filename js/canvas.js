@@ -23,7 +23,7 @@ const CanvasManager = {
         }
       }
 
-      const bannerText = ld.banner && ld.banner.trim() ? ld.banner.trim() : (idx === 0 ? "=== MY FIRST SETUP ===" : idx === 1 ? "=== MY SECOND SETUP ===" : "=== MY THIRD SETUP ===");
+      const bannerText = ld.banner && ld.banner.trim() ? ld.banner.trim() : (idx === 0 ? "◆ PRIMARY LOADOUT ◆" : idx === 1 ? "◆ SECONDARY LOADOUT ◆" : "◆ TERTIARY LOADOUT ◆");
       const subText = ld.subtitle && ld.subtitle.trim() ? ld.subtitle.trim() : "";
 
       let itemsGridHtml = '';
@@ -89,7 +89,7 @@ const CanvasManager = {
         ${loadoutCardsHtml}
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
-          <span>⚡ Generated with STN Showcase</span>
+          <span>🔥 Crafted with STN Forge</span>
           <span>erickapenas.github.io/STN</span>
         </div>
       </div>
@@ -216,7 +216,7 @@ const CanvasManager = {
         ${renderedSectionsHtml}
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
-          <span>⚡ Generated with STN Showcase</span>
+          <span>🔥 Crafted with STN Forge</span>
           <span>erickapenas.github.io/STN</span>
         </div>
       </div>
@@ -284,7 +284,7 @@ const CanvasManager = {
         </div>
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
-          <span>⚡ Generated with STN Showcase</span>
+          <span>🔥 Crafted with STN Forge</span>
           <span>erickapenas.github.io/STN</span>
         </div>
       </div>
@@ -312,7 +312,7 @@ const CanvasManager = {
     return await html2canvas(element, { backgroundColor: "#151822", scale: 2 });
   },
 
-  downloadCanvas(canvas, filename = `showcase_${Date.now()}.png`) {
+  downloadCanvas(canvas, filename = `stn_forge_${Date.now()}.png`) {
     const link = document.createElement("a");
     link.download = filename;
     link.href = canvas.toDataURL("image/png");

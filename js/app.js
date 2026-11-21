@@ -61,7 +61,7 @@ function updateTextOutputState() {
   const btn = document.getElementById("btnTextOutputToggle");
   if (btn) {
     btn.className = `status-toggle-btn ${isTextOutput ? 'active' : 'inactive'}`;
-    btn.textContent = isTextOutput ? "📝 Text Output: ON" : "📝 Text Output: OFF";
+    btn.textContent = isTextOutput ? "📝 Text Export: ON" : "📝 Text Export: OFF";
   }
   if (isTextOutput) {
     document.body.classList.remove("hide-text-output");
@@ -80,7 +80,7 @@ function updateSettingsLabels() {
 function updateIgnPreview() {
   const ignColor = getAnsiHex(userColors.IGN || "32");
   ignLinePreview.style.color = ignColor;
-  ignLinePreview.textContent = userIgn && userIgn.trim() ? `Ingame Name: ${userIgn.trim()}` : `Ingame Name: (none)`;
+  ignLinePreview.textContent = userIgn && userIgn.trim() ? `Player: ${userIgn.trim()}` : `Player: (not set)`;
 }
 
 function updateNitroButtons() {
@@ -88,7 +88,7 @@ function updateNitroButtons() {
   nitroBtns.forEach(b => {
     if (!b) return;
     b.className = `status-toggle-btn ${isNitro ? 'active' : 'inactive'}`;
-    b.textContent = isNitro ? "🚀 Discord Nitro: ON (4000)" : "🚀 Discord Nitro: OFF (2000)";
+    b.textContent = isNitro ? "🚀 Nitro Limit: ON (4000)" : "🚀 Nitro Limit: OFF (2000)";
   });
 }
 
@@ -122,10 +122,10 @@ importFileInput.onchange = e => {
   const reader = new FileReader();
   reader.onload = ev => {
     if (StorageManager.importAllData(ev.target.result)) {
-      alert("All data imported successfully!");
+      alert("Profile imported successfully!");
       location.reload();
     } else {
-      alert("Failed to parse JSON backup file.");
+      alert("Could not read that JSON backup file.");
     }
   };
   reader.readAsText(file);
@@ -145,7 +145,7 @@ document.getElementById("btnResetColors").onclick = () => {
 };
 
 document.getElementById("btnResetAllData").onclick = () => {
-  if (confirm("Are you sure you want to reset all data and settings? This will restore the default fresh view.")) {
+  if (confirm("Wipe your saved vault, decks, and preferences? This cannot be undone.")) {
     localStorage.clear();
     location.reload();
   }
@@ -162,7 +162,7 @@ function updateRoleTagButtons() {
   buttons.forEach(btn => {
     if (!btn) return;
     btn.className = `status-toggle-btn ${includeRoleTags ? 'active' : 'inactive'}`;
-    btn.textContent = includeRoleTags ? "🏷️ Role Tags: ON" : "🚫 Role Tags: OFF";
+    btn.textContent = includeRoleTags ? "🏷️ Role Labels: ON" : "🚫 Role Labels: OFF";
   });
 }
 

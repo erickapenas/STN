@@ -108,11 +108,11 @@ const ClanBattleUI = {
     const btn = document.getElementById("cbNitroBtn");
     if (!btn) return;
     btn.className = `status-toggle-btn ${this.nitro ? 'active' : 'inactive'}`;
-    btn.textContent = this.nitro ? "🚀 Discord Nitro: ON (4000)" : "🚀 Discord Nitro: OFF (2000)";
+    btn.textContent = this.nitro ? "🚀 Nitro Limit: ON (4000)" : "🚀 Nitro Limit: OFF (2000)";
   },
 
   updateRoleTagButtons() {
-    const text = this.includeRoleTags ? "🏷️ Role Tags: ON" : "🏷️ Role Tags: OFF";
+    const text = this.includeRoleTags ? "🏷️ Role Labels: ON" : "🏷️ Role Labels: OFF";
     const cls = `status-toggle-btn ${this.includeRoleTags ? 'active' : 'inactive'}`;
 
     const bTop = document.getElementById("cbRoleTagBtnTop");
