@@ -109,9 +109,31 @@ const IndexUI = {
     let sectionsHtml = "";
 
     if (details) {
-      // Total Unlock Coins & Cash calculation from levels
-      const totalUnlockCoins = (details.levels || []).reduce((sum, r) => sum + (r.unlockCoins || 0), 0);
-      const totalMatchCash = (details.levels || []).reduce((sum, r) => sum + (r.cashCost || 0), 0);
+      // Total Unlock Coins, Cash & DPS calculation from levels
+      const levels = details.levels || [];
+      const totalUnlockCoins = levels.reduce((sum, r) => sum + (r.unlockCoins || 0), 0);
+      const totalMatchCash = levels.reduce((sum, r) => sum + (r.cashCost || 0), 0);
+
+      const parseNum = (v) => parseFloat(String(v).replace(/[^0-9.]/g, "")) || 0;
+      const formatDps = (n) => {
+        if (!isFinite(n) || n <= 0) return "-";
+        return Number.isInteger(n)
+          ? n.toLocaleString()
+          : Number(n.toFixed(1)).toLocaleString();
+      };
+      const bossMult = details.bossMultiplier || 1;
+      const hasBossBonus = bossMult > 1;
+
+      const levelsWithDps = levels.map(lv => {
+        const dmg = parseNum(lv.damage);
+        const rel = parseNum(lv.reload);
+        const dps = rel > 0 ? dmg / rel : 0;
+        const bossDps = dps * bossMult;
+        return { ...lv, dps, bossDps };
+      });
+
+      const firstLv = levelsWithDps[0];
+      const maxLv = levelsWithDps[levelsWithDps.length - 1];
 
       // Bullets
       if (details.bullets && details.bullets.length > 0) {
@@ -122,13 +144,33 @@ const IndexUI = {
         `;
       }
 
-      // Key Numbers (injecting COINS TO MAX IT right next to CASH TO MAX IT!)
+      // Key Numbers (injecting TOTAL DPS, TOTAL DPS (BOSS), and COINS TO MAX IT)
       const keyNumbersList = [...(details.keyNumbers || [])];
+      if (maxLv && maxLv.dps > 0) {
+        const dpsRows = [
+          {
+            label: "TOTAL DPS",
+            value: `<strong>${formatDps(maxLv.dps)} DPS</strong> at Max Level <span style="color:#94a3b8;">(${formatDps(firstLv.dps)} → ${formatDps(maxLv.dps)})</span>`,
+            highlight: true
+          }
+        ];
+        if (hasBossBonus) {
+          const pct = Math.round((bossMult - 1) * 100);
+          dpsRows.push({
+            label: "TOTAL DPS (BOSS)",
+            value: `<strong>${formatDps(maxLv.bossDps)} DPS</strong> at Max Level (+${pct}%) <span style="color:#94a3b8;">(${formatDps(firstLv.bossDps)} → ${formatDps(maxLv.bossDps)})</span>`,
+            highlight: true
+          });
+        }
+        keyNumbersList.unshift(...dpsRows);
+      }
+
       if (totalUnlockCoins > 0) {
         const cashIdx = keyNumbersList.findIndex(k => k.label.toUpperCase().includes("CASH TO MAX"));
         const coinsRow = {
           label: "COINS TO MAX IT (UNLOCK)",
-          value: `<strong>${totalUnlockCoins.toLocaleString()} Coins</strong> in the lobby (all <strong>${details.levels.length} levels</strong>)`
+          value: `<strong>${totalUnlockCoins.toLocaleString()} Coins</strong> in the lobby (all <strong>${levels.length} levels</strong>)`,
+          highlight: true
         };
         if (cashIdx >= 0) {
           keyNumbersList.splice(cashIdx + 1, 0, coinsRow);
@@ -143,7 +185,7 @@ const IndexUI = {
             <div class="detail-section-title">KEY NUMBERS</div>
             <div class="detail-kv-list">
               ${keyNumbersList.map(k => `
-                <div class="detail-kv-row${k.label.includes("COINS TO MAX") ? " detail-kv-highlight" : ""}">
+                <div class="detail-kv-row${k.highlight ? " detail-kv-highlight" : ""}">
                   <span class="detail-kv-label">${escapeXml(k.label)}</span>
                   <span class="detail-kv-val">${k.value}</span>
                 </div>
@@ -166,7 +208,10 @@ const IndexUI = {
       }
 
       // Every Level Table
-      if (details.levels && details.levels.length > 0) {
+      if (levelsWithDps.length > 0) {
+        const showDpsCols = levelsWithDps.some(lv => lv.dps > 0);
+        const totalColSpan = 3 + (showDpsCols ? 1 : 0) + (showDpsCols && hasBossBonus ? 1 : 0);
+
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
@@ -181,17 +226,21 @@ const IndexUI = {
                     <th>CASH COST</th>
                     <th>DAMAGE</th>
                     <th>RELOAD</th>
+                    ${showDpsCols ? "<th>TOTAL DPS</th>" : ""}
+                    ${showDpsCols && hasBossBonus ? "<th>BOSS DPS</th>" : ""}
                     <th>RANGE</th>
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
                 <tbody>
-                  ${details.levels.map(lv => `
+                  ${levelsWithDps.map(lv => `
                     <tr>
                       <td class="col-lvl">${lv.level}</td>
                       <td>$${lv.cashCost.toLocaleString()}</td>
                       <td>${escapeXml(lv.damage)}</td>
                       <td>${escapeXml(lv.reload)}</td>
+                      ${showDpsCols ? `<td style="color:#60a5fa;">${formatDps(lv.dps)}</td>` : ""}
+                      ${showDpsCols && hasBossBonus ? `<td style="color:#fbbf24;">${formatDps(lv.bossDps)}</td>` : ""}
                       <td>${escapeXml(lv.range)}</td>
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
@@ -201,7 +250,7 @@ const IndexUI = {
                   <tr class="detail-table-total">
                     <td>TOTAL</td>
                     <td>$${totalMatchCash.toLocaleString()}</td>
-                    <td colspan="3">Coins to Max (Lobby Unlock)</td>
+                    <td colspan="${totalColSpan}">Coins to Max (Lobby Unlock)</td>
                     <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
                   </tr>
                 </tfoot>

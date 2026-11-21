@@ -1,6 +1,7 @@
 const INDEX_DETAILS = {
   "Juggernaut": {
     tags: ["DIVINE", "SPIN", "EVOLUTION"],
+    bossMultiplier: 1.25,
     summaryStats: [
       { label: "DAMAGE",     value: "250 → 10,000" },
       { label: "RELOAD",     value: "0.2s → 0.08s" },
