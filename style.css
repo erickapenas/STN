@@ -1570,14 +1570,14 @@ select option {
 
 .detail-modal-card {
   position: relative;
-  width: 100%;
-  max-width: 720px;
+  width: min(960px, 95vw);
+  max-width: 960px;
   max-height: 90vh;
   overflow-y: auto;
   background: linear-gradient(180deg, rgba(14, 20, 38, 0.98) 0%, rgba(8, 12, 24, 0.99) 100%);
   border: 1px solid rgba(148, 163, 184, 0.24);
   border-radius: 20px;
-  padding: 26px;
+  padding: 26px 28px;
   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.05) inset;
   animation: modalPopIn 0.26s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
@@ -1872,19 +1872,21 @@ select option {
 
 .detail-table th {
   text-align: center;
-  padding: 6px 8px;
+  padding: 6px 6px;
   font-family: var(--font-display);
   font-size: 0.82rem;
-  letter-spacing: 0.7px;
+  letter-spacing: 0.6px;
   color: #94a3b8;
+  white-space: nowrap;
 }
 
 .detail-table tbody td {
   text-align: center;
-  padding: 9px 8px;
+  padding: 9px 6px;
   background: rgba(15, 23, 42, 0.74);
   color: #f1f5f9;
   font-weight: 700;
+  white-space: nowrap;
 }
 
 .detail-table tbody td:first-child {
