@@ -1,13 +1,13 @@
 const ANSI_OPTIONS = [
   { code: "30",     name: "Dark Gray (30)", hex: "#72767d", ansi: "30" },
   { code: "31",     name: "Red (31)",       hex: "#ed4245", ansi: "31" },
-  { code: "orange", name: "Orange",         hex: "#f97316", ansi: "33" },
   { code: "32",     name: "Green (32)",     hex: "#57f287", ansi: "32" },
   { code: "33",     name: "Yellow (33)",    hex: "#fee75c", ansi: "33" },
   { code: "34",     name: "Blue (34)",      hex: "#5865f2", ansi: "34" },
   { code: "35",     name: "Magenta (35)",   hex: "#eb459e", ansi: "35" },
   { code: "36",     name: "Cyan (36)",      hex: "#00ffff", ansi: "36" },
-  { code: "37",     name: "White (37)",     hex: "#ffffff", ansi: "37" }
+  { code: "37",     name: "White (37)",     hex: "#ffffff", ansi: "37" },
+  { code: "orange", name: "Orange (38)",    hex: "#f97316", ansi: "33" }
 ];
 
 const DEFAULT_COLORS = {
