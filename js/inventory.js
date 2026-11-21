@@ -132,18 +132,25 @@ const InventoryUI = {
     const renderCard = (it) => {
       const itemState = this.inv[it.name];
       const isEvoState = () => !!(itemState.owned && it.canEvo && itemState.lvl > it.max);
+      const rarityHex = getAnsiHex(userColors[it.rarity] || DEFAULT_COLORS[it.rarity] || "37");
+      const roleHex = getAnsiHex(userColors[it.role] || DEFAULT_COLORS[it.role] || "37");
 
       const card = document.createElement("div");
-      card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
-
-      const chkBox = document.createElement("div");
-      chkBox.className = `inv-status-box ${itemState.owned ? 'checked' : 'unchecked'}`;
-      chkBox.textContent = itemState.owned ? "✓" : "✕";
-      chkBox.onclick = () => {
-        itemState.owned = !itemState.owned;
-        card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
-        chkBox.className = `inv-status-box ${itemState.owned ? 'checked' : 'unchecked'}`;
+      const syncCardClasses = () => {
+        const evo = isEvoState();
+        card.className = `inv-card ${itemState.owned ? 'owned' : 'not-owned'}${evo ? ' evo' : ''}`;
+        card.style.setProperty("--rarity-color", evo ? "#a855f7" : rarityHex);
+        chkBox.className = `inv-card-check ${itemState.owned ? 'checked' : 'unchecked'}`;
         chkBox.textContent = itemState.owned ? "✓" : "✕";
+      };
+
+      const chkBox = document.createElement("button");
+      chkBox.type = "button";
+      chkBox.title = "Toggle Owned";
+
+      const toggleOwned = () => {
+        itemState.owned = !itemState.owned;
+        syncCardClasses();
         if (!this.showUnowned && !itemState.owned) {
           this.renderItems();
         }
@@ -151,19 +158,27 @@ const InventoryUI = {
         if (typeof IndexUI !== 'undefined') IndexUI.render();
       };
 
+      chkBox.onclick = (e) => {
+        e.stopPropagation();
+        toggleOwned();
+      };
+
+      const topRow = document.createElement("div");
+      topRow.className = "inv-card-top";
+      topRow.innerHTML = `<span class="index-role-tag" style="color:${roleHex};">[${it.role}]</span>`;
+      topRow.appendChild(chkBox);
+
       const thumb = document.createElement("div");
-      thumb.className = "inv-thumb";
+      thumb.className = "index-thumb inv-card-thumb";
       thumb.innerHTML = `<img src="${it.img}" alt="${it.name}" onerror="this.style.display='none'">`;
-      thumb.onclick = chkBox.onclick;
 
       const nameSpan = document.createElement("div");
-      nameSpan.className = "inv-name";
-      const rarityHex = getAnsiHex(userColors[it.rarity]);
+      nameSpan.className = "index-card-name inv-name";
       nameSpan.style.color = rarityHex;
       nameSpan.textContent = it.name;
-      nameSpan.onclick = chkBox.onclick;
 
       const sel = document.createElement("select");
+      sel.className = "inv-card-lvl";
       for (let l = 1; l <= it.max; l++) {
         const opt = document.createElement("option");
         opt.value = l;
@@ -178,17 +193,21 @@ const InventoryUI = {
         if (itemState.lvl > it.max) evoOpt.selected = true;
         sel.appendChild(evoOpt);
       }
+      sel.onclick = (e) => e.stopPropagation();
       sel.onchange = () => {
         itemState.lvl = parseInt(sel.value, 10);
-        card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
+        if (!itemState.owned) itemState.owned = true;
+        syncCardClasses();
         this.updateUI();
         if (typeof IndexUI !== 'undefined') IndexUI.render();
       };
 
-      card.appendChild(chkBox);
+      card.onclick = toggleOwned;
+      card.appendChild(topRow);
       card.appendChild(thumb);
       card.appendChild(nameSpan);
       card.appendChild(sel);
+      syncCardClasses();
       return card;
     };
 

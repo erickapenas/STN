@@ -1175,8 +1175,123 @@ select option {
 
 .inventory-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
-  gap: 11px;
+  grid-template-columns: repeat(auto-fill, minmax(162px, 1fr));
+  gap: 13px;
+}
+
+.inv-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  padding: 12px 11px 13px;
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+  text-align: center;
+  background: rgba(8, 13, 27, 0.84);
+  border: 2px solid rgba(148, 163, 184, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease, background 0.22s ease;
+}
+
+.inv-card:hover {
+  transform: translateY(-4px) scale(1.015);
+}
+
+.inv-card.not-owned {
+  opacity: 0.56;
+  border-color: rgba(239, 68, 68, 0.24);
+  background: rgba(15, 18, 30, 0.72);
+}
+
+.inv-card.not-owned:hover {
+  opacity: 0.92;
+  border-color: rgba(239, 68, 68, 0.52);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+}
+
+.inv-card.not-owned .inv-card-thumb img {
+  filter: grayscale(0.65) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.45));
+}
+
+.inv-card.owned {
+  opacity: 1;
+  border-color: color-mix(in srgb, var(--rarity-color, #22c55e) 72%, transparent);
+  background: linear-gradient(180deg, color-mix(in srgb, var(--rarity-color, #22c55e) 10%, rgba(10, 15, 30, 0.9)), rgba(8, 13, 27, 0.92));
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.42), 0 0 16px color-mix(in srgb, var(--rarity-color, #22c55e) 22%, transparent);
+}
+
+.inv-card.owned:hover {
+  border-color: var(--rarity-color, #22c55e);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.52), 0 0 24px color-mix(in srgb, var(--rarity-color, #22c55e) 35%, transparent);
+}
+
+.inv-card.owned.evo {
+  background: linear-gradient(180deg, rgba(126, 34, 206, 0.34), rgba(14, 16, 36, 0.94));
+  border-color: #a855f7;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5), 0 0 24px rgba(168, 85, 247, 0.45);
+}
+
+.inv-card.owned.evo .inv-card-thumb {
+  border-color: #a855f7;
+  box-shadow: 0 0 14px rgba(168, 85, 247, 0.5);
+}
+
+.inv-card-top {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.inv-card-check {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+  font-size: 0.84rem;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.inv-card-check:hover {
+  transform: scale(1.14);
+}
+
+.inv-card-check.checked {
+  background: linear-gradient(135deg, #22c55e, #15803d);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.55);
+}
+
+.inv-card-check.unchecked {
+  background: linear-gradient(135deg, #dc2626, #991b1b);
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(220, 38, 38, 0.45);
+}
+
+.inv-card-lvl {
+  width: 100%;
+  margin-top: auto;
+  padding: 6px 8px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: center;
+  border-radius: 8px;
+}
+
+.inv-card.owned.evo .inv-card-lvl {
+  border-color: #a855f7;
+  color: #f3e8ff;
+  background: rgba(88, 28, 135, 0.55);
 }
 
 .inv-item {
