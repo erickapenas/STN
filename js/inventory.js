@@ -66,6 +66,7 @@ const InventoryUI = {
       this.showUnowned = !this.showUnowned;
       StorageManager.saveShowUnownedInImage(this.showUnowned);
       this.updateUnownedButton();
+      this.renderItems();
       this.renderImagePreview();
     };
 
@@ -143,6 +144,9 @@ const InventoryUI = {
         card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
         chkBox.className = `inv-status-box ${itemState.owned ? 'checked' : 'unchecked'}`;
         chkBox.textContent = itemState.owned ? "✓" : "✕";
+        if (!this.showUnowned && !itemState.owned) {
+          this.renderItems();
+        }
         this.updateUI();
         if (typeof IndexUI !== 'undefined') IndexUI.render();
       };
@@ -188,10 +192,13 @@ const InventoryUI = {
       return card;
     };
 
+    let renderedAny = false;
+
     if (this.sortMode === "rarity") {
       RARITY_TIERS.forEach(tier => {
-        const itemsInTier = ITEMS.filter(it => it.rarity === tier.key);
+        const itemsInTier = ITEMS.filter(it => it.rarity === tier.key && (this.showUnowned || (this.inv[it.name] && this.inv[it.name].owned)));
         if (itemsInTier.length === 0) return;
+        renderedAny = true;
 
         const block = document.createElement("div");
         block.className = "inventory-category-block";
@@ -211,8 +218,9 @@ const InventoryUI = {
       });
     } else {
       CATEGORIES.forEach(cat => {
-        const itemsInCat = ITEMS.filter(it => it.role === cat.id);
+        const itemsInCat = ITEMS.filter(it => it.role === cat.id && (this.showUnowned || (this.inv[it.name] && this.inv[it.name].owned)));
         if (itemsInCat.length === 0) return;
+        renderedAny = true;
 
         const block = document.createElement("div");
         block.className = "inventory-category-block";
@@ -230,6 +238,10 @@ const InventoryUI = {
         block.appendChild(grid);
         container.appendChild(block);
       });
+    }
+
+    if (!renderedAny) {
+      container.innerHTML = `<div class="index-empty">No owned units selected. Turn <strong>Show Unowned: ON</strong> to select your units.</div>`;
     }
   },
 

@@ -109,10 +109,11 @@ const StorageManager = {
   },
 
   loadShowUnownedInImage() {
-    return localStorage.getItem('td_inv_show_unowned') === 'true';
+    const val = localStorage.getItem('td_inv_show_unowned_v2');
+    return val === null ? true : val === 'true';
   },
   saveShowUnownedInImage(val) {
-    localStorage.setItem('td_inv_show_unowned', val ? 'true' : 'false');
+    localStorage.setItem('td_inv_show_unowned_v2', val ? 'true' : 'false');
   },
 
   loadInventory() {
