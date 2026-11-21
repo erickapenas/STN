@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STN Forge — Vault & Loadout Studio</title>
+  <title>STN Showcase — Setup & Inventory Generator</title>
   <link rel="icon" type="image/jpeg" href="images/hero-bg.jpg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4.0">
+  <link rel="stylesheet" href="style.css?v=4.1">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -25,29 +25,29 @@
       <div class="hero-banner-overlay" aria-hidden="true"></div>
       <div class="hero-content">
         <div class="brand-cluster">
-          <div class="brand-logo" id="brandLogo" title="STN Forge">
-            <img src="images/hero-bg.jpg" alt="STN Forge Emblem">
+          <div class="brand-logo" id="brandLogo" title="Survive The Night">
+            <img src="images/hero-bg.jpg" alt="Survive The Night Logo">
             <span class="brand-logo-shine" aria-hidden="true"></span>
           </div>
           <div class="brand-text">
             <div class="brand-eyebrow">
               <span class="live-dot"></span>
-              <span>SURVIVE THE NIGHT &bull; TACTICAL COMPANION</span>
+              <span>SURVIVE THE NIGHT &bull; ROBLOX</span>
             </div>
             <h1>
-              <span class="title-main">STN Forge &mdash; Vault &amp; Loadout Studio</span>
+              <span class="title-main">Setup &amp; Inventory Generator</span>
             </h1>
-            <p class="brand-tagline">Organize your unlocked units, assemble high-tier squad decks, and export crisp share cards for Discord.</p>
+            <p class="brand-tagline">Build Discord-ready team loadouts, showcase your unit inventory, and recruit for Clan Battles.</p>
           </div>
         </div>
         <div class="hero-badge-group">
           <div class="hero-stat-pill">
             <span class="pill-icon">⚡</span>
-            <span>Instant PNG Cards</span>
+            <span>HD Card Export</span>
           </div>
           <div class="hero-stat-pill">
-            <span class="pill-icon">🔥</span>
-            <span>STN Forge</span>
+            <span class="pill-icon">🛡️</span>
+            <span>STN Showcase</span>
           </div>
         </div>
       </div>
@@ -55,42 +55,41 @@
 
     <nav class="nav-tabs" id="mainNavTabs">
       <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
-      <button class="tab-btn active" data-tab="inventoryTab">🎒 Unit Vault</button>
-      <button class="tab-btn" data-tab="teamTab">🛡️ Squad Decks</button>
-      <button class="tab-btn" data-tab="clanBattleTab">⚔️ Clan Wars</button>
-      <button class="tab-btn" data-tab="settingsTab">⚙️ Preferences</button>
+      <button class="tab-btn active" data-tab="inventoryTab">🎒 Inventory</button>
+      <button class="tab-btn" data-tab="teamTab">👥 Team Setup</button>
+      <button class="tab-btn" data-tab="clanBattleTab">⚔️ Clan Battle</button>
+      <button class="tab-btn" data-tab="settingsTab">⚙️ Settings</button>
     </nav>
   </header>
 
-  <!-- 1. UNIT VAULT (INVENTORY — DEFAULT ACTIVE TAB) -->
   <main id="inventoryTab" class="tab-content active">
     <section class="card">
       <div class="header-row">
         <div class="header-inputs-col">
           <div class="highlight-field-wrap">
-            <label for="invHeadline">✏️ Post Heading</label>
-            <input type="text" id="invHeadline" value="My Current STN Unit Vault" placeholder="Write a title for your vault card...">
+            <label for="invHeadline">✏️ Discord Headline / Title</label>
+            <input type="text" id="invHeadline" value="Everything i have" placeholder="Discord title...">
           </div>
           <div class="highlight-field-wrap">
-            <label for="invBanner">✏️ Vault Tagline (Optional)</label>
-            <input type="text" id="invBanner" value="" placeholder="e.g. ◆ FULL ROSTER ◆ or Trading / Co-op Ready...">
+            <label for="invBanner">✏️ Section Subtitle / Banner (Optional)</label>
+            <input type="text" id="invBanner" value="" placeholder="e.g. === MY INVENTORY === or Clan Member Deck...">
           </div>
         </div>
       </div>
 
       <div class="inventory-tools">
-        <button id="btnInvSelectAll">Mark All Owned</button>
-        <button id="btnInvDeselectAll">Clear All</button>
-        <button id="btnInvMaxAll">Max All Levels</button>
+        <button id="btnInvSelectAll">Select All</button>
+        <button id="btnInvDeselectAll">Deselect All</button>
+        <button id="btnInvMaxAll">Set All to Max Level</button>
         <div class="sort-select-wrapper">
-          <label for="invSortSelect">Order:</label>
+          <label for="invSortSelect">Sort by:</label>
           <select id="invSortSelect">
-            <option value="rarity" selected>💎 By Tier (Top → Base)</option>
-            <option value="category">⚔️ By Role</option>
+            <option value="rarity" selected>💎 Rarity (Divine → Common)</option>
+            <option value="category">⚔️ Category</option>
           </select>
         </div>
-        <button id="btnInvToggleUnowned" class="status-toggle-btn inactive tool-toggle-auto">👁️ Missing Units: HIDDEN</button>
-        <button id="invRoleTagBtnTop" class="status-toggle-btn active tool-toggle-sm">🏷️ Role Labels: ON</button>
+        <button id="btnInvToggleUnowned" class="status-toggle-btn inactive tool-toggle-auto">👁️ Show Unowned: OFF</button>
+        <button id="invRoleTagBtnTop" class="status-toggle-btn active tool-toggle-sm">🏷️ Role Tags: ON</button>
       </div>
 
       <div id="inventoryContainer"></div>
@@ -98,54 +97,53 @@
       <div class="card-footer" style="margin-top: 20px;">
         <div id="invCharBadge" class="discord-text-element"></div>
         <div class="footer-btn-row">
-          <button id="invRoleTagBtnBottom" class="status-toggle-btn active">🏷️ Role Labels: ON</button>
-          <button id="invNitroBtn" class="status-toggle-btn inactive discord-text-element" type="button">🚀 Nitro Limit: OFF (2000)</button>
+          <button id="invRoleTagBtnBottom" class="status-toggle-btn active">🏷️ Role Tags: ON</button>
+          <button id="invNitroBtn" class="status-toggle-btn inactive discord-text-element" type="button">🚀 Discord Nitro: OFF (2000)</button>
         </div>
         <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-primary-action" id="invCopyImgBtn">📷 Copy Vault Card (PNG)</button>
-          <button class="btn btn-secondary" id="invDownloadImgBtn">💾 Save Vault Card</button>
+          <button class="btn btn-primary-action" id="invCopyImgBtn">📷 Copy Inventory Image for Discord</button>
+          <button class="btn btn-secondary" id="invDownloadImgBtn">💾 Download Inventory Image for Discord</button>
         </div>
         <div id="invActionButtons" class="discord-text-element"></div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Live Card Preview</h2>
+      <h2>Discord Image Preview</h2>
       <div id="invImagePreviewBox" class="preview-image-card"></div>
       <div id="invCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
 
       <div class="discord-text-element">
-        <h2 style="margin-top: 30px;">Formatted Text Preview</h2>
+        <h2 style="margin-top: 30px;">Discord Text Preview</h2>
         <div id="invPreviewContainer"></div>
       </div>
     </section>
   </main>
 
-  <!-- 2. SQUAD DECKS (TEAM SETUP) -->
   <main id="teamTab" class="tab-content">
     <section class="card">
       <div class="loadout-nav">
-        <button type="button" class="loadout-tab-btn active" data-loadout="0">Deck 1</button>
-        <button type="button" class="loadout-tab-btn" data-loadout="1">Deck 2</button>
-        <button type="button" class="loadout-tab-btn" data-loadout="2">Deck 3</button>
+        <button type="button" class="loadout-tab-btn active" data-loadout="0">Loadout 1</button>
+        <button type="button" class="loadout-tab-btn" data-loadout="1">Loadout 2</button>
+        <button type="button" class="loadout-tab-btn" data-loadout="2">Loadout 3</button>
       </div>
 
       <div class="header-row">
         <div class="header-inputs-col">
           <div class="highlight-field-wrap">
-            <label for="teamHeadline">✏️ Post Heading</label>
-            <input type="text" id="teamHeadline" value="LFG — Ready to Clear Impossible Mode" placeholder="Enter your LFG message or deck title...">
+            <label for="teamHeadline">✏️ Discord Headline / Title</label>
+            <input type="text" id="teamHeadline" value="Looking for a team to farm Impossible" placeholder="Discord title / headline...">
           </div>
           <div class="sub-header-row">
             <div class="highlight-field-wrap">
-              <label for="teamBanner">✏️ Deck Header</label>
-              <input type="text" id="teamBanner" value="◆ PRIMARY LOADOUT ◆" placeholder="Deck banner text...">
+              <label for="teamBanner">✏️ Section Subtitle / Banner</label>
+              <input type="text" id="teamBanner" value="=== MY FIRST SETUP ===" placeholder="Banner text...">
             </div>
             <div class="highlight-field-wrap">
-              <label for="teamSubtitle">✏️ Strategy Note (Optional)</label>
-              <input type="text" id="teamSubtitle" value="" placeholder="e.g. Heavy DPS + Economy...">
+              <label for="teamSubtitle">✏️ Custom Loadout Subtitle (Optional)</label>
+              <input type="text" id="teamSubtitle" value="" placeholder="e.g. My Support Team...">
             </div>
-            <button id="vipToggleBtn" class="status-toggle-btn inactive" type="button">⭐ VIP Pass: 4 Slots</button>
+            <button id="vipToggleBtn" class="status-toggle-btn inactive" type="button">⭐ VIP: 4 Slots</button>
           </div>
         </div>
       </div>
@@ -153,53 +151,52 @@
       <div id="slotsContainer"></div>
 
       <div class="card-footer">
-        <span id="teamCharCount" class="char-badge char-ok discord-text-element">Length: 0 / 2,000</span>
+        <span id="teamCharCount" class="char-badge char-ok discord-text-element">Characters: 0 / 2,000</span>
         <div class="footer-btn-row">
-          <button id="teamRoleTagBtn" class="status-toggle-btn active">🏷️ Role Labels: ON</button>
-          <button class="btn discord-text-element" id="teamCopyBtn">📋 Copy Deck Text</button>
+          <button id="teamRoleTagBtn" class="status-toggle-btn active">🏷️ Role Tags: ON</button>
+          <button class="btn discord-text-element" id="teamCopyBtn">📋 Copy Team Setup for Discord</button>
         </div>
         <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-primary-action" id="teamCopyImgBtn">📷 Copy Deck Card (PNG)</button>
-          <button class="btn btn-secondary" id="teamDownloadImgBtn">💾 Save Deck Card</button>
+          <button class="btn btn-primary-action" id="teamCopyImgBtn">📷 Copy Setup Image for Discord</button>
+          <button class="btn btn-secondary" id="teamDownloadImgBtn">💾 Download Setup Image for Discord</button>
         </div>
       </div>
     </section>
 
     <section class="card">
       <div class="discord-text-element">
-        <h2>Formatted Text Preview</h2>
-        <div class="preview-headline" id="teamPreviewHeadline">LFG — Ready to Clear Impossible Mode</div>
+        <h2>Discord Text Preview</h2>
+        <div class="preview-headline" id="teamPreviewHeadline">Looking for a team to farm Impossible</div>
         <pre class="preview-box" id="teamPreview"></pre>
         <div id="teamPreviewSubtext" class="preview-subtext"></div>
       </div>
       
-      <h2 class="preview-section-title">Live Card Preview</h2>
+      <h2 class="preview-section-title">Discord Image Preview</h2>
       <div id="teamImagePreviewBox" class="preview-image-card"></div>
       <div id="teamCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
     </section>
   </main>
 
-  <!-- 3. CLAN WARS (CLAN BATTLE) -->
   <main id="clanBattleTab" class="tab-content">
     <section class="card">
       <div class="header-row">
         <div class="header-inputs-col">
           <div class="highlight-field-wrap">
-            <label for="cbHeadline">✏️ Recruitment Title</label>
-            <input type="text" id="cbHeadline" value="Recruiting Active Squad for Clan Wars">
+            <label for="cbHeadline">✏️ Discord Headline / Title</label>
+            <input type="text" id="cbHeadline" value="We need players for Clan Battle">
           </div>
           <div class="sub-header-row">
             <div class="highlight-field-wrap">
-              <label for="cbBanner">✏️ Roster Header</label>
-              <input type="text" id="cbBanner" value="◆ CLAN WAR ROSTER NEEDS ◆">
+              <label for="cbBanner">✏️ Section Subtitle / Banner</label>
+              <input type="text" id="cbBanner" value="=== CLAN BATTLE REQUIREMENTS ===">
             </div>
             <div class="highlight-field-wrap">
-              <label for="cbClanName">✏️ Clan Tag / Name (Optional)</label>
-              <input type="text" id="cbClanName" placeholder="Leave blank for open squad call...">
+              <label for="cbClanName">✏️ Clan Name (Optional)</label>
+              <input type="text" id="cbClanName" placeholder="Leave empty for generic clan recruitment...">
             </div>
             <div class="highlight-field-wrap" style="max-width: 210px;">
-              <label for="cbPlayersNeeded">👥 Open Spots</label>
-              <input type="text" id="cbPlayersNeeded" value="2 Open Spots" placeholder="e.g. 2 Players...">
+              <label for="cbPlayersNeeded">👥 Players Needed</label>
+              <input type="text" id="cbPlayersNeeded" value="1 - 2 Players" placeholder="e.g. 2 Players...">
             </div>
           </div>
         </div>
@@ -207,16 +204,16 @@
 
       <div class="inventory-tools">
         <button id="btnCbSelectAll">Select All</button>
-        <button id="btnCbDeselectAll">Clear All</button>
-        <button id="btnCbResetQuantities">Reset Counts</button>
+        <button id="btnCbDeselectAll">Deselect All</button>
+        <button id="btnCbResetQuantities">Reset Amounts</button>
         <div class="sort-select-wrapper">
-          <label for="cbSortSelect">Order:</label>
+          <label for="cbSortSelect">Sort by:</label>
           <select id="cbSortSelect">
-            <option value="rarity" selected>💎 By Tier (Top → Base)</option>
-            <option value="category">⚔️ By Role</option>
+            <option value="rarity" selected>💎 Rarity (Divine → Common)</option>
+            <option value="category">⚔️ Category</option>
           </select>
         </div>
-        <button id="cbRoleTagBtnTop" class="status-toggle-btn active tool-toggle-auto">🏷️ Role Labels: ON</button>
+        <button id="cbRoleTagBtnTop" class="status-toggle-btn active tool-toggle-auto">🏷️ Role Tags: ON</button>
       </div>
 
       <div id="clanBattleContainer"></div>
@@ -224,89 +221,88 @@
       <div class="card-footer" style="margin-top: 20px;">
         <div id="cbCharBadge" class="discord-text-element"></div>
         <div class="footer-btn-row">
-          <button id="cbRoleTagBtnBottom" class="status-toggle-btn active">🏷️ Role Labels: ON</button>
-          <button id="cbNitroBtn" class="status-toggle-btn inactive discord-text-element" type="button">🚀 Nitro Limit: OFF (2000)</button>
+          <button id="cbRoleTagBtnBottom" class="status-toggle-btn active">🏷️ Role Tags: ON</button>
+          <button id="cbNitroBtn" class="status-toggle-btn inactive discord-text-element" type="button">🚀 Discord Nitro: OFF (2000)</button>
         </div>
         <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-primary-action" id="cbCopyImgBtn">📷 Copy Clan War Card (PNG)</button>
-          <button class="btn btn-secondary" id="cbDownloadImgBtn">💾 Save Clan War Card</button>
+          <button class="btn btn-primary-action" id="cbCopyImgBtn">📷 Copy Clan Battle Image for Discord</button>
+          <button class="btn btn-secondary" id="cbDownloadImgBtn">💾 Download Clan Battle Image for Discord</button>
         </div>
         <div id="cbActionButtons" class="discord-text-element"></div>
       </div>
     </section>
 
     <section class="card">
-      <h2>Live Card Preview</h2>
+      <h2>Discord Image Preview</h2>
       <div id="cbImagePreviewBox" class="preview-image-card"></div>
       <div id="cbCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
 
       <div class="discord-text-element">
-        <h2 style="margin-top: 30px;">Formatted Text Preview</h2>
+        <h2 style="margin-top: 30px;">Discord Text Preview</h2>
         <div id="cbPreviewContainer"></div>
       </div>
     </section>
   </main>
 
-  <!-- 4. PREFERENCES (SETTINGS + INGAME NAME) -->
   <main id="settingsTab" class="tab-content">
     <section class="card">
-      <h2>Player Identity (Ingame Name)</h2>
+      <h2>Ingame Name Settings</h2>
       <p class="section-desc">
-        Set your Roblox username here. It will automatically appear on your generated Vault and Squad Deck cards.
+        Enter your ingame username. It will appear directly below your banner line in the generated showcase messages.
       </p>
-      <div class="highlight-field-wrap" style="max-width: 520px; margin-bottom: 18px;">
-        <label for="ignInput">🎮 Roblox Username</label>
-        <input type="text" id="ignInput" placeholder="Enter your Roblox handle...">
+      <div class="highlight-field-wrap" style="max-width: 520px; margin-bottom: 20px;">
+        <label for="ignInput">🎮 Roblox / Ingame Username</label>
+        <input type="text" id="ignInput" placeholder="Your Ingame Name...">
       </div>
       <div class="ign-preview-pill">
-        <span class="ign-preview-label">Card preview:</span>
-        <code id="ignLinePreview">Player: (not set)</code>
+        <span class="ign-preview-label">Line preview:</span>
+        <code id="ignLinePreview">Ingame Name: (none)</code>
       </div>
     </section>
 
     <section class="card">
-      <h2>Discord Text Export Mode</h2>
+      <h2>Discord Output Mode</h2>
       <p class="section-desc">
-        Toggle ANSI text blocks and copy buttons. Turn OFF to keep a clean visual-card-only workspace.
+        Choose whether you want Discord text outputs and text previews displayed. When turned off, all Discord text buttons and previews are hidden.
       </p>
       <div style="margin-bottom: 10px;">
-        <button id="btnTextOutputToggle" class="status-toggle-btn inactive" type="button">📝 Text Export: OFF</button>
+        <button id="btnTextOutputToggle" class="status-toggle-btn inactive" type="button">📝 Text Output: OFF</button>
       </div>
     </section>
 
     <section class="card">
-      <h2>Profile Backup &amp; Restore</h2>
-      <p class="section-desc">Download a JSON snapshot of your vault, decks, player name, and color palette, or restore an existing backup anytime.</p>
+      <h2>Backup &amp; Data Transfer</h2>
+      <p class="section-desc">Export all your settings, inventory, loadouts, and levels into a JSON backup file or restore a previous one.</p>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
-        <button class="btn btn-secondary" id="btnExportData">📤 Export Profile (.JSON)</button>
-        <button class="btn btn-secondary" id="btnImportData">📥 Import Profile (.JSON)</button>
+        <button class="btn btn-secondary" id="btnExportData">📤 Export All Data (JSON)</button>
+        <button class="btn btn-secondary" id="btnImportData">📥 Import Data (JSON)</button>
         <input type="file" id="importFileInput" accept=".json" style="display:none;">
       </div>
     </section>
 
     <section class="card">
-      <h2>Color Theme &amp; ANSI Palette</h2>
+      <h2>Customize Discord ANSI Colors</h2>
       <p class="section-desc">
-        Personalize highlight colors for headers, player tags, unit roles, and rarity borders across cards and text blocks.
+        Configure ANSI colors for headers, labels, tags, and item rarities.
       </p>
 
       <div class="settings-grid">
         <div class="settings-group">
-          <h3>Headers &amp; Identity</h3>
+          <h3>Banner, Clan &amp; Ingame Name Colors</h3>
           <div class="settings-row">
-            <label id="lbl_BANNER">◆ DECK / SECTION HEADER ◆</label>
+            <label id="lbl_BANNER">=== BANNER / SUBTITLE ===</label>
             <select id="ansi_BANNER" class="setting-select" data-key="BANNER"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_IGN">Player Username</label>
+            <label id="lbl_IGN">Ingame Name Line</label>
             <select id="ansi_IGN" class="setting-select" data-key="IGN"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_CLAN">Clan Tag Line</label>
+            <label id="lbl_CLAN">Clan Line</label>
             <select id="ansi_CLAN" class="setting-select" data-key="CLAN"></select>
           </div>
 
-          <h3 style="margin-top: 24px;">Unit Roles</h3>
+          <h3 style="margin-top: 24px;">Role Tag Colors</h3>
           <div class="settings-row">
             <label id="lbl_DAMAGE">[DAMAGE]</label>
             <select id="ansi_DAMAGE" class="setting-select" data-key="DAMAGE"></select>
@@ -326,60 +322,60 @@
         </div>
 
         <div class="settings-group">
-          <h3>Unit Tier Borders</h3>
+          <h3>Item Rarity Colors</h3>
           <div class="settings-row">
-            <label id="lbl_exclusive">Exclusive Tier</label>
+            <label id="lbl_exclusive">Exclusive (Orange)</label>
             <select id="ansi_exclusive" class="setting-select" data-key="exclusive"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_divine">Divine Tier</label>
+            <label id="lbl_divine">Divine (White)</label>
             <select id="ansi_divine" class="setting-select" data-key="divine"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_legendary">Legendary Tier</label>
+            <label id="lbl_legendary">Legendary (Yellow)</label>
             <select id="ansi_legendary" class="setting-select" data-key="legendary"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_mythic">Mythic Tier</label>
+            <label id="lbl_mythic">Mythic (Red)</label>
             <select id="ansi_mythic" class="setting-select" data-key="mythic"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_epic">Epic Tier</label>
+            <label id="lbl_epic">Epic (Purple)</label>
             <select id="ansi_epic" class="setting-select" data-key="epic"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_rare">Rare Tier</label>
+            <label id="lbl_rare">Rare (Blue)</label>
             <select id="ansi_rare" class="setting-select" data-key="rare"></select>
           </div>
           <div class="settings-row">
-            <label id="lbl_common">Common Tier</label>
+            <label id="lbl_common">Common (Green)</label>
             <select id="ansi_common" class="setting-select" data-key="common"></select>
           </div>
         </div>
       </div>
 
       <div style="margin-top: 25px; display: flex; gap: 12px; flex-wrap: wrap;">
-        <button class="btn btn-secondary" id="btnResetColors">↺ Restore Default Palette</button>
-        <button class="btn btn-danger" id="btnResetAllData">🗑️ Wipe Saved Profile</button>
+        <button class="btn btn-secondary" id="btnResetColors">↺ Reset to Default Colors</button>
+        <button class="btn btn-danger" id="btnResetAllData">🗑️ Reset All Data (Fresh View)</button>
       </div>
     </section>
   </main>
 
   <footer class="app-footer">
-    <span>🔥 <strong>STN Forge</strong> &bull; Built for Survive The Night Players</span>
+    <span>⚡ <strong>STN Showcase</strong> &bull; Survive The Night Setup &amp; Inventory Generator</span>
   </footer>
 </div>
 
-<script src="js/data.js?v=4.0"></script>
-<script src="js/storage.js?v=4.0"></script>
-<script src="js/ansi.js?v=4.0"></script>
-<script src="js/canvas.js?v=4.0"></script>
-<script src="js/dropdown.js?v=4.0"></script>
-<script src="js/team.js?v=4.0"></script>
-<script src="js/inventory.js?v=4.0"></script>
-<script src="js/clanbattle.js?v=4.0"></script>
-<script src="js/app.js?v=4.0"></script>
-<script src="js/effects.js?v=4.0"></script>
+<script src="js/data.js?v=4.1"></script>
+<script src="js/storage.js?v=4.1"></script>
+<script src="js/ansi.js?v=4.1"></script>
+<script src="js/canvas.js?v=4.1"></script>
+<script src="js/dropdown.js?v=4.1"></script>
+<script src="js/team.js?v=4.1"></script>
+<script src="js/inventory.js?v=4.1"></script>
+<script src="js/clanbattle.js?v=4.1"></script>
+<script src="js/app.js?v=4.1"></script>
+<script src="js/effects.js?v=4.1"></script>
 
 </body>
 </html>

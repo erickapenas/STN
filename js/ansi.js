@@ -5,8 +5,8 @@ const PAD_HAVE = 16;
 const PAD_NEED = 8;
 const ESC = "\u001b";
 
-const PROMO_FOOTER_RAW = "-# 🔥 Built with [STN Forge](https://erickapenas.github.io/STN/)";
-const PROMO_FOOTER_HTML = `🔥 Built with <a href="https://erickapenas.github.io/STN/" target="_blank" rel="noopener">STN Forge</a>`;
+const PROMO_FOOTER_RAW = "-# ⚡ Generated with [STN Showcase](https://erickapenas.github.io/STN/)";
+const PROMO_FOOTER_HTML = `⚡ Generated with <a href="https://erickapenas.github.io/STN/" target="_blank" rel="noopener">STN Showcase</a>`;
 
 function getAnsiHex(code) {
   const found = ANSI_OPTIONS.find(o => o.code === code);
@@ -74,7 +74,7 @@ function buildTeamMessage(headline, ign, loadouts, count, colors, isHtml = false
     lines.push("```ansi");
   }
 
-  let list = Array.isArray(loadouts) && loadouts.length > 0 && loadouts[0].slots ? loadouts : [{ banner: "◆ PRIMARY LOADOUT ◆", subtitle: "", slots: loadouts }];
+  let list = Array.isArray(loadouts) && loadouts.length > 0 && loadouts[0].slots ? loadouts : [{ banner: "=== MY FIRST SETUP ===", subtitle: "", slots: loadouts }];
   let activeSectionsCount = 0;
 
   list.forEach((ld, idx) => {
@@ -86,7 +86,7 @@ function buildTeamMessage(headline, ign, loadouts, count, colors, isHtml = false
     }
     activeSectionsCount++;
 
-    const bannerText = ld.banner && ld.banner.trim() ? ld.banner.trim() : (idx === 0 ? "◆ PRIMARY LOADOUT ◆" : idx === 1 ? "◆ SECONDARY LOADOUT ◆" : "◆ TERTIARY LOADOUT ◆");
+    const bannerText = ld.banner && ld.banner.trim() ? ld.banner.trim() : (idx === 0 ? "=== MY FIRST SETUP ===" : idx === 1 ? "=== MY SECOND SETUP ===" : "=== MY THIRD SETUP ===");
     const subText = ld.subtitle && ld.subtitle.trim() ? ld.subtitle.trim() : "";
 
     if (isHtml) {

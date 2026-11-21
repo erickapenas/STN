@@ -15,7 +15,7 @@ const TeamUI = {
 
     const headlines = StorageManager.loadHeadlines();
     teamHeadlineInput.value = headlines.team;
-    teamBannerInput.value = this.loadouts[this.activeLoadoutIdx].banner || "◆ PRIMARY LOADOUT ◆";
+    teamBannerInput.value = this.loadouts[this.activeLoadoutIdx].banner || "=== MY FIRST SETUP ===";
     teamSubtitleInput.value = this.loadouts[this.activeLoadoutIdx].subtitle || "";
 
     this.updateVipButton();
@@ -73,7 +73,7 @@ const TeamUI = {
   updateVipButton() {
     const btn = document.getElementById("vipToggleBtn");
     btn.className = `status-toggle-btn ${this.isVip ? 'active' : 'inactive'}`;
-    btn.textContent = this.isVip ? "⭐ VIP Pass: 5 Slots" : "⭐ VIP Pass: 4 Slots";
+    btn.textContent = this.isVip ? "⭐ VIP: 5 Slots" : "⭐ VIP: 4 Slots";
   },
 
   getCurrentSlots() {

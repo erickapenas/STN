@@ -26,7 +26,7 @@ const StorageManager = {
         const parsed = JSON.parse(data);
         if (Array.isArray(parsed) && parsed.length > 0) {
           return parsed.map((ld, i) => ({
-            banner: ld.banner || (i === 0 ? "◆ PRIMARY LOADOUT ◆" : i === 1 ? "◆ SECONDARY LOADOUT ◆" : "◆ TERTIARY LOADOUT ◆"),
+            banner: ld.banner || (i === 0 ? "=== MY FIRST SETUP ===" : i === 1 ? "=== MY SECOND SETUP ===" : "=== MY THIRD SETUP ==="),
             subtitle: ld.subtitle || "",
             slots: Array.isArray(ld.slots) ? ld.slots : this.defaultSlots()
           }));
@@ -35,9 +35,9 @@ const StorageManager = {
     } catch {}
 
     const initialLoadouts = [
-      { banner: "◆ PRIMARY LOADOUT ◆", subtitle: "", slots: this.defaultSlots() },
-      { banner: "◆ SECONDARY LOADOUT ◆", subtitle: "", slots: this.defaultSlots() },
-      { banner: "◆ TERTIARY LOADOUT ◆", subtitle: "", slots: this.defaultSlots() }
+      { banner: "=== MY FIRST SETUP ===", subtitle: "", slots: this.defaultSlots() },
+      { banner: "=== MY SECOND SETUP ===", subtitle: "", slots: this.defaultSlots() },
+      { banner: "=== MY THIRD SETUP ===", subtitle: "", slots: this.defaultSlots() }
     ];
 
     localStorage.setItem('td_setup_loadouts', JSON.stringify(initialLoadouts));
@@ -139,10 +139,10 @@ const StorageManager = {
 
   loadClanBattle() {
     let cb = {
-      headline: "Recruiting Active Squad for Clan Wars",
-      banner: "◆ CLAN WAR ROSTER NEEDS ◆",
+      headline: "We need players for Clan Battle",
+      banner: "=== CLAN BATTLE REQUIREMENTS ===",
       clanName: "",
-      playersNeeded: "2 Open Spots",
+      playersNeeded: "1 - 2 Players",
       units: {}
     };
     ITEMS.forEach(it => {
@@ -176,9 +176,9 @@ const StorageManager = {
 
   loadHeadlines() {
     return {
-      team: localStorage.getItem('td_headline_team') || "LFG — Ready to Clear Impossible Mode",
-      banner: localStorage.getItem('td_banner_team') || "◆ PRIMARY LOADOUT ◆",
-      inv: localStorage.getItem('td_headline_inv') || "My Current STN Unit Vault",
+      team: localStorage.getItem('td_headline_team') || "Looking for a team to farm Impossible",
+      banner: localStorage.getItem('td_banner_team') || "=== MY FIRST SETUP ===",
+      inv: localStorage.getItem('td_headline_inv') || "Everything i have",
       invBanner: localStorage.getItem('td_banner_inv') || ""
     };
   },
@@ -211,7 +211,7 @@ const StorageManager = {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = `stn_forge_profile_${new Date().toISOString().slice(0,10)}.json`;
+    a.download = `setup_backup_${new Date().toISOString().slice(0,10)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   },
