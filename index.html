@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5.3">
+  <link rel="stylesheet" href="style.css?v=5.4">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -328,12 +328,21 @@
   </footer>
 </div>
 
-<script src="js/data.js?v=5.1"></script>
+<!-- Index Detail Modal -->
+<div id="indexDetailModal" class="detail-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="indexModalBody">
+  <div class="detail-modal-card">
+    <button type="button" id="indexModalCloseBtn" class="detail-modal-close" aria-label="Close">✕</button>
+    <div id="indexModalBody" class="detail-modal-body"></div>
+  </div>
+</div>
+
+<script src="js/data.js?v=5.4"></script>
+<script src="js/details.js?v=5.4"></script>
 <script src="js/storage.js?v=5.2"></script>
 <script src="js/ansi.js?v=5.0"></script>
 <script src="js/canvas.js?v=5.0"></script>
 <script src="js/inventory.js?v=5.3"></script>
-<script src="js/index.js?v=5.0"></script>
+<script src="js/index.js?v=5.4"></script>
 <script src="js/clanbattle.js?v=5.0"></script>
 <script src="js/app.js?v=5.0"></script>
 <script src="js/effects.js?v=5.0"></script>
