@@ -117,15 +117,16 @@ const StorageManager = {
 
   loadInventory() {
     let inv = {};
-    ITEMS.forEach(it => { inv[it.name] = { owned: false, lvl: 1, max: it.max }; });
+    ITEMS.forEach(it => { inv[it.name] = { owned: false, lvl: 1, max: it.max, canEvo: !!it.canEvo }; });
     try {
       const data = localStorage.getItem('td_setup_inventory');
       if (data) {
         const parsed = JSON.parse(data);
         Object.keys(parsed).forEach(k => {
           if (inv[k]) {
+            const cap = inv[k].canEvo ? inv[k].max + 1 : inv[k].max;
             inv[k].owned = !!parsed[k].owned;
-            inv[k].lvl = Math.min(parsed[k].lvl || 1, inv[k].max);
+            inv[k].lvl = Math.min(parsed[k].lvl || 1, cap);
           }
         });
         return inv;

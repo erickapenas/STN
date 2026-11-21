@@ -21,7 +21,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.classList.add("active");
     document.getElementById(btn.dataset.tab).classList.add("active");
 
-    if (btn.dataset.tab === "teamTab") TeamUI.updateUI();
+    if (btn.dataset.tab === "indexTab" && typeof IndexUI !== "undefined") IndexUI.render();
     if (btn.dataset.tab === "inventoryTab") InventoryUI.updateUI();
     if (btn.dataset.tab === "clanBattleTab") ClanBattleUI.updateUI();
   });
@@ -39,8 +39,7 @@ function initSettings() {
       StorageManager.saveColors(userColors);
       updateSettingsLabels();
       updateIgnPreview();
-      TeamUI.renderSlots();
-      TeamUI.updateUI();
+      if (typeof IndexUI !== "undefined") IndexUI.render();
       InventoryUI.renderItems();
       InventoryUI.updateUI();
       ClanBattleUI.render();
@@ -96,7 +95,6 @@ function toggleNitro() {
   isNitro = !isNitro;
   StorageManager.saveNitro(isNitro);
   updateNitroButtons();
-  TeamUI.updateUI();
   InventoryUI.updateUI();
   ClanBattleUI.updateUI();
 }
@@ -108,7 +106,6 @@ ignInput.addEventListener("input", () => {
   userIgn = ignInput.value;
   StorageManager.saveIgn(userIgn);
   updateIgnPreview();
-  TeamUI.updateUI();
   InventoryUI.updateUI();
 });
 
@@ -136,8 +133,7 @@ document.getElementById("btnResetColors").onclick = () => {
   StorageManager.saveColors(userColors);
   initSettings();
   updateIgnPreview();
-  TeamUI.renderSlots();
-  TeamUI.updateUI();
+  if (typeof IndexUI !== "undefined") IndexUI.render();
   InventoryUI.renderItems();
   InventoryUI.updateUI();
   ClanBattleUI.render();
@@ -153,7 +149,6 @@ document.getElementById("btnResetAllData").onclick = () => {
 
 function updateRoleTagButtons() {
   const buttons = [
-    document.getElementById("teamRoleTagBtn"), 
     document.getElementById("invRoleTagBtnTop"), 
     document.getElementById("invRoleTagBtnBottom"), 
     document.getElementById("cbRoleTagBtnTop"), 
@@ -170,18 +165,16 @@ function toggleRoleTags() {
   includeRoleTags = !includeRoleTags;
   StorageManager.saveIncludeRoleTags(includeRoleTags);
   updateRoleTagButtons();
-  TeamUI.updateUI();
   InventoryUI.updateUI();
   ClanBattleUI.updateUI();
 }
 
-document.getElementById("teamRoleTagBtn").onclick = toggleRoleTags;
 document.getElementById("invRoleTagBtnTop").onclick = toggleRoleTags;
 document.getElementById("invRoleTagBtnBottom").onclick = toggleRoleTags;
 document.getElementById("cbRoleTagBtnTop").onclick = toggleRoleTags;
 document.getElementById("cbRoleTagBtnBottom").onclick = toggleRoleTags;
 
 initSettings();
-TeamUI.init();
 InventoryUI.init();
+IndexUI.init();
 ClanBattleUI.init();

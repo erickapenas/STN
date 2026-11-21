@@ -111,19 +111,25 @@ const CanvasManager = {
 
     const renderCard = (item, isOwned, data, tier) => {
       const currentLvl = isOwned ? data.lvl : 0;
-      const isMax = isOwned && currentLvl >= item.max;
+      const isEvo = isOwned && !!item.canEvo && currentLvl > item.max;
+      const isMax = isOwned && !isEvo && currentLvl >= item.max;
       const roleColor = getAnsiHex(colors[item.role] || "37");
       const itemColor = getAnsiHex(colors[item.rarity] || "37");
+      const borderColor = isEvo ? "#a855f7" : (isOwned ? itemColor : "#262c3f");
+      const cardGlow = isEvo ? "0 0 16px rgba(168,85,247,0.65)" : (isOwned ? `0 0 10px ${itemColor}33` : "none");
+      const cardBg = isEvo ? "#19112b" : "#10121b";
       const roleHtml = includeRoleTag ? `<div style="font-size:0.68rem; font-weight:800; color:${roleColor}; text-align:center; margin-bottom:4px; font-family:'Consolas', monospace;">[${item.role}]</div>` : '';
 
       let levelBadgeHtml = isOwned
-        ? (isMax
+        ? (isEvo
+            ? `<div style="background:linear-gradient(135deg,#7e22ce,#a855f7); color:#ffffff; font-weight:900; font-size:0.78rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; box-shadow:0 0 10px rgba(168,85,247,0.6);">⚡ EVO</div>`
+            : isMax
             ? `<div style="background:#15803d; color:#ffffff; font-weight:900; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; box-shadow:0 0 8px rgba(34,197,94,0.45);">MAX (${currentLvl}/${item.max})</div>`
             : `<div style="background:#1e2436; color:#e2e8f0; font-weight:800; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; border:1px solid #333a4d;">Lvl ${currentLvl}/${item.max}</div>`)
         : `<div style="background:#181b26; color:#64748b; font-weight:700; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace;">Not Owned</div>`;
 
       return `
-        <div style="width:130px; background:#10121b; border:5px solid ${isOwned ? itemColor : '#262c3f'}; border-radius:10px; padding:10px 8px; box-sizing:border-box; opacity:${isOwned ? '1' : '0.35'}; filter:${isOwned ? 'none' : 'grayscale(1)'}; box-shadow:${isOwned ? '0 0 10px ' + itemColor + '33' : 'none'}; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="width:130px; background:${cardBg}; border:5px solid ${borderColor}; border-radius:10px; padding:10px 8px; box-sizing:border-box; opacity:${isOwned ? '1' : '0.35'}; filter:${isOwned ? 'none' : 'grayscale(1)'}; box-shadow:${cardGlow}; display:flex; flex-direction:column; justify-content:space-between;">
           ${roleHtml}
           <div style="width:68px; height:68px; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
             <img src="${item.img}" alt="${escapeXml(item.name)}" style="width:100%; height:100%; object-fit:contain; display:block;">

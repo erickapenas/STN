@@ -82,7 +82,6 @@ const ClanBattleUI = {
       StorageManager.saveIncludeRoleTags(this.includeRoleTags);
       this.updateRoleTagButtons();
       this.updateUI();
-      if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
       if (typeof InventoryUI !== 'undefined') InventoryUI.updateUI();
     };
 

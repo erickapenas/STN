@@ -1205,6 +1205,217 @@ select option {
   border: 1px solid rgba(34, 197, 94, 0.36);
 }
 
+.inv-item.owned.evo {
+  background: linear-gradient(135deg, rgba(126, 34, 206, 0.22), rgba(168, 85, 247, 0.14));
+  border: 1.5px solid #a855f7;
+  box-shadow: 0 0 18px rgba(168, 85, 247, 0.35), 0 0 0 1px rgba(192, 132, 252, 0.25) inset;
+}
+
+.inv-item.owned.evo .inv-thumb {
+  border-color: #a855f7;
+  box-shadow: 0 0 12px rgba(168, 85, 247, 0.45);
+}
+
+.inv-item.owned.evo select {
+  border-color: #a855f7;
+  color: #e9d5ff;
+  background: rgba(88, 28, 135, 0.45);
+}
+
+/* =========================================================
+   INDEX CODEX TAB (TURRETS, PETS, ZOMBIES, BOSSES)
+   ========================================================= */
+.index-header-bar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 24px;
+}
+
+.index-subnav {
+  display: flex;
+  gap: 8px;
+  padding: 5px;
+  background: rgba(6, 10, 22, 0.68);
+  border: 1px solid var(--border);
+  border-radius: 13px;
+  flex-wrap: wrap;
+}
+
+.index-sub-btn {
+  flex: 1 1 130px;
+  padding: 11px 16px;
+  background: transparent;
+  border: 1px solid transparent;
+  color: var(--text-muted);
+  border-radius: 9px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.22s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.index-sub-btn:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
+}
+
+.index-sub-btn.active {
+  background: linear-gradient(135deg, #2563eb 0%, #3b82f6 100%);
+  border-color: rgba(147, 197, 253, 0.45);
+  color: #ffffff;
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4), 0 1px 0 rgba(255, 255, 255, 0.22) inset;
+}
+
+.index-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.index-search {
+  flex: 1;
+  min-width: 220px;
+}
+
+.index-tier-count {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.index-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(158px, 1fr));
+  gap: 13px;
+}
+
+.index-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 12px;
+  border-radius: 14px;
+  background: rgba(8, 13, 27, 0.84);
+  border: 2px solid color-mix(in srgb, var(--rarity-color, #94a3b8) 42%, transparent);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.34);
+  transition: transform 0.22s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+  text-align: center;
+}
+
+.index-card:hover {
+  transform: translateY(-4px) scale(1.015);
+  border-color: var(--rarity-color, #fbbf24);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.48), 0 0 20px color-mix(in srgb, var(--rarity-color, #fbbf24) 28%, transparent);
+}
+
+.index-card.is-evo {
+  background: linear-gradient(180deg, rgba(88, 28, 135, 0.28), rgba(14, 16, 34, 0.92));
+  border-color: #a855f7;
+  box-shadow: 0 0 22px rgba(168, 85, 247, 0.34);
+}
+
+.index-thumb {
+  width: 74px;
+  height: 74px;
+  border-radius: 12px;
+  background: radial-gradient(circle at center, rgba(30, 41, 59, 0.72), rgba(5, 8, 18, 0.95));
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px;
+}
+
+.index-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 5px 10px rgba(0, 0, 0, 0.55));
+}
+
+.index-thumb-emoji {
+  font-size: 2.2rem;
+}
+
+.index-card-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  line-height: 1.15;
+}
+
+.index-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.index-role-tag {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  font-weight: 700;
+}
+
+.index-status-row {
+  width: 100%;
+  margin-top: auto;
+}
+
+.index-pill {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+.index-pill-evo {
+  background: rgba(168, 85, 247, 0.22);
+  border: 1px solid rgba(192, 132, 252, 0.55);
+  color: #e9d5ff;
+}
+
+.index-pill-owned {
+  background: rgba(34, 197, 94, 0.18);
+  border: 1px solid rgba(74, 222, 128, 0.4);
+  color: #86efac;
+}
+
+.index-pill-owned-evo {
+  background: linear-gradient(135deg, #7e22ce, #a855f7);
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(168, 85, 247, 0.5);
+}
+
+.index-pill-locked {
+  background: rgba(30, 41, 59, 0.75);
+  border: 1px solid rgba(148, 163, 184, 0.2);
+  color: #94a3b8;
+}
+
+.index-trait {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.index-empty {
+  text-align: center;
+  padding: 32px 16px;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
 .inv-status-box {
   width: 28px;
   height: 28px;

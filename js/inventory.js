@@ -56,7 +56,6 @@ const InventoryUI = {
       StorageManager.saveIncludeRoleTags(this.includeRoleTags);
       this.updateRoleTagButtons();
       this.updateUI();
-      if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
       if (typeof ClanBattleUI !== 'undefined') ClanBattleUI.updateUI();
     };
 
@@ -106,13 +105,13 @@ const InventoryUI = {
       ITEMS.forEach(it => { this.inv[it.name].owned = true; });
       this.renderItems();
       this.updateUI();
-      if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
+      if (typeof IndexUI !== 'undefined') IndexUI.render();
     };
     document.getElementById("btnInvDeselectAll").onclick = () => {
       ITEMS.forEach(it => { this.inv[it.name].owned = false; });
       this.renderItems();
       this.updateUI();
-      if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
+      if (typeof IndexUI !== 'undefined') IndexUI.render();
     };
     document.getElementById("btnInvMaxAll").onclick = () => {
       ITEMS.forEach(it => {
@@ -121,7 +120,7 @@ const InventoryUI = {
       });
       this.renderItems();
       this.updateUI();
-      if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
+      if (typeof IndexUI !== 'undefined') IndexUI.render();
     };
   },
 
@@ -131,19 +130,21 @@ const InventoryUI = {
 
     const renderCard = (it) => {
       const itemState = this.inv[it.name];
+      const isEvoState = () => !!(itemState.owned && it.canEvo && itemState.lvl > it.max);
+
       const card = document.createElement("div");
-      card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}`;
+      card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
 
       const chkBox = document.createElement("div");
       chkBox.className = `inv-status-box ${itemState.owned ? 'checked' : 'unchecked'}`;
       chkBox.textContent = itemState.owned ? "✓" : "✕";
       chkBox.onclick = () => {
         itemState.owned = !itemState.owned;
-        card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}`;
+        card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
         chkBox.className = `inv-status-box ${itemState.owned ? 'checked' : 'unchecked'}`;
         chkBox.textContent = itemState.owned ? "✓" : "✕";
         this.updateUI();
-        if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
+        if (typeof IndexUI !== 'undefined') IndexUI.render();
       };
 
       const thumb = document.createElement("div");
@@ -166,10 +167,18 @@ const InventoryUI = {
         if (itemState.lvl === l) opt.selected = true;
         sel.appendChild(opt);
       }
+      if (it.canEvo) {
+        const evoOpt = document.createElement("option");
+        evoOpt.value = it.max + 1;
+        evoOpt.textContent = "⚡ EVO";
+        if (itemState.lvl > it.max) evoOpt.selected = true;
+        sel.appendChild(evoOpt);
+      }
       sel.onchange = () => {
         itemState.lvl = parseInt(sel.value, 10);
+        card.className = `inv-item ${itemState.owned ? 'owned' : 'not-owned'}${isEvoState() ? ' evo' : ''}`;
         this.updateUI();
-        if (typeof TeamUI !== 'undefined') TeamUI.renderSlots();
+        if (typeof IndexUI !== 'undefined') IndexUI.render();
       };
 
       card.appendChild(chkBox);

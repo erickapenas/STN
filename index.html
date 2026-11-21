@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=4.1">
+  <link rel="stylesheet" href="style.css?v=5.0">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -56,7 +56,7 @@
     <nav class="nav-tabs" id="mainNavTabs">
       <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
       <button class="tab-btn active" data-tab="inventoryTab">🎒 Inventory</button>
-      <button class="tab-btn" data-tab="teamTab">👥 Team Setup</button>
+      <button class="tab-btn" data-tab="indexTab">📖 Index</button>
       <button class="tab-btn" data-tab="clanBattleTab">⚔️ Clan Battle</button>
       <button class="tab-btn" data-tab="settingsTab">⚙️ Settings</button>
     </nav>
@@ -120,60 +120,22 @@
     </section>
   </main>
 
-  <main id="teamTab" class="tab-content">
+  <main id="indexTab" class="tab-content">
     <section class="card">
-      <div class="loadout-nav">
-        <button type="button" class="loadout-tab-btn active" data-loadout="0">Loadout 1</button>
-        <button type="button" class="loadout-tab-btn" data-loadout="1">Loadout 2</button>
-        <button type="button" class="loadout-tab-btn" data-loadout="2">Loadout 3</button>
-      </div>
-
-      <div class="header-row">
-        <div class="header-inputs-col">
-          <div class="highlight-field-wrap">
-            <label for="teamHeadline">✏️ Discord Headline / Title</label>
-            <input type="text" id="teamHeadline" value="Looking for a team to farm Impossible" placeholder="Discord title / headline...">
-          </div>
-          <div class="sub-header-row">
-            <div class="highlight-field-wrap">
-              <label for="teamBanner">✏️ Section Subtitle / Banner</label>
-              <input type="text" id="teamBanner" value="=== MY FIRST SETUP ===" placeholder="Banner text...">
-            </div>
-            <div class="highlight-field-wrap">
-              <label for="teamSubtitle">✏️ Custom Loadout Subtitle (Optional)</label>
-              <input type="text" id="teamSubtitle" value="" placeholder="e.g. My Support Team...">
-            </div>
-            <button id="vipToggleBtn" class="status-toggle-btn inactive" type="button">⭐ VIP: 4 Slots</button>
-          </div>
+      <div class="index-header-bar">
+        <div class="index-subnav">
+          <button type="button" class="index-sub-btn active" data-index-cat="turrets">🔫 Turrets</button>
+          <button type="button" class="index-sub-btn" data-index-cat="pets">🐾 Pets</button>
+          <button type="button" class="index-sub-btn" data-index-cat="zombies">🧟 Zombies</button>
+          <button type="button" class="index-sub-btn" data-index-cat="bosses">👑 Bosses</button>
+        </div>
+        <div class="index-toolbar">
+          <input type="text" id="indexSearchInput" class="index-search" placeholder="🔍 Search index...">
+          <span id="indexCountBadge" class="char-badge char-ok">0 Total</span>
         </div>
       </div>
 
-      <div id="slotsContainer"></div>
-
-      <div class="card-footer">
-        <span id="teamCharCount" class="char-badge char-ok discord-text-element">Characters: 0 / 2,000</span>
-        <div class="footer-btn-row">
-          <button id="teamRoleTagBtn" class="status-toggle-btn active">🏷️ Role Tags: ON</button>
-          <button class="btn discord-text-element" id="teamCopyBtn">📋 Copy Team Setup for Discord</button>
-        </div>
-        <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-primary-action" id="teamCopyImgBtn">📷 Copy Setup Image for Discord</button>
-          <button class="btn btn-secondary" id="teamDownloadImgBtn">💾 Download Setup Image for Discord</button>
-        </div>
-      </div>
-    </section>
-
-    <section class="card">
-      <div class="discord-text-element">
-        <h2>Discord Text Preview</h2>
-        <div class="preview-headline" id="teamPreviewHeadline">Looking for a team to farm Impossible</div>
-        <pre class="preview-box" id="teamPreview"></pre>
-        <div id="teamPreviewSubtext" class="preview-subtext"></div>
-      </div>
-      
-      <h2 class="preview-section-title">Discord Image Preview</h2>
-      <div id="teamImagePreviewBox" class="preview-image-card"></div>
-      <div id="teamCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
+      <div id="indexContainer"></div>
     </section>
   </main>
 
@@ -366,16 +328,15 @@
   </footer>
 </div>
 
-<script src="js/data.js?v=4.3"></script>
-<script src="js/storage.js?v=4.2"></script>
-<script src="js/ansi.js?v=4.2"></script>
-<script src="js/canvas.js?v=4.1"></script>
-<script src="js/dropdown.js?v=4.1"></script>
-<script src="js/team.js?v=4.1"></script>
-<script src="js/inventory.js?v=4.1"></script>
-<script src="js/clanbattle.js?v=4.1"></script>
-<script src="js/app.js?v=4.1"></script>
-<script src="js/effects.js?v=4.1"></script>
+<script src="js/data.js?v=5.0"></script>
+<script src="js/storage.js?v=5.0"></script>
+<script src="js/ansi.js?v=5.0"></script>
+<script src="js/canvas.js?v=5.0"></script>
+<script src="js/inventory.js?v=5.0"></script>
+<script src="js/index.js?v=5.0"></script>
+<script src="js/clanbattle.js?v=5.0"></script>
+<script src="js/app.js?v=5.0"></script>
+<script src="js/effects.js?v=5.0"></script>
 
 </body>
 </html>

@@ -35,8 +35,9 @@ function formatSetupLine(itemDef, role, lvl, max, colors, isHtml = false, includ
   const itemAnsi = colors[itemDef.rarity] || "37";
 
   const namePadded = itemDef.name.padEnd(PAD_NAME, ' ');
-  const lvlString = `Lvl ${lvl}/${max}`.padEnd(PAD_LVL, ' ');
-  const isMax = lvl >= max;
+  const isEvo = !!(itemDef.canEvo && lvl > max);
+  const lvlString = (isEvo ? `EVO` : `Lvl ${lvl}/${max}`).padEnd(PAD_LVL, ' ');
+  const isMax = !isEvo && lvl >= max;
 
   let rolePrefixHtml = '';
   let rolePrefixAnsi = '';
@@ -52,18 +53,18 @@ function formatSetupLine(itemDef, role, lvl, max, colors, isHtml = false, includ
   }
 
   if (isHtml) {
-    const itemColor = getAnsiHex(itemAnsi);
-    const maxHtml = isMax ? ` <span style="color:#72767d;">(MAX)</span>` : '';
+    const itemColor = isEvo ? "#a855f7" : getAnsiHex(itemAnsi);
+    const maxHtml = isEvo ? ` <span style="color:#a855f7; font-weight:bold;">(EVO)</span>` : (isMax ? ` <span style="color:#72767d;">(MAX)</span>` : '');
     return `${rolePrefixHtml}` +
            `<span style="color:${itemColor}; font-weight:bold;">${namePadded}</span> ` +
            `<span style="color:#ffffff;">───</span> ` +
-           `<span style="color:#ffffff;">${lvlString}</span>${maxHtml}`;
+           `<span style="color:${isEvo ? '#c084fc' : '#ffffff'};">${lvlString}</span>${maxHtml}`;
   } else {
-    const maxAnsi = isMax ? ` ${ESC}[1;30m(MAX)${ESC}[0m` : '';
+    const maxAnsi = isEvo ? ` ${ESC}[1;35m(EVO)${ESC}[0m` : (isMax ? ` ${ESC}[1;30m(MAX)${ESC}[0m` : '');
     return `${rolePrefixAnsi}` +
-           `${ESC}[1;${getAnsiCode(itemAnsi)}m${namePadded}${ESC}[0m ` +
+           `${ESC}[1;${isEvo ? '35' : getAnsiCode(itemAnsi)}m${namePadded}${ESC}[0m ` +
            `${ESC}[1;37m───${ESC}[0m ` +
-           `${ESC}[1;37m${lvlString}${ESC}[0m${maxAnsi}`;
+           `${ESC}[1;${isEvo ? '35' : '37'}m${lvlString}${ESC}[0m${maxAnsi}`;
   }
 }
 
