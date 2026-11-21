@@ -3,18 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Setup & Inventory Generator</title>
-  <link rel="stylesheet" href="style.css?v=2.1">
+  <title>STN Showcase — Setup & Inventory Generator</title>
+  <link rel="icon" type="image/jpeg" href="images/hero-bg.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=3.0">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
 
+<!-- Ambient Background & Interactive Embers -->
+<div class="bg-artwork" id="bgArtwork" aria-hidden="true"></div>
+<div class="bg-vignette" aria-hidden="true"></div>
+<canvas id="emberCanvas" class="ember-canvas" aria-hidden="true"></canvas>
+
 <div class="container">
   <header class="app-header">
-    <h1>
-      <span>🛡️ Setup & Inventory Generator</span>
-    </h1>
-    <nav class="nav-tabs">
+    <div class="hero-banner">
+      <div class="hero-banner-bg" aria-hidden="true"></div>
+      <div class="hero-banner-overlay" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="brand-cluster">
+          <div class="brand-logo" id="brandLogo" title="Survive The Night">
+            <img src="images/hero-bg.jpg" alt="Survive The Night Logo">
+            <span class="brand-logo-shine" aria-hidden="true"></span>
+          </div>
+          <div class="brand-text">
+            <div class="brand-eyebrow">
+              <span class="live-dot"></span>
+              <span>SURVIVE THE NIGHT &bull; ROBLOX</span>
+            </div>
+            <h1>
+              <span class="title-main">Setup &amp; Inventory Generator</span>
+            </h1>
+            <p class="brand-tagline">Build Discord-ready team loadouts, showcase your unit inventory, and recruit for Clan Battles.</p>
+          </div>
+        </div>
+        <div class="hero-badge-group">
+          <div class="hero-stat-pill">
+            <span class="pill-icon">⚡</span>
+            <span>HD Card Export</span>
+          </div>
+          <div class="hero-stat-pill">
+            <span class="pill-icon">🛡️</span>
+            <span>STN Showcase</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="nav-tabs" id="mainNavTabs">
+      <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
       <button class="tab-btn active" data-tab="teamTab">👥 Team Setup</button>
       <button class="tab-btn" data-tab="inventoryTab">🎒 Inventory</button>
       <button class="tab-btn" data-tab="clanBattleTab">⚔️ Clan Battle</button>
@@ -46,7 +86,7 @@
               <label for="teamSubtitle">✏️ Custom Loadout Subtitle (Optional)</label>
               <input type="text" id="teamSubtitle" value="" placeholder="e.g. My Support Team...">
             </div>
-            <button id="vipToggleBtn" class="status-toggle-btn inactive" type="button" style="height: 52px; margin-top: auto;">⭐ VIP: 4 Slots</button>
+            <button id="vipToggleBtn" class="status-toggle-btn inactive" type="button">⭐ VIP: 4 Slots</button>
           </div>
         </div>
       </div>
@@ -60,7 +100,7 @@
           <button class="btn discord-text-element" id="teamCopyBtn">📋 Copy Team Setup for Discord</button>
         </div>
         <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-secondary" id="teamCopyImgBtn">📷 Copy Setup Image for Discord</button>
+          <button class="btn btn-primary-action" id="teamCopyImgBtn">📷 Copy Setup Image for Discord</button>
           <button class="btn btn-secondary" id="teamDownloadImgBtn">💾 Download Setup Image for Discord</button>
         </div>
       </div>
@@ -74,7 +114,7 @@
         <div id="teamPreviewSubtext" class="preview-subtext"></div>
       </div>
       
-      <h2 style="margin-top: 25px;">Discord Image Preview</h2>
+      <h2 class="preview-section-title">Discord Image Preview</h2>
       <div id="teamImagePreviewBox" class="preview-image-card"></div>
       <div id="teamCaptureContainer" style="position: absolute; left: -9999px; top: -9999px;"></div>
     </section>
@@ -106,8 +146,8 @@
             <option value="category">⚔️ Category</option>
           </select>
         </div>
-        <button id="btnInvToggleUnowned" class="status-toggle-btn inactive" style="margin-left:auto; padding:8px 14px; font-size:0.95rem;">👁️ Show Unowned: OFF</button>
-        <button id="invRoleTagBtnTop" class="status-toggle-btn active" style="padding:8px 14px; font-size:0.95rem;">🏷️ Role Tags: ON</button>
+        <button id="btnInvToggleUnowned" class="status-toggle-btn inactive tool-toggle-auto">👁️ Show Unowned: OFF</button>
+        <button id="invRoleTagBtnTop" class="status-toggle-btn active tool-toggle-sm">🏷️ Role Tags: ON</button>
       </div>
 
       <div id="inventoryContainer"></div>
@@ -119,7 +159,7 @@
           <button id="invNitroBtn" class="status-toggle-btn inactive discord-text-element" type="button">🚀 Discord Nitro: OFF (2000)</button>
         </div>
         <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-secondary" id="invCopyImgBtn">📷 Copy Inventory Image for Discord</button>
+          <button class="btn btn-primary-action" id="invCopyImgBtn">📷 Copy Inventory Image for Discord</button>
           <button class="btn btn-secondary" id="invDownloadImgBtn">💾 Download Inventory Image for Discord</button>
         </div>
         <div id="invActionButtons" class="discord-text-element"></div>
@@ -155,7 +195,7 @@
               <label for="cbClanName">✏️ Clan Name (Optional)</label>
               <input type="text" id="cbClanName" placeholder="Leave empty for generic clan recruitment...">
             </div>
-            <div class="highlight-field-wrap" style="max-width: 190px;">
+            <div class="highlight-field-wrap" style="max-width: 210px;">
               <label for="cbPlayersNeeded">👥 Players Needed</label>
               <input type="text" id="cbPlayersNeeded" value="1 - 2 Players" placeholder="e.g. 2 Players...">
             </div>
@@ -174,7 +214,7 @@
             <option value="category">⚔️ Category</option>
           </select>
         </div>
-        <button id="cbRoleTagBtnTop" class="status-toggle-btn active" style="margin-left:auto; padding:8px 14px; font-size:0.95rem;">🏷️ Role Tags: ON</button>
+        <button id="cbRoleTagBtnTop" class="status-toggle-btn active tool-toggle-auto">🏷️ Role Tags: ON</button>
       </div>
 
       <div id="clanBattleContainer"></div>
@@ -186,7 +226,7 @@
           <button id="cbNitroBtn" class="status-toggle-btn inactive discord-text-element" type="button">🚀 Discord Nitro: OFF (2000)</button>
         </div>
         <div class="footer-btn-row" style="margin-top: 8px;">
-          <button class="btn btn-secondary" id="cbCopyImgBtn">📷 Copy Clan Battle Image for Discord</button>
+          <button class="btn btn-primary-action" id="cbCopyImgBtn">📷 Copy Clan Battle Image for Discord</button>
           <button class="btn btn-secondary" id="cbDownloadImgBtn">💾 Download Clan Battle Image for Discord</button>
         </div>
         <div id="cbActionButtons" class="discord-text-element"></div>
@@ -211,11 +251,13 @@
       <p class="section-desc">
         Enter your ingame username. It will appear directly below your banner line in the generated showcase messages.
       </p>
-      <div style="max-width: 480px; margin-bottom: 20px;">
+      <div class="highlight-field-wrap" style="max-width: 520px; margin-bottom: 20px;">
+        <label for="ignInput">🎮 Roblox / Ingame Username</label>
         <input type="text" id="ignInput" placeholder="Your Ingame Name...">
       </div>
-      <div style="font-size: 0.95rem; color: #94a3b8;">
-        Line preview: <code id="ignLinePreview" style="color: #57f287; font-weight: bold;">Ingame Name: (none)</code>
+      <div class="ign-preview-pill">
+        <span class="ign-preview-label">Line preview:</span>
+        <code id="ignLinePreview">Ingame Name: (none)</code>
       </div>
     </section>
   </main>
@@ -226,13 +268,13 @@
       <p class="section-desc">
         Choose whether you want Discord text outputs and text previews displayed. When turned off, all Discord text buttons and previews are hidden.
       </p>
-      <div style="margin-bottom: 15px;">
+      <div style="margin-bottom: 10px;">
         <button id="btnTextOutputToggle" class="status-toggle-btn inactive" type="button">📝 Text Output: OFF</button>
       </div>
     </section>
 
     <section class="card">
-      <h2>Backup & Data Transfer</h2>
+      <h2>Backup &amp; Data Transfer</h2>
       <p class="section-desc">Export all your settings, inventory, loadouts, and levels into a JSON backup file or restore a previous one.</p>
       <div style="display: flex; gap: 12px; flex-wrap: wrap;">
         <button class="btn btn-secondary" id="btnExportData">📤 Export All Data (JSON)</button>
@@ -249,7 +291,7 @@
 
       <div class="settings-grid">
         <div class="settings-group">
-          <h3>Banner, Clan & Ingame Name Colors</h3>
+          <h3>Banner, Clan &amp; Ingame Name Colors</h3>
           <div class="settings-row">
             <label id="lbl_BANNER">=== BANNER / SUBTITLE ===</label>
             <select id="ansi_BANNER" class="setting-select" data-key="BANNER"></select>
@@ -321,6 +363,10 @@
       </div>
     </section>
   </main>
+
+  <footer class="app-footer">
+    <span>⚡ <strong>STN Showcase</strong> &bull; Survive The Night Setup &amp; Inventory Generator</span>
+  </footer>
 </div>
 
 <script src="js/data.js?v=2.1"></script>
@@ -332,6 +378,7 @@
 <script src="js/inventory.js?v=2.1"></script>
 <script src="js/clanbattle.js?v=2.1"></script>
 <script src="js/app.js?v=2.1"></script>
+<script src="js/effects.js?v=3.0"></script>
 
 </body>
 </html>
