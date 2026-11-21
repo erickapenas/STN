@@ -40,5 +40,45 @@ const INDEX_DETAILS = {
       { source: "Pumpkin Chest", chance: "<strong>0.5%</strong> per chest" },
       { source: "Lava Chest",    chance: "<strong>1.25%</strong> per chest" }
     ]
+  },
+
+  "Machine Mortar": {
+    tags: ["DIVINE", "SPLASH"],
+    rapidFire: { multiplier: 3, duration: 5 },
+    summaryStats: [
+      { label: "DAMAGE",     value: "1,000 → 16,000" },
+      { label: "RELOAD",     value: "3s → 0.6s" },
+      { label: "PLACE COST", value: "$20,000" }
+    ],
+    bullets: [
+      "Lobs a shell from <strong>each of its barrels</strong> in turn, and every shell <strong>explodes</strong> on the zombies near where it lands",
+      "When its cooldown is up it goes into <strong>Rapid Fire</strong> and shoots <strong>3x faster for 5 seconds</strong>"
+    ],
+    keyNumbers: [
+      { label: "BARRELS",             value: "<strong>1 → 5</strong>, fired one after another" },
+      { label: "EXPLOSION SIZE",      value: "<strong>15 → 26</strong> studs" },
+      { label: "AT THE EDGE",         value: "<strong>45%</strong> of the damage. Full damage in the middle" },
+      { label: "RAPID FIRE",          value: "<strong>3x</strong> fire speed for <strong>5 seconds</strong>" },
+      { label: "RAPID FIRE COOLDOWN", value: "<strong>30s → 13s</strong>, counted from the end of the burst" },
+      { label: "CASH TO MAX IT",      value: "<strong>$8,500,000</strong> in a match, for all <strong>9 levels</strong>" },
+      { label: "PLACEMENT LIMIT",     value: "<strong>5</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 20000,   damage: "1,000",  reload: "3s",    range: "50", blast: "15", unlockCoins: 0,       barrels: 1, rfCooldown: "30s" },
+      { level: 2, cashCost: 45000,   damage: "1,800",  reload: "3s",    range: "53", blast: "16", unlockCoins: 25000,   barrels: 1, rfCooldown: "28s" },
+      { level: 3, cashCost: 95000,   damage: "1,900",  reload: "1.5s",  range: "56", blast: "17", unlockCoins: 60000,   barrels: 2, rfCooldown: "26s" },
+      { level: 4, cashCost: 180000,  damage: "3,200",  reload: "1.5s",  range: "60", blast: "18", unlockCoins: 130000,  barrels: 2, rfCooldown: "24s" },
+      { level: 5, cashCost: 360000,  damage: "3,800",  reload: "1s",    range: "64", blast: "19", unlockCoins: 260000,  barrels: 3, rfCooldown: "21s" },
+      { level: 6, cashCost: 700000,  damage: "5,800",  reload: "1s",    range: "68", blast: "20", unlockCoins: 450000,  barrels: 3, rfCooldown: "19s" },
+      { level: 7, cashCost: 1300000, damage: "8,000",  reload: "0.75s", range: "73", blast: "22", unlockCoins: 775000,  barrels: 4, rfCooldown: "17s" },
+      { level: 8, cashCost: 2300000, damage: "12,000", reload: "0.75s", range: "78", blast: "24", unlockCoins: 1300000, barrels: 4, rfCooldown: "15s" },
+      { level: 9, cashCost: 3500000, damage: "16,000", reload: "0.6s",  range: "83", blast: "26", unlockCoins: 2000000, barrels: 5, rfCooldown: "13s" }
+    ],
+    whereToGet: [
+      { source: "Legendary Chest", chance: "<strong>0.1%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>1%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>1%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>2.5%</strong> per chest" }
+    ]
   }
 };

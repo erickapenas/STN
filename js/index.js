@@ -123,13 +123,19 @@ const IndexUI = {
       };
       const bossMult = details.bossMultiplier || 1;
       const hasBossBonus = bossMult > 1;
+      const rfConfig = details.rapidFire || null;
+      const hasRapidFire = !!(rfConfig && rfConfig.multiplier > 1);
+      const hasBlast = levels.some(lv => lv.blast !== undefined);
+      const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
         const dps = rel > 0 ? dmg / rel : 0;
         const bossDps = dps * bossMult;
-        return { ...lv, dps, bossDps };
+        const rfDps = hasRapidFire ? dps * rfConfig.multiplier : 0;
+        const rfBurstDmg = hasRapidFire ? rfDps * (rfConfig.duration || 5) : 0;
+        return { ...lv, dps, bossDps, rfDps, rfBurstDmg };
       });
 
       const firstLv = levelsWithDps[0];
@@ -144,7 +150,7 @@ const IndexUI = {
         `;
       }
 
-      // Key Numbers (injecting TOTAL DPS, TOTAL DPS (BOSS), and COINS TO MAX IT)
+      // Key Numbers (injecting TOTAL DPS, TOTAL DPS (BOSS) or RAPID FIRE, and COINS TO MAX IT)
       const keyNumbersList = [...(details.keyNumbers || [])];
       if (maxLv && maxLv.dps > 0) {
         const dpsRows = [
@@ -159,6 +165,13 @@ const IndexUI = {
           dpsRows.push({
             label: "TOTAL DPS (BOSS)",
             value: `<strong>${formatDps(maxLv.bossDps)} DPS</strong> at Max Level (+${pct}%) <span style="color:#94a3b8;">(${formatDps(firstLv.bossDps)} → ${formatDps(maxLv.bossDps)})</span>`,
+            highlight: true
+          });
+        }
+        if (hasRapidFire) {
+          dpsRows.push({
+            label: `RAPID FIRE (${rfConfig.multiplier}x / ${rfConfig.duration}s)`,
+            value: `<strong>${formatDps(maxLv.rfDps)} DPS</strong> (<strong>${formatDps(maxLv.rfBurstDmg)}</strong> dmg in ${rfConfig.duration}s) <span style="color:#94a3b8;">(${formatDps(firstLv.rfDps)} → ${formatDps(maxLv.rfDps)})</span>`,
             highlight: true
           });
         }
@@ -210,7 +223,12 @@ const IndexUI = {
       // Every Level Table
       if (levelsWithDps.length > 0) {
         const showDpsCols = levelsWithDps.some(lv => lv.dps > 0);
-        const totalColSpan = 3 + (showDpsCols ? 1 : 0) + (showDpsCols && hasBossBonus ? 1 : 0);
+        const totalColSpan =
+          3 +
+          (showDpsCols ? 1 : 0) +
+          (showDpsCols && hasBossBonus ? 1 : 0) +
+          (showDpsCols && hasRapidFire ? 1 : 0) +
+          (hasBlast ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -228,7 +246,9 @@ const IndexUI = {
                     <th>RELOAD</th>
                     ${showDpsCols ? "<th>TOTAL DPS</th>" : ""}
                     ${showDpsCols && hasBossBonus ? "<th>BOSS DPS</th>" : ""}
+                    ${showDpsCols && hasRapidFire ? `<th>RAPID FIRE (${rfConfig.duration}s)</th>` : ""}
                     <th>RANGE</th>
+                    ${hasBlast ? "<th>BLAST</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -241,7 +261,9 @@ const IndexUI = {
                       <td>${escapeXml(lv.reload)}</td>
                       ${showDpsCols ? `<td style="color:#60a5fa;">${formatDps(lv.dps)}</td>` : ""}
                       ${showDpsCols && hasBossBonus ? `<td style="color:#fbbf24;">${formatDps(lv.bossDps)}</td>` : ""}
+                      ${showDpsCols && hasRapidFire ? `<td style="color:#fbbf24;" title="${formatDps(lv.rfDps)} DPS × ${rfConfig.duration}s">${formatDps(lv.rfDps)}/s <small style="color:#94a3b8;">(${formatDps(lv.rfBurstDmg)})</small></td>` : ""}
                       <td>${escapeXml(lv.range)}</td>
+                      ${hasBlast ? `<td>${escapeXml(lv.blast)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
@@ -254,6 +276,35 @@ const IndexUI = {
                     <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
                   </tr>
                 </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Barrels & Rapid Fire Cooldown Table (when available)
+      if (hasBarrelsTable) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-title">BARRELS AND RAPID FIRE BY LEVEL</div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LEVEL</th>
+                    <th>BARRELS</th>
+                    <th>RAPID FIRE COOLDOWN</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>${lv.barrels}</td>
+                      <td style="color:#fbbf24;">${escapeXml(lv.rfCooldown)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
               </table>
             </div>
           </div>
