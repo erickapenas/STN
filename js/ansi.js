@@ -5,8 +5,8 @@ const PAD_HAVE = 16;
 const PAD_NEED = 8;
 const ESC = "\u001b";
 
-const PROMO_FOOTER_RAW = "-# ⚡ Generated with [STN Showcase](https://erickapenas.github.io/erick.github.io/)";
-const PROMO_FOOTER_HTML = `⚡ Generated with <a href="https://erickapenas.github.io/erick.github.io/" target="_blank" rel="noopener">STN Showcase</a>`;
+const PROMO_FOOTER_RAW = "-# ⚡ Generated with [STN Showcase](https://erickapenas.github.io/STN/)";
+const PROMO_FOOTER_HTML = `⚡ Generated with <a href="https://erickapenas.github.io/STN/" target="_blank" rel="noopener">STN Showcase</a>`;
 
 function getAnsiHex(code) {
   const found = ANSI_OPTIONS.find(o => o.code === code);

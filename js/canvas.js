@@ -90,7 +90,7 @@ const CanvasManager = {
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
           <span>⚡ Generated with STN Showcase</span>
-          <span>erickapenas.github.io/erick.github.io</span>
+          <span>erickapenas.github.io/STN</span>
         </div>
       </div>
     `;
@@ -217,7 +217,7 @@ const CanvasManager = {
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
           <span>⚡ Generated with STN Showcase</span>
-          <span>erickapenas.github.io/erick.github.io</span>
+          <span>erickapenas.github.io/STN</span>
         </div>
       </div>
     `;
@@ -285,7 +285,7 @@ const CanvasManager = {
 
         <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
           <span>⚡ Generated with STN Showcase</span>
-          <span>erickapenas.github.io/erick.github.io</span>
+          <span>erickapenas.github.io/STN</span>
         </div>
       </div>
     `;
