@@ -70,7 +70,7 @@ const ITEMS = [
   { name: "Void Farm",      role: "FARM",    max: 8,  rarity: "legendary", hex: "#f59e0b", img: "images/VoidFarm.png",      canEvo: true },
   { name: "Vault",          role: "FARM",    max: 8,  rarity: "epic",      hex: "#a855f7", img: "images/Vault.png" },
   { name: "Mining Cave",    role: "FARM",    max: 8,  rarity: "rare",      hex: "#38bdf8", img: "images/MiningCave.png" },
-  { name: "Money Printer",  role: "FARM",    max: 8,  rarity: "common",    hex: "#22c55e", img: "images/MoneyPrinter.png",  canEvo: true },
+  { name: "Money Printer",  role: "FARM",    max: 8,  rarity: "rare",      hex: "#38bdf8", img: "images/MoneyPrinter.png",  canEvo: true },
   { name: "Farm",           role: "FARM",    max: 8,  rarity: "common",    hex: "#22c55e", img: "images/Farm.png" },
 
   { name: "Ghostie",        role: "PET",     max: 5,  rarity: "exclusive", hex: "#f97316", img: "images/Ghostie.png" },
