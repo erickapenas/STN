@@ -1,12 +1,13 @@
 const ANSI_OPTIONS = [
-  { code: "30", name: "Dark Gray (30)", hex: "#72767d" },
-  { code: "31", name: "Red (31)",       hex: "#ed4245" },
-  { code: "32", name: "Green (32)",     hex: "#57f287" },
-  { code: "33", name: "Yellow (33)",    hex: "#fee75c" },
-  { code: "34", name: "Blue (34)",      hex: "#5865f2" },
-  { code: "35", name: "Magenta (35)",   hex: "#eb459e" },
-  { code: "36", name: "Cyan (36)",      hex: "#00ffff" },
-  { code: "37", name: "White (37)",     hex: "#ffffff" }
+  { code: "30",     name: "Dark Gray (30)", hex: "#72767d", ansi: "30" },
+  { code: "31",     name: "Red (31)",       hex: "#ed4245", ansi: "31" },
+  { code: "orange", name: "Orange",         hex: "#f97316", ansi: "33" },
+  { code: "32",     name: "Green (32)",     hex: "#57f287", ansi: "32" },
+  { code: "33",     name: "Yellow (33)",    hex: "#fee75c", ansi: "33" },
+  { code: "34",     name: "Blue (34)",      hex: "#5865f2", ansi: "34" },
+  { code: "35",     name: "Magenta (35)",   hex: "#eb459e", ansi: "35" },
+  { code: "36",     name: "Cyan (36)",      hex: "#00ffff", ansi: "36" },
+  { code: "37",     name: "White (37)",     hex: "#ffffff", ansi: "37" }
 ];
 
 const DEFAULT_COLORS = {
@@ -17,7 +18,7 @@ const DEFAULT_COLORS = {
   SUPPORT: "32",
   FARM: "33",
   PET: "34",
-  exclusive: "33",
+  exclusive: "orange",
   divine: "37",
   legendary: "33",
   mythic: "31",
@@ -40,6 +41,9 @@ const ITEMS = [
   { name: "Scarecrow",      role: "DAMAGE", max: 8, rarity: "exclusive", hex: "#f97316", img: "images/Scarecrow.png" },
   { name: "Juggernaut",     role: "DAMAGE", max: 9, rarity: "divine",    hex: "#ffffff", img: "images/Juggernaut.png" },
   { name: "Machine Mortar", role: "DAMAGE", max: 9, rarity: "divine",    hex: "#ffffff", img: "images/MortarMachine.png" },
+  { name: "Crusher",        role: "DAMAGE", max: 9, rarity: "divine",    hex: "#ffffff", img: "images/Crusher.png" },
+  { name: "Golem Forge",    role: "DAMAGE", max: 9, rarity: "divine",    hex: "#ffffff", img: "images/GolemForge.png" },
+  { name: "Drone Hangar",   role: "DAMAGE", max: 9, rarity: "divine",    hex: "#ffffff", img: "images/DroneHangar.png" },
   { name: "World Ender",    role: "DAMAGE", max: 8, rarity: "legendary", hex: "#f59e0b", img: "images/WorldEnder.png" },
   { name: "Samurai",        role: "DAMAGE", max: 8, rarity: "legendary", hex: "#f59e0b", img: "images/Samurai.png" },
   { name: "Railgun",        role: "DAMAGE", max: 8, rarity: "legendary", hex: "#f59e0b", img: "images/Railgun.png" },
@@ -47,9 +51,11 @@ const ITEMS = [
   { name: "Ice Turret",     role: "DAMAGE", max: 8, rarity: "legendary", hex: "#f59e0b", img: "images/IceTurret.png" },
   { name: "Rocketeer",      role: "DAMAGE", max: 8, rarity: "epic",      hex: "#a855f7", img: "images/Rocketeer.png" },
   { name: "Tesla",          role: "DAMAGE", max: 8, rarity: "epic",      hex: "#a855f7", img: "images/Tesla.png" },
+  { name: "Corn Popper",    role: "DAMAGE", max: 8, rarity: "epic",      hex: "#a855f7", img: "images/CornPopper.png" },
   { name: "Toxic Turret",   role: "DAMAGE", max: 8, rarity: "mythic",    hex: "#ef4444", img: "images/ToxicTurret.png" },
   { name: "Fire Spitter",   role: "DAMAGE", max: 8, rarity: "mythic",    hex: "#ef4444", img: "images/FireSpitter.png" },
   { name: "Ballista",       role: "DAMAGE", max: 8, rarity: "mythic",    hex: "#ef4444", img: "images/Ballista.png" },
+  { name: "Pie Launcher",   role: "DAMAGE", max: 8, rarity: "mythic",    hex: "#ef4444", img: "images/PieLauncher.png" },
   { name: "Mortar",         role: "DAMAGE", max: 8, rarity: "rare",      hex: "#38bdf8", img: "images/Mortar.png" },
   { name: "Flamethrower",   role: "DAMAGE", max: 8, rarity: "rare",      hex: "#38bdf8", img: "images/Flamethrower.png" },
   { name: "Cannon",         role: "DAMAGE", max: 10, rarity: "rare",     hex: "#38bdf8", img: "images/Cannon.png" },
@@ -63,10 +69,14 @@ const ITEMS = [
   { name: "Vault",          role: "FARM", max: 8, rarity: "epic",      hex: "#a855f7", img: "images/Vault.png" },
   { name: "Mining Cave",    role: "FARM", max: 8, rarity: "rare",      hex: "#38bdf8", img: "images/MiningCave.png" },
 
-  { name: "Ghostie",    role: "PET", max: 5, rarity: "exclusive", hex: "#f97316", img: "images/Ghostie.png" },
-  { name: "Jinx",       role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Jinx.png" },
-  { name: "Unicorn",    role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Unicorn.png" },
-  { name: "Lion",       role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Lion.png" },
+  { name: "Ghostie",       role: "PET", max: 5, rarity: "exclusive", hex: "#f97316", img: "images/Ghostie.png" },
+  { name: "Turkey",        role: "PET", max: 5, rarity: "exclusive", hex: "#f97316", img: "images/Turkey.png" },
+  { name: "Pilgrim Bear",  role: "PET", max: 5, rarity: "exclusive", hex: "#f97316", img: "images/PilgrimBear.png" },
+  { name: "Golden Turkey", role: "PET", max: 5, rarity: "exclusive", hex: "#f97316", img: "images/GoldenTurkey.png" },
+  { name: "Jinx",          role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Jinx.png" },
+  { name: "Unicorn",       role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Unicorn.png" },
+  { name: "Lion",          role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Lion.png" },
+  { name: "Horse",         role: "PET", max: 5, rarity: "divine",    hex: "#ffffff", img: "images/Horse.png" },
   { name: "Dragon",     role: "PET", max: 5, rarity: "legendary", hex: "#f59e0b", img: "images/Dragon.png" },
   { name: "Turtle",     role: "PET", max: 5, rarity: "legendary", hex: "#f59e0b", img: "images/Turtle.png" },
   { name: "Elephant",   role: "PET", max: 5, rarity: "legendary", hex: "#f59e0b", img: "images/Elephant.png" },
@@ -95,7 +105,7 @@ const CATEGORIES = [
   { id: "PET",     title: "🐾 PETS",             cssClass: "cat-pet" }
 ];
 
-const IMAGE_VERSION = "2.1";
+const IMAGE_VERSION = "4.2";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

@@ -13,6 +13,11 @@ function getAnsiHex(code) {
   return found ? found.hex : "#ffffff";
 }
 
+function getAnsiCode(code) {
+  const found = ANSI_OPTIONS.find(o => o.code === code);
+  return found ? (found.ansi || found.code) : (code || "37");
+}
+
 function escapeXml(unsafe) {
   return String(unsafe).replace(/[<>&'"]/g, c => {
     switch (c) {
@@ -42,7 +47,7 @@ function formatSetupLine(itemDef, role, lvl, max, colors, isHtml = false, includ
       const roleColor = getAnsiHex(roleAnsi);
       rolePrefixHtml = `<span style="color:${roleColor}; font-weight:bold;">${roleTag}</span> `;
     } else {
-      rolePrefixAnsi = `${ESC}[1;${roleAnsi}m${roleTag}${ESC}[0m `;
+      rolePrefixAnsi = `${ESC}[1;${getAnsiCode(roleAnsi)}m${roleTag}${ESC}[0m `;
     }
   }
 
@@ -56,7 +61,7 @@ function formatSetupLine(itemDef, role, lvl, max, colors, isHtml = false, includ
   } else {
     const maxAnsi = isMax ? ` ${ESC}[1;30m(MAX)${ESC}[0m` : '';
     return `${rolePrefixAnsi}` +
-           `${ESC}[1;${itemAnsi}m${namePadded}${ESC}[0m ` +
+           `${ESC}[1;${getAnsiCode(itemAnsi)}m${namePadded}${ESC}[0m ` +
            `${ESC}[1;37m───${ESC}[0m ` +
            `${ESC}[1;37m${lvlString}${ESC}[0m${maxAnsi}`;
   }
@@ -100,12 +105,12 @@ function buildTeamMessage(headline, ign, loadouts, count, colors, isHtml = false
         lines.push("");
       }
     } else {
-      lines.push(`${ESC}[1;${bannerAnsi}m${bannerText}${ESC}[0m`);
+      lines.push(`${ESC}[1;${getAnsiCode(bannerAnsi)}m${bannerText}${ESC}[0m`);
       if (subText) {
         lines.push(`${ESC}[1;30m${subText}${ESC}[0m`);
       }
       if (idx === 0 && ign && ign.trim()) {
-        lines.push(`${ESC}[1;${ignAnsi}mIngame Name: ${ign.trim()}${ESC}[0m\n`);
+        lines.push(`${ESC}[1;${getAnsiCode(ignAnsi)}mIngame Name: ${ign.trim()}${ESC}[0m\n`);
       } else {
         lines.push("");
       }
@@ -260,7 +265,7 @@ function chunkClanBattleMessages(headline, bannerText, clanName, playersNeeded, 
     let roleHtml = '';
     if (includeRoleTag) {
       const roleTag = `[${it.role}]`.padEnd(PAD_TAG, ' ');
-      roleRaw = `${ESC}[1;${roleAnsi}m${roleTag}${ESC}[0m `;
+      roleRaw = `${ESC}[1;${getAnsiCode(roleAnsi)}m${roleTag}${ESC}[0m `;
       roleHtml = `<span style="color:${getAnsiHex(roleAnsi)}; font-weight:bold;">${roleTag}</span> `;
     }
 
@@ -270,7 +275,7 @@ function chunkClanBattleMessages(headline, bannerText, clanName, playersNeeded, 
     const lvlStr = `Bring Level ${u.minLvl}+`;
 
     return {
-      raw: `${roleRaw}${ESC}[1;${itemAnsi}m${namePadded}${ESC}[0m ${ESC}[1;37m───${ESC}[0m ${ESC}[1;32m${haveStr}${ESC}[0m ${ESC}[1;37m|${ESC}[0m ${ESC}[1;33m${needStr}${ESC}[0m ${ESC}[1;37m(${lvlStr})${ESC}[0m`,
+      raw: `${roleRaw}${ESC}[1;${getAnsiCode(itemAnsi)}m${namePadded}${ESC}[0m ${ESC}[1;37m───${ESC}[0m ${ESC}[1;32m${haveStr}${ESC}[0m ${ESC}[1;37m|${ESC}[0m ${ESC}[1;33m${needStr}${ESC}[0m ${ESC}[1;37m(${lvlStr})${ESC}[0m`,
       html: `${roleHtml}<span style="color:${getAnsiHex(itemAnsi)}; font-weight:bold;">${namePadded}</span> <span style="color:#ffffff;">───</span> <span style="color:#57f287; font-weight:bold;">${haveStr}</span> <span style="color:#ffffff;">|</span> <span style="color:#fee75c; font-weight:bold;">${needStr}</span> <span style="color:#ffffff;">(${lvlStr})</span>`
     };
   });
