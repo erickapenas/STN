@@ -232,9 +232,34 @@ const StorageManager = {
     localStorage.setItem('td_squad_loadouts', JSON.stringify(players.slice(0, 10)));
   },
 
+  loadClanBuffs() {
+    const defaults = { armory: 0, ammoDepot: 0, watchtower: 0, treasury: 0 };
+    try {
+      const raw = localStorage.getItem('td_clan_buffs');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        Object.keys(defaults).forEach(k => {
+          const val = parseInt(parsed[k], 10);
+          if (!isNaN(val)) defaults[k] = Math.max(0, Math.min(13, val));
+        });
+      }
+    } catch {}
+    return defaults;
+  },
+  saveClanBuffs(buffs) {
+    localStorage.setItem('td_clan_buffs', JSON.stringify(buffs));
+  },
+
+  loadClanBuffsEnabled() {
+    return localStorage.getItem('td_clan_buffs_enabled') === 'true';
+  },
+  saveClanBuffsEnabled(val) {
+    localStorage.setItem('td_clan_buffs_enabled', val ? 'true' : 'false');
+  },
+
   exportAllData() {
     const backup = {
-      version: 6,
+      version: 7,
       timestamp: new Date().toISOString(),
       textOutput: this.loadTextOutput(),
       invSortMode: this.loadInvSortMode(),
@@ -242,6 +267,8 @@ const StorageManager = {
       colors: this.loadColors(),
       loadouts: this.loadLoadouts(),
       squadLoadouts: this.loadSquadLoadouts(),
+      clanBuffs: this.loadClanBuffs(),
+      clanBuffsEnabled: this.loadClanBuffsEnabled(),
       vip: this.loadVip(),
       nitro: this.loadNitro(),
       ign: this.loadIgn(),
@@ -269,6 +296,8 @@ const StorageManager = {
       if (data.colors) this.saveColors(data.colors);
       if (data.loadouts) this.saveLoadouts(data.loadouts);
       if (Array.isArray(data.squadLoadouts)) this.saveSquadLoadouts(data.squadLoadouts);
+      if (data.clanBuffs) this.saveClanBuffs(data.clanBuffs);
+      if (typeof data.clanBuffsEnabled === 'boolean') this.saveClanBuffsEnabled(data.clanBuffsEnabled);
       if (typeof data.vip === 'boolean') this.saveVip(data.vip);
       if (typeof data.nitro === 'boolean') this.saveNitro(data.nitro);
       if (typeof data.ign === 'string') this.saveIgn(data.ign);

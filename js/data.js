@@ -208,7 +208,14 @@ const PET_BUFFS = {
 
 const BUFF_DIMINISHING_FACTOR = 0.6;
 
-const IMAGE_VERSION = "6.0";
+const CLAN_BUFF_DEFS = [
+  { key: "armory",     name: "Armory",     stat: "damage",   label: "Damage",    perLevel: 10,  maxLvl: 13, icon: "⚔️" },
+  { key: "ammoDepot",  name: "Ammo Depot", stat: "firerate", label: "Fire Rate", perLevel: 8,   maxLvl: 13, icon: "⚡" },
+  { key: "watchtower", name: "Watchtower", stat: "range",    label: "Range",     perLevel: 3,   maxLvl: 13, icon: "🎯" },
+  { key: "treasury",   name: "Treasury",   stat: "cash",     label: "Cash",      perLevel: 7.5, maxLvl: 13, icon: "💰" }
+];
+
+const IMAGE_VERSION = "6.3";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

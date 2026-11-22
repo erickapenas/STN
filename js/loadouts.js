@@ -1,6 +1,7 @@
 const LoadoutsUI = {
   activeSubView: "squad",
   players: [],
+  clanBuffEnabled: false,
   pickerState: {
     open: false,
     playerIdx: 0,
@@ -12,6 +13,18 @@ const LoadoutsUI = {
 
   init() {
     this.players = StorageManager.loadSquadLoadouts();
+    this.clanBuffEnabled = StorageManager.loadClanBuffsEnabled();
+
+    const clanBuffBtn = document.getElementById("btnToggleClanBuff");
+    if (clanBuffBtn) {
+      clanBuffBtn.onclick = () => {
+        this.clanBuffEnabled = !this.clanBuffEnabled;
+        StorageManager.saveClanBuffsEnabled(this.clanBuffEnabled);
+        this.updateClanBuffButton();
+        this.renderSummary();
+      };
+      this.updateClanBuffButton();
+    }
 
     const subBtns = document.querySelectorAll(".loadouts-sub-btn");
     subBtns.forEach(btn => {
@@ -293,6 +306,13 @@ const LoadoutsUI = {
     }
   },
 
+  updateClanBuffButton() {
+    const btn = document.getElementById("btnToggleClanBuff");
+    if (!btn) return;
+    btn.className = `status-toggle-btn ${this.clanBuffEnabled ? "active" : "inactive"} squad-action-btn`;
+    btn.textContent = this.clanBuffEnabled ? "🏰 Clan Buff: ON" : "🏰 Clan Buff: OFF";
+  },
+
   save() {
     StorageManager.saveSquadLoadouts(this.players);
   },
@@ -383,17 +403,17 @@ const LoadoutsUI = {
       }
     });
 
-    // Apply geometric diminishing returns: base * (0.6 ^ index) per stat
+    // Apply geometric diminishing returns: base * (0.6 ^ index) per stat for pets
     const factor = (typeof BUFF_DIMINISHING_FACTOR !== "undefined") ? BUFF_DIMINISHING_FACTOR : 0.6;
     const buffsSummary = {};
     Object.keys(buffEntriesByStat).forEach(stat => {
       const list = buffEntriesByStat[stat].sort((a, b) => b.base - a.base);
-      let total = 0;
+      let petTotal = 0;
       const steps = [];
       list.forEach((entry, idx) => {
         const mult = Math.pow(factor, idx);
         const eff = entry.base * mult;
-        total += eff;
+        petTotal += eff;
         steps.push({
           petName: entry.petName,
           eff,
@@ -404,11 +424,41 @@ const LoadoutsUI = {
         stat,
         label: list[0].label,
         icon: list[0].icon,
-        count: list.length,
-        total,
+        petCount: list.length,
+        petTotal,
+        clanAdd: 0,
+        clanInfo: null,
+        total: petTotal,
         steps
       };
     });
+
+    // Add Clan Buffs when enabled (Armory, Ammo Depot, Watchtower, Treasury)
+    if (this.clanBuffEnabled && typeof CLAN_BUFF_DEFS !== "undefined") {
+      const clanLevels = StorageManager.loadClanBuffs();
+      CLAN_BUFF_DEFS.forEach(def => {
+        const lvl = clanLevels[def.key] || 0;
+        if (lvl <= 0) return;
+        const addPct = lvl * def.perLevel;
+        if (!buffsSummary[def.stat]) {
+          buffsSummary[def.stat] = {
+            stat: def.stat,
+            label: def.label,
+            icon: def.icon,
+            petCount: 0,
+            petTotal: 0,
+            clanAdd: addPct,
+            clanInfo: `${def.name} Lvl ${lvl}`,
+            total: addPct,
+            steps: []
+          };
+        } else {
+          buffsSummary[def.stat].clanAdd = addPct;
+          buffsSummary[def.stat].clanInfo = `${def.name} Lvl ${lvl}`;
+          buffsSummary[def.stat].total += addPct;
+        }
+      });
+    }
 
     const dmgMult = 1 + ((buffsSummary.damage ? buffsSummary.damage.total : 0) / 100);
     const rateMult = 1 + ((buffsSummary.firerate ? buffsSummary.firerate.total : 0) / 100);
@@ -438,18 +488,25 @@ const LoadoutsUI = {
 
     const buffsHtml = buffList.length > 0
       ? buffList.map(b => {
-          const breakdown = b.steps.map(st => `${this.formatPct(st.eff)}`).join(" + ");
+          const parts = [];
+          if (b.petCount > 0) {
+            const petBreak = b.steps.map(st => `${this.formatPct(st.eff)}`).join(" + ");
+            parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
+          }
+          if (b.clanAdd > 0 && b.clanInfo) {
+            parts.push(`🏰 ${b.clanInfo}: +${this.formatPct(b.clanAdd)}`);
+          }
           return `
-            <div class="squad-buff-card">
+            <div class="squad-buff-card${b.clanAdd > 0 ? " has-clan" : ""}">
               <div class="squad-buff-top">
                 <span class="squad-buff-title">${b.icon} ${escapeXml(b.label)}</span>
                 <span class="squad-buff-total">+${this.formatPct(b.total)}</span>
               </div>
-              <div class="squad-buff-breakdown">${b.count} pet${b.count > 1 ? "s" : ""}: ${breakdown}</div>
+              <div class="squad-buff-breakdown">${parts.join(" • ")}</div>
             </div>
           `;
         }).join("")
-      : `<div class="squad-empty-note">Add pets to players below to calculate stacked buffs (100% → 60% → 36%...).</div>`;
+      : `<div class="squad-empty-note">Add pets to players below or enable <strong>Clan Buff</strong> (configured in Settings) to see stacked buffs.</div>`;
 
     const rosterEntries = Object.values(totals.unitCounts);
     const rosterHtml = rosterEntries.length > 0
@@ -495,7 +552,11 @@ const LoadoutsUI = {
       ${missingNote}
 
       <div class="squad-section-block">
-        <div class="squad-block-title">✨ Active Pet Buffs <span class="squad-decay-tag">60% diminishing returns per duplicate</span></div>
+        <div class="squad-block-title">
+          ✨ Active Buffs
+          <span class="squad-decay-tag">Pets: 60% decay per duplicate</span>
+          ${this.clanBuffEnabled ? `<span class="squad-clan-mode-tag">🏰 Clan Buff ON (Clan Easy / Hard / Crazy / Apocalypse)</span>` : ""}
+        </div>
         <div class="squad-buffs-grid">${buffsHtml}</div>
       </div>
 

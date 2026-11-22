@@ -1,6 +1,7 @@
 let userColors = StorageManager.loadColors();
 let userInventory = StorageManager.loadInventory();
 let userIgn = StorageManager.loadIgn();
+let userClanBuffs = StorageManager.loadClanBuffs();
 let isNitro = StorageManager.loadNitro();
 let includeRoleTags = StorageManager.loadIncludeRoleTags();
 let isTextOutput = StorageManager.loadTextOutput();
@@ -58,6 +59,45 @@ function initSettings() {
     StorageManager.saveTextOutput(isTextOutput);
     updateTextOutputState();
   };
+
+  initClanBuffSettings();
+}
+
+function initClanBuffSettings() {
+  if (typeof CLAN_BUFF_DEFS === "undefined") return;
+  CLAN_BUFF_DEFS.forEach(def => {
+    const sel = document.getElementById(`clanBuff_${def.key}`);
+    const pill = document.getElementById(`clanBuffVal_${def.key}`);
+    if (!sel) return;
+
+    let opts = "";
+    for (let l = 0; l <= def.maxLvl; l++) {
+      const pct = l * def.perLevel;
+      const pctStr = Number.isInteger(pct) ? `${pct}%` : `${Number(pct.toFixed(1))}%`;
+      const label = l === 0
+        ? `Level 0 (OFF)`
+        : `Level ${l}${l === def.maxLvl ? " (MAX)" : ""} — +${pctStr}`;
+      opts += `<option value="${l}" ${userClanBuffs[def.key] === l ? "selected" : ""}>${label}</option>`;
+    }
+    sel.innerHTML = opts;
+
+    const updatePill = () => {
+      if (!pill) return;
+      const lvl = userClanBuffs[def.key] || 0;
+      const pct = lvl * def.perLevel;
+      const pctStr = Number.isInteger(pct) ? `${pct}%` : `${Number(pct.toFixed(1))}%`;
+      pill.textContent = `+${pctStr} ${def.label}`;
+      pill.classList.toggle("is-active", lvl > 0);
+    };
+    updatePill();
+
+    sel.onchange = () => {
+      userClanBuffs[def.key] = parseInt(sel.value, 10) || 0;
+      StorageManager.saveClanBuffs(userClanBuffs);
+      updatePill();
+      if (typeof LoadoutsUI !== "undefined") LoadoutsUI.render();
+    };
+  });
 }
 
 function updateTextOutputState() {

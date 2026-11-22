@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.2">
+  <link rel="stylesheet" href="style.css?v=6.3">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -153,6 +153,7 @@
             <p class="section-desc" style="margin-bottom: 0;">Assign towers &amp; pets for up to 10 players to calculate total units, stacked pet buffs (60% decay), and squad DPS with placement limits.</p>
           </div>
           <div class="squad-top-actions">
+            <button type="button" class="status-toggle-btn inactive squad-action-btn" id="btnToggleClanBuff">🏰 Clan Buff: OFF</button>
             <button type="button" class="btn btn-primary-action squad-action-btn" id="btnAddSquadPlayer">➕ Add Player (1/10)</button>
             <button type="button" class="btn btn-secondary squad-action-btn" id="btnClearSquadLoadouts">🗑️ Clear All</button>
           </div>
@@ -245,6 +246,50 @@
       <div class="ign-preview-pill">
         <span class="ign-preview-label">Line preview:</span>
         <code id="ignLinePreview">Ingame Name: (none)</code>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Clan Buffs</h2>
+      <p class="section-desc">
+        Configure your Clan building levels (up to Level 13). <strong>Note:</strong> Clan Buffs only work in <strong>Clan Easy</strong>, <strong>Clan Hard</strong>, <strong>Clan Crazy</strong>, and <strong>Clan Apocalypse</strong> modes.
+      </p>
+      <div class="clan-buffs-grid">
+        <div class="clan-buff-setting-card">
+          <div class="clan-buff-setting-head">
+            <span class="clan-buff-name">⚔️ Armory</span>
+            <span class="clan-buff-val-pill" id="clanBuffVal_armory">+0% Damage</span>
+          </div>
+          <div class="clan-buff-desc">+10% Damage per level (Max Lvl 13)</div>
+          <select id="clanBuff_armory" class="clan-buff-select" data-clan-key="armory"></select>
+        </div>
+
+        <div class="clan-buff-setting-card">
+          <div class="clan-buff-setting-head">
+            <span class="clan-buff-name">⚡ Ammo Depot</span>
+            <span class="clan-buff-val-pill" id="clanBuffVal_ammoDepot">+0% Fire Rate</span>
+          </div>
+          <div class="clan-buff-desc">+8% Fire Rate per level (Max Lvl 13)</div>
+          <select id="clanBuff_ammoDepot" class="clan-buff-select" data-clan-key="ammoDepot"></select>
+        </div>
+
+        <div class="clan-buff-setting-card">
+          <div class="clan-buff-setting-head">
+            <span class="clan-buff-name">🎯 Watchtower</span>
+            <span class="clan-buff-val-pill" id="clanBuffVal_watchtower">+0% Range</span>
+          </div>
+          <div class="clan-buff-desc">+3% Range per level (Max Lvl 13)</div>
+          <select id="clanBuff_watchtower" class="clan-buff-select" data-clan-key="watchtower"></select>
+        </div>
+
+        <div class="clan-buff-setting-card">
+          <div class="clan-buff-setting-head">
+            <span class="clan-buff-name">💰 Treasury</span>
+            <span class="clan-buff-val-pill" id="clanBuffVal_treasury">+0% Cash</span>
+          </div>
+          <div class="clan-buff-desc">+7.5% Cash boost per level (Max Lvl 13)</div>
+          <select id="clanBuff_treasury" class="clan-buff-select" data-clan-key="treasury"></select>
+        </div>
       </div>
     </section>
 
@@ -390,16 +435,16 @@
   </div>
 </div>
 
-<script src="js/data.js?v=6.0"></script>
+<script src="js/data.js?v=6.3"></script>
 <script src="js/details.js?v=5.6"></script>
-<script src="js/storage.js?v=6.1"></script>
+<script src="js/storage.js?v=6.3"></script>
 <script src="js/ansi.js?v=5.0"></script>
 <script src="js/canvas.js?v=5.0"></script>
 <script src="js/inventory.js?v=5.3"></script>
 <script src="js/index.js?v=5.6"></script>
-<script src="js/loadouts.js?v=6.2"></script>
+<script src="js/loadouts.js?v=6.3"></script>
 <script src="js/clanbattle.js?v=5.0"></script>
-<script src="js/app.js?v=6.0"></script>
+<script src="js/app.js?v=6.3"></script>
 <script src="js/effects.js?v=5.0"></script>
 
 </body>
