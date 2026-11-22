@@ -58,7 +58,7 @@
       <button class="tab-btn active" data-tab="inventoryTab">🎒 Inventory</button>
       <button class="tab-btn" data-tab="indexTab">📖 Index</button>
       <button class="tab-btn" data-tab="clanBattleTab">🛡️ Loadouts</button>
-      <button class="tab-btn" data-tab="doorTab">🚪 Door</button>
+      <button class="tab-btn" data-tab="doorTab">🧮 Calculator</button>
       <button class="tab-btn" data-tab="settingsTab">⚙️ Settings</button>
     </nav>
   </header>
@@ -246,6 +246,12 @@
   </main>
 
   <main id="doorTab" class="tab-content">
+    <div class="index-subnav loadouts-subnav">
+      <button type="button" class="index-sub-btn calc-sub-btn active" data-calc-view="door">🚪 Door</button>
+      <button type="button" class="index-sub-btn calc-sub-btn" data-calc-view="jinx">🔮 Jinx</button>
+    </div>
+
+    <div id="calcDoorPanel" class="sub-panel active">
     <section class="card">
       <div class="squad-top-bar">
         <div>
@@ -301,6 +307,58 @@
       </div>
       <div id="doorLevelsTableContainer" class="detail-table-wrap"></div>
     </section>
+    </div>
+
+    <div id="calcJinxPanel" class="sub-panel">
+      <section class="card">
+        <div class="squad-top-bar">
+          <div>
+            <h2 style="margin-bottom: 4px;">🔮 Jinx Crystal Ball &amp; Luck Calculator</h2>
+            <p class="section-desc" style="margin-bottom: 0;">Each Jinx adds <strong>+20% → +40% Luck</strong> and <strong>+30% Zombie Damage (Curse)</strong> in full (no decay). Jackpot starts at <strong>2%</strong> + <strong>4%</strong> per 100% Luck (max <strong>25%</strong>).</p>
+          </div>
+          <div class="squad-top-actions">
+            <button type="button" class="btn btn-primary-action squad-action-btn" id="btnJinxImportLoadouts">📥 Import from Loadouts</button>
+            <button type="button" class="btn btn-primary-action squad-action-btn" id="btnJinxAdd">➕ Add Jinx</button>
+            <button type="button" class="btn btn-secondary squad-action-btn" id="btnJinxClear">🗑️ Clear</button>
+          </div>
+        </div>
+
+        <div class="door-controls-panel">
+          <div class="door-controls-grid">
+            <div class="door-level-control">
+              <label for="jinxCalcModeSelect">🎮 Select Game Mode</label>
+              <select id="jinxCalcModeSelect" class="squad-mode-select" style="width:100%; max-width:420px;"></select>
+              <div class="door-dps-hint" id="jinxCalcModeHint"></div>
+            </div>
+            <div class="door-dps-control">
+              <label>⚡ Quick Add Jinx (Lvl 5)</label>
+              <div class="door-presets-row" style="margin-top:0;">
+                <button type="button" class="door-preset-btn jinx-preset-btn" data-jinx-count="1">1× Lvl 5</button>
+                <button type="button" class="door-preset-btn jinx-preset-btn" data-jinx-count="3">3× Lvl 5</button>
+                <button type="button" class="door-preset-btn jinx-preset-btn" data-jinx-count="5">5× Lvl 5</button>
+                <button type="button" class="door-preset-btn jinx-preset-btn" data-jinx-count="8">8× Lvl 5</button>
+                <button type="button" class="door-preset-btn jinx-preset-btn" data-jinx-count="11">11× Lvl 5</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="squad-section-block" style="margin-top: 16px;">
+          <div class="squad-block-title">🔮 Equipped Jinx Pets <span class="squad-decay-tag">All add up in full (no decay)</span></div>
+          <div id="jinxCalcPetsList" class="door-equipped-pets"></div>
+        </div>
+
+        <div id="jinxCalcSummaryKpis" class="squad-kpi-grid" style="margin-top: 18px;"></div>
+      </section>
+
+      <section class="card">
+        <div class="detail-section-head" style="margin-bottom: 12px;">
+          <h2 style="margin: 0;">📊 All Modes Comparison (With Your Jinx Setup)</h2>
+          <span class="detail-section-note">SPIN BASE = ONE FULL CLEAR</span>
+        </div>
+        <div id="jinxCalcModesTable" class="detail-table-wrap"></div>
+      </section>
+    </div>
   </main>
 
   <main id="settingsTab" class="tab-content">
@@ -475,13 +533,13 @@
 <script src="js/details.js?v=9.1"></script>
 <script src="js/storage.js?v=8.4"></script>
 <script src="js/ansi.js?v=5.0"></script>
-<script src="js/canvas.js?v=9.2"></script>
+<script src="js/canvas.js?v=9.5"></script>
 <script src="js/inventory.js?v=8.8"></script>
 <script src="js/index.js?v=9.4"></script>
 <script src="js/loadouts.js?v=9.4"></script>
-<script src="js/door.js?v=8.9"></script>
+<script src="js/door.js?v=9.5"></script>
 <script src="js/clanbattle.js?v=8.8"></script>
-<script src="js/app.js?v=8.7"></script>
+<script src="js/app.js?v=9.5"></script>
 <script src="js/effects.js?v=7.6"></script>
 
 </body>

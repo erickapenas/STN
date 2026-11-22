@@ -29,7 +29,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     }
     if (btn.dataset.tab === "doorTab" && typeof DoorUI !== "undefined") {
       DoorUI.renderPetPickerButtons();
-      DoorUI.render();
+      DoorUI.selectSubView(DoorUI.activeSubView || "door");
     }
   });
 });
@@ -275,4 +275,5 @@ InventoryUI.init();
 IndexUI.init();
 LoadoutsUI.init();
 if (typeof DoorUI !== "undefined") DoorUI.init();
+if (typeof JinxCalcUI !== "undefined") JinxCalcUI.init();
 ClanBattleUI.init();

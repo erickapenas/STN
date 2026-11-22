@@ -19,12 +19,19 @@ const MEDICAL_BASE_HEAL_LEVELS = [0.2, 0.35, 0.55, 0.85, 1.3, 2.0]; // % max HP 
 const MEDICAL_BASE_MAX_PLACED = 4;
 
 const DoorUI = {
+  activeSubView: "door",
   targetLevel: 20,
   squadDps: 0,
   pets: [], // [{ name, lvl, placed? }]
 
   init() {
     this.loadState();
+
+    document.querySelectorAll("#doorTab .calc-sub-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        this.selectSubView(btn.dataset.calcView);
+      });
+    });
 
     const lvlInput = document.getElementById("doorTargetLevelInput");
     const lvlRange = document.getElementById("doorTargetLevelRange");
@@ -88,7 +95,24 @@ const DoorUI = {
     }
 
     this.renderPetPickerButtons();
-    this.render();
+    this.selectSubView("door");
+  },
+
+  selectSubView(view) {
+    this.activeSubView = view || "door";
+    document.querySelectorAll("#doorTab .calc-sub-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.calcView === this.activeSubView);
+    });
+    const doorPanel = document.getElementById("calcDoorPanel");
+    const jinxPanel = document.getElementById("calcJinxPanel");
+    if (doorPanel) doorPanel.classList.toggle("active", this.activeSubView === "door");
+    if (jinxPanel) jinxPanel.classList.toggle("active", this.activeSubView === "jinx");
+
+    if (this.activeSubView === "jinx" && typeof JinxCalcUI !== "undefined") {
+      JinxCalcUI.render();
+    } else {
+      this.render();
+    }
   },
 
   loadState() {
@@ -591,5 +615,288 @@ const DoorUI = {
         </table>
       `;
     }
+  }
+};
+
+const JINX_LUCK_LEVELS = [20, 25, 30, 35, 40];
+
+const JinxCalcUI = {
+  modeKey: "crazy",
+  jinxes: [{ lvl: 5 }], // [{ lvl: 1..5 }]
+
+  init() {
+    this.loadState();
+
+    const modeSel = document.getElementById("jinxCalcModeSelect");
+    if (modeSel && typeof JINX_MODES !== "undefined") {
+      modeSel.innerHTML = JINX_MODES.map(m =>
+        `<option value="${m.key}" ${m.key === this.modeKey ? "selected" : ""}>🎮 ${m.name} (Bonus +${m.bonusLuck}% • Max ${m.maxLuck}%)</option>`
+      ).join("");
+      modeSel.onchange = () => {
+        this.modeKey = modeSel.value;
+        this.saveState();
+        this.render();
+      };
+    }
+
+    const addBtn = document.getElementById("btnJinxAdd");
+    if (addBtn) {
+      addBtn.onclick = () => {
+        if (this.jinxes.length >= 20) return;
+        this.jinxes.push({ lvl: 5 });
+        this.saveState();
+        this.render();
+      };
+    }
+
+    const clearBtn = document.getElementById("btnJinxClear");
+    if (clearBtn) {
+      clearBtn.onclick = () => {
+        this.jinxes = [];
+        this.saveState();
+        this.render();
+      };
+    }
+
+    const importBtn = document.getElementById("btnJinxImportLoadouts");
+    if (importBtn) {
+      importBtn.onclick = () => this.importFromLoadouts();
+    }
+
+    document.querySelectorAll(".jinx-preset-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const cnt = Math.max(1, Math.min(20, parseInt(btn.dataset.jinxCount, 10) || 1));
+        this.jinxes = Array.from({ length: cnt }, () => ({ lvl: 5 }));
+        this.saveState();
+        this.render();
+      });
+    });
+
+    this.render();
+  },
+
+  loadState() {
+    try {
+      const raw = localStorage.getItem("td_jinx_calc_v1");
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (parsed && typeof parsed.modeKey === "string") {
+          this.modeKey = parsed.modeKey;
+        }
+        if (parsed && Array.isArray(parsed.jinxes)) {
+          this.jinxes = parsed.jinxes
+            .slice(0, 20)
+            .map(j => ({ lvl: Math.max(1, Math.min(5, parseInt(j && j.lvl, 10) || 5)) }));
+        }
+      }
+    } catch {}
+  },
+
+  saveState() {
+    try {
+      localStorage.setItem("td_jinx_calc_v1", JSON.stringify({
+        modeKey: this.modeKey,
+        jinxes: this.jinxes
+      }));
+    } catch {}
+  },
+
+  importFromLoadouts() {
+    if (typeof LoadoutsUI === "undefined" || !Array.isArray(LoadoutsUI.players)) return;
+    const found = [];
+    LoadoutsUI.players.forEach(p => {
+      const slotCount = p.vip ? 5 : 4;
+      for (let i = 0; i < slotCount; i++) {
+        const s = p.slots[i];
+        if (s && s.item === "Jinx") {
+          found.push({ lvl: Math.max(1, Math.min(5, s.lvl || 5)) });
+        }
+      }
+    });
+    if (LoadoutsUI.selectedMode) {
+      this.modeKey = LoadoutsUI.selectedMode;
+      const modeSel = document.getElementById("jinxCalcModeSelect");
+      if (modeSel) modeSel.value = this.modeKey;
+    }
+    this.jinxes = found.slice(0, 20);
+    this.saveState();
+    this.render();
+  },
+
+  getLuckForLevel(lvl) {
+    const idx = Math.min(Math.max(1, lvl || 1), 5) - 1;
+    return JINX_LUCK_LEVELS[idx];
+  },
+
+  render() {
+    const jinxDef = ITEMS.find(it => it.name === "Jinx");
+    const jinxImg = jinxDef ? jinxDef.img : "";
+    const jinxColor = jinxDef ? getAnsiHex(userColors[jinxDef.rarity] || DEFAULT_COLORS[jinxDef.rarity] || "37") : "#ffffff";
+
+    // Render equipped Jinx chips
+    const list = document.getElementById("jinxCalcPetsList");
+    if (list) {
+      list.innerHTML = "";
+      if (this.jinxes.length === 0) {
+        list.innerHTML = `<div class="squad-empty-note">No Jinx added yet. Click <strong>➕ Add Jinx</strong> or <strong>📥 Import from Loadouts</strong>.</div>`;
+      } else {
+        this.jinxes.forEach((jx, idx) => {
+          const luckVal = this.getLuckForLevel(jx.lvl);
+          const pill = document.createElement("div");
+          pill.className = "door-pet-chip";
+          pill.style.borderColor = "rgba(168, 85, 247, 0.55)";
+
+          const img = document.createElement("img");
+          img.src = jinxImg;
+          img.alt = "Jinx";
+          img.onerror = () => { img.style.display = "none"; };
+
+          const nameEl = document.createElement("span");
+          nameEl.className = "door-pet-chip-name";
+          nameEl.style.color = jinxColor;
+          nameEl.textContent = `Jinx #${idx + 1}`;
+
+          const lvlSel = document.createElement("select");
+          lvlSel.className = "door-pet-chip-lvl";
+          for (let l = 1; l <= 5; l++) {
+            const opt = document.createElement("option");
+            opt.value = l;
+            opt.textContent = `Lvl ${l}${l === 5 ? " (MAX)" : ""}`;
+            if (jx.lvl === l) opt.selected = true;
+            lvlSel.appendChild(opt);
+          }
+          lvlSel.onchange = () => {
+            this.jinxes[idx].lvl = parseInt(lvlSel.value, 10) || 5;
+            this.saveState();
+            this.render();
+          };
+
+          const valEl = document.createElement("span");
+          valEl.className = "door-pet-chip-val";
+          valEl.style.color = "#c084fc";
+          valEl.textContent = `🔮 +${luckVal}% • 💀 +30%`;
+
+          const rmBtn = document.createElement("button");
+          rmBtn.type = "button";
+          rmBtn.className = "squad-slot-remove-btn";
+          rmBtn.title = "Remove Jinx";
+          rmBtn.textContent = "✕";
+          rmBtn.onclick = () => {
+            this.jinxes.splice(idx, 1);
+            this.saveState();
+            this.render();
+          };
+
+          pill.appendChild(img);
+          pill.appendChild(nameEl);
+          pill.appendChild(lvlSel);
+          pill.appendChild(valEl);
+          pill.appendChild(rmBtn);
+          list.appendChild(pill);
+        });
+      }
+    }
+
+    const mode = (typeof JINX_MODES !== "undefined" && JINX_MODES.find(m => m.key === this.modeKey))
+      || { key: "crazy", name: "Crazy", bonusLuck: 60, maxLuck: 500, baseCoins: 31720, baseGems: 406 };
+
+    const count = this.jinxes.length;
+    const petLuckSum = this.jinxes.reduce((sum, j) => sum + this.getLuckForLevel(j.lvl), 0);
+    const rawLuck = count > 0 ? (mode.bonusLuck + petLuckSum) : 0;
+    const cappedLuck = Math.min(rawLuck, mode.maxLuck);
+    const overCap = Math.max(0, rawLuck - mode.maxLuck);
+    const missingLuck = Math.max(0, mode.maxLuck - rawLuck);
+    const lvl5NeededForCap = count > 0 ? Math.ceil(missingLuck / 40) : Math.ceil(Math.max(0, mode.maxLuck - mode.bonusLuck) / 40);
+    const cursePct = count * 30;
+    const jackpotChance = count > 0 ? Math.min(25, 2 + (cappedLuck / 100) * 4) : 0;
+    const fmtPct = (n) => Number.isInteger(n) ? `${n}%` : `${Number(n.toFixed(2))}%`;
+
+    const hintEl = document.getElementById("jinxCalcModeHint");
+    if (hintEl) {
+      hintEl.innerHTML = `Mode Bonus: <strong>+${mode.bonusLuck}%</strong> • Max Cap: <strong>${mode.maxLuck}%</strong> • Spin Base: <strong>${mode.baseCoins.toLocaleString()} Coins</strong> / <strong>${mode.baseGems.toLocaleString()} Gems</strong>`;
+    }
+
+    const kpiEl = document.getElementById("jinxCalcSummaryKpis");
+    if (kpiEl) {
+      const capSub = count === 0
+        ? `Need ${lvl5NeededForCap}× Lvl 5 Jinx to hit cap`
+        : overCap > 0
+        ? `<span style="color:#fbbf24;">⚠️ +${overCap}% over cap (extra Jinxes only add Curse!)</span>`
+        : missingLuck === 0
+        ? `<span style="color:#4ade80;">✓ Max Luck Cap reached!</span>`
+        : `Need +${missingLuck}% (${lvl5NeededForCap}× Lvl 5) for cap`;
+
+      kpiEl.innerHTML = `
+        <div class="squad-kpi-card">
+          <div class="squad-kpi-label">🔮 Jinx Luck (${escapeXml(mode.name)})</div>
+          <div class="squad-kpi-val" style="color:#c084fc;">${cappedLuck}% <small>/ ${mode.maxLuck}%</small></div>
+          <div class="squad-kpi-sub">Mode +${mode.bonusLuck}% • ${count} Jinx (+${petLuckSum}%)</div>
+          <div class="squad-kpi-sub">${capSub}</div>
+        </div>
+        <div class="squad-kpi-card">
+          <div class="squad-kpi-label">🎰 Jackpot Chance</div>
+          <div class="squad-kpi-val" style="color:#fbbf24;">${fmtPct(jackpotChance)}</div>
+          <div class="squad-kpi-sub">2% base + 4% per 100% Luck (max 25%)</div>
+        </div>
+        <div class="squad-kpi-card">
+          <div class="squad-kpi-label">💀 Total Curse (Zombie DMG)</div>
+          <div class="squad-kpi-val" style="color:#f87171;">+${cursePct}%</div>
+          <div class="squad-kpi-sub">${count} Jinx × +30% Zombie Damage</div>
+        </div>
+        <div class="squad-kpi-card squad-kpi-dps">
+          <div class="squad-kpi-label">🪙 Spin Base / 25× Jackpot</div>
+          <div class="squad-kpi-val">${mode.baseCoins.toLocaleString()} <small>Coins</small></div>
+          <div class="squad-kpi-sub" style="color:#38bdf8;">${mode.baseGems.toLocaleString()} Base Gems</div>
+          <div class="squad-kpi-sub" style="color:#fbbf24;">25× Max: ${(mode.baseCoins * 25).toLocaleString()} Coins / ${(mode.baseGems * 25).toLocaleString()} Gems</div>
+        </div>
+      `;
+    }
+
+    const tableWrap = document.getElementById("jinxCalcModesTable");
+    if (tableWrap && typeof JINX_MODES !== "undefined") {
+      const rowsHtml = JINX_MODES.map(m => {
+        const rLuck = count > 0 ? (m.bonusLuck + petLuckSum) : 0;
+        const cLuck = Math.min(rLuck, m.maxLuck);
+        const oCap = Math.max(0, rLuck - m.maxLuck);
+        const jp = count > 0 ? Math.min(25, 2 + (cLuck / 100) * 4) : 0;
+        const isSelected = m.key === mode.key;
+        return `
+          <tr class="${isSelected ? "door-row-target" : ""}" style="cursor:pointer;" onclick="JinxCalcUI.selectMode('${m.key}')">
+            <td class="col-lvl">${escapeXml(m.name)}</td>
+            <td>+${m.bonusLuck}%</td>
+            <td style="color:#c084fc;font-weight:700;">${cLuck}% / ${m.maxLuck}%${oCap > 0 ? ` <small style="color:#fbbf24;">(+${oCap}%)</small>` : ""}</td>
+            <td style="color:#fbbf24;font-weight:700;">${fmtPct(jp)}</td>
+            <td>${m.baseCoins.toLocaleString()}</td>
+            <td style="color:#38bdf8;">${m.baseGems.toLocaleString()}</td>
+          </tr>
+        `;
+      }).join("");
+
+      tableWrap.innerHTML = `
+        <table class="detail-table door-levels-table">
+          <thead>
+            <tr>
+              <th>MODE</th>
+              <th>BONUS LUCK</th>
+              <th>YOUR LUCK / CAP</th>
+              <th>JACKPOT %</th>
+              <th>BASE COINS</th>
+              <th>BASE GEMS</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowsHtml}
+          </tbody>
+        </table>
+      `;
+    }
+  },
+
+  selectMode(key) {
+    this.modeKey = key;
+    const modeSel = document.getElementById("jinxCalcModeSelect");
+    if (modeSel) modeSel.value = key;
+    this.saveState();
+    this.render();
   }
 };
