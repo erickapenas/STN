@@ -27,6 +27,10 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     if (btn.dataset.tab === "clanBattleTab") {
       if (typeof LoadoutsUI !== "undefined") LoadoutsUI.selectSubView("squad");
     }
+    if (btn.dataset.tab === "doorTab" && typeof DoorUI !== "undefined") {
+      DoorUI.renderPetPickerButtons();
+      DoorUI.render();
+    }
   });
 });
 
@@ -270,4 +274,5 @@ initSettings();
 InventoryUI.init();
 IndexUI.init();
 LoadoutsUI.init();
+if (typeof DoorUI !== "undefined") DoorUI.init();
 ClanBattleUI.init();
