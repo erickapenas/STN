@@ -4,11 +4,24 @@ const DOOR_COST_GROWTH = 1.55;
 const DOOR_HP_GROWTH = 1.45;
 const DOOR_MAX_LEVEL = 100;
 
-const DOOR_PET_NAMES = ["Hippo", "Beaver", "Rhino", "Bunny", "Turtle", "Dragon"];
+const DOOR_UNIT_NAMES = [
+  "Hippo",
+  "Beaver",
+  "Rhino",
+  "Bunny",
+  "Turtle",
+  "Dragon",
+  "Horse",
+  "Medical Base"
+];
+
+const MEDICAL_BASE_HEAL_LEVELS = [0.2, 0.35, 0.55, 0.85, 1.3, 2.0]; // % max HP per sec per placed base
+const MEDICAL_BASE_MAX_PLACED = 4;
 
 const DoorUI = {
   targetLevel: 20,
-  pets: [], // [{ name, lvl }]
+  squadDps: 0,
+  pets: [], // [{ name, lvl, placed? }]
 
   init() {
     this.loadState();
@@ -36,6 +49,16 @@ const DoorUI = {
       });
     }
 
+    const dpsInput = document.getElementById("doorSquadDpsInput");
+    if (dpsInput) {
+      dpsInput.value = this.squadDps > 0 ? Math.round(this.squadDps) : "";
+      dpsInput.addEventListener("input", () => {
+        this.squadDps = Math.max(0, parseFloat(dpsInput.value) || 0);
+        this.saveState();
+        this.render();
+      });
+    }
+
     document.querySelectorAll(".door-preset-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         const v = Math.max(1, Math.min(DOOR_MAX_LEVEL, parseInt(btn.dataset.doorLvl, 10) || 20));
@@ -56,6 +79,9 @@ const DoorUI = {
     if (clearPetsBtn) {
       clearPetsBtn.onclick = () => {
         this.pets = [];
+        this.squadDps = 0;
+        const dpsEl = document.getElementById("doorSquadDpsInput");
+        if (dpsEl) dpsEl.value = "";
         this.saveState();
         this.render();
       };
@@ -73,11 +99,24 @@ const DoorUI = {
         if (parsed && typeof parsed.targetLevel === "number") {
           this.targetLevel = Math.max(1, Math.min(DOOR_MAX_LEVEL, Math.round(parsed.targetLevel)));
         }
+        if (parsed && typeof parsed.squadDps === "number" && isFinite(parsed.squadDps)) {
+          this.squadDps = Math.max(0, parsed.squadDps);
+        }
         if (parsed && Array.isArray(parsed.pets)) {
           this.pets = parsed.pets
-            .filter(p => p && DOOR_PET_NAMES.includes(p.name))
-            .slice(0, 15)
-            .map(p => ({ name: p.name, lvl: Math.max(1, Math.min(5, parseInt(p.lvl, 10) || 5)) }));
+            .filter(p => p && DOOR_UNIT_NAMES.includes(p.name))
+            .slice(0, 20)
+            .map(p => {
+              const maxLvl = p.name === "Medical Base" ? 6 : 5;
+              const entry = {
+                name: p.name,
+                lvl: Math.max(1, Math.min(maxLvl, parseInt(p.lvl, 10) || maxLvl))
+              };
+              if (p.name === "Medical Base") {
+                entry.placed = Math.max(1, Math.min(MEDICAL_BASE_MAX_PLACED, parseInt(p.placed, 10) || MEDICAL_BASE_MAX_PLACED));
+              }
+              return entry;
+            });
         }
       }
     } catch {}
@@ -87,6 +126,7 @@ const DoorUI = {
     try {
       localStorage.setItem("td_door_calc_v1", JSON.stringify({
         targetLevel: this.targetLevel,
+        squadDps: this.squadDps,
         pets: this.pets
       }));
     } catch {}
@@ -99,30 +139,75 @@ const DoorUI = {
       const slotCount = p.vip ? 5 : 4;
       for (let i = 0; i < slotCount; i++) {
         const s = p.slots[i];
-        if (s && s.item && DOOR_PET_NAMES.includes(s.item)) {
-          imported.push({ name: s.item, lvl: Math.max(1, Math.min(5, s.lvl || 5)) });
+        if (s && s.item && DOOR_UNIT_NAMES.includes(s.item)) {
+          const maxLvl = s.item === "Medical Base" ? 6 : 5;
+          const entry = {
+            name: s.item,
+            lvl: Math.max(1, Math.min(maxLvl, s.lvl || maxLvl))
+          };
+          if (s.item === "Medical Base") {
+            entry.placed = MEDICAL_BASE_MAX_PLACED;
+          }
+          imported.push(entry);
         }
       }
     });
-    this.pets = imported.slice(0, 15);
+
+    // Pull full Squad DPS from Loadouts (buffed DPS) for Dragon Lifesteal math
+    const totals = LoadoutsUI.computeSquadTotals();
+    const dps = totals.buffedSquadDps > 0 ? totals.buffedSquadDps : (totals.baseSquadDps || 0);
+    this.squadDps = Math.round(dps);
+
+    const dpsInput = document.getElementById("doorSquadDpsInput");
+    if (dpsInput) {
+      dpsInput.value = this.squadDps > 0 ? this.squadDps : "";
+    }
+
+    this.pets = imported.slice(0, 20);
     this.saveState();
     this.render();
   },
 
-  addPet(name) {
-    if (!DOOR_PET_NAMES.includes(name) || this.pets.length >= 15) return;
-    this.pets.push({ name, lvl: 5 });
+  addUnit(name) {
+    if (!DOOR_UNIT_NAMES.includes(name) || this.pets.length >= 20) return;
+    if (name === "Medical Base") {
+      this.pets.push({ name, lvl: 6, placed: MEDICAL_BASE_MAX_PLACED });
+    } else {
+      this.pets.push({ name, lvl: 5 });
+    }
     this.saveState();
     this.render();
   },
 
-  removePet(idx) {
+  removeUnit(idx) {
     this.pets.splice(idx, 1);
     this.saveState();
     this.render();
   },
 
+  getUnitInfo(name) {
+    if (name === "Medical Base") {
+      return { icon: "🏥", label: "Door Heal", maxLvl: 6 };
+    }
+    if (name === "Horse") {
+      return { icon: "🐎", label: "Stampede Heal", maxLvl: 5 };
+    }
+    const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[name] : null;
+    return {
+      icon: buff ? buff.icon : "🐾",
+      label: buff ? buff.label : "Buff",
+      maxLvl: 5
+    };
+  },
+
   getPetValue(name, lvl) {
+    if (name === "Medical Base") {
+      const idx = Math.min(Math.max(1, lvl || 1), MEDICAL_BASE_HEAL_LEVELS.length) - 1;
+      return MEDICAL_BASE_HEAL_LEVELS[idx];
+    }
+    if (name === "Horse") {
+      return 20; // 20% door health healed over 10 seconds per Stampede
+    }
     const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[name] : null;
     if (!buff) return 0;
     if (Array.isArray(buff.levels) && buff.levels.length > 0) {
@@ -132,7 +217,7 @@ const DoorUI = {
     return buff.value || 0;
   },
 
-  computePetBuffs() {
+  computeBuffs() {
     const factor = (typeof BUFF_DIMINISHING_FACTOR !== "undefined") ? BUFF_DIMINISHING_FACTOR : 0.6;
     const byStat = {
       doorhp: [],
@@ -143,7 +228,22 @@ const DoorUI = {
       lifesteal: []
     };
 
+    let medBaseHealPct = 0;
+    let medBasePlacedTotal = 0;
+    let horseCount = 0;
+
     this.pets.forEach(p => {
+      if (p.name === "Medical Base") {
+        const perBase = this.getPetValue("Medical Base", p.lvl);
+        const placed = Math.max(1, Math.min(MEDICAL_BASE_MAX_PLACED, p.placed || MEDICAL_BASE_MAX_PLACED));
+        medBaseHealPct += perBase * placed;
+        medBasePlacedTotal += placed;
+        return;
+      }
+      if (p.name === "Horse") {
+        horseCount += 1;
+        return;
+      }
       const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[p.name] : null;
       if (!buff || !byStat[buff.stat]) return;
       byStat[buff.stat].push(this.getPetValue(p.name, p.lvl));
@@ -158,9 +258,10 @@ const DoorUI = {
     const doorStartAddRaw = sumWithDecay(byStat.doorlvl);
     const doorStartAdd = Math.round(doorStartAddRaw);
     const doorArmorPct = Math.min(90, sumWithDecay(byStat.doorarmor));
-    const doorHealPct = sumWithDecay(byStat.doorheal);
-    const shieldSecs = byStat.shield.reduce((acc, v) => acc + v, 0); // Turtles fire one after another
+    const bunnyHealPct = sumWithDecay(byStat.doorheal);
+    const shieldSecs = byStat.shield.reduce((acc, v) => acc + v, 0);
     const lifestealPct = sumWithDecay(byStat.lifesteal);
+    const horseStampedeHealPctPerSec = horseCount * 2; // 20% over 10s = 2%/s per active Stampede (stacks)
 
     return {
       doorHpPct,
@@ -168,7 +269,12 @@ const DoorUI = {
       doorStartAdd,
       startLevel: 1 + doorStartAdd,
       doorArmorPct,
-      doorHealPct,
+      bunnyHealPct,
+      medBaseHealPct,
+      medBasePlacedTotal,
+      totalPctHealPerSec: bunnyHealPct + medBaseHealPct,
+      horseCount,
+      horseStampedeHealPctPerSec,
       shieldSecs,
       lifestealPct
     };
@@ -217,46 +323,58 @@ const DoorUI = {
     if (!bar) return;
     bar.innerHTML = "";
 
-    DOOR_PET_NAMES.forEach(name => {
+    DOOR_UNIT_NAMES.forEach(name => {
       const def = ITEMS.find(it => it.name === name);
-      const buff = PET_BUFFS[name];
-      if (!def || !buff) return;
+      if (!def) return;
+      const info = this.getUnitInfo(name);
       const color = getAnsiHex(userColors[def.rarity] || DEFAULT_COLORS[def.rarity] || "37");
 
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "door-pet-add-btn";
       btn.style.setProperty("--rarity-color", color);
-      btn.onclick = () => this.addPet(name);
+      btn.onclick = () => this.addUnit(name);
       btn.innerHTML = `
         <img src="${def.img}" alt="${escapeXml(name)}" onerror="this.style.display='none'">
         <div class="door-pet-add-info">
           <span class="door-pet-add-name" style="color:${color};">+ ${escapeXml(name)}</span>
-          <span class="door-pet-add-sub">${buff.icon} ${escapeXml(buff.label)}</span>
+          <span class="door-pet-add-sub">${info.icon} ${escapeXml(info.label)}</span>
         </div>
       `;
       bar.appendChild(btn);
     });
   },
 
-  renderEquippedPets(buffs) {
+  renderEquippedUnits() {
     const list = document.getElementById("doorEquippedPetsList");
     if (!list) return;
     list.innerHTML = "";
 
     if (this.pets.length === 0) {
-      list.innerHTML = `<div class="squad-empty-note">No pets added yet. Click any pet above or import from Loadouts to include pet buffs in the calculation.</div>`;
+      list.innerHTML = `<div class="squad-empty-note">No pets or Medical Base added yet. Click any unit above or <strong>Import from Loadouts</strong> to include buffs &amp; Squad DPS.</div>`;
       return;
     }
 
     this.pets.forEach((p, idx) => {
       const def = ITEMS.find(it => it.name === p.name);
-      const buff = PET_BUFFS[p.name];
-      if (!def || !buff) return;
+      if (!def) return;
+      const info = this.getUnitInfo(p.name);
       const color = getAnsiHex(userColors[def.rarity] || DEFAULT_COLORS[def.rarity] || "37");
       const val = this.getPetValue(p.name, p.lvl);
-      const unit = buff.unit || "%";
-      const valStr = unit === "lvl" ? `+${val} Lvl` : unit === "s" ? `${val}s` : unit === "%/s" ? `${val}%/s` : `+${val}%`;
+
+      let valStr = "";
+      if (p.name === "Medical Base") {
+        const placed = p.placed || MEDICAL_BASE_MAX_PLACED;
+        const totPct = Number((val * placed).toFixed(2));
+        valStr = `🏥 ${totPct}%/s (×${placed})`;
+      } else if (p.name === "Horse") {
+        valStr = `🐎 20% / 10s`;
+      } else {
+        const buff = PET_BUFFS[p.name];
+        const unit = (buff && buff.unit) || "%";
+        const formatted = unit === "lvl" ? `+${val} Lvl` : unit === "s" ? `${val}s` : unit === "%/s" ? `${val}%/s` : `+${val}%`;
+        valStr = `${info.icon} ${formatted}`;
+      }
 
       const pill = document.createElement("div");
       pill.className = "door-pet-chip";
@@ -274,33 +392,53 @@ const DoorUI = {
 
       const lvlSel = document.createElement("select");
       lvlSel.className = "door-pet-chip-lvl";
-      for (let l = 1; l <= 5; l++) {
+      for (let l = 1; l <= info.maxLvl; l++) {
         const opt = document.createElement("option");
         opt.value = l;
-        opt.textContent = `Lvl ${l}${l === 5 ? " (MAX)" : ""}`;
+        opt.textContent = `Lvl ${l}${l === info.maxLvl ? " (MAX)" : ""}`;
         if (p.lvl === l) opt.selected = true;
         lvlSel.appendChild(opt);
       }
       lvlSel.onchange = () => {
-        this.pets[idx].lvl = parseInt(lvlSel.value, 10) || 5;
+        this.pets[idx].lvl = parseInt(lvlSel.value, 10) || info.maxLvl;
         this.saveState();
         this.render();
       };
 
+      pill.appendChild(img);
+      pill.appendChild(nameEl);
+      pill.appendChild(lvlSel);
+
+      if (p.name === "Medical Base") {
+        const placedSel = document.createElement("select");
+        placedSel.className = "door-pet-chip-lvl";
+        placedSel.title = "Placed Medical Bases (limit 4 per player)";
+        for (let c = 1; c <= MEDICAL_BASE_MAX_PLACED; c++) {
+          const opt = document.createElement("option");
+          opt.value = c;
+          opt.textContent = `×${c}`;
+          if ((p.placed || MEDICAL_BASE_MAX_PLACED) === c) opt.selected = true;
+          placedSel.appendChild(opt);
+        }
+        placedSel.onchange = () => {
+          this.pets[idx].placed = parseInt(placedSel.value, 10) || MEDICAL_BASE_MAX_PLACED;
+          this.saveState();
+          this.render();
+        };
+        pill.appendChild(placedSel);
+      }
+
       const valEl = document.createElement("span");
       valEl.className = "door-pet-chip-val";
-      valEl.textContent = `${buff.icon} ${valStr}`;
+      valEl.textContent = valStr;
 
       const rmBtn = document.createElement("button");
       rmBtn.type = "button";
       rmBtn.className = "squad-slot-remove-btn";
-      rmBtn.title = "Remove pet";
+      rmBtn.title = "Remove unit";
       rmBtn.textContent = "✕";
-      rmBtn.onclick = () => this.removePet(idx);
+      rmBtn.onclick = () => this.removeUnit(idx);
 
-      pill.appendChild(img);
-      pill.appendChild(nameEl);
-      pill.appendChild(lvlSel);
       pill.appendChild(valEl);
       pill.appendChild(rmBtn);
       list.appendChild(pill);
@@ -308,8 +446,8 @@ const DoorUI = {
   },
 
   render() {
-    const buffs = this.computePetBuffs();
-    this.renderEquippedPets(buffs);
+    const buffs = this.computeBuffs();
+    this.renderEquippedUnits();
 
     const effectiveTarget = Math.max(this.targetLevel, buffs.startLevel);
     const hpMult = 1 + buffs.doorHpPct / 100;
@@ -330,22 +468,36 @@ const DoorUI = {
       }
     }
     const cashSaved = Math.max(0, totalCostNoBeaver - totalCostWithBeaver);
-    const healPerSec = buffedHpAtTarget * (buffs.doorHealPct / 100);
+
+    const bunnyHealPerSec = buffedHpAtTarget * (buffs.bunnyHealPct / 100);
+    const medBaseHealPerSec = buffedHpAtTarget * (buffs.medBaseHealPct / 100);
+    const dragonHealPerSec = this.squadDps * (buffs.lifestealPct / 100);
+    const totalHealPerSec = bunnyHealPerSec + medBaseHealPerSec + dragonHealPerSec;
+    const horseStampedePerSec = buffedHpAtTarget * (buffs.horseStampedeHealPctPerSec / 100);
 
     // Active Buff Pills
     const buffPills = [];
     if (buffs.doorHpPct > 0) buffPills.push(`<span class="door-buff-pill">💚 Door HP: <strong>+${this.formatPct(buffs.doorHpPct)}</strong></span>`);
     if (buffs.doorStartAdd > 0) buffPills.push(`<span class="door-buff-pill">🚪 Start Level: <strong>Lvl ${buffs.startLevel} (+${buffs.doorStartAdd})</strong></span>`);
     if (buffs.doorArmorPct > 0) buffPills.push(`<span class="door-buff-pill">🛡️ Door Armor: <strong>+${this.formatPct(buffs.doorArmorPct)}</strong></span>`);
-    if (buffs.doorHealPct > 0) buffPills.push(`<span class="door-buff-pill">💚 Regen: <strong>${Number(buffs.doorHealPct.toFixed(2))}%/s</strong></span>`);
+    if (buffs.bunnyHealPct > 0) buffPills.push(`<span class="door-buff-pill">🐰 Bunny Regen: <strong>${Number(buffs.bunnyHealPct.toFixed(2))}%/s</strong></span>`);
+    if (buffs.medBaseHealPct > 0) buffPills.push(`<span class="door-buff-pill">🏥 Medical Base (×${buffs.medBasePlacedTotal}): <strong>${Number(buffs.medBaseHealPct.toFixed(2))}%/s</strong></span>`);
+    if (buffs.lifestealPct > 0) {
+      const lsNote = this.squadDps > 0
+        ? ` (${this.formatBig(dragonHealPerSec)} HP/s from ${this.formatBig(this.squadDps)} DPS)`
+        : " (set/import Squad DPS)";
+      buffPills.push(`<span class="door-buff-pill">🩸 Dragon Lifesteal: <strong>+${this.formatPct(buffs.lifestealPct)}</strong>${lsNote}</span>`);
+    }
+    if (buffs.horseCount > 0) {
+      buffPills.push(`<span class="door-buff-pill">🐎 Horse (${buffs.horseCount}): <strong>+${buffs.horseCount * 20}% / 10s</strong> (${this.formatBig(horseStampedePerSec)} HP/s on Stampede)</span>`);
+    }
     if (buffs.shieldSecs > 0) buffPills.push(`<span class="door-buff-pill">🛡️ Turtle Shield: <strong>${Number(buffs.shieldSecs.toFixed(2))}s</strong></span>`);
-    if (buffs.lifestealPct > 0) buffPills.push(`<span class="door-buff-pill">🩸 Lifesteal: <strong>+${this.formatPct(buffs.lifestealPct)}</strong></span>`);
 
     const activeBuffsEl = document.getElementById("doorActiveBuffsRow");
     if (activeBuffsEl) {
       activeBuffsEl.innerHTML = buffPills.length > 0
         ? buffPills.join("")
-        : `<span class="door-buff-pill muted">Base Door Stats (no pet buffs active)</span>`;
+        : `<span class="door-buff-pill muted">Base Door Stats (no pet or Medical Base buffs active)</span>`;
     }
 
     // KPI Summary
@@ -353,6 +505,15 @@ const DoorUI = {
     if (summaryEl) {
       const hasHpBuff = buffs.doorHpPct > 0;
       const hasArmor = buffs.doorArmorPct > 0;
+
+      const healParts = [];
+      if (bunnyHealPerSec > 0) healParts.push(`Bunny: ${this.formatBig(bunnyHealPerSec)}/s`);
+      if (medBaseHealPerSec > 0) healParts.push(`Med: ${this.formatBig(medBaseHealPerSec)}/s`);
+      if (dragonHealPerSec > 0) healParts.push(`Dragon: ${this.formatBig(dragonHealPerSec)}/s`);
+      if (horseStampedePerSec > 0) healParts.push(`Horse: +${this.formatBig(horseStampedePerSec)}/s`);
+      if (buffs.doorArmorPct > 0) healParts.push(`Armor: ${this.formatPct(buffs.doorArmorPct)}`);
+      if (buffs.shieldSecs > 0) healParts.push(`Shield: ${Number(buffs.shieldSecs.toFixed(1))}s`);
+
       summaryEl.innerHTML = `
         <div class="squad-kpi-card">
           <div class="squad-kpi-label">❤️ Door HP (Lvl ${effectiveTarget})</div>
@@ -371,9 +532,9 @@ const DoorUI = {
           ${cashSaved > 0 ? `<div class="squad-kpi-sub" style="color:#4ade80;">Saved $${this.formatBig(cashSaved)} with Beaver!</div>` : `<div class="squad-kpi-sub">Start: Lvl ${buffs.startLevel}</div>`}
         </div>
         <div class="squad-kpi-card">
-          <div class="squad-kpi-label">💚 Regen &amp; Defense</div>
-          <div class="squad-kpi-val" style="color:#4ade80;">${buffs.doorHealPct > 0 ? `${this.formatBig(healPerSec)} <small>HP/s</small>` : "0 <small>HP/s</small>"}</div>
-          <div class="squad-kpi-sub">Armor: ${this.formatPct(buffs.doorArmorPct)}${buffs.shieldSecs > 0 ? ` • Shield: ${Number(buffs.shieldSecs.toFixed(1))}s` : ""}</div>
+          <div class="squad-kpi-label">💚 Total Door Heal / sec</div>
+          <div class="squad-kpi-val" style="color:#4ade80;" title="${this.formatExact(totalHealPerSec)} HP/s">${this.formatBig(totalHealPerSec)} <small>HP/s</small></div>
+          <div class="squad-kpi-sub">${healParts.length > 0 ? healParts.join(" • ") : "No active healing or armor"}</div>
         </div>
       `;
     }
@@ -383,7 +544,7 @@ const DoorUI = {
     if (tableWrap) {
       const showBuffedCol = buffs.doorHpPct > 0;
       const showEffCol = buffs.doorArmorPct > 0;
-      const showHealCol = buffs.doorHealPct > 0;
+      const showHealCol = buffs.totalPctHealPerSec > 0 || dragonHealPerSec > 0;
 
       let rowsHtml = "";
       let runningCost = 0;
@@ -395,7 +556,7 @@ const DoorUI = {
         const baseHp = this.getBaseHp(l);
         const buffedHp = baseHp * hpMult;
         const effHp = armorDiv > 0 ? buffedHp / armorDiv : buffedHp;
-        const regen = buffedHp * (buffs.doorHealPct / 100);
+        const regen = buffedHp * (buffs.totalPctHealPerSec / 100) + dragonHealPerSec;
         const isTargetRow = l === effectiveTarget;
 
         rowsHtml += `

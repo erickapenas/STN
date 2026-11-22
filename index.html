@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=8.7">
+  <link rel="stylesheet" href="style.css?v=8.9">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -253,31 +253,39 @@
           <p class="section-desc" style="margin-bottom: 0;">Level 1 starts at <strong>420 HP</strong>, upgrade to Lvl 2 costs <strong>$100</strong>. Each upgrade increases cost by <strong>+55%</strong> and HP by <strong>+45%</strong>.</p>
         </div>
         <div class="squad-top-actions">
-          <button type="button" class="btn btn-primary-action squad-action-btn" id="btnDoorImportLoadouts">📥 Import Pets from Loadouts</button>
-          <button type="button" class="btn btn-secondary squad-action-btn" id="btnDoorClearPets">🗑️ Clear Pets</button>
+          <button type="button" class="btn btn-primary-action squad-action-btn" id="btnDoorImportLoadouts">📥 Import from Loadouts</button>
+          <button type="button" class="btn btn-secondary squad-action-btn" id="btnDoorClearPets">🗑️ Clear Units</button>
         </div>
       </div>
 
       <div class="door-controls-panel">
-        <div class="door-level-control">
-          <label for="doorTargetLevelInput">🎯 Target Door Level (1 – 100)</label>
-          <div class="door-level-inputs">
-            <input type="number" id="doorTargetLevelInput" min="1" max="100" value="20" class="door-lvl-num">
-            <input type="range" id="doorTargetLevelRange" min="1" max="100" value="20" class="door-lvl-range">
+        <div class="door-controls-grid">
+          <div class="door-level-control">
+            <label for="doorTargetLevelInput">🎯 Target Door Level (1 – 100)</label>
+            <div class="door-level-inputs">
+              <input type="number" id="doorTargetLevelInput" min="1" max="100" value="20" class="door-lvl-num">
+              <input type="range" id="doorTargetLevelRange" min="1" max="100" value="20" class="door-lvl-range">
+            </div>
+            <div class="door-presets-row">
+              <button type="button" class="door-preset-btn" data-door-lvl="10">Lvl 10</button>
+              <button type="button" class="door-preset-btn" data-door-lvl="20">Lvl 20</button>
+              <button type="button" class="door-preset-btn" data-door-lvl="30">Lvl 30</button>
+              <button type="button" class="door-preset-btn" data-door-lvl="40">Lvl 40</button>
+              <button type="button" class="door-preset-btn" data-door-lvl="50">Lvl 50</button>
+              <button type="button" class="door-preset-btn" data-door-lvl="60">Lvl 60</button>
+            </div>
           </div>
-          <div class="door-presets-row">
-            <button type="button" class="door-preset-btn" data-door-lvl="10">Lvl 10</button>
-            <button type="button" class="door-preset-btn" data-door-lvl="20">Lvl 20</button>
-            <button type="button" class="door-preset-btn" data-door-lvl="30">Lvl 30</button>
-            <button type="button" class="door-preset-btn" data-door-lvl="40">Lvl 40</button>
-            <button type="button" class="door-preset-btn" data-door-lvl="50">Lvl 50</button>
-            <button type="button" class="door-preset-btn" data-door-lvl="60">Lvl 60</button>
+
+          <div class="door-dps-control">
+            <label for="doorSquadDpsInput">⚡ Squad DPS <small style="color:#94a3b8;font-weight:600;">(for 🩸 Dragon Lifesteal)</small></label>
+            <input type="number" id="doorSquadDpsInput" min="0" step="100" placeholder="Import from Loadouts or type DPS..." class="door-dps-input">
+            <div class="door-dps-hint">Importing Loadouts pulls total Squad DPS automatically to calculate Dragon's healing/sec.</div>
           </div>
         </div>
       </div>
 
       <div class="squad-section-block" style="margin-top: 16px;">
-        <div class="squad-block-title">🐾 Add Door Pets <span class="squad-decay-tag">60% decay per duplicate</span></div>
+        <div class="squad-block-title">🐾 Add Door Pets &amp; Medical Base <span class="squad-decay-tag">Pets: 60% decay per duplicate</span></div>
         <div id="doorPetAddBar" class="door-pet-add-bar"></div>
         <div id="doorEquippedPetsList" class="door-equipped-pets"></div>
         <div id="doorActiveBuffsRow" class="door-active-buffs"></div>
@@ -471,7 +479,7 @@
 <script src="js/inventory.js?v=8.8"></script>
 <script src="js/index.js?v=8.8"></script>
 <script src="js/loadouts.js?v=8.8"></script>
-<script src="js/door.js?v=8.7"></script>
+<script src="js/door.js?v=8.9"></script>
 <script src="js/clanbattle.js?v=8.8"></script>
 <script src="js/app.js?v=8.7"></script>
 <script src="js/effects.js?v=7.6"></script>
