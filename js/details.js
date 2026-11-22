@@ -396,19 +396,19 @@ const INDEX_DETAILS = {
 
   "Raccoon": {
     tags: ["MYTHIC", "PET"],
-    buffColumnLabel: "💵 START CASH",
-    buff2ColumnLabel: "📡 FARMS",
+    buffColumnLabel: `${ICON_STARTCASH} START CASH`,
+    buff2ColumnLabel: `${ICON_FARMS} FARMS`,
     summaryStats: [
-      { label: "💵 START CASH", value: "+$100 → +$500" },
-      { label: "📡 FARMS",      value: "+15% → +25%" }
+      { label: `${ICON_STARTCASH} START CASH`, value: "+$100 → +$500" },
+      { label: `${ICON_FARMS} FARMS`,          value: "+15% → +25%" }
     ],
     bullets: [
       "Everyone in your house starts with <strong>extra cash</strong> and your <strong>farms pay out faster</strong>"
     ],
     keyNumbers: [
-      { label: "💵 START CASH",        value: "For <strong>everyone</strong> in your house" },
-      { label: "📡 FARMS",             value: "<strong>Pay out faster</strong>" },
-      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+      { label: `${ICON_STARTCASH} START CASH`, value: "For <strong>everyone</strong> in your house" },
+      { label: `${ICON_FARMS} FARMS`,          value: "<strong>Pay out faster</strong>" },
+      { label: "MORE OF THE SAME PET",         value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
     ],
     petLevels: [
       { level: 1, buff: "+$100", buff2: "+15%",   upgradeCoins: 0 },
@@ -438,11 +438,11 @@ const INDEX_DETAILS = {
       "Earns cash on its own and sends a <strong>pulse</strong> that makes all economy towers next to it earn <strong>more cash for 10 seconds</strong>"
     ],
     keyNumbers: [
-      { label: "PAYS",            value: "Every <strong>5 seconds</strong>" },
-      { label: "📡 PULSE",        value: "Every <strong>34s → 20s</strong>" },
-      { label: "📡 PULSE BUFF",   value: "Economy towers <strong>next to it</strong> earn <strong>+15% → +50%</strong> for <strong>10 seconds</strong>" },
-      { label: "CASH TO MAX IT",  value: "<strong>$202,400</strong> in a match, for all <strong>8 levels</strong>" },
-      { label: "PLACEMENT LIMIT", value: "<strong>10</strong> per player" }
+      { label: "PAYS",                    value: "Every <strong>5 seconds</strong>" },
+      { label: `${ICON_PULSE} PULSE`,     value: "Every <strong>34s → 20s</strong>" },
+      { label: `${ICON_PULSE} PULSE BUFF`, value: "Economy towers <strong>next to it</strong> earn <strong>+15% → +50%</strong> for <strong>10 seconds</strong>" },
+      { label: "CASH TO MAX IT",          value: "<strong>$202,400</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",         value: "<strong>10</strong> per player" }
     ],
     evolution: {
       name: "Void Ward",

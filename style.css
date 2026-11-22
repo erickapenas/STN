@@ -2605,6 +2605,15 @@ select option {
   margin-top: 2px;
 }
 
+.stat-icon-img {
+  width: 17px;
+  height: 17px;
+  object-fit: contain;
+  vertical-align: -3px;
+  display: inline-block;
+  margin-right: 3px;
+}
+
 .picker-unit-sub {
   font-family: var(--font-mono);
   font-size: 0.7rem;

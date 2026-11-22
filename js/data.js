@@ -176,6 +176,10 @@ const TOWER_PLACEMENT_LIMITS = {
   "Farm": 6
 };
 
+const ICON_FARMS = `<img src="images/icon-farms.png" class="stat-icon-img" alt="">`;
+const ICON_STARTCASH = `<img src="images/icon-startcash.png" class="stat-icon-img" alt="">`;
+const ICON_PULSE = `<img src="images/icon-pulse.png" class="stat-icon-img" alt="">`;
+
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {
   "Bear":          { stat: "range",    label: "Range",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🎯" },
@@ -196,9 +200,9 @@ const PET_BUFFS = {
     ]
   },
   "Raccoon":       {
-    stat: "farms", label: "Farms", value: 25, levels: [15, 17.5, 20, 22.5, 25], icon: "📡",
+    stat: "farms", label: "Farms", value: 25, levels: [15, 17.5, 20, 22.5, 25], icon: ICON_FARMS,
     extraBuffs: [
-      { stat: "startcash", label: "Start Cash", value: 500, levels: [100, 200, 300, 400, 500], unit: "$", icon: "💵" }
+      { stat: "startcash", label: "Start Cash", value: 500, levels: [100, 200, 300, 400, 500], unit: "$", icon: ICON_STARTCASH }
     ]
   },
   "Dragon":        { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },

@@ -221,8 +221,8 @@ const LoadoutsUI = {
           { key: "range",    label: "🎯 Range",     color: "#38bdf8" },
           { key: "slow",     label: "🧊 Slow",      color: "#67e8f9" },
           { key: "cash",      label: "💰 Cash",       color: "#22c55e" },
-          { key: "startcash", label: "💵 Start Cash", color: "#4ade80" },
-          { key: "farms",     label: "📡 Farms",      color: "#c084fc" },
+          { key: "startcash", label: `${ICON_STARTCASH} Start Cash`, color: "#4ade80" },
+          { key: "farms",     label: `${ICON_FARMS} Farms`,          color: "#c084fc" },
           { key: "coins",     label: "🪙 Coins",       color: "#facc15" },
           { key: "gems",      label: "💎 Gems",        color: "#a855f7" },
           { key: "doorlvl",   label: "🚪 Doors Start", color: "#d97706" },
@@ -236,7 +236,7 @@ const LoadoutsUI = {
       btn.type = "button";
       btn.className = `picker-rarity-chip${this.pickerState.subFilter === c.key ? " active" : ""}`;
       btn.style.setProperty("--chip-color", c.color);
-      btn.textContent = c.label;
+      btn.innerHTML = c.label;
       btn.onclick = () => {
         this.pickerState.subFilter = c.key;
         this.renderPickerSubFilterBar();
@@ -265,7 +265,7 @@ const LoadoutsUI = {
       btn.type = "button";
       btn.className = `picker-rarity-chip${this.pickerState.rarity === c.key ? " active" : ""}`;
       btn.style.setProperty("--chip-color", c.color);
-      btn.textContent = c.label;
+      btn.innerHTML = c.label;
       btn.onclick = () => {
         this.pickerState.rarity = c.key;
         this.renderPickerRarityBar();
@@ -510,8 +510,8 @@ const LoadoutsUI = {
       range:    { label: "Range",     icon: "🎯" },
       slow:     { label: "Slow",      icon: "🧊" },
       cash:      { label: "Cash",       icon: "💰", unit: "%" },
-      startcash: { label: "Start Cash", icon: "💵", unit: "$" },
-      farms:     { label: "Farms",      icon: "📡", unit: "%" },
+      startcash: { label: "Start Cash", icon: ICON_STARTCASH, unit: "$" },
+      farms:     { label: "Farms",      icon: ICON_FARMS,     unit: "%" },
       coins:     { label: "Coins",       icon: "🪙", unit: "%" },
       gems:      { label: "Gems",        icon: "💎", unit: "%" },
       doorlvl:   { label: "Doors Start", icon: "🚪", unit: "lvl" },

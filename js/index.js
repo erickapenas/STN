@@ -95,7 +95,7 @@ const IndexUI = {
         <div class="detail-summary-stats">
           ${details.summaryStats.map(s => `
             <div class="detail-summary-row">
-              <span class="detail-summary-label">${escapeXml(s.label)}</span>
+              <span class="detail-summary-label">${s.label}</span>
               <span class="detail-summary-val">${escapeXml(s.value)}</span>
             </div>
           `).join("")}
@@ -227,7 +227,7 @@ const IndexUI = {
             <div class="detail-kv-list">
               ${keyNumbersList.map(k => `
                 <div class="detail-kv-row${k.highlight ? " detail-kv-highlight" : ""}">
-                  <span class="detail-kv-label">${escapeXml(k.label)}</span>
+                  <span class="detail-kv-label">${k.label}</span>
                   <span class="detail-kv-val">${k.value}</span>
                 </div>
               `).join("")}
@@ -420,13 +420,13 @@ const IndexUI = {
           </div>
 
           <div class="detail-section">
-            <div class="detail-section-title">📡 PULSE BY LEVEL</div>
+            <div class="detail-section-title">${ICON_PULSE} PULSE BY LEVEL</div>
             <div class="detail-table-wrap">
               <table class="detail-table">
                 <thead>
                   <tr>
                     <th>LEVEL</th>
-                    <th>📡 PULSE EVERY</th>
+                    <th>${ICON_PULSE} PULSE EVERY</th>
                     <th>NEIGHBORS EARN</th>
                   </tr>
                 </thead>
@@ -434,7 +434,7 @@ const IndexUI = {
                   ${levelsWithDps.map(lv => `
                     <tr>
                       <td class="col-lvl">${lv.level}</td>
-                      <td style="color:#c084fc;">📡 ${escapeXml(lv.pulseEvery)}</td>
+                      <td style="color:#c084fc;">${ICON_PULSE} ${escapeXml(lv.pulseEvery)}</td>
                       <td style="color:#4ade80;">${escapeXml(lv.neighborsEarn)}</td>
                     </tr>
                   `).join("")}
@@ -684,8 +684,8 @@ const IndexUI = {
                 <thead>
                   <tr>
                     <th>LEVEL</th>
-                    <th>${escapeXml(buffColTitle)}</th>
-                    ${hasBuff2 ? `<th>${escapeXml(buff2ColTitle)}</th>` : ""}
+                    <th>${buffColTitle}</th>
+                    ${hasBuff2 ? `<th>${buff2ColTitle}</th>` : ""}
                     <th>UPGRADE</th>
                   </tr>
                 </thead>
