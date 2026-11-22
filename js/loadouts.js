@@ -220,8 +220,10 @@ const LoadoutsUI = {
           { key: "firerate", label: "⚡ Fire Rate", color: "#f59e0b" },
           { key: "range",    label: "🎯 Range",     color: "#38bdf8" },
           { key: "slow",     label: "🧊 Slow",      color: "#67e8f9" },
-          { key: "cash",     label: "💰 Cash",      color: "#22c55e" },
-          { key: "coins",    label: "🪙 Coins",     color: "#facc15" },
+          { key: "cash",      label: "💰 Cash",       color: "#22c55e" },
+          { key: "startcash", label: "💵 Start Cash", color: "#4ade80" },
+          { key: "farms",     label: "📡 Farms",      color: "#c084fc" },
+          { key: "coins",     label: "🪙 Coins",      color: "#facc15" },
           { key: "gems",     label: "💎 Gems",      color: "#a855f7" },
           { key: "event",    label: "🍗 Event",     color: "#f97316" }
         ];
@@ -334,8 +336,9 @@ const LoadoutsUI = {
           subText = "✓ Equipped (Click to remove)";
         } else if (it.role === "PET" && PET_BUFFS[it.name]) {
           const b = PET_BUFFS[it.name];
-          const extra = b.extraBuffs ? b.extraBuffs.map(eb => `${eb.icon} +${eb.value}%`).join(" ") : "";
-          subText = `${b.icon} +${b.value}% ${b.label}${extra ? " • " + extra : ""}`;
+          const fmt = (pb) => `${pb.icon} +${pb.unit === "$" ? "$" + pb.value : pb.value + "%"} ${pb.label}`;
+          const extra = b.extraBuffs ? b.extraBuffs.map(eb => `${eb.icon} +${eb.unit === "$" ? "$" + eb.value : eb.value + "%"}`).join(" ") : "";
+          subText = `${fmt(b)}${extra ? " • " + extra : ""}`;
         } else {
           const lim = (typeof TOWER_PLACEMENT_LIMITS !== "undefined" && TOWER_PLACEMENT_LIMITS[it.name]) || 1;
           subText = `Limit ×${lim}${it.canEvo ? " • ⚡EVO" : ""}`;
@@ -393,8 +396,13 @@ const LoadoutsUI = {
     return Number.isInteger(n) ? n.toLocaleString() : Number(n.toFixed(1)).toLocaleString();
   },
 
+  formatStatVal(n, unit = "%") {
+    const num = Number.isInteger(n) ? n.toLocaleString() : Number(n.toFixed(2)).toLocaleString();
+    return unit === "$" ? `$${num}` : `${num}%`;
+  },
+
   formatPct(n) {
-    return Number.isInteger(n) ? `${n}%` : `${Number(n.toFixed(2))}%`;
+    return this.formatStatVal(n, "%");
   },
 
   getPetBuffValue(buff, lvl) {
@@ -497,8 +505,10 @@ const LoadoutsUI = {
       firerate: { label: "Fire Rate", icon: "⚡" },
       range:    { label: "Range",     icon: "🎯" },
       slow:     { label: "Slow",      icon: "🧊" },
-      cash:     { label: "Cash",      icon: "💰" },
-      coins:    { label: "Coins",     icon: "🪙" },
+      cash:      { label: "Cash",       icon: "💰", unit: "%" },
+      startcash: { label: "Start Cash", icon: "💵", unit: "$" },
+      farms:     { label: "Farms",      icon: "📡", unit: "%" },
+      coins:     { label: "Coins",      icon: "🪙", unit: "%" },
       gems:     { label: "Gems",      icon: "💎" },
       event:    { label: "Event",     icon: "🍗" }
     };
@@ -511,6 +521,7 @@ const LoadoutsUI = {
           stat,
           label: label || meta.label,
           icon: icon || meta.icon,
+          unit: meta.unit || "%",
           petCount: 0,
           petTotal: 0,
           baseAdds: [],
@@ -602,22 +613,23 @@ const LoadoutsUI = {
 
     const buffsHtml = buffList.length > 0
       ? buffList.map(b => {
+          const u = b.unit || "%";
           const parts = [];
           if (b.petCount > 0) {
-            const petBreak = b.steps.map(st => `${this.formatPct(st.eff)}`).join(" + ");
+            const petBreak = b.steps.map(st => `${this.formatStatVal(st.eff, u)}`).join(" + ");
             parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
           }
           if (b.baseAdds && b.baseAdds.length > 0) {
-            b.baseAdds.forEach(ba => parts.push(`🛡️ ${ba.name}: +${this.formatPct(ba.value)}`));
+            b.baseAdds.forEach(ba => parts.push(`🛡️ ${ba.name}: +${this.formatStatVal(ba.value, u)}`));
           }
           if (b.clanAdd > 0 && b.clanInfo) {
-            parts.push(`🏰 ${b.clanInfo}: +${this.formatPct(b.clanAdd)}`);
+            parts.push(`🏰 ${b.clanInfo}: +${this.formatStatVal(b.clanAdd, u)}`);
           }
           return `
             <div class="squad-buff-card${(b.clanAdd > 0 || (b.baseAdds && b.baseAdds.length > 0)) ? " has-clan" : ""}">
               <div class="squad-buff-top">
                 <span class="squad-buff-title">${b.icon} ${escapeXml(b.label)}</span>
-                <span class="squad-buff-total">+${this.formatPct(b.total)}</span>
+                <span class="squad-buff-total">+${this.formatStatVal(b.total, u)}</span>
               </div>
               <div class="squad-buff-breakdown">${parts.join(" • ")}</div>
             </div>
@@ -835,7 +847,10 @@ const LoadoutsUI = {
             const buff = PET_BUFFS[def.name];
             if (buff) {
               const allStr = [buff, ...(buff.extraBuffs || [])]
-                .map(pb => `${pb.icon}+${this.getPetBuffValue(pb, slot.lvl)}%`)
+                .map(pb => {
+                  const v = this.getPetBuffValue(pb, slot.lvl);
+                  return `${pb.icon}+${pb.unit === "$" ? "$" + v : v + "%"}`;
+                })
                 .join(" ");
               badge.innerHTML = `<span class="squad-meta-buff">${allStr}</span>`;
             } else {

@@ -169,7 +169,7 @@ const TOWER_PLACEMENT_LIMITS = {
   "Military Base": 4,
   "Protector Base": 5,
   "Bank": 3,
-  "Void Farm": 4,
+  "Void Farm": 10,
   "Vault": 4,
   "Mining Cave": 5,
   "Money Printer": 5,
@@ -195,7 +195,12 @@ const PET_BUFFS = {
       { stat: "slow", label: "Slow", value: 14, levels: [10, 11, 12, 13, 14], icon: "🧊" }
     ]
   },
-  "Raccoon":       { stat: "cash",     label: "Cash",      value: 22, icon: "💰" },
+  "Raccoon":       {
+    stat: "farms", label: "Farms", value: 25, levels: [15, 17.5, 20, 22.5, 25], icon: "📡",
+    extraBuffs: [
+      { stat: "startcash", label: "Start Cash", value: 500, levels: [100, 200, 300, 400, 500], unit: "$", icon: "💵" }
+    ]
+  },
   "Dragon":        { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
   "Croc":          { stat: "gems",     label: "Gems",      value: 40, levels: [20, 25, 30, 35, 40], icon: "💎" },
   "Turtle":        { stat: "range",    label: "Range",     value: 25, icon: "🎯" },

@@ -394,6 +394,82 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Raccoon": {
+    tags: ["MYTHIC", "PET"],
+    buffColumnLabel: "💵 START CASH",
+    buff2ColumnLabel: "📡 FARMS",
+    summaryStats: [
+      { label: "💵 START CASH", value: "+$100 → +$500" },
+      { label: "📡 FARMS",      value: "+15% → +25%" }
+    ],
+    bullets: [
+      "Everyone in your house starts with <strong>extra cash</strong> and your <strong>farms pay out faster</strong>"
+    ],
+    keyNumbers: [
+      { label: "💵 START CASH",        value: "For <strong>everyone</strong> in your house" },
+      { label: "📡 FARMS",             value: "<strong>Pay out faster</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+$100", buff2: "+15%",   upgradeCoins: 0 },
+      { level: 2, buff: "+$200", buff2: "+17.5%", upgradeCoins: 8000 },
+      { level: 3, buff: "+$300", buff2: "+20%",   upgradeCoins: 30000 },
+      { level: 4, buff: "+$400", buff2: "+22.5%", upgradeCoins: 125000 },
+      { level: 5, buff: "+$500", buff2: "+25%",   upgradeCoins: 500000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>1.2%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>2.6%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>3%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>15.3%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>14.1%</strong> per egg" }
+    ]
+  },
+
+  "Void Farm": {
+    tags: ["LEGENDARY", "ECONOMY", "EVOLUTION"],
+    isVoidFarm: true,
+    summaryStats: [
+      { label: "EARNS",      value: "$55 → $4,000 / 5s" },
+      { label: "PAYS",       value: "EVERY 5s" },
+      { label: "PLACE COST", value: "$500" }
+    ],
+    bullets: [
+      "Earns cash on its own and sends a <strong>pulse</strong> that makes all economy towers next to it earn <strong>more cash for 10 seconds</strong>"
+    ],
+    keyNumbers: [
+      { label: "PAYS",            value: "Every <strong>5 seconds</strong>" },
+      { label: "📡 PULSE",        value: "Every <strong>34s → 20s</strong>" },
+      { label: "📡 PULSE BUFF",   value: "Economy towers <strong>next to it</strong> earn <strong>+15% → +50%</strong> for <strong>10 seconds</strong>" },
+      { label: "CASH TO MAX IT",  value: "<strong>$202,400</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>10</strong> per player" }
+    ],
+    evolution: {
+      name: "Void Ward",
+      description: "Its pulse gives the doors it reaches a shield that blocks 75% of damage",
+      quest: "Evolution Quest: earn $300,000,000 with a maxed Void Farm"
+    },
+    levels: [
+      { level: 1, cashCost: 500,   pays: "$55",    every: "5s", perMin: "$660",    unlockCoins: 0,      pulseEvery: "34s", neighborsEarn: "+15%" },
+      { level: 2, cashCost: 2700,  pays: "$265",   every: "5s", perMin: "$3,180",  unlockCoins: 500,    pulseEvery: "32s", neighborsEarn: "+20%" },
+      { level: 3, cashCost: 6500,  pays: "$605",   every: "5s", perMin: "$7,260",  unlockCoins: 1400,   pulseEvery: "30s", neighborsEarn: "+25%" },
+      { level: 4, cashCost: 13600, pays: "$1,040", every: "5s", perMin: "$12,480", unlockCoins: 3800,   pulseEvery: "28s", neighborsEarn: "+30%" },
+      { level: 5, cashCost: 24600, pays: "$1,650", every: "5s", perMin: "$19,800", unlockCoins: 10500,  pulseEvery: "26s", neighborsEarn: "+35%" },
+      { level: 6, cashCost: 34300, pays: "$2,320", every: "5s", perMin: "$27,840", unlockCoins: 28000,  pulseEvery: "24s", neighborsEarn: "+40%" },
+      { level: 7, cashCost: 52200, pays: "$3,150", every: "5s", perMin: "$37,800", unlockCoins: 76000,  pulseEvery: "22s", neighborsEarn: "+45%" },
+      { level: 8, cashCost: 68000, pays: "$4,000", every: "5s", perMin: "$48,000", unlockCoins: 180000, pulseEvery: "20s", neighborsEarn: "+50%" }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.02%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>0.19%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>0.38%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>1.05%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>3.84%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>4.79%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>16.54%</strong> per chest" }
+    ]
+  },
+
   "Dino": {
     tags: ["LEGENDARY", "PET"],
     buffColumnLabel: "COINS",
