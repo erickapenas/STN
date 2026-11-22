@@ -668,23 +668,32 @@ const IndexUI = {
         `;
       }
 
-      // Generic Extra Table (e.g. Horse Stampede Damage to a Boss)
+      // Generic Extra Table(s) (e.g. Horse Stampede, Unicorn Wishes, Jinx Reels & Modes)
+      const allExtraTables = [];
       if (details.extraTable && Array.isArray(details.extraTable.rows) && details.extraTable.rows.length > 0) {
+        allExtraTables.push(details.extraTable);
+      }
+      if (Array.isArray(details.extraTables)) {
+        details.extraTables.forEach(t => {
+          if (t && Array.isArray(t.rows) && t.rows.length > 0) allExtraTables.push(t);
+        });
+      }
+      allExtraTables.forEach(tbl => {
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
-              <div class="detail-section-title">${escapeXml(details.extraTable.title)}</div>
-              ${details.extraTable.note ? `<div class="detail-section-note">${escapeXml(details.extraTable.note)}</div>` : ""}
+              <div class="detail-section-title">${escapeXml(tbl.title)}</div>
+              ${tbl.note ? `<div class="detail-section-note">${escapeXml(tbl.note)}</div>` : ""}
             </div>
             <div class="detail-table-wrap">
               <table class="detail-table">
                 <thead>
                   <tr>
-                    ${details.extraTable.headers.map(h => `<th>${escapeXml(h)}</th>`).join("")}
+                    ${tbl.headers.map(h => `<th>${escapeXml(h)}</th>`).join("")}
                   </tr>
                 </thead>
                 <tbody>
-                  ${details.extraTable.rows.map(r => `
+                  ${tbl.rows.map(r => `
                     <tr>
                       ${r.map((cell, idx) => `<td${idx === 0 ? ' class="col-lvl"' : ''}>${escapeXml(cell)}</td>`).join("")}
                     </tr>
@@ -694,7 +703,7 @@ const IndexUI = {
             </div>
           </div>
         `;
-      }
+      });
 
       // Pet Every Level Table (when petLevels is present)
       if (petLevels.length > 0) {

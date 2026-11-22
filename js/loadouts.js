@@ -2,6 +2,7 @@ const LoadoutsUI = {
   activeSubView: "squad",
   players: [],
   clanBuffEnabled: false,
+  selectedMode: "crazy",
   _cachedCanvas: null,
   _cachedBlobPromise: null,
   _isCopying: false,
@@ -18,6 +19,19 @@ const LoadoutsUI = {
   init() {
     this.players = StorageManager.loadSquadLoadouts();
     this.clanBuffEnabled = StorageManager.loadClanBuffsEnabled();
+    this.selectedMode = StorageManager.loadSquadMode();
+
+    const modeSelect = document.getElementById("squadModeSelect");
+    if (modeSelect && typeof JINX_MODES !== "undefined") {
+      modeSelect.innerHTML = JINX_MODES.map(m =>
+        `<option value="${m.key}" ${m.key === this.selectedMode ? "selected" : ""}>🎮 ${m.name} (Max ${m.maxLuck}%)</option>`
+      ).join("");
+      modeSelect.onchange = () => {
+        this.selectedMode = modeSelect.value;
+        StorageManager.saveSquadMode(this.selectedMode);
+        this.renderSummary();
+      };
+    }
 
     const clanBuffBtn = document.getElementById("btnToggleClanBuff");
     if (clanBuffBtn) {
@@ -244,6 +258,8 @@ const LoadoutsUI = {
           { key: "bossstun",     label: "🛡️ Boss Stun",                   color: "#eab308" },
           { key: "exp",          label: `${ICON_EXP} EXP`,                color: "#38bdf8" },
           { key: "clansupplies", label: `${ICON_CLANSUPPLIES} Supplies`,  color: "#f59e0b" },
+          { key: "luck",         label: "🔮 Luck",                        color: "#c084fc" },
+          { key: "wish",         label: "🎰 Wish",                        color: "#f472b6" },
           { key: "event",        label: "🍗 Event",                       color: "#f97316" }
         ];
 
@@ -562,6 +578,8 @@ const LoadoutsUI = {
     const unitCounts = {}; // name -> { item, count, placements }
     const buffEntriesByStat = {}; // stat -> [{ petName, label, icon, base }]
     const bestSupportBaseLvl = {}; // "Military Base" -> max lvl equipped, "Protector Base" -> max lvl equipped
+    let jinxCount = 0;
+    let jinxLuckFromPets = 0;
 
     this.players.forEach(p => {
       const slotCount = p.vip ? 5 : 4;
@@ -579,7 +597,10 @@ const LoadoutsUI = {
         if (def.role === "PET") {
           totalPets += 1;
           const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[def.name] : null;
-          if (buff) {
+          if (def.name === "Jinx" && buff) {
+            jinxCount += 1;
+            jinxLuckFromPets += this.getPetBuffValue(buff, s.lvl);
+          } else if (buff) {
             const allPetBuffs = [buff, ...(buff.extraBuffs || [])];
             allPetBuffs.forEach(pb => {
               const val = this.getPetBuffValue(pb, s.lvl);
@@ -637,6 +658,9 @@ const LoadoutsUI = {
       bossstun:     { label: "Boss Stun",     icon: "🛡️",              unit: "s" },
       exp:          { label: "EXP",           icon: ICON_EXP,          unit: "%" },
       clansupplies: { label: "Clan Supplies", icon: ICON_CLANSUPPLIES, unit: "%" },
+      luck:         { label: "Luck",          icon: "🔮",              unit: "%" },
+      curse:        { label: "Zombie DMG",    icon: "💀",              unit: "%" },
+      wish:         { label: "Wish CD",       icon: "🎰",              unit: "s" },
       event:        { label: "Event",         icon: "🍗",              unit: "%" }
     };
 
@@ -717,6 +741,25 @@ const LoadoutsUI = {
     const buffedSquadDps = baseSquadDps * dmgMult * rateMult;
     const buffedBossDps = baseBossDps * dmgMult * rateMult;
 
+    const modeDef = (typeof JINX_MODES !== "undefined" && JINX_MODES.find(m => m.key === this.selectedMode))
+      || { key: "crazy", name: "Crazy", bonusLuck: 60, maxLuck: 500 };
+    const rawLuck = jinxCount > 0 ? (modeDef.bonusLuck + jinxLuckFromPets) : 0;
+    const cappedLuck = Math.min(rawLuck, modeDef.maxLuck);
+    const overCap = Math.max(0, rawLuck - modeDef.maxLuck);
+    const cursePct = jinxCount * 30;
+    const jackpotChance = jinxCount > 0 ? Math.min(25, 2 + (cappedLuck / 100) * 4) : 0;
+    const jinxInfo = {
+      count: jinxCount,
+      mode: modeDef,
+      petLuck: jinxLuckFromPets,
+      rawLuck,
+      cappedLuck,
+      maxLuck: modeDef.maxLuck,
+      overCap,
+      cursePct,
+      jackpotChance
+    };
+
     return {
       totalTowers,
       totalPets,
@@ -727,7 +770,8 @@ const LoadoutsUI = {
       buffedBossDps,
       towersMissingStats,
       buffsSummary,
-      unitCounts
+      unitCounts,
+      jinxInfo
     };
   },
 
@@ -738,9 +782,30 @@ const LoadoutsUI = {
 
     const totals = this.computeSquadTotals();
     const buffList = Object.values(totals.buffsSummary);
+    const jx = totals.jinxInfo;
 
-    const buffsHtml = buffList.length > 0
-      ? buffList.map(b => {
+    let jinxCardsHtml = "";
+    if (jx && jx.count > 0) {
+      const capTag = jx.overCap > 0 ? ` • ⚠️ +${this.formatStatVal(jx.overCap, "%")} over cap` : "";
+      jinxCardsHtml = `
+        <div class="squad-buff-card squad-buff-jinx">
+          <div class="squad-buff-top">
+            <span class="squad-buff-title">🔮 Jinx Luck (${escapeXml(jx.mode.name)})</span>
+            <span class="squad-buff-total" style="color:#c084fc;">${this.formatStatVal(jx.cappedLuck, "%")} / ${this.formatStatVal(jx.maxLuck, "%")}</span>
+          </div>
+          <div class="squad-buff-breakdown">Mode: +${jx.mode.bonusLuck}% • ${jx.count} Jinx: +${this.formatStatVal(jx.petLuck, "%")} • Jackpot: ${this.formatStatVal(jx.jackpotChance, "%")}${capTag}</div>
+        </div>
+        <div class="squad-buff-card squad-buff-curse">
+          <div class="squad-buff-top">
+            <span class="squad-buff-title">💀 Jinx Curse (Zombie DMG)</span>
+            <span class="squad-buff-total" style="color:#f87171;">+${jx.cursePct}%</span>
+          </div>
+          <div class="squad-buff-breakdown">${jx.count} Jinx × +30% = +${jx.cursePct}% Zombie Damage (no decay)</div>
+        </div>
+      `;
+    }
+
+    const regularBuffsHtml = buffList.map(b => {
           const u = b.unit || "%";
           const parts = [];
           if (b.petCount > 0) {
@@ -762,7 +827,10 @@ const LoadoutsUI = {
               <div class="squad-buff-breakdown">${parts.join(" • ")}</div>
             </div>
           `;
-        }).join("")
+        }).join("");
+
+    const buffsHtml = (jinxCardsHtml || regularBuffsHtml)
+      ? `${jinxCardsHtml}${regularBuffsHtml}`
       : `<div class="squad-empty-note">Add pets, Military/Protector Base, or enable <strong>Clan Buff</strong> (Settings) to see stacked buffs.</div>`;
 
     const rosterEntries = Object.values(totals.unitCounts);

@@ -241,8 +241,13 @@ const PET_BUFFS = {
       { stat: "firerate", label: "Fire Rate", value: 30, levels: [20, 22.5, 25, 27.5, 30], icon: "⚡" }
     ]
   },
-  "Jinx":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
-  "Unicorn":       { stat: "firerate", label: "Fire Rate", value: 30, icon: "⚡" },
+  "Jinx":          {
+    stat: "luck", label: "Luck", value: 40, levels: [20, 25, 30, 35, 40], icon: "🔮", noDecay: true,
+    extraBuffs: [
+      { stat: "curse", label: "Zombie DMG", value: 30, levels: [30, 30, 30, 30, 30], icon: "💀", noDecay: true }
+    ]
+  },
+  "Unicorn":       { stat: "wish",     label: "Wish CD",   value: 30, levels: [60, 52.5, 45, 37.5, 30], unit: "s", icon: "🎰" },
   "Lion":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
   "Horse":         {
     stat: "damage", label: "Damage", value: 50, levels: [50, 50, 50, 50, 50], icon: "⚔️",
@@ -268,6 +273,21 @@ const PET_BUFFS = {
 };
 
 const BUFF_DIMINISHING_FACTOR = 0.6;
+
+const JINX_MODES = [
+  { key: "easy",           name: "Easy",            bonusLuck: 0,  maxLuck: 100, baseCoins: 1500,  baseGems: 23  },
+  { key: "hard",           name: "Hard",            bonusLuck: 15, maxLuck: 125, baseCoins: 5000,  baseGems: 66  },
+  { key: "nightmare",      name: "Nightmare",       bonusLuck: 30, maxLuck: 250, baseCoins: 14500, baseGems: 183 },
+  { key: "impossible",     name: "Impossible",      bonusLuck: 50, maxLuck: 400, baseCoins: 21000, baseGems: 267 },
+  { key: "crazy",          name: "Crazy",           bonusLuck: 60, maxLuck: 500, baseCoins: 31720, baseGems: 406 },
+  { key: "clans_easy",     name: "Clans Easy",      bonusLuck: 0,  maxLuck: 100, baseCoins: 1500,  baseGems: 23  },
+  { key: "clans_hard",     name: "Clans Hard",      bonusLuck: 15, maxLuck: 150, baseCoins: 41499, baseGems: 506 },
+  { key: "clans_crazy",    name: "Clans Crazy",     bonusLuck: 40, maxLuck: 300, baseCoins: 53199, baseGems: 649 },
+  { key: "apocalypse",     name: "Apocalypse",      bonusLuck: 60, maxLuck: 500, baseCoins: 64992, baseGems: 793 },
+  { key: "feast_easy",     name: "Feast Easy",      bonusLuck: 15, maxLuck: 150, baseCoins: 9000,  baseGems: 120 },
+  { key: "feast_nightmare",name: "Feast Nightmare", bonusLuck: 40, maxLuck: 300, baseCoins: 17000, baseGems: 228 },
+  { key: "feast_crazy",    name: "Feast Crazy",     bonusLuck: 60, maxLuck: 500, baseCoins: 23000, baseGems: 308 }
+];
 
 const CLAN_BUFF_DEFS = [
   { key: "armory",     name: "Armory",     stat: "damage",   label: "Damage",    perLevel: 10,  maxLvl: 13, icon: "⚔️", color: "#ef4444", img: "images/Armory.png" },

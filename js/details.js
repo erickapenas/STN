@@ -1133,5 +1133,141 @@ const INDEX_DETAILS = {
       { source: "Pumpkin Egg", chance: "<strong>0.5%</strong> per egg" },
       { source: "Lava Egg",    chance: "<strong>1.25%</strong> per egg" }
     ]
+  },
+
+  "Unicorn": {
+    tags: ["DIVINE", "PET"],
+    buffColumnLabel: "🎰 WISHES",
+    buff2ColumnLabel: "⏱️ COOLDOWN",
+    summaryStats: [
+      { label: "🎰 WISHES",   value: "9" },
+      { label: "⏱️ COOLDOWN", value: "60s → 30s" }
+    ],
+    bullets: [
+      "Gives you a <strong>wish button</strong> that grants a random <strong>powerful wish</strong>: huge tower boosts, extra cash, unbreakable doors and more",
+      "Upgrading it <strong>lowers the cooldown</strong>"
+    ],
+    keyNumbers: [
+      { label: "WISH BUTTON",      value: "Press it to roll <strong>1 random wish</strong>" },
+      { label: "COOLDOWN",         value: "<strong>60s → 30s</strong> by level. It starts when the wish ends" },
+      { label: "UPGRADING",        value: "Only shortens the cooldown. Chances <strong>never change</strong>" },
+      { label: "THE ROLL",         value: "The reel spins for <strong>4.5 seconds</strong>, then the wish starts" },
+      { label: "SEVERAL UNICORNS", value: "Each is its own button at <strong>full strength</strong>" }
+    ],
+    extraTables: [
+      {
+        title: "THE 9 WISHES",
+        note: "SAME CHANCES AT EVERY LEVEL",
+        headers: ["CHANCE", "WISH", "EFFECT"],
+        rows: [
+          ["18%", "Pocket Money",      "Instant cash: what your farms earn in 60 seconds"],
+          ["17%", "Golden Kills",      "40s. Every kill pays 1.5s of your farm income, a boss 30s"],
+          ["15%", "Money Rain",        "45s. Your farms pay 2x"],
+          ["13%", "Invincible Doors",  "20s. Your doors take no damage"],
+          ["12%", "Reverse Card",      "15s. Zombie hits heal your doors instead"],
+          ["11%", "Free Upgrade",      "A random tower gets 1 free level"],
+          ["9%",  "Rainbow Fury",      "40s. Every tower: +200% damage, +200% reload, +50% range"],
+          ["4%",  "Divine Strike",     "Kills every normal zombie at your house. Bosses lose 15% of the health they have left"],
+          ["1%",  "Jackpot",           "3 wishes at once"]
+        ]
+      },
+      {
+        title: "IN PVP THE WISHES ARE WEAKER",
+        headers: ["WISH", "PVP EFFECT"],
+        rows: [
+          ["Pocket Money",     "30 seconds of income"],
+          ["Golden Kills",     "0.75s a kill, 15s a boss"],
+          ["Money Rain",       "1.5x"],
+          ["Invincible Doors", "10s"],
+          ["Reverse Card",     "8s"],
+          ["Rainbow Fury",     "+100% damage, +100% reload, +25% range"],
+          ["Divine Strike",    "Nothing is killed. Zombies lose half their health, bosses 7.5%"]
+        ]
+      }
+    ],
+    petLevels: [
+      { level: 1, buff: "9", buff2: "60s",   upgradeCoins: 0 },
+      { level: 2, buff: "9", buff2: "52.5s", upgradeCoins: 45000 },
+      { level: 3, buff: "9", buff2: "45s",   upgradeCoins: 180000 },
+      { level: 4, buff: "9", buff2: "37.5s", upgradeCoins: 750000 },
+      { level: 5, buff: "9", buff2: "30s",   upgradeCoins: 3000000 }
+    ],
+    whereToGet: [
+      { source: "Legendary Egg", chance: "<strong>0.1%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>1%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>1%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>2.5%</strong> per egg" }
+    ]
+  },
+
+  "Jinx": {
+    tags: ["DIVINE", "PET"],
+    buffColumnLabel: "🔮 LUCK",
+    buff2ColumnLabel: "💀 ZOMBIE DAMAGE",
+    summaryStats: [
+      { label: "🔮 LUCK",          value: "+20% → +40%" },
+      { label: "💀 ZOMBIE DAMAGE", value: "+30%" }
+    ],
+    bullets: [
+      "After every <strong>win</strong>, everyone she curses spins a <strong>crystal ball</strong> for <strong>bonus coins and gems</strong>",
+      "Each Jinx adds <strong>luck</strong> but makes zombies <strong>hit harder</strong>"
+    ],
+    keyNumbers: [
+      { label: "EVERY JINX (CURSE)", value: "Zombies at your house deal <strong>+30% damage</strong>" },
+      { label: "SEVERAL JINXES",     value: "All add up in full: 2 are <strong>+60%</strong>, 3 are <strong>+90%</strong>" },
+      { label: "WHO IS CURSED",      value: "Only the house Jinx is in" },
+      { label: "CRYSTAL BALL SPIN",  value: "After every <strong>win</strong> (Clans Easy: after clearing <strong>50 waves</strong>). A loss gives no spin" },
+      { label: "WHO SPINS",          value: "<strong>Everyone</strong> in the cursed house, once (Jinx must be there for at least <strong>half</strong> of your time)" },
+      { label: "3 REELS",            value: "Each lands on a <strong>coin pack</strong> or <strong>gem pack</strong> (50/50). A pair pays <strong>double</strong>; 3 of a kind = <strong>Jackpot</strong> up to <strong>25x</strong>" },
+      { label: "LUCK",               value: "<strong>20% → 40%</strong> luck per Jinx (all added up) + mode bonus luck, capped by mode" },
+      { label: "JACKPOT CHANCE",     value: "<strong>2%</strong>, plus <strong>4%</strong> for every 100% luck, up to <strong>25%</strong>" },
+      { label: "EXAMPLE",            value: "One level 5 Jinx in Crazy: 40% + 60% = <strong>100% luck</strong>, a <strong>6%</strong> jackpot chance" }
+    ],
+    extraTables: [
+      {
+        title: "THE REELS",
+        note: "PAYS = SHARE OF THE SPIN BASE",
+        headers: ["SYMBOL", "PAYS", "3 OF A KIND", "0% LUCK", "100% LUCK", "250% LUCK", "500% LUCK"],
+        rows: [
+          ["PACK 1",  "6%",  "1x",   "40%", "22.7%", "9.7%",  "2.9%"],
+          ["PACK 2",  "12%", "2.5x", "28%", "23.8%", "15.3%", "7.1%"],
+          ["PACK 3",  "25%", "5x",   "18%", "22.9%", "22.2%", "15.9%"],
+          ["PACK 4",  "50%", "10x",  "10%", "19.1%", "27.7%", "30.9%"],
+          ["PACK 5",  "90%", "25x",  "4%",  "11.5%", "25%",   "43.3%"],
+          ["Jackpot", "—",   "—",    "2%",  "6%",    "12%",   "22%"]
+        ]
+      },
+      {
+        title: "EVERY MODE",
+        note: "SPIN BASE = ONE FULL CLEAR",
+        headers: ["MODE", "BONUS LUCK", "MAX LUCK", "BASE COINS", "BASE GEMS"],
+        rows: [
+          ["Easy",            "+0%",  "100%", "1,500",  "23"],
+          ["Hard",            "+15%", "125%", "5,000",  "66"],
+          ["Nightmare",       "+30%", "250%", "14,500", "183"],
+          ["Impossible",      "+50%", "400%", "21,000", "267"],
+          ["Crazy",           "+60%", "500%", "31,720", "406"],
+          ["Clans Easy",      "+0%",  "100%", "1,500",  "23"],
+          ["Clans Hard",      "+15%", "150%", "41,499", "506"],
+          ["Clans Crazy",     "+40%", "300%", "53,199", "649"],
+          ["Apocalypse",      "+60%", "500%", "64,992", "793"],
+          ["Feast Easy",      "+15%", "150%", "9,000",  "120"],
+          ["Feast Nightmare", "+40%", "300%", "17,000", "228"],
+          ["Feast Crazy",     "+60%", "500%", "23,000", "308"]
+        ]
+      }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", buff2: "+30%", upgradeCoins: 0 },
+      { level: 2, buff: "+25%", buff2: "+30%", upgradeCoins: 45000 },
+      { level: 3, buff: "+30%", buff2: "+30%", upgradeCoins: 180000 },
+      { level: 4, buff: "+35%", buff2: "+30%", upgradeCoins: 750000 },
+      { level: 5, buff: "+40%", buff2: "+30%", upgradeCoins: 3000000 }
+    ],
+    whereToGet: [
+      { source: "Divine Egg",  chance: "<strong>1%</strong> per egg" },
+      { source: "Pumpkin Egg", chance: "<strong>1%</strong> per egg" },
+      { source: "Lava Egg",    chance: "<strong>2.5%</strong> per egg" }
+    ]
   }
 };

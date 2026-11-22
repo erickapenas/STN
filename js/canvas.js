@@ -327,8 +327,29 @@ const CanvasManager = {
 
     // Active Buffs HTML
     const buffList = Object.values(totals.buffsSummary || {});
-    const buffsHtml = buffList.length > 0
-      ? buffList.map(b => {
+    const jx = totals.jinxInfo;
+    let jinxExportHtml = "";
+    if (jx && jx.count > 0) {
+      const capTag = jx.overCap > 0 ? ` • ⚠️ +${fmtStatVal(jx.overCap, "%")} over cap` : "";
+      jinxExportHtml = `
+        <div style="background:#151024; border:1px solid #a855f788; border-radius:8px; padding:9px 12px; min-width:210px; flex:1 1 220px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
+            <span style="font-size:0.84rem; font-weight:700; color:#e9d5ff; font-family:'Segoe UI', sans-serif;">🔮 Jinx Luck (${escapeXml(jx.mode.name)})</span>
+            <span style="font-size:0.9rem; font-weight:800; color:#c084fc; font-family:'Consolas', monospace;">${fmtStatVal(jx.cappedLuck, "%")} / ${fmtStatVal(jx.maxLuck, "%")}</span>
+          </div>
+          <div style="font-size:0.72rem; color:#c4b5fd; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(`Mode: +${jx.mode.bonusLuck}% • ${jx.count} Jinx: +${fmtStatVal(jx.petLuck, "%")} • Jackpot: ${fmtStatVal(jx.jackpotChance, "%")}${capTag}`)}</div>
+        </div>
+        <div style="background:#201015; border:1px solid #ef444488; border-radius:8px; padding:9px 12px; min-width:195px; flex:1 1 200px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
+            <span style="font-size:0.84rem; font-weight:700; color:#fecaca; font-family:'Segoe UI', sans-serif;">💀 Jinx Curse (Zombie DMG)</span>
+            <span style="font-size:0.9rem; font-weight:800; color:#f87171; font-family:'Consolas', monospace;">+${jx.cursePct}%</span>
+          </div>
+          <div style="font-size:0.72rem; color:#fca5a5; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(`${jx.count} Jinx × +30% = +${jx.cursePct}% Zombie Damage`)}</div>
+        </div>
+      `;
+    }
+
+    const regularBuffsExportHtml = buffList.map(b => {
           const u = b.unit || "%";
           const parts = [];
           if (b.petCount > 0) {
@@ -351,7 +372,10 @@ const CanvasManager = {
               <div style="font-size:0.72rem; color:#94a3b8; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(parts.join(" • "))}</div>
             </div>
           `;
-        }).join("")
+        }).join("");
+
+    const buffsHtml = (jinxExportHtml || regularBuffsExportHtml)
+      ? `${jinxExportHtml}${regularBuffsExportHtml}`
       : `<div style="color:#64748b; font-size:0.82rem; font-style:italic; font-family:'Segoe UI', sans-serif;">No active buffs.</div>`;
 
     // Squad Units Summary HTML

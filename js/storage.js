@@ -300,6 +300,13 @@ const StorageManager = {
     localStorage.setItem('td_clan_buffs_enabled', val ? 'true' : 'false');
   },
 
+  loadSquadMode() {
+    return localStorage.getItem('td_squad_mode') || 'crazy';
+  },
+  saveSquadMode(mode) {
+    localStorage.setItem('td_squad_mode', mode || 'crazy');
+  },
+
   exportAllData() {
     const backup = {
       version: 7,
