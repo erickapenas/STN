@@ -6,8 +6,8 @@ const LoadoutsUI = {
     open: false,
     playerIdx: 0,
     slotIdx: 0,
-    type: "towers", // "towers" | "pets"
-    subFilter: "all", // tower role (DAMAGE/SUPPORT/FARM) or pet stat (damage/firerate/range/cash/gems)
+    type: "all", // "all" | "towers" | "pets"
+    subFilter: "all",
     rarity: "all",
     query: ""
   },
@@ -153,7 +153,7 @@ const LoadoutsUI = {
     this.pickerState.open = true;
     this.pickerState.playerIdx = playerIdx;
     this.pickerState.slotIdx = slotIdx;
-    this.pickerState.type = currentDef && currentDef.role === "PET" ? "pets" : "towers";
+    this.pickerState.type = "all";
     this.pickerState.subFilter = "all";
     this.pickerState.rarity = "all";
     this.pickerState.query = "";
@@ -199,7 +199,15 @@ const LoadoutsUI = {
     const bar = document.getElementById("unitPickerSubFilterBar");
     if (!bar) return;
 
-    const chips = this.pickerState.type === "towers"
+    const chips = this.pickerState.type === "all"
+      ? [
+          { key: "all",     label: "All Units",  color: "#60a5fa" },
+          { key: "DAMAGE",  label: "⚔️ Damage",  color: "#ef4444" },
+          { key: "SUPPORT", label: "🛡️ Support", color: "#22c55e" },
+          { key: "FARM",    label: "🌾 Farm",    color: "#facc15" },
+          { key: "PET",     label: "🐾 Pets",    color: "#a855f7" }
+        ]
+      : this.pickerState.type === "towers"
       ? [
           { key: "all",     label: "All Types",   color: "#60a5fa" },
           { key: "DAMAGE",  label: "⚔️ Damage",   color: "#ef4444" },
@@ -212,6 +220,7 @@ const LoadoutsUI = {
           { key: "firerate", label: "⚡ Fire Rate", color: "#f59e0b" },
           { key: "range",    label: "🎯 Range",     color: "#38bdf8" },
           { key: "cash",     label: "💰 Cash",      color: "#22c55e" },
+          { key: "coins",    label: "🪙 Coins",     color: "#facc15" },
           { key: "gems",     label: "💎 Gems",      color: "#a855f7" }
         ];
 
@@ -269,11 +278,13 @@ const LoadoutsUI = {
     const player = this.players[playerIdx];
     const slotCount = player.vip ? 5 : 4;
 
-    const pool = ITEMS.filter(it => (type === "pets" ? it.role === "PET" : it.role !== "PET"));
+    const pool = type === "all"
+      ? ITEMS
+      : ITEMS.filter(it => (type === "pets" ? it.role === "PET" : it.role !== "PET"));
     const filtered = pool.filter(it => {
       if (rarity !== "all" && it.rarity !== rarity) return false;
       if (subFilter !== "all") {
-        if (type === "towers" && it.role !== subFilter) return false;
+        if ((type === "towers" || type === "all") && it.role !== subFilter) return false;
         if (type === "pets") {
           const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[it.name] : null;
           if (!buff || buff.stat !== subFilter) return false;
@@ -420,6 +431,7 @@ const LoadoutsUI = {
 
     const unitCounts = {}; // name -> { item, count, placements }
     const buffEntriesByStat = {}; // stat -> [{ petName, label, icon, base }]
+    const bestSupportBaseLvl = {}; // "Military Base" -> max lvl equipped, "Protector Base" -> max lvl equipped
 
     this.players.forEach(p => {
       const slotCount = p.vip ? 5 : 4;
@@ -451,6 +463,14 @@ const LoadoutsUI = {
           const stats = this.getTowerStatsForLevel(def, s.lvl);
           totalPlacements += stats.limit;
           unitCounts[def.name].placements += stats.limit;
+
+          if (typeof SUPPORT_BASE_BUFFS !== "undefined" && SUPPORT_BASE_BUFFS[def.name]) {
+            const clampedLvl = Math.min(Math.max(1, s.lvl || 1), def.max);
+            if (!bestSupportBaseLvl[def.name] || clampedLvl > bestSupportBaseLvl[def.name]) {
+              bestSupportBaseLvl[def.name] = clampedLvl;
+            }
+          }
+
           if (stats.hasStats) {
             baseSquadDps += stats.totalDps;
             baseBossDps += stats.totalDps * stats.bossMult;
@@ -463,9 +483,38 @@ const LoadoutsUI = {
 
     // Apply geometric diminishing returns: base * (0.6 ^ index) per stat for pets
     const factor = (typeof BUFF_DIMINISHING_FACTOR !== "undefined") ? BUFF_DIMINISHING_FACTOR : 0.6;
+    const STAT_META = {
+      damage:   { label: "Damage",    icon: "⚔️" },
+      firerate: { label: "Fire Rate", icon: "⚡" },
+      range:    { label: "Range",     icon: "🎯" },
+      cash:     { label: "Cash",      icon: "💰" },
+      coins:    { label: "Coins",     icon: "🪙" },
+      gems:     { label: "Gems",      icon: "💎" }
+    };
+
     const buffsSummary = {};
+    const ensureStat = (stat, label, icon) => {
+      if (!buffsSummary[stat]) {
+        const meta = STAT_META[stat] || { label: label || stat, icon: icon || "✨" };
+        buffsSummary[stat] = {
+          stat,
+          label: label || meta.label,
+          icon: icon || meta.icon,
+          petCount: 0,
+          petTotal: 0,
+          baseAdds: [],
+          clanAdd: 0,
+          clanInfo: null,
+          total: 0,
+          steps: []
+        };
+      }
+      return buffsSummary[stat];
+    };
+
     Object.keys(buffEntriesByStat).forEach(stat => {
       const list = buffEntriesByStat[stat].sort((a, b) => b.base - a.base);
+      const entryObj = ensureStat(stat, list[0].label, list[0].icon);
       let petTotal = 0;
       const steps = [];
       list.forEach((entry, idx) => {
@@ -478,18 +527,27 @@ const LoadoutsUI = {
           pctOfBase: Math.round(mult * 1000) / 10
         });
       });
-      buffsSummary[stat] = {
-        stat,
-        label: list[0].label,
-        icon: list[0].icon,
-        petCount: list.length,
-        petTotal,
-        clanAdd: 0,
-        clanInfo: null,
-        total: petTotal,
-        steps
-      };
+      entryObj.petCount = list.length;
+      entryObj.petTotal = petTotal;
+      entryObj.steps = steps;
+      entryObj.total += petTotal;
     });
+
+    // Add Support Base Buffs (Military Base: Damage & Range; Protector Base: Fire Rate — strongest only, non-stacking)
+    if (typeof SUPPORT_BASE_BUFFS !== "undefined") {
+      Object.keys(bestSupportBaseLvl).forEach(baseName => {
+        const lvl = bestSupportBaseLvl[baseName];
+        const baseDef = SUPPORT_BASE_BUFFS[baseName];
+        Object.keys(baseDef).forEach(stat => {
+          const arr = baseDef[stat];
+          const val = arr[Math.min(lvl, arr.length) - 1] || 0;
+          if (val <= 0) return;
+          const entryObj = ensureStat(stat);
+          entryObj.baseAdds.push({ name: `${baseName} Lvl ${lvl}`, value: val });
+          entryObj.total += val;
+        });
+      });
+    }
 
     // Add Clan Buffs when enabled (Armory, Ammo Depot, Watchtower, Treasury)
     if (this.clanBuffEnabled && typeof CLAN_BUFF_DEFS !== "undefined") {
@@ -498,23 +556,10 @@ const LoadoutsUI = {
         const lvl = clanLevels[def.key] || 0;
         if (lvl <= 0) return;
         const addPct = lvl * def.perLevel;
-        if (!buffsSummary[def.stat]) {
-          buffsSummary[def.stat] = {
-            stat: def.stat,
-            label: def.label,
-            icon: def.icon,
-            petCount: 0,
-            petTotal: 0,
-            clanAdd: addPct,
-            clanInfo: `${def.name} Lvl ${lvl}`,
-            total: addPct,
-            steps: []
-          };
-        } else {
-          buffsSummary[def.stat].clanAdd = addPct;
-          buffsSummary[def.stat].clanInfo = `${def.name} Lvl ${lvl}`;
-          buffsSummary[def.stat].total += addPct;
-        }
+        const entryObj = ensureStat(def.stat, def.label, def.icon);
+        entryObj.clanAdd = addPct;
+        entryObj.clanInfo = `${def.name} Lvl ${lvl}`;
+        entryObj.total += addPct;
       });
     }
 
@@ -551,11 +596,14 @@ const LoadoutsUI = {
             const petBreak = b.steps.map(st => `${this.formatPct(st.eff)}`).join(" + ");
             parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
           }
+          if (b.baseAdds && b.baseAdds.length > 0) {
+            b.baseAdds.forEach(ba => parts.push(`🛡️ ${ba.name}: +${this.formatPct(ba.value)}`));
+          }
           if (b.clanAdd > 0 && b.clanInfo) {
             parts.push(`🏰 ${b.clanInfo}: +${this.formatPct(b.clanAdd)}`);
           }
           return `
-            <div class="squad-buff-card${b.clanAdd > 0 ? " has-clan" : ""}">
+            <div class="squad-buff-card${(b.clanAdd > 0 || (b.baseAdds && b.baseAdds.length > 0)) ? " has-clan" : ""}">
               <div class="squad-buff-top">
                 <span class="squad-buff-title">${b.icon} ${escapeXml(b.label)}</span>
                 <span class="squad-buff-total">+${this.formatPct(b.total)}</span>
@@ -564,7 +612,7 @@ const LoadoutsUI = {
             </div>
           `;
         }).join("")
-      : `<div class="squad-empty-note">Add pets to players below or enable <strong>Clan Buff</strong> (configured in Settings) to see stacked buffs.</div>`;
+      : `<div class="squad-empty-note">Add pets, Military/Protector Base, or enable <strong>Clan Buff</strong> (Settings) to see stacked buffs.</div>`;
 
     const rosterEntries = Object.values(totals.unitCounts);
     const rosterHtml = rosterEntries.length > 0

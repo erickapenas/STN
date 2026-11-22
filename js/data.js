@@ -167,7 +167,7 @@ const TOWER_PLACEMENT_LIMITS = {
   "Crossbow": 6,
   "Medical Base": 4,
   "Military Base": 4,
-  "Protector Base": 2,
+  "Protector Base": 5,
   "Bank": 3,
   "Void Farm": 4,
   "Vault": 4,
@@ -196,7 +196,7 @@ const PET_BUFFS = {
   "Turtle":        { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
   "Elephant":      { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
   "Polar Bear":    { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
-  "Dino":          { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
+  "Dino":          { stat: "coins",    label: "Coins",     value: 40, levels: [20, 25, 30, 35, 40], icon: "🪙" },
   "Tiger":         { stat: "firerate", label: "Fire Rate", value: 25, icon: "⚡" },
   "Jinx":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
   "Unicorn":       { stat: "firerate", label: "Fire Rate", value: 30, icon: "⚡" },
@@ -217,7 +217,17 @@ const CLAN_BUFF_DEFS = [
   { key: "treasury",   name: "Treasury",   stat: "cash",     label: "Cash",      perLevel: 7.5, maxLvl: 13, icon: "💰", color: "#22c55e", img: "images/Treasury.png" }
 ];
 
-const IMAGE_VERSION = "6.5";
+const SUPPORT_BASE_BUFFS = {
+  "Military Base": {
+    damage: [15, 20, 25, 30, 35, 40],
+    range:  [0, 0, 0, 17, 33, 50]
+  },
+  "Protector Base": {
+    firerate: [15, 25, 35, 45, 60, 75]
+  }
+};
+
+const IMAGE_VERSION = "7.0";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

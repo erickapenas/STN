@@ -280,6 +280,75 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Protector Base": {
+    tags: ["EPIC", "BOOST"],
+    isProtectorBase: true,
+    summaryStats: [
+      { label: "RELOAD",     value: "+15% → +75%" },
+      { label: "SHIELD",     value: "45s → 25s" },
+      { label: "PLACE COST", value: "$5,000" }
+    ],
+    bullets: [
+      "<strong>Buffs every tower next to it</strong> so they <strong>shoot faster</strong>",
+      "From <strong>level 4</strong> it also gives them a <strong>shield</strong> that <strong>blocks a stun</strong>, and the shield comes back after a short wait"
+    ],
+    keyNumbers: [
+      { label: "RELOAD BUFF",       value: "<strong>+15% → +75%</strong> for every tower in reach" },
+      { label: "SHIELD",            value: "From <strong>level 4</strong>. Blocks <strong>1 boss stun</strong> on each tower in reach" },
+      { label: "SHIELD COMES BACK", value: "After <strong>45s</strong> at level 4, <strong>35s</strong> at level 5, <strong>25s</strong> at level 6" },
+      { label: "REACH",             value: "<strong>21 → 32</strong> studs" },
+      { label: "SEVERAL BASES",     value: "Do not add up. The <strong>strongest</strong> one in reach counts" },
+      { label: "CASH TO MAX IT",    value: "<strong>$780,500</strong> in a match, for all <strong>6 levels</strong>" },
+      { label: "PLACEMENT LIMIT",   value: "<strong>5</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 5000,   reloadBuff: "+15%", reach: "21", shieldBack: "NO SHIELD", unlockCoins: 0 },
+      { level: 2, cashCost: 12500,  reloadBuff: "+25%", reach: "23", shieldBack: "NO SHIELD", unlockCoins: 0 },
+      { level: 3, cashCost: 33000,  reloadBuff: "+35%", reach: "26", shieldBack: "NO SHIELD", unlockCoins: 0 },
+      { level: 4, cashCost: 85000,  reloadBuff: "+45%", reach: "29", shieldBack: "45s",       unlockCoins: 0 },
+      { level: 5, cashCost: 215000, reloadBuff: "+60%", reach: "31", shieldBack: "35s",       unlockCoins: 5000 },
+      { level: 6, cashCost: 430000, reloadBuff: "+75%", reach: "32", shieldBack: "25s",       unlockCoins: 45000 }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.26%</strong> per chest" },
+      { source: "Rare Chest",      chance: "<strong>0.5%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>5.2%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>10.4%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>15.82%</strong> per chest" }
+    ]
+  },
+
+  "Dino": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "COINS",
+    summaryStats: [
+      { label: "COINS", value: "+20% → +40%" }
+    ],
+    bullets: [
+      "You earn <strong>more coins</strong> at the end of every match you finish"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The coins of <strong>every match you finish</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", upgradeCoins: 0 },
+      { level: 2, buff: "+25%", upgradeCoins: 15000 },
+      { level: 3, buff: "+30%", upgradeCoins: 60000 },
+      { level: 4, buff: "+35%", upgradeCoins: 250000 },
+      { level: 5, buff: "+40%", upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg",      chance: "<strong>0.04%</strong> per egg" },
+      { source: "Epic Egg",      chance: "<strong>0.22%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.43%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>1.18%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>4.27%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>5.38%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>19.09%</strong> per egg" }
+    ]
+  },
+
   "Croc": {
     tags: ["LEGENDARY", "PET"],
     buffColumnLabel: "GEMS",
