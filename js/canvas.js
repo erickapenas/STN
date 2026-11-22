@@ -311,6 +311,7 @@ const CanvasManager = {
       const num = Number.isInteger(n) ? n.toLocaleString() : Number(n.toFixed(2)).toLocaleString();
       if (unit === "$") return `$${num}`;
       if (unit === "lvl") return `${num} Lvl`;
+      if (unit === "s") return `${num}s`;
       return `${num}%`;
     };
     const normalizeInlineIcon = (htmlStr) =>

@@ -871,5 +871,144 @@ const INDEX_DETAILS = {
       { source: "Pumpkin Egg",   chance: "<strong>5.38%</strong> per egg" },
       { source: "Lava Egg",      chance: "<strong>19.09%</strong> per egg" }
     ]
+  },
+
+  "Elephant": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "🛡️ STUNS FOR",
+    buff2ColumnLabel: "⏱️ COOLDOWN",
+    summaryStats: [
+      { label: "🛡️ STUNS FOR", value: "5s → 8s" },
+      { label: "⏱️ COOLDOWN",  value: "70s → 40s" }
+    ],
+    bullets: [
+      "When a boss tries to stun your towers, the stun bounces back and <strong>every boss at your house is stunned</strong> instead"
+    ],
+    keyNumbers: [
+      { label: "TRIGGERS",          value: "When a boss tries to <strong>stun your towers</strong>" },
+      { label: "WHAT HAPPENS",      value: "The stun is canceled and <strong>every boss</strong> at your house is stunned" },
+      { label: "BOSS STUN",         value: "<strong>5s → 8s</strong> by level" },
+      { label: "COOLDOWN",          value: "<strong>70s → 40s</strong> by level" },
+      { label: "SEVERAL ELEPHANTS", value: "Each has its own cooldown. Maxed, the 2nd waits <strong>67s</strong>, the 3rd <strong>111s</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "5s",    buff2: "70s",   upgradeCoins: 0 },
+      { level: 2, buff: "5.75s", buff2: "62.5s", upgradeCoins: 15000 },
+      { level: 3, buff: "6.5s",  buff2: "55s",   upgradeCoins: 60000 },
+      { level: 4, buff: "7.25s", buff2: "47.5s", upgradeCoins: 250000 },
+      { level: 5, buff: "8s",    buff2: "40s",   upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>0.11%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.22%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>0.59%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>2.13%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>2.69%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>9.54%</strong> per egg" }
+    ]
+  },
+
+  "Dragon": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "🩸 LIFESTEAL",
+    summaryStats: [
+      { label: "🩸 LIFESTEAL", value: "+30% → +40%" }
+    ],
+    bullets: [
+      "A share of the damage your towers deal <strong>repairs your door</strong>"
+    ],
+    keyNumbers: [
+      { label: "HEALS",                value: "Your door, with a share of the <strong>damage your towers deal</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+30%",   upgradeCoins: 0 },
+      { level: 2, buff: "+32.5%", upgradeCoins: 15000 },
+      { level: 3, buff: "+35%",   upgradeCoins: 60000 },
+      { level: 4, buff: "+37.5%", upgradeCoins: 250000 },
+      { level: 5, buff: "+40%",   upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>0.04%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.09%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>0.24%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>1%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>1.08%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>3.82%</strong> per egg" }
+    ]
+  },
+
+  "Golden Turkey": {
+    tags: ["LEGENDARY", "EXCLUSIVE", "PET"],
+    buffColumnLabel: "🪙 COINS",
+    buff2ColumnLabel: "🍗 EVENT",
+    buff3ColumnLabel: "🦅 LIFT",
+    summaryStats: [
+      { label: "🪙 COINS", value: "+20% → +40%" },
+      { label: "🍗 EVENT", value: "+30% → +70%" },
+      { label: "🦅 LIFT",  value: "16s → 8s" }
+    ],
+    bullets: [
+      "Every few seconds it <strong>flies off with a zombie</strong> and <strong>drops it dead</strong>",
+      "You also earn <strong>more coins</strong> from every match and <strong>much more event currency</strong> from every event win"
+    ],
+    keyNumbers: [
+      { label: "LIFT EVERY",             value: "<strong>16s → 8s</strong> by level, when a zombie is near your house" },
+      { label: "PICKS",                  value: "The <strong>toughest normal zombie</strong> within <strong>50 studs</strong> of a door" },
+      { label: "WHAT HAPPENS",           value: "Carries it <strong>20 studs</strong> up and drops it. It <strong>dies</strong>" },
+      { label: "BOSSES",                 value: "Are never picked" },
+      { label: "SEVERAL GOLDEN TURKEYS", value: "All lift, but wait longer. Maxed: <strong>8s</strong>, <strong>13s</strong>, <strong>22s</strong>" },
+      { label: "COINS",                  value: "<strong>+20% → +40%</strong> from every match you finish" },
+      { label: "DRUMSTICKS",             value: "<strong>+30% → +70%</strong> from every event match you win" },
+      { label: "LEVEL UPS",              value: "Cost <strong>Drumsticks</strong> while the event runs" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", buff2: "+30%", buff3: "16s", upgradeCoins: 0 },
+      { level: 2, buff: "+25%", buff2: "+40%", buff3: "14s", upgradeCoins: 15000 },
+      { level: 3, buff: "+30%", buff2: "+50%", buff3: "12s", upgradeCoins: 60000 },
+      { level: 4, buff: "+35%", buff2: "+60%", buff3: "10s", upgradeCoins: 250000 },
+      { level: 5, buff: "+40%", buff2: "+70%", buff3: "8s",  upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Exclusive",   chance: "<strong>Thanksgiving Event</strong>" },
+      { source: "Harvest Egg", chance: "<strong>3%</strong> per egg" }
+    ]
+  },
+
+  "Turtle": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "🛡️ SHIELD",
+    buff2ColumnLabel: "⚡ RELOAD",
+    summaryStats: [
+      { label: "🛡️ SHIELD", value: "5s → 20s" },
+      { label: "⚡ RELOAD", value: "+100% → +200%" }
+    ],
+    bullets: [
+      "When a door is about to break, every door in your house gets a <strong>shield</strong> and your towers <strong>reload much faster</strong> for a few seconds",
+      "Works once per match"
+    ],
+    keyNumbers: [
+      { label: "TRIGGERS",        value: "When a hit would <strong>break a door</strong>" },
+      { label: "SHIELD",          value: "<strong>Every door</strong> takes no damage for <strong>5s → 20s</strong>" },
+      { label: "WHILE IT IS UP",  value: "Your towers reload <strong>+100% → +200%</strong> faster" },
+      { label: "USES",            value: "<strong>1 per match</strong> for each Turtle" },
+      { label: "HEALING",         value: "Still works while the shield is up" },
+      { label: "SEVERAL TURTLES", value: "Fire one after another, strongest first" }
+    ],
+    petLevels: [
+      { level: 1, buff: "5s",     buff2: "+100%", upgradeCoins: 0 },
+      { level: 2, buff: "8.75s",  buff2: "+125%", upgradeCoins: 15000 },
+      { level: 3, buff: "12.5s",  buff2: "+150%", upgradeCoins: 60000 },
+      { level: 4, buff: "16.25s", buff2: "+175%", upgradeCoins: 250000 },
+      { level: 5, buff: "20s",    buff2: "+200%", upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>0.08%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.15%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>0.41%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>1.49%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>1.88%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>6.68%</strong> per egg" }
+    ]
   }
 };

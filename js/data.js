@@ -224,10 +224,15 @@ const PET_BUFFS = {
       { stat: "startcash", label: "Start Cash", value: 500, levels: [100, 200, 300, 400, 500], unit: "$", icon: ICON_STARTCASH }
     ]
   },
-  "Dragon":        { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
-  "Croc":          { stat: "gems",     label: "Gems",      value: 40, levels: [20, 25, 30, 35, 40], icon: "💎" },
-  "Turtle":        { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
-  "Elephant":      { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
+  "Dragon":        { stat: "lifesteal", label: "Lifesteal",   value: 40, levels: [30, 32.5, 35, 37.5, 40], icon: "🩸" },
+  "Croc":          { stat: "gems",      label: "Gems",        value: 40, levels: [20, 25, 30, 35, 40], icon: "💎" },
+  "Turtle":        {
+    stat: "shield", label: "Door Shield", value: 20, levels: [5, 8.75, 12.5, 16.25, 20], unit: "s", icon: "🛡️",
+    extraBuffs: [
+      { stat: "firerate", label: "Fire Rate", value: 200, levels: [100, 125, 150, 175, 200], icon: "⚡" }
+    ]
+  },
+  "Elephant":      { stat: "bossstun",  label: "Boss Stun",   value: 8,  levels: [5, 5.75, 6.5, 7.25, 8], unit: "s", icon: "🛡️" },
   "Polar Bear":    { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
   "Dino":          { stat: "coins",    label: "Coins",     value: 40, levels: [20, 25, 30, 35, 40], icon: "🪙" },
   "Tiger":         {
@@ -248,7 +253,12 @@ const PET_BUFFS = {
       { stat: "range", label: "Range", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🎯" }
     ]
   },
-  "Golden Turkey": { stat: "cash",     label: "Cash",      value: 35, icon: "💰" }
+  "Golden Turkey": {
+    stat: "coins", label: "Coins", value: 40, levels: [20, 25, 30, 35, 40], icon: "🪙",
+    extraBuffs: [
+      { stat: "event", label: "Event", value: 70, levels: [30, 40, 50, 60, 70], icon: "🍗" }
+    ]
+  }
 };
 
 const BUFF_DIMINISHING_FACTOR = 0.6;

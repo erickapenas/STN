@@ -237,6 +237,9 @@ const LoadoutsUI = {
           { key: "gems",      label: "💎 Gems",        color: "#a855f7" },
           { key: "doorlvl",      label: "🚪 Doors Start",                 color: "#d97706" },
           { key: "doorhp",       label: "💚 Door Health",                 color: "#4ade80" },
+          { key: "lifesteal",    label: "🩸 Lifesteal",                   color: "#ef4444" },
+          { key: "shield",       label: "🛡️ Door Shield",                 color: "#38bdf8" },
+          { key: "bossstun",     label: "🛡️ Boss Stun",                   color: "#eab308" },
           { key: "exp",          label: `${ICON_EXP} EXP`,                color: "#38bdf8" },
           { key: "clansupplies", label: `${ICON_CLANSUPPLIES} Supplies`,  color: "#f59e0b" },
           { key: "event",        label: "🍗 Event",                       color: "#f97316" }
@@ -507,6 +510,7 @@ const LoadoutsUI = {
     const num = Number.isInteger(n) ? n.toLocaleString() : Number(n.toFixed(2)).toLocaleString();
     if (unit === "$") return `$${num}`;
     if (unit === "lvl") return `${num} Lvl`;
+    if (unit === "s") return `${num}s`;
     return `${num}%`;
   },
 
@@ -623,6 +627,9 @@ const LoadoutsUI = {
       gems:      { label: "Gems",        icon: "💎", unit: "%" },
       doorlvl:      { label: "Doors Start",   icon: "🚪",              unit: "lvl" },
       doorhp:       { label: "Door Health",   icon: "💚",              unit: "%" },
+      lifesteal:    { label: "Lifesteal",     icon: "🩸",              unit: "%" },
+      shield:       { label: "Door Shield",   icon: "🛡️",              unit: "s" },
+      bossstun:     { label: "Boss Stun",     icon: "🛡️",              unit: "s" },
       exp:          { label: "EXP",           icon: ICON_EXP,          unit: "%" },
       clansupplies: { label: "Clan Supplies", icon: ICON_CLANSUPPLIES, unit: "%" },
       event:        { label: "Event",         icon: "🍗",              unit: "%" }
