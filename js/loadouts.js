@@ -581,6 +581,12 @@ const LoadoutsUI = {
     const bestSupportBaseLvl = {}; // "Military Base" -> max lvl equipped, "Protector Base" -> max lvl equipped
     let jinxCount = 0;
     let jinxLuckFromPets = 0;
+    let lionCount = 0;
+    const lionSpots = []; // [{ fireRate, farms }]
+    const placedDpsTowers = []; // [{ singleDps, bossSingleDps }]
+    const LION_SPOTS_BY_LVL = [4, 5, 6, 7, 8];
+    const LION_RATE_BY_LVL  = [100, 125, 150, 175, 200];
+    const LION_FARMS_BY_LVL = [60, 70, 80, 90, 100];
 
     this.players.forEach(p => {
       const slotCount = p.vip ? 5 : 4;
@@ -601,6 +607,15 @@ const LoadoutsUI = {
           if (def.name === "Jinx" && buff) {
             jinxCount += 1;
             jinxLuckFromPets += this.getPetBuffValue(buff, s.lvl);
+          } else if (def.name === "Lion") {
+            lionCount += 1;
+            const lvIdx = Math.min(Math.max(1, s.lvl || 1), 5) - 1;
+            const spotCnt = LION_SPOTS_BY_LVL[lvIdx];
+            const spotRate = LION_RATE_BY_LVL[lvIdx];
+            const spotFarms = LION_FARMS_BY_LVL[lvIdx];
+            for (let k = 0; k < spotCnt; k++) {
+              lionSpots.push({ fireRate: spotRate, farms: spotFarms });
+            }
           } else if (buff) {
             const allPetBuffs = [buff, ...(buff.extraBuffs || [])];
             allPetBuffs.forEach(pb => {
@@ -631,6 +646,12 @@ const LoadoutsUI = {
           if (stats.hasStats) {
             baseSquadDps += stats.totalDps;
             baseBossDps += stats.totalDps * stats.bossMult;
+            for (let k = 0; k < stats.limit; k++) {
+              placedDpsTowers.push({
+                singleDps: stats.singleDps,
+                bossSingleDps: stats.singleDps * stats.bossMult
+              });
+            }
           } else if (def.role === "DAMAGE") {
             towersMissingStats += 1;
           }
@@ -755,10 +776,39 @@ const LoadoutsUI = {
       });
     }
 
-    const dmgMult = 1 + ((buffsSummary.damage ? buffsSummary.damage.total : 0) / 100);
-    const rateMult = 1 + ((buffsSummary.firerate ? buffsSummary.firerate.total : 0) / 100);
-    const buffedSquadDps = baseSquadDps * dmgMult * rateMult;
-    const buffedBossDps = baseBossDps * dmgMult * rateMult;
+    const globalDmgPct = buffsSummary.damage ? buffsSummary.damage.total : 0;
+    const globalRatePct = buffsSummary.firerate ? buffsSummary.firerate.total : 0;
+    const globalFarmsPct = buffsSummary.farms ? buffsSummary.farms.total : 0;
+    const dmgMult = 1 + (globalDmgPct / 100);
+
+    // Assign Lion Blessed Spots 1-to-1 to highest-DPS placed towers (no decay on other Fire Rate/Farms pets)
+    lionSpots.sort((a, b) => b.fireRate - a.fireRate);
+    placedDpsTowers.sort((a, b) => b.singleDps - a.singleDps);
+
+    let buffedSquadDps = 0;
+    let buffedBossDps = 0;
+    placedDpsTowers.forEach((tw, idx) => {
+      const spotRate = idx < lionSpots.length ? lionSpots[idx].fireRate : 0;
+      const towerRateMult = 1 + ((globalRatePct + spotRate) / 100);
+      buffedSquadDps += tw.singleDps * dmgMult * towerRateMult;
+      buffedBossDps += tw.bossSingleDps * dmgMult * towerRateMult;
+    });
+
+    const totalLionSpots = lionSpots.length;
+    const lionSpotsUsed = Math.min(placedDpsTowers.length, totalLionSpots);
+    const lionSpotsAvailable = Math.max(0, totalLionSpots - lionSpotsUsed);
+    const maxLionRate = totalLionSpots > 0 ? lionSpots[0].fireRate : 0;
+    const maxLionFarms = totalLionSpots > 0 ? lionSpots[0].farms : 0;
+    const lionInfo = {
+      count: lionCount,
+      totalSpots: totalLionSpots,
+      spotsUsed: lionSpotsUsed,
+      spotsAvailable: lionSpotsAvailable,
+      maxFireRate: maxLionRate,
+      maxFarms: maxLionFarms,
+      totalFireRateOnSpot: globalRatePct + maxLionRate,
+      totalFarmsOnSpot: globalFarmsPct + maxLionFarms
+    };
 
     const modeDef = (typeof JINX_MODES !== "undefined" && JINX_MODES.find(m => m.key === this.selectedMode))
       || { key: "crazy", name: "Crazy", bonusLuck: 60, maxLuck: 500 };
@@ -790,7 +840,8 @@ const LoadoutsUI = {
       towersMissingStats,
       buffsSummary,
       unitCounts,
-      jinxInfo
+      jinxInfo,
+      lionInfo
     };
   },
 
@@ -802,11 +853,23 @@ const LoadoutsUI = {
     const totals = this.computeSquadTotals();
     const buffList = Object.values(totals.buffsSummary);
     const jx = totals.jinxInfo;
+    const ln = totals.lionInfo;
 
-    let jinxCardsHtml = "";
+    let specialCardsHtml = "";
+    if (ln && ln.count > 0) {
+      specialCardsHtml += `
+        <div class="squad-buff-card squad-buff-lion">
+          <div class="squad-buff-top">
+            <span class="squad-buff-title">🦁 Lion Blessed Spots (${ln.spotsUsed}/${ln.totalSpots} used • ${ln.spotsAvailable} free)</span>
+            <span class="squad-buff-total" style="color:#fbbf24;">+${this.formatStatVal(ln.totalFireRateOnSpot, "%")} Fire Rate</span>
+          </div>
+          <div class="squad-buff-breakdown">Lion: +${ln.maxFireRate}% Fire Rate (no decay) • ${ICON_FARMS} Farms: +${ln.maxFarms}% (Total: +${this.formatStatVal(ln.totalFarmsOnSpot, "%")}) • ${ln.totalSpots} spot${ln.totalSpots > 1 ? "s" : ""} total</div>
+        </div>
+      `;
+    }
     if (jx && jx.count > 0) {
       const capTag = jx.overCap > 0 ? ` • ⚠️ +${this.formatStatVal(jx.overCap, "%")} over cap` : "";
-      jinxCardsHtml = `
+      specialCardsHtml += `
         <div class="squad-buff-card squad-buff-jinx">
           <div class="squad-buff-top">
             <span class="squad-buff-title">🔮 Jinx Luck (${escapeXml(jx.mode.name)})</span>
@@ -854,8 +917,8 @@ const LoadoutsUI = {
           `;
         }).join("");
 
-    const buffsHtml = (jinxCardsHtml || regularBuffsHtml)
-      ? `${jinxCardsHtml}${regularBuffsHtml}`
+    const buffsHtml = (specialCardsHtml || regularBuffsHtml)
+      ? `${specialCardsHtml}${regularBuffsHtml}`
       : `<div class="squad-empty-note">Add pets, Military/Protector Base, or enable <strong>Clan Buff</strong> (Settings) to see stacked buffs.</div>`;
 
     const rosterEntries = Object.values(totals.unitCounts);

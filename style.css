@@ -3028,6 +3028,11 @@ select option {
   color: #f8fafc;
 }
 
+.squad-buff-card.squad-buff-lion {
+  border-color: rgba(245, 158, 11, 0.6);
+  background: rgba(42, 30, 10, 0.72);
+}
+
 .squad-buff-card.squad-buff-jinx {
   border-color: rgba(168, 85, 247, 0.55);
   background: rgba(30, 16, 48, 0.72);

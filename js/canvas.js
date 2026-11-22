@@ -328,10 +328,22 @@ const CanvasManager = {
     // Active Buffs HTML
     const buffList = Object.values(totals.buffsSummary || {});
     const jx = totals.jinxInfo;
-    let jinxExportHtml = "";
+    const ln = totals.lionInfo;
+    let specialExportHtml = "";
+    if (ln && ln.count > 0) {
+      specialExportHtml += `
+        <div style="background:#21190c; border:1px solid #f59e0b88; border-radius:8px; padding:9px 12px; min-width:220px; flex:1 1 240px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
+            <span style="font-size:0.84rem; font-weight:700; color:#fef3c7; font-family:'Segoe UI', sans-serif;">🦁 Lion Spots (${ln.spotsUsed}/${ln.totalSpots} used • ${ln.spotsAvailable} free)</span>
+            <span style="font-size:0.9rem; font-weight:800; color:#fbbf24; font-family:'Consolas', monospace;">+${fmtStatVal(ln.totalFireRateOnSpot, "%")}</span>
+          </div>
+          <div style="font-size:0.72rem; color:#fde68a; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(`Lion: +${ln.maxFireRate}% Fire Rate (no decay) • Farms: +${ln.maxFarms}% (Total: +${fmtStatVal(ln.totalFarmsOnSpot, "%")})`)}</div>
+        </div>
+      `;
+    }
     if (jx && jx.count > 0) {
       const capTag = jx.overCap > 0 ? ` • ⚠️ +${fmtStatVal(jx.overCap, "%")} over cap` : "";
-      jinxExportHtml = `
+      specialExportHtml += `
         <div style="background:#151024; border:1px solid #a855f788; border-radius:8px; padding:9px 12px; min-width:210px; flex:1 1 220px; box-sizing:border-box;">
           <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
             <span style="font-size:0.84rem; font-weight:700; color:#e9d5ff; font-family:'Segoe UI', sans-serif;">🔮 Jinx Luck (${escapeXml(jx.mode.name)})</span>
@@ -380,8 +392,8 @@ const CanvasManager = {
           `;
         }).join("");
 
-    const buffsHtml = (jinxExportHtml || regularBuffsExportHtml)
-      ? `${jinxExportHtml}${regularBuffsExportHtml}`
+    const buffsHtml = (specialExportHtml || regularBuffsExportHtml)
+      ? `${specialExportHtml}${regularBuffsExportHtml}`
       : `<div style="color:#64748b; font-size:0.82rem; font-style:italic; font-family:'Segoe UI', sans-serif;">No active buffs.</div>`;
 
     // Squad Units Summary HTML
