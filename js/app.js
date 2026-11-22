@@ -195,7 +195,10 @@ ignInput.addEventListener("input", () => {
   userIgn = ignInput.value;
   StorageManager.saveIgn(userIgn);
   updateIgnPreview();
-  InventoryUI.updateUI();
+  if (typeof InventoryUI !== "undefined") {
+    InventoryUI.syncActiveProfileName(userIgn);
+    InventoryUI.updateUI();
+  }
 });
 
 document.getElementById("btnExportData").onclick = () => StorageManager.exportAllData();

@@ -116,28 +116,70 @@ const StorageManager = {
     localStorage.setItem('td_inv_show_unowned_v2', val ? 'true' : 'false');
   },
 
-  loadInventory() {
-    let inv = {};
+  createEmptyInventory() {
+    const inv = {};
     ITEMS.forEach(it => { inv[it.name] = { owned: false, lvl: 1, max: it.max, canEvo: !!it.canEvo }; });
+    return inv;
+  },
+
+  normalizeInventory(parsed) {
+    const inv = this.createEmptyInventory();
+    if (parsed && typeof parsed === 'object') {
+      Object.keys(parsed).forEach(k => {
+        const targetKey = k === "The Bank" ? "Bank" : k;
+        if (inv[targetKey] && parsed[k]) {
+          const cap = inv[targetKey].canEvo ? inv[targetKey].max + 1 : inv[targetKey].max;
+          inv[targetKey].owned = !!parsed[k].owned;
+          inv[targetKey].lvl = Math.min(parsed[k].lvl || 1, cap);
+        }
+      });
+    }
+    return inv;
+  },
+
+  loadInventory() {
     try {
       const data = localStorage.getItem('td_setup_inventory');
-      if (data) {
-        const parsed = JSON.parse(data);
-        Object.keys(parsed).forEach(k => {
-          const targetKey = k === "The Bank" ? "Bank" : k;
-          if (inv[targetKey]) {
-            const cap = inv[targetKey].canEvo ? inv[targetKey].max + 1 : inv[targetKey].max;
-            inv[targetKey].owned = !!parsed[k].owned;
-            inv[targetKey].lvl = Math.min(parsed[k].lvl || 1, cap);
-          }
-        });
-        return inv;
-      }
+      if (data) return this.normalizeInventory(JSON.parse(data));
     } catch {}
-    return inv;
+    return this.createEmptyInventory();
   },
   saveInventory(inv) {
     localStorage.setItem('td_setup_inventory', JSON.stringify(inv));
+  },
+
+  loadInventoryProfiles() {
+    try {
+      const raw = localStorage.getItem('td_inv_profiles_v1');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.slice(0, 6).map((p, idx) => ({
+            id: typeof p.id === 'string' && p.id ? p.id : (idx === 0 ? 'main' : `alt_${idx}`),
+            name: typeof p.name === 'string' ? p.name : '',
+            inv: this.normalizeInventory(p.inv)
+          }));
+        }
+      }
+    } catch {}
+
+    const migrated = [{
+      id: 'main',
+      name: this.loadIgn() || '',
+      inv: this.loadInventory()
+    }];
+    this.saveInventoryProfiles(migrated);
+    return migrated;
+  },
+  saveInventoryProfiles(profiles) {
+    localStorage.setItem('td_inv_profiles_v1', JSON.stringify(profiles.slice(0, 6)));
+  },
+
+  loadActiveProfileId() {
+    return localStorage.getItem('td_inv_active_profile_v1') || 'main';
+  },
+  saveActiveProfileId(id) {
+    localStorage.setItem('td_inv_active_profile_v1', id || 'main');
   },
 
   loadClanBattle() {
@@ -276,6 +318,8 @@ const StorageManager = {
       includeRoleTags: this.loadIncludeRoleTags(),
       showUnownedInImage: this.loadShowUnownedInImage(),
       inventory: this.loadInventory(),
+      invProfiles: this.loadInventoryProfiles(),
+      invActiveProfileId: this.loadActiveProfileId(),
       clanBattle: this.loadClanBattle(),
       headlines: this.loadHeadlines()
     };
@@ -305,6 +349,8 @@ const StorageManager = {
       if (typeof data.includeRoleTags === 'boolean') this.saveIncludeRoleTags(data.includeRoleTags);
       if (typeof data.showUnownedInImage === 'boolean') this.saveShowUnownedInImage(data.showUnownedInImage);
       if (data.inventory) this.saveInventory(data.inventory);
+      if (Array.isArray(data.invProfiles) && data.invProfiles.length > 0) this.saveInventoryProfiles(data.invProfiles);
+      if (typeof data.invActiveProfileId === 'string') this.saveActiveProfileId(data.invActiveProfileId);
       if (data.clanBattle) this.saveClanBattle(data.clanBattle);
       if (data.headlines) {
         this.saveHeadlines(

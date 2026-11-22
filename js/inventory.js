@@ -1,4 +1,6 @@
 const InventoryUI = {
+  profiles: [],
+  activeProfileId: "main",
   inv: {},
   nitro: false,
   includeRoleTags: true,
@@ -13,7 +15,25 @@ const InventoryUI = {
   _isCopying: false,
 
   init() {
-    this.inv = StorageManager.loadInventory();
+    this.profiles = StorageManager.loadInventoryProfiles();
+    const savedActiveId = StorageManager.loadActiveProfileId();
+    const active = this.profiles.find(p => p.id === savedActiveId) || this.profiles[0];
+    this.activeProfileId = active.id;
+    this.inv = active.inv;
+
+    if (typeof userIgn !== "undefined") {
+      if (active.id === "main" && !active.name && userIgn && userIgn.trim()) {
+        active.name = userIgn.trim();
+        StorageManager.saveInventoryProfiles(this.profiles);
+      } else {
+        userIgn = active.name || "";
+        StorageManager.saveIgn(userIgn);
+        const ignEl = document.getElementById("ignInput");
+        if (ignEl) ignEl.value = userIgn;
+        if (typeof updateIgnPreview === "function") updateIgnPreview();
+      }
+    }
+
     this.nitro = StorageManager.loadNitro();
     this.includeRoleTags = StorageManager.loadIncludeRoleTags();
     this.showUnowned = StorageManager.loadShowUnownedInImage();
@@ -79,8 +99,132 @@ const InventoryUI = {
     document.getElementById("invCopyImgBtn").onclick = () => this.copyImage();
     document.getElementById("invDownloadImgBtn").onclick = () => this.downloadImage();
 
+    this.renderProfileBar();
     this.renderItems();
     this.updateUI();
+  },
+
+  getActiveProfile() {
+    return this.profiles.find(p => p.id === this.activeProfileId) || this.profiles[0];
+  },
+
+  getProfileDisplayName(profile, idx) {
+    if (profile && profile.name && profile.name.trim()) return profile.name.trim();
+    return idx === 0 ? "Main Account" : `Alt ${idx}`;
+  },
+
+  syncActiveProfileName(newName) {
+    const active = this.getActiveProfile();
+    if (!active) return;
+    active.name = newName || "";
+    StorageManager.saveInventoryProfiles(this.profiles);
+    this.renderProfileBar();
+  },
+
+  selectProfile(id) {
+    const target = this.profiles.find(p => p.id === id);
+    if (!target || target.id === this.activeProfileId) return;
+
+    this.activeProfileId = target.id;
+    this.inv = target.inv;
+    StorageManager.saveActiveProfileId(this.activeProfileId);
+    StorageManager.saveInventory(this.inv);
+
+    if (typeof userIgn !== "undefined") {
+      userIgn = target.name || "";
+      StorageManager.saveIgn(userIgn);
+      const ignEl = document.getElementById("ignInput");
+      if (ignEl) ignEl.value = userIgn;
+      if (typeof updateIgnPreview === "function") updateIgnPreview();
+    }
+
+    this.renderProfileBar();
+    this.renderItems();
+    this.updateUI();
+    if (typeof IndexUI !== "undefined") IndexUI.render();
+  },
+
+  addProfile() {
+    if (this.profiles.length >= 6) return;
+    const defaultName = `Alt ${this.profiles.length}`;
+    const entered = prompt("Enter account / profile name (Ingame Name):", defaultName);
+    if (entered === null) return;
+    const trimmed = entered.trim() || defaultName;
+    const newProfile = {
+      id: `alt_${Date.now()}`,
+      name: trimmed,
+      inv: StorageManager.createEmptyInventory()
+    };
+    this.profiles.push(newProfile);
+    StorageManager.saveInventoryProfiles(this.profiles);
+    this.selectProfile(newProfile.id);
+  },
+
+  deleteProfile(id) {
+    if (this.profiles.length <= 1) return;
+    const idx = this.profiles.findIndex(p => p.id === id);
+    if (idx === -1) return;
+    const label = this.getProfileDisplayName(this.profiles[idx], idx);
+    if (!confirm(`Remove profile "${label}" and its inventory?`)) return;
+
+    const wasActive = this.activeProfileId === id;
+    this.profiles.splice(idx, 1);
+    StorageManager.saveInventoryProfiles(this.profiles);
+
+    if (wasActive) {
+      const next = this.profiles[Math.max(0, idx - 1)] || this.profiles[0];
+      this.activeProfileId = "";
+      this.selectProfile(next.id);
+    } else {
+      this.renderProfileBar();
+    }
+  },
+
+  renderProfileBar() {
+    const bar = document.getElementById("invProfileBar");
+    if (!bar) return;
+    bar.innerHTML = "";
+
+    this.profiles.forEach((profile, idx) => {
+      const isActive = profile.id === this.activeProfileId;
+      const label = this.getProfileDisplayName(profile, idx);
+
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = `inv-profile-btn${isActive ? " active" : ""}`;
+      btn.setAttribute("role", "tab");
+      btn.setAttribute("aria-selected", isActive ? "true" : "false");
+      btn.onclick = () => this.selectProfile(profile.id);
+
+      const nameSpan = document.createElement("span");
+      nameSpan.className = "inv-profile-label";
+      nameSpan.textContent = `👤 ${label}`;
+      btn.appendChild(nameSpan);
+
+      if (this.profiles.length > 1) {
+        const delBtn = document.createElement("span");
+        delBtn.className = "inv-profile-del";
+        delBtn.title = `Remove ${label}`;
+        delBtn.textContent = "✕";
+        delBtn.onclick = (e) => {
+          e.stopPropagation();
+          this.deleteProfile(profile.id);
+        };
+        btn.appendChild(delBtn);
+      }
+
+      bar.appendChild(btn);
+    });
+
+    if (this.profiles.length < 6) {
+      const addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.className = "inv-profile-add-btn";
+      addBtn.title = "Add another account profile";
+      addBtn.textContent = "➕ Add Account";
+      addBtn.onclick = () => this.addProfile();
+      bar.appendChild(addBtn);
+    }
   },
 
   updateNitroButton() {
@@ -272,6 +416,7 @@ const InventoryUI = {
 
   updateUI() {
     StorageManager.saveInventory(this.inv);
+    StorageManager.saveInventoryProfiles(this.profiles);
 
     const headline = document.getElementById("invHeadline").value;
     const bannerSubtitle = document.getElementById("invBanner").value;
