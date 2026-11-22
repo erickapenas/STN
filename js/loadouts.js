@@ -350,7 +350,7 @@ const LoadoutsUI = {
       const title = document.createElement("div");
       title.className = "inv-cat-title";
       title.style.color = tierColor;
-      title.innerHTML = `<span>💎</span> <span>${tier.label}</span> <span class="index-tier-count">(${tierItems.length})</span>`;
+      title.innerHTML = `<span>${tier.label}</span> <span class="index-tier-count">(${tierItems.length})</span>`;
       block.appendChild(title);
 
       const grid = document.createElement("div");

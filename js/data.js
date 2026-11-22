@@ -28,13 +28,13 @@ const DEFAULT_COLORS = {
 };
 
 const RARITY_TIERS = [
-  { key: "exclusive", label: "EXCLUSIVE (ORANGE)",  color: "#f97316", border: "#f97316", bg: "rgba(249,115,22,0.08)" },
-  { key: "divine",    label: "DIVINE (WHITE)",      color: "#ffffff", border: "#f8fafc", bg: "rgba(255,255,255,0.08)" },
-  { key: "legendary", label: "LEGENDARY (YELLOW)",  color: "#facc15", border: "#facc15", bg: "rgba(250,204,21,0.08)" },
-  { key: "mythic",    label: "MYTHIC (RED)",        color: "#ef4444", border: "#ef4444", bg: "rgba(239,68,68,0.08)" },
-  { key: "epic",      label: "EPIC (PURPLE)",       color: "#a855f7", border: "#a855f7", bg: "rgba(168,85,247,0.08)" },
-  { key: "rare",      label: "RARE (BLUE)",         color: "#38bdf8", border: "#38bdf8", bg: "rgba(56,189,248,0.08)" },
-  { key: "common",    label: "COMMON (GREEN)",      color: "#22c55e", border: "#22c55e", bg: "rgba(34,197,94,0.08)" }
+  { key: "exclusive", label: "EXCLUSIVE", color: "#f97316", border: "#f97316", bg: "rgba(249,115,22,0.08)" },
+  { key: "divine",    label: "DIVINE",    color: "#ffffff", border: "#f8fafc", bg: "rgba(255,255,255,0.08)" },
+  { key: "legendary", label: "LEGENDARY", color: "#facc15", border: "#facc15", bg: "rgba(250,204,21,0.08)" },
+  { key: "mythic",    label: "MYTHIC",    color: "#ef4444", border: "#ef4444", bg: "rgba(239,68,68,0.08)" },
+  { key: "epic",      label: "EPIC",      color: "#a855f7", border: "#a855f7", bg: "rgba(168,85,247,0.08)" },
+  { key: "rare",      label: "RARE",      color: "#38bdf8", border: "#38bdf8", bg: "rgba(56,189,248,0.08)" },
+  { key: "common",    label: "COMMON",    color: "#22c55e", border: "#22c55e", bg: "rgba(34,197,94,0.08)" }
 ];
 
 const ITEMS = [

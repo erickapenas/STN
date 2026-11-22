@@ -375,7 +375,7 @@ const InventoryUI = {
         const title = document.createElement("div");
         title.className = "inv-cat-title";
         title.style.color = tier.color;
-        title.innerHTML = `<span>💎</span> <span>${tier.label}</span>`;
+        title.innerHTML = `<span>${tier.label}</span>`;
         block.appendChild(title);
 
         const grid = document.createElement("div");

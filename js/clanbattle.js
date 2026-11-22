@@ -217,7 +217,7 @@ const ClanBattleUI = {
         const title = document.createElement("div");
         title.className = "inv-cat-title";
         title.style.color = getAnsiHex(userColors[tier.key] || "37");
-        title.innerHTML = `<span>💎</span> <span>${tier.label}</span>`;
+        title.innerHTML = `<span>${tier.label}</span>`;
         block.appendChild(title);
 
         const grid = document.createElement("div");
