@@ -209,13 +209,13 @@ const PET_BUFFS = {
 const BUFF_DIMINISHING_FACTOR = 0.6;
 
 const CLAN_BUFF_DEFS = [
-  { key: "armory",     name: "Armory",     stat: "damage",   label: "Damage",    perLevel: 10,  maxLvl: 13, icon: "⚔️" },
-  { key: "ammoDepot",  name: "Ammo Depot", stat: "firerate", label: "Fire Rate", perLevel: 8,   maxLvl: 13, icon: "⚡" },
-  { key: "watchtower", name: "Watchtower", stat: "range",    label: "Range",     perLevel: 3,   maxLvl: 13, icon: "🎯" },
-  { key: "treasury",   name: "Treasury",   stat: "cash",     label: "Cash",      perLevel: 7.5, maxLvl: 13, icon: "💰" }
+  { key: "armory",     name: "Armory",     stat: "damage",   label: "Damage",    perLevel: 10,  maxLvl: 13, icon: "⚔️", color: "#ef4444", img: "images/Armory.png" },
+  { key: "ammoDepot",  name: "Ammo Depot", stat: "firerate", label: "Fire Rate", perLevel: 8,   maxLvl: 13, icon: "⚡", color: "#f59e0b", img: "images/AmmoDepot.png" },
+  { key: "watchtower", name: "Watchtower", stat: "range",    label: "Range",     perLevel: 3,   maxLvl: 13, icon: "🎯", color: "#38bdf8", img: "images/Watchtower.png" },
+  { key: "treasury",   name: "Treasury",   stat: "cash",     label: "Cash",      perLevel: 7.5, maxLvl: 13, icon: "💰", color: "#22c55e", img: "images/Treasury.png" }
 ];
 
-const IMAGE_VERSION = "6.3";
+const IMAGE_VERSION = "6.4";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

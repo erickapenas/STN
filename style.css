@@ -2558,6 +2558,26 @@ select option {
   color: #ffffff;
 }
 
+/* Clan Buffs Inventory-Style Cards */
+.clan-buffs-inv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.clan-buff-thumb {
+  width: 96px;
+  height: 96px;
+}
+
+.clan-buff-sub {
+  font-family: var(--font-mono);
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-top: -4px;
+}
+
 .clan-buff-val-pill {
   font-family: var(--font-mono);
   font-size: 0.78rem;

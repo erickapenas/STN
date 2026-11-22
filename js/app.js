@@ -64,39 +64,85 @@ function initSettings() {
 }
 
 function initClanBuffSettings() {
-  if (typeof CLAN_BUFF_DEFS === "undefined") return;
-  CLAN_BUFF_DEFS.forEach(def => {
-    const sel = document.getElementById(`clanBuff_${def.key}`);
-    const pill = document.getElementById(`clanBuffVal_${def.key}`);
-    if (!sel) return;
+  const container = document.getElementById("clanBuffsContainer");
+  if (!container || typeof CLAN_BUFF_DEFS === "undefined") return;
+  container.innerHTML = "";
 
-    let opts = "";
+  CLAN_BUFF_DEFS.forEach(def => {
+    const card = document.createElement("div");
+
+    const topRow = document.createElement("div");
+    topRow.className = "inv-card-top";
+
+    const tag = document.createElement("span");
+    tag.className = "index-role-tag";
+    tag.style.color = def.color;
+    tag.textContent = `[${def.label.toUpperCase()}]`;
+
+    const pill = document.createElement("span");
+    pill.className = "clan-buff-val-pill";
+    pill.id = `clanBuffVal_${def.key}`;
+
+    topRow.appendChild(tag);
+    topRow.appendChild(pill);
+
+    const thumb = document.createElement("div");
+    thumb.className = "index-thumb inv-card-thumb clan-buff-thumb";
+    thumb.innerHTML = `<img src="${def.img}?v=${IMAGE_VERSION}" alt="${def.name}" onerror="this.style.display='none'">`;
+
+    const nameEl = document.createElement("div");
+    nameEl.className = "index-card-name";
+    nameEl.style.color = def.color;
+    nameEl.textContent = def.name;
+
+    const subEl = document.createElement("div");
+    subEl.className = "clan-buff-sub";
+    subEl.textContent = `+${def.perLevel}% / lvl`;
+
+    const sel = document.createElement("select");
+    sel.id = `clanBuff_${def.key}`;
+    sel.className = "inv-card-lvl";
     for (let l = 0; l <= def.maxLvl; l++) {
       const pct = l * def.perLevel;
       const pctStr = Number.isInteger(pct) ? `${pct}%` : `${Number(pct.toFixed(1))}%`;
-      const label = l === 0
-        ? `Level 0 (OFF)`
-        : `Level ${l}${l === def.maxLvl ? " (MAX)" : ""} — +${pctStr}`;
-      opts += `<option value="${l}" ${userClanBuffs[def.key] === l ? "selected" : ""}>${label}</option>`;
+      const opt = document.createElement("option");
+      opt.value = l;
+      opt.textContent = l === 0
+        ? "Lvl 0 (OFF)"
+        : `Lvl ${l}/${def.maxLvl}${l === def.maxLvl ? " (MAX)" : ""} (+${pctStr})`;
+      if ((userClanBuffs[def.key] || 0) === l) opt.selected = true;
+      sel.appendChild(opt);
     }
-    sel.innerHTML = opts;
 
-    const updatePill = () => {
-      if (!pill) return;
+    const syncCard = () => {
       const lvl = userClanBuffs[def.key] || 0;
       const pct = lvl * def.perLevel;
       const pctStr = Number.isInteger(pct) ? `${pct}%` : `${Number(pct.toFixed(1))}%`;
-      pill.textContent = `+${pctStr} ${def.label}`;
+      card.className = `inv-card clan-buff-inv-card ${lvl > 0 ? "owned" : "not-owned"}`;
+      card.style.setProperty("--rarity-color", def.color);
+      pill.textContent = `+${pctStr}`;
       pill.classList.toggle("is-active", lvl > 0);
     };
-    updatePill();
 
+    sel.onclick = (e) => e.stopPropagation();
     sel.onchange = () => {
       userClanBuffs[def.key] = parseInt(sel.value, 10) || 0;
       StorageManager.saveClanBuffs(userClanBuffs);
-      updatePill();
+      syncCard();
       if (typeof LoadoutsUI !== "undefined") LoadoutsUI.render();
     };
+
+    card.onclick = () => {
+      sel.focus();
+    };
+
+    card.appendChild(topRow);
+    card.appendChild(thumb);
+    card.appendChild(nameEl);
+    card.appendChild(subEl);
+    card.appendChild(sel);
+    syncCard();
+    container.appendChild(card);
   });
 }
 
