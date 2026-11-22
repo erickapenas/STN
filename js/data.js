@@ -233,7 +233,7 @@ const PET_BUFFS = {
     ]
   },
   "Elephant":      { stat: "bossstun",  label: "Boss Stun",   value: 8,  levels: [5, 5.75, 6.5, 7.25, 8], unit: "s", icon: "🛡️" },
-  "Polar Bear":    { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
+  "Polar Bear":    { stat: "thorns",    label: "Thorns",      value: 25, levels: [15, 17.5, 20, 22.5, 25], icon: "🌵" },
   "Dino":          { stat: "coins",    label: "Coins",     value: 40, levels: [20, 25, 30, 35, 40], icon: "🪙" },
   "Tiger":         {
     stat: "damage", label: "Damage", value: 40, levels: [20, 25, 30, 35, 40], icon: "⚔️",
@@ -248,7 +248,12 @@ const PET_BUFFS = {
     ]
   },
   "Unicorn":       { stat: "wish",     label: "Wish CD",   value: 30, levels: [60, 52.5, 45, 37.5, 30], unit: "s", icon: "🎰" },
-  "Lion":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
+  "Lion":          {
+    stat: "firerate", label: "Fire Rate", value: 200, levels: [100, 125, 150, 175, 200], icon: "⚡",
+    extraBuffs: [
+      { stat: "farms", label: "Farms", value: 100, levels: [60, 70, 80, 90, 100], icon: ICON_FARMS }
+    ]
+  },
   "Horse":         {
     stat: "damage", label: "Damage", value: 50, levels: [50, 50, 50, 50, 50], icon: "⚔️",
     extraBuffs: [
@@ -256,7 +261,7 @@ const PET_BUFFS = {
       { stat: "range",    label: "Range",     value: 25, levels: [25, 25, 25, 25, 25], icon: "🎯" }
     ]
   },
-  "Ghostie":       { stat: "damage",   label: "Damage",    value: 35, icon: "⚔️" },
+  "Ghostie":       { stat: "range",     label: "Range",     value: 175, levels: [175, 175, 175, 175, 175], icon: "🎯" },
   "Turkey":        { stat: "event",    label: "Event",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🍗" },
   "Pilgrim Bear":  {
     stat: "damage", label: "Damage", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️",

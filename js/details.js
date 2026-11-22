@@ -1344,5 +1344,105 @@ const INDEX_DETAILS = {
     whereToGet: [
       { source: "Harvest Crate", chance: "<strong>70%</strong> per chest" }
     ]
+  },
+
+  "Lion": {
+    tags: ["DIVINE", "PET"],
+    buffColumnLabel: "⚡ RELOAD",
+    buff2ColumnLabel: `${ICON_FARMS} FARMS`,
+    buff3ColumnLabel: "⬆️ BLESSED SPOTS",
+    summaryStats: [
+      { label: "⚡ RELOAD",             value: "+100% → +200%" },
+      { label: `${ICON_FARMS} FARMS`,   value: "+60% → +100%" },
+      { label: "⬆️ BLESSED SPOTS",      value: "4 → 8" }
+    ],
+    bullets: [
+      "Blesses a <strong>random area of your base</strong>",
+      "Towers placed there <strong>reload much faster</strong> and farms there <strong>earn faster</strong>"
+    ],
+    keyNumbers: [
+      { label: "BLESSED SPOTS", value: "<strong>4 → 8</strong> random spots of your base, picked once a match" },
+      { label: "TOWERS ON THEM", value: "Reload <strong>+100% → +200%</strong> faster" },
+      { label: "FARMS ON THEM",  value: "Earn <strong>+60% → +100%</strong> faster" },
+      { label: "SEVERAL LIONS",  value: "Each blesses its own spots at <strong>full strength</strong>" },
+      { label: "IN PVP",         value: "Both buffs are <strong>half</strong> as strong" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+100%", buff2: "+60%",  buff3: "4", upgradeCoins: 0 },
+      { level: 2, buff: "+125%", buff2: "+70%",  buff3: "5", upgradeCoins: 45000 },
+      { level: 3, buff: "+150%", buff2: "+80%",  buff3: "6", upgradeCoins: 180000 },
+      { level: 4, buff: "+175%", buff2: "+90%",  buff3: "7", upgradeCoins: 750000 },
+      { level: 5, buff: "+200%", buff2: "+100%", buff3: "8", upgradeCoins: 3000000 }
+    ],
+    whereToGet: [
+      { source: "Legendary Egg", chance: "<strong>0.1%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>1%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>1%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>2.5%</strong> per egg" }
+    ]
+  },
+
+  "Polar Bear": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "🌵 THORNS",
+    summaryStats: [
+      { label: "🌵 THORNS", value: "+15% → +25%" }
+    ],
+    bullets: [
+      "Every zombie that hits your door <strong>takes damage back</strong>"
+    ],
+    keyNumbers: [
+      { label: "THORNS",               value: "Every zombie that hits your door <strong>takes damage back</strong>" },
+      { label: "NOT ALLOWED IN",       value: "<strong>Clans Hard, Crazy and Apocalypse</strong>. It does nothing there" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+15%",   upgradeCoins: 0 },
+      { level: 2, buff: "+17.5%", upgradeCoins: 15000 },
+      { level: 3, buff: "+20%",   upgradeCoins: 60000 },
+      { level: 4, buff: "+22.5%", upgradeCoins: 250000 },
+      { level: 5, buff: "+25%",   upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg",      chance: "<strong>0.02%</strong> per egg" },
+      { source: "Epic Egg",      chance: "<strong>0.13%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.26%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>0.71%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>2.56%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>3.23%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>11.45%</strong> per egg" }
+    ]
+  },
+
+  "Ghostie": {
+    tags: ["EXCLUSIVE", "PET"],
+    buffColumnLabel: "🎯 RANGE",
+    buff2ColumnLabel: "👻 DURATION",
+    summaryStats: [
+      { label: "🎯 RANGE",    value: "+175%" },
+      { label: "👻 DURATION", value: "26s (Lvl 4)" },
+      { label: "⏱️ COOLDOWN", value: "30s" }
+    ],
+    bullets: [
+      "Every <strong>30 seconds</strong> it <strong>haunts a random tower</strong> and gives it <strong>huge range</strong> for a while",
+      "Upgrading the pet <strong>makes the haunt last longer</strong>"
+    ],
+    keyNumbers: [
+      { label: "TRIGGERS",        value: "Every <strong>30 seconds</strong>" },
+      { label: "TARGETS",         value: "<strong>1 random tower</strong>" },
+      { label: "RANGE BUFF",      value: "<strong>+175%</strong> range while haunted" },
+      { label: "HAUNT DURATION",  value: "<strong>26s</strong> at Level 4 (increases each level)" },
+      { label: "LEVEL 5 UPGRADE", value: "<strong>2,265,000 Coins</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+175%", buff2: "~14s", upgradeCoins: 0 },
+      { level: 2, buff: "+175%", buff2: "~18s", upgradeCoins: 0 },
+      { level: 3, buff: "+175%", buff2: "~22s", upgradeCoins: 0 },
+      { level: 4, buff: "+175%", buff2: "26s",  upgradeCoins: 0 },
+      { level: 5, buff: "+175%", buff2: "~30s", upgradeCoins: 2265000 }
+    ],
+    whereToGet: [
+      { source: "Exclusive", chance: "<strong>Halloween Event</strong>" }
+    ]
   }
 };
