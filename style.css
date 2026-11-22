@@ -2850,6 +2850,45 @@ select option {
 }
 
 /* =========================================================
+   COPY / EXPORT LOADING SPINNER & LOADOUTS EXPORT BAR
+   ========================================================= */
+.btn.is-copying {
+  cursor: wait !important;
+  opacity: 0.92;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  box-shadow: 0 0 0 2px rgba(251, 191, 36, 0.45), 0 8px 22px rgba(245, 158, 11, 0.25);
+}
+
+.btn-spinner {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  border: 2.5px solid rgba(255, 255, 255, 0.28);
+  border-top-color: currentColor;
+  display: inline-block;
+  flex-shrink: 0;
+  animation: btnSpin 0.72s linear infinite;
+}
+
+@keyframes btnSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.squad-export-card {
+  margin-top: 20px;
+  padding: 18px 22px;
+}
+
+.squad-export-card .footer-btn-row {
+  margin-top: 0;
+}
+
+/* =========================================================
    TEXT OUTPUT HIDE MODE
    ========================================================= */
 body.hide-text-output .discord-text-element,

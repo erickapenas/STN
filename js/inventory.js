@@ -5,6 +5,12 @@ const InventoryUI = {
   showUnowned: false,
   sortMode: "rarity",
   imgTimer: null,
+  _previewSeq: 0,
+  _cachedCanvas: null,
+  _cachedBlobPromise: null,
+  _cachedPreviewUrl: null,
+  _inFlightPromise: null,
+  _isCopying: false,
 
   init() {
     this.inv = StorageManager.loadInventory();
@@ -326,58 +332,139 @@ const InventoryUI = {
     this.renderImagePreview();
   },
 
+  _captureCurrentCanvas(seq) {
+    const headline = document.getElementById("invHeadline").value;
+    const bannerSubtitle = document.getElementById("invBanner").value;
+    const promise = CanvasManager.captureInventoryCanvas(
+      headline,
+      bannerSubtitle,
+      userIgn,
+      this.inv,
+      userColors,
+      this.showUnowned,
+      this.sortMode,
+      this.includeRoleTags
+    ).then(canvas => {
+      if (seq === this._previewSeq) {
+        this._cachedCanvas = canvas;
+        this._cachedBlobPromise = CanvasManager.canvasToBlob(canvas);
+        this._inFlightPromise = null;
+      }
+      return canvas;
+    }).catch(err => {
+      if (seq === this._previewSeq) {
+        this._inFlightPromise = null;
+      }
+      throw err;
+    });
+    this._inFlightPromise = promise;
+    return promise;
+  },
+
   renderImagePreview() {
     clearTimeout(this.imgTimer);
+    this._previewSeq += 1;
+    const seq = this._previewSeq;
+    this._cachedCanvas = null;
+    this._cachedBlobPromise = null;
+    this._inFlightPromise = null;
+
     this.imgTimer = setTimeout(async () => {
-      const headline = document.getElementById("invHeadline").value;
-      const bannerSubtitle = document.getElementById("invBanner").value;
       const imgBox = document.getElementById("invImagePreviewBox");
       if (!imgBox) return;
 
       try {
-        const canvas = await CanvasManager.captureInventoryCanvas(headline, bannerSubtitle, userIgn, this.inv, userColors, this.showUnowned, this.sortMode, this.includeRoleTags);
-        imgBox.innerHTML = `<img src="${canvas.toDataURL('image/png')}" alt="Inventory Image Preview" style="user-select:none; pointer-events:none; max-width:100%;">`;
+        const canvas = await this._captureCurrentCanvas(seq);
+        if (seq !== this._previewSeq) return;
+        const blob = await this._cachedBlobPromise;
+        if (seq !== this._previewSeq) return;
+
+        if (blob) {
+          if (this._cachedPreviewUrl) URL.revokeObjectURL(this._cachedPreviewUrl);
+          this._cachedPreviewUrl = URL.createObjectURL(blob);
+          imgBox.innerHTML = `<img src="${this._cachedPreviewUrl}" alt="Inventory Image Preview" style="user-select:none; pointer-events:none; max-width:100%;">`;
+        } else {
+          imgBox.innerHTML = `<img src="${canvas.toDataURL('image/png')}" alt="Inventory Image Preview" style="user-select:none; pointer-events:none; max-width:100%;">`;
+        }
       } catch {
-        imgBox.innerHTML = `<div style="padding:15px; color:#ef4444;">Could not generate inventory image preview.</div>`;
+        if (seq === this._previewSeq) {
+          imgBox.innerHTML = `<div style="padding:15px; color:#ef4444;">Could not generate inventory image preview.</div>`;
+        }
       }
     }, 280);
   },
 
+  async _getOrBuildCanvas() {
+    if (this._cachedCanvas) return this._cachedCanvas;
+    if (this._inFlightPromise) return await this._inFlightPromise;
+    clearTimeout(this.imgTimer);
+    return await this._captureCurrentCanvas(this._previewSeq);
+  },
+
   async copyImage() {
-    const headline = document.getElementById("invHeadline").value;
-    const bannerSubtitle = document.getElementById("invBanner").value;
+    if (this._isCopying) return;
     const btn = document.getElementById("invCopyImgBtn");
+    const origHtml = btn.innerHTML;
+    this._isCopying = true;
+    btn.disabled = true;
+    btn.classList.remove("copied");
+    btn.classList.add("is-copying");
+    btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span><span>Copying Image...</span>`;
 
     try {
-      const canvas = await CanvasManager.captureInventoryCanvas(headline, bannerSubtitle, userIgn, this.inv, userColors, this.showUnowned, this.sortMode, this.includeRoleTags);
-      canvas.toBlob(blob => {
-        if (!blob) {
-          CanvasManager.downloadCanvas(canvas, `inventory_${Date.now()}.png`);
-          return;
-        }
-        navigator.clipboard.write([new ClipboardItem({ 'image/png': blob })]).then(() => {
-          const orig = btn.textContent;
-          btn.textContent = "✅ Inventory Image Copied!";
-          btn.classList.add("copied");
-          setTimeout(() => {
-            btn.textContent = orig;
-            btn.classList.remove("copied");
-          }, 2000);
-        }).catch(() => CanvasManager.downloadCanvas(canvas, `inventory_${Date.now()}.png`));
-      }, "image/png");
+      const hasReadyBlob = !!this._cachedBlobPromise;
+      const blobPromise = hasReadyBlob
+        ? this._cachedBlobPromise
+        : new Promise(resolve => requestAnimationFrame(resolve))
+            .then(() => this._getOrBuildCanvas())
+            .then(canvas => this._cachedBlobPromise || CanvasManager.canvasToBlob(canvas));
+
+      const result = await CanvasManager.copyBlobToClipboard(
+        blobPromise,
+        () => this._getOrBuildCanvas(),
+        `inventory_${Date.now()}.png`
+      );
+
+      btn.classList.remove("is-copying");
+      btn.classList.add("copied");
+      btn.innerHTML = result === "copied" ? "✅ Inventory Image Copied!" : "💾 Inventory Image Downloaded!";
+      setTimeout(() => {
+        btn.innerHTML = origHtml;
+        btn.classList.remove("copied");
+        btn.disabled = false;
+        this._isCopying = false;
+      }, 2000);
     } catch {
+      btn.classList.remove("is-copying");
+      btn.innerHTML = origHtml;
+      btn.disabled = false;
+      this._isCopying = false;
       alert("Error generating image.");
     }
   },
 
   async downloadImage() {
-    const headline = document.getElementById("invHeadline").value;
-    const bannerSubtitle = document.getElementById("invBanner").value;
+    const btn = document.getElementById("invDownloadImgBtn");
+    const origHtml = btn ? btn.innerHTML : "";
+    if (btn) {
+      btn.disabled = true;
+      btn.classList.add("is-copying");
+      btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span><span>Preparing PNG...</span>`;
+    }
     try {
-      const canvas = await CanvasManager.captureInventoryCanvas(headline, bannerSubtitle, userIgn, this.inv, userColors, this.showUnowned, this.sortMode, this.includeRoleTags);
+      if (!this._cachedCanvas) {
+        await new Promise(resolve => requestAnimationFrame(resolve));
+      }
+      const canvas = await this._getOrBuildCanvas();
       CanvasManager.downloadCanvas(canvas, `inventory_${Date.now()}.png`);
     } catch {
       alert("Error downloading image.");
+    } finally {
+      if (btn) {
+        btn.classList.remove("is-copying");
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
+      }
     }
   }
 };

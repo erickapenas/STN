@@ -2,6 +2,9 @@ const LoadoutsUI = {
   activeSubView: "squad",
   players: [],
   clanBuffEnabled: false,
+  _cachedCanvas: null,
+  _cachedBlobPromise: null,
+  _isCopying: false,
   pickerState: {
     open: false,
     playerIdx: 0,
@@ -21,11 +24,18 @@ const LoadoutsUI = {
       clanBuffBtn.onclick = () => {
         this.clanBuffEnabled = !this.clanBuffEnabled;
         StorageManager.saveClanBuffsEnabled(this.clanBuffEnabled);
+        this.invalidateExportCache();
         this.updateClanBuffButton();
         this.renderSummary();
       };
       this.updateClanBuffButton();
     }
+
+    const copyImgBtn = document.getElementById("squadCopyImgBtn");
+    if (copyImgBtn) copyImgBtn.onclick = () => this.copyImage();
+
+    const dlImgBtn = document.getElementById("squadDownloadImgBtn");
+    if (dlImgBtn) dlImgBtn.onclick = () => this.downloadImage();
 
     const subBtns = document.querySelectorAll("#clanBattleTab .loadouts-sub-btn");
     subBtns.forEach(btn => {
@@ -384,8 +394,96 @@ const LoadoutsUI = {
     btn.textContent = this.clanBuffEnabled ? "🏰 Clan Buff: ON" : "🏰 Clan Buff: OFF";
   },
 
+  invalidateExportCache() {
+    this._cachedCanvas = null;
+    this._cachedBlobPromise = null;
+  },
+
   save() {
+    this.invalidateExportCache();
     StorageManager.saveSquadLoadouts(this.players);
+  },
+
+  async _getOrBuildCanvas() {
+    if (this._cachedCanvas) return this._cachedCanvas;
+    const totals = this.computeSquadTotals();
+    const canvas = await CanvasManager.captureSquadLoadoutsCanvas(
+      this.players,
+      totals,
+      this.clanBuffEnabled,
+      userColors
+    );
+    this._cachedCanvas = canvas;
+    this._cachedBlobPromise = CanvasManager.canvasToBlob(canvas);
+    return canvas;
+  },
+
+  async copyImage() {
+    if (this._isCopying) return;
+    const btn = document.getElementById("squadCopyImgBtn");
+    if (!btn) return;
+    const origHtml = btn.innerHTML;
+    this._isCopying = true;
+    btn.disabled = true;
+    btn.classList.remove("copied");
+    btn.classList.add("is-copying");
+    btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span><span>Copying Image...</span>`;
+
+    try {
+      const hasReadyBlob = !!this._cachedBlobPromise;
+      const blobPromise = hasReadyBlob
+        ? this._cachedBlobPromise
+        : new Promise(resolve => requestAnimationFrame(resolve))
+            .then(() => this._getOrBuildCanvas())
+            .then(canvas => this._cachedBlobPromise || CanvasManager.canvasToBlob(canvas));
+
+      const result = await CanvasManager.copyBlobToClipboard(
+        blobPromise,
+        () => this._getOrBuildCanvas(),
+        `squad_loadouts_${Date.now()}.png`
+      );
+
+      btn.classList.remove("is-copying");
+      btn.classList.add("copied");
+      btn.innerHTML = result === "copied" ? "✅ Loadout Image Copied!" : "💾 Loadout Image Downloaded!";
+      setTimeout(() => {
+        btn.innerHTML = origHtml;
+        btn.classList.remove("copied");
+        btn.disabled = false;
+        this._isCopying = false;
+      }, 2000);
+    } catch {
+      btn.classList.remove("is-copying");
+      btn.innerHTML = origHtml;
+      btn.disabled = false;
+      this._isCopying = false;
+      alert("Error generating squad loadout image.");
+    }
+  },
+
+  async downloadImage() {
+    const btn = document.getElementById("squadDownloadImgBtn");
+    const origHtml = btn ? btn.innerHTML : "";
+    if (btn) {
+      btn.disabled = true;
+      btn.classList.add("is-copying");
+      btn.innerHTML = `<span class="btn-spinner" aria-hidden="true"></span><span>Preparing PNG...</span>`;
+    }
+    try {
+      if (!this._cachedCanvas) {
+        await new Promise(resolve => requestAnimationFrame(resolve));
+      }
+      const canvas = await this._getOrBuildCanvas();
+      CanvasManager.downloadCanvas(canvas, `squad_loadouts_${Date.now()}.png`);
+    } catch {
+      alert("Error downloading squad loadout image.");
+    } finally {
+      if (btn) {
+        btn.classList.remove("is-copying");
+        btn.innerHTML = origHtml;
+        btn.disabled = false;
+      }
+    }
   },
 
   parseNum(v) {
@@ -611,6 +709,7 @@ const LoadoutsUI = {
   },
 
   renderSummary() {
+    this.invalidateExportCache();
     const box = document.getElementById("squadSummaryContainer");
     if (!box) return;
 
