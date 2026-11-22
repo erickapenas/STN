@@ -82,6 +82,7 @@ const ITEMS = [
   { name: "Lion",           role: "PET",     max: 5,  rarity: "divine",    hex: "#ffffff", img: "images/Lion.png" },
   { name: "Horse",          role: "PET",     max: 5,  rarity: "divine",    hex: "#ffffff", img: "images/Horse.png" },
   { name: "Dragon",         role: "PET",     max: 5,  rarity: "legendary", hex: "#f59e0b", img: "images/Dragon.png" },
+  { name: "Croc",           role: "PET",     max: 5,  rarity: "legendary", hex: "#f59e0b", img: "images/Croc.png" },
   { name: "Turtle",         role: "PET",     max: 5,  rarity: "legendary", hex: "#f59e0b", img: "images/Turtle.png" },
   { name: "Elephant",       role: "PET",     max: 5,  rarity: "legendary", hex: "#f59e0b", img: "images/Elephant.png" },
   { name: "Polar Bear",     role: "PET",     max: 5,  rarity: "legendary", hex: "#f59e0b", img: "images/PolarBear.png" },
@@ -191,6 +192,7 @@ const PET_BUFFS = {
   "Arctic Fox":    { stat: "range",    label: "Range",     value: 22, icon: "🎯" },
   "Raccoon":       { stat: "cash",     label: "Cash",      value: 22, icon: "💰" },
   "Dragon":        { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
+  "Croc":          { stat: "gems",     label: "Gems",      value: 40, levels: [20, 25, 30, 35, 40], icon: "💎" },
   "Turtle":        { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
   "Elephant":      { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
   "Polar Bear":    { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
@@ -215,7 +217,7 @@ const CLAN_BUFF_DEFS = [
   { key: "treasury",   name: "Treasury",   stat: "cash",     label: "Cash",      perLevel: 7.5, maxLvl: 13, icon: "💰", color: "#22c55e", img: "images/Treasury.png" }
 ];
 
-const IMAGE_VERSION = "6.4";
+const IMAGE_VERSION = "6.5";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

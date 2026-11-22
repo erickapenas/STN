@@ -7,6 +7,7 @@ const LoadoutsUI = {
     playerIdx: 0,
     slotIdx: 0,
     type: "towers", // "towers" | "pets"
+    subFilter: "all", // tower role (DAMAGE/SUPPORT/FARM) or pet stat (damage/firerate/range/cash/gems)
     rarity: "all",
     query: ""
   },
@@ -119,8 +120,10 @@ const LoadoutsUI = {
     document.querySelectorAll(".picker-tab-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         this.pickerState.type = btn.dataset.pickerType;
+        this.pickerState.subFilter = "all";
         document.querySelectorAll(".picker-tab-btn").forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
+        this.renderPickerSubFilterBar();
         this.renderPickerGrid();
       });
     });
@@ -145,6 +148,7 @@ const LoadoutsUI = {
     this.pickerState.playerIdx = playerIdx;
     this.pickerState.slotIdx = slotIdx;
     this.pickerState.type = currentDef && currentDef.role === "PET" ? "pets" : "towers";
+    this.pickerState.subFilter = "all";
     this.pickerState.rarity = "all";
     this.pickerState.query = "";
 
@@ -167,6 +171,7 @@ const LoadoutsUI = {
       searchInput.value = "";
     }
 
+    this.renderPickerSubFilterBar();
     this.renderPickerRarityBar();
     this.renderPickerGrid();
 
@@ -182,6 +187,42 @@ const LoadoutsUI = {
       document.body.style.overflow = "";
     }
     this.pickerState.open = false;
+  },
+
+  renderPickerSubFilterBar() {
+    const bar = document.getElementById("unitPickerSubFilterBar");
+    if (!bar) return;
+
+    const chips = this.pickerState.type === "towers"
+      ? [
+          { key: "all",     label: "All Types",   color: "#60a5fa" },
+          { key: "DAMAGE",  label: "⚔️ Damage",   color: "#ef4444" },
+          { key: "SUPPORT", label: "🛡️ Support",  color: "#22c55e" },
+          { key: "FARM",    label: "🌾 Farm",     color: "#facc15" }
+        ]
+      : [
+          { key: "all",      label: "All Buffs",    color: "#60a5fa" },
+          { key: "damage",   label: "⚔️ Damage",    color: "#ef4444" },
+          { key: "firerate", label: "⚡ Fire Rate", color: "#f59e0b" },
+          { key: "range",    label: "🎯 Range",     color: "#38bdf8" },
+          { key: "cash",     label: "💰 Cash",      color: "#22c55e" },
+          { key: "gems",     label: "💎 Gems",      color: "#a855f7" }
+        ];
+
+    bar.innerHTML = "";
+    chips.forEach(c => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = `picker-rarity-chip${this.pickerState.subFilter === c.key ? " active" : ""}`;
+      btn.style.setProperty("--chip-color", c.color);
+      btn.textContent = c.label;
+      btn.onclick = () => {
+        this.pickerState.subFilter = c.key;
+        this.renderPickerSubFilterBar();
+        this.renderPickerGrid();
+      };
+      bar.appendChild(btn);
+    });
   },
 
   renderPickerRarityBar() {
@@ -218,18 +259,20 @@ const LoadoutsUI = {
     if (!container) return;
     container.innerHTML = "";
 
-    const { playerIdx, slotIdx, type, rarity, query } = this.pickerState;
+    const { playerIdx, slotIdx, type, subFilter, rarity, query } = this.pickerState;
     const player = this.players[playerIdx];
     const slotCount = player.vip ? 5 : 4;
-    const currentItemName = (player.slots[slotIdx] && player.slots[slotIdx].item) || null;
-    const takenNames = player.slots
-      .slice(0, slotCount)
-      .filter((s, idx) => idx !== slotIdx && s && s.item)
-      .map(s => s.item);
 
     const pool = ITEMS.filter(it => (type === "pets" ? it.role === "PET" : it.role !== "PET"));
     const filtered = pool.filter(it => {
       if (rarity !== "all" && it.rarity !== rarity) return false;
+      if (subFilter !== "all") {
+        if (type === "towers" && it.role !== subFilter) return false;
+        if (type === "pets") {
+          const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[it.name] : null;
+          if (!buff || buff.stat !== subFilter) return false;
+        }
+      }
       if (query && !it.name.toLowerCase().includes(query) && !it.role.toLowerCase().includes(query)) return false;
       return true;
     });
@@ -331,6 +374,15 @@ const LoadoutsUI = {
     return Number.isInteger(n) ? `${n}%` : `${Number(n.toFixed(2))}%`;
   },
 
+  getPetBuffValue(buff, lvl) {
+    if (!buff) return 0;
+    if (Array.isArray(buff.levels) && buff.levels.length > 0) {
+      const idx = Math.min(Math.max(1, lvl || 1), buff.levels.length) - 1;
+      return buff.levels[idx];
+    }
+    return buff.value;
+  },
+
   getTowerStatsForLevel(itemDef, lvl) {
     const details = (typeof INDEX_DETAILS !== "undefined") ? INDEX_DETAILS[itemDef.name] : null;
     const limit = (typeof TOWER_PLACEMENT_LIMITS !== "undefined" && TOWER_PLACEMENT_LIMITS[itemDef.name]) || 1;
@@ -385,7 +437,7 @@ const LoadoutsUI = {
               petName: def.name,
               label: buff.label,
               icon: buff.icon,
-              base: buff.value
+              base: this.getPetBuffValue(buff, s.lvl)
             });
           }
         } else {
@@ -717,7 +769,7 @@ const LoadoutsUI = {
           if (def.role === "PET") {
             const buff = PET_BUFFS[def.name];
             badge.innerHTML = buff
-              ? `<span class="squad-meta-buff">${buff.icon} +${buff.value}%</span>`
+              ? `<span class="squad-meta-buff">${buff.icon} +${this.getPetBuffValue(buff, slot.lvl)}%</span>`
               : `<span class="squad-meta-muted">PET</span>`;
           } else {
             const stats = this.getTowerStatsForLevel(def, slot.lvl);

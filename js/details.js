@@ -80,5 +80,36 @@ const INDEX_DETAILS = {
       { source: "Pumpkin Chest",   chance: "<strong>1%</strong> per chest" },
       { source: "Lava Chest",      chance: "<strong>2.5%</strong> per chest" }
     ]
+  },
+
+  "Croc": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "GEMS",
+    summaryStats: [
+      { label: "GEMS", value: "+20% → +40%" }
+    ],
+    bullets: [
+      "You earn <strong>more gems</strong> at the end of every match you finish"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                 value: "The gems of <strong>every match you finish</strong>" },
+      { label: "MORE OF THE SAME PET",  value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", upgradeCoins: 0 },
+      { level: 2, buff: "+25%", upgradeCoins: 15000 },
+      { level: 3, buff: "+30%", upgradeCoins: 60000 },
+      { level: 4, buff: "+35%", upgradeCoins: 250000 },
+      { level: 5, buff: "+40%", upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg",      chance: "<strong>0.04%</strong> per egg" },
+      { source: "Epic Egg",      chance: "<strong>0.22%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.43%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>1.18%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>4.28%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>5.36%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>19.08%</strong> per egg" }
+    ]
   }
 };

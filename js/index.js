@@ -109,9 +109,12 @@ const IndexUI = {
     let sectionsHtml = "";
 
     if (details) {
-      // Total Unlock Coins, Cash & DPS calculation from levels
+      // Total Unlock Coins, Cash & DPS calculation from levels (or petLevels)
       const levels = details.levels || [];
-      const totalUnlockCoins = levels.reduce((sum, r) => sum + (r.unlockCoins || 0), 0);
+      const petLevels = details.petLevels || [];
+      const totalUnlockCoins = levels.length > 0
+        ? levels.reduce((sum, r) => sum + (r.unlockCoins || 0), 0)
+        : petLevels.reduce((sum, r) => sum + (r.upgradeCoins || 0), 0);
       const totalMatchCash = levels.reduce((sum, r) => sum + (r.cashCost || 0), 0);
 
       const parseNum = (v) => parseFloat(String(v).replace(/[^0-9.]/g, "")) || 0;
@@ -180,9 +183,10 @@ const IndexUI = {
 
       if (totalUnlockCoins > 0) {
         const cashIdx = keyNumbersList.findIndex(k => k.label.toUpperCase().includes("CASH TO MAX"));
+        const levelCount = levels.length > 0 ? levels.length : petLevels.length;
         const coinsRow = {
-          label: "COINS TO MAX IT (UNLOCK)",
-          value: `<strong>${totalUnlockCoins.toLocaleString()} Coins</strong> in the lobby (all <strong>${levels.length} levels</strong>)`,
+          label: petLevels.length > 0 ? "COINS TO MAX IT (UPGRADE)" : "COINS TO MAX IT (UNLOCK)",
+          value: `<strong>${totalUnlockCoins.toLocaleString()} Coins</strong> in the lobby (all <strong>${levelCount} levels</strong>)`,
           highlight: true
         };
         if (cashIdx >= 0) {
@@ -273,6 +277,46 @@ const IndexUI = {
                     <td>TOTAL</td>
                     <td>$${totalMatchCash.toLocaleString()}</td>
                     <td colspan="${totalColSpan}">Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Pet Every Level Table (when petLevels is present)
+      if (petLevels.length > 0) {
+        const buffColTitle = details.buffColumnLabel || "BUFF";
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UPGRADE = COINS</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LEVEL</th>
+                    <th>${escapeXml(buffColTitle)}</th>
+                    <th>UPGRADE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${petLevels.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td style="color:#4ade80;">${escapeXml(lv.buff)}</td>
+                      <td class="col-unlock">${lv.upgradeCoins === 0 ? "—" : lv.upgradeCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>Coins to Max (Upgrades)</td>
                     <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
                   </tr>
                 </tfoot>
