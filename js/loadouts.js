@@ -726,20 +726,31 @@ const LoadoutsUI = {
         return;
       }
 
-      const list = buffEntriesByStat[stat].sort((a, b) => b.base - a.base);
+      // Apply 60% diminishing returns ONLY to duplicates of the SAME pet (different pets sharing a stat stay at 100%)
+      const list = buffEntriesByStat[stat];
       const entryObj = ensureStat(stat, list[0].label, list[0].icon);
+      const byPetName = {};
+      list.forEach(entry => {
+        if (!byPetName[entry.petName]) byPetName[entry.petName] = [];
+        byPetName[entry.petName].push(entry);
+      });
+
       let petTotal = 0;
       const steps = [];
-      list.forEach((entry, idx) => {
-        const mult = Math.pow(factor, idx);
-        const eff = entry.base * mult;
-        petTotal += eff;
-        steps.push({
-          petName: entry.petName,
-          eff,
-          pctOfBase: Math.round(mult * 1000) / 10
+      Object.values(byPetName).forEach(samePetList => {
+        samePetList.sort((a, b) => b.base - a.base);
+        samePetList.forEach((entry, sameIdx) => {
+          const mult = Math.pow(factor, sameIdx);
+          const eff = entry.base * mult;
+          petTotal += eff;
+          steps.push({
+            petName: entry.petName,
+            eff,
+            pctOfBase: Math.round(mult * 1000) / 10
+          });
         });
       });
+      steps.sort((a, b) => b.eff - a.eff);
       entryObj.petCount = list.length;
       entryObj.petTotal = petTotal;
       entryObj.steps = steps;
