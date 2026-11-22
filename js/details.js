@@ -82,6 +82,46 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Crusher": {
+    tags: ["DIVINE", "SLAM"],
+    isSlam: true,
+    summaryStats: [
+      { label: "DAMAGE",     value: "6,000 → 192,000" },
+      { label: "RELOAD",     value: "3s → 2.4s" },
+      { label: "PLACE COST", value: "$19,000" }
+    ],
+    bullets: [
+      "Slowly charges up and <strong>smashes the ground</strong>, hurting <strong>every zombie around it</strong> once it is half charged",
+      "If nothing comes close it keeps charging, and a <strong>full charge</strong> hits <strong>6x harder</strong>"
+    ],
+    keyNumbers: [
+      { label: "HITS",            value: "<strong>Every zombie</strong> within <strong>22 → 25</strong> studs" },
+      { label: "SLAMS",           value: "As soon as it is <strong>half charged</strong> and a zombie is in range" },
+      { label: "HALF CHARGE",     value: "After <strong>3s → 2.4s</strong>. Deals the listed damage" },
+      { label: "FULL CHARGE",     value: "After <strong>15s → 12s</strong>. Deals <strong>6x</strong> the damage" },
+      { label: "IN BETWEEN",      value: "The damage climbs evenly from <strong>1x to 6x</strong>" },
+      { label: "CASH TO MAX IT",  value: "<strong>$7,491,500</strong> in a match, for all <strong>9 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>4</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 19000,   damage: "6,000",   fullSlam: "36,000",    reload: "3s",    toFull: "15s",    unlockCoins: 0 },
+      { level: 2, cashCost: 37500,   damage: "11,800",  fullSlam: "70,800",    reload: "2.95s", toFull: "14.5s",  unlockCoins: 25000 },
+      { level: 3, cashCost: 75000,   damage: "21,200",  fullSlam: "127,200",   reload: "2.9s",  toFull: "14s",    unlockCoins: 60000 },
+      { level: 4, cashCost: 150000,  damage: "36,200",  fullSlam: "217,200",   reload: "2.85s", toFull: "13.5s",  unlockCoins: 130000 },
+      { level: 5, cashCost: 300000,  damage: "59,600",  fullSlam: "357,600",   reload: "2.8s",  toFull: "13s",    unlockCoins: 260000 },
+      { level: 6, cashCost: 560000,  damage: "86,400",  fullSlam: "518,400",   reload: "2.7s",  toFull: "12.75s", unlockCoins: 450000 },
+      { level: 7, cashCost: 1000000, damage: "117,800", fullSlam: "706,800",   reload: "2.6s",  toFull: "12.5s",  unlockCoins: 775000 },
+      { level: 8, cashCost: 1800000, damage: "153,300", fullSlam: "919,800",   reload: "2.5s",  toFull: "12.25s", unlockCoins: 1300000 },
+      { level: 9, cashCost: 3550000, damage: "192,000", fullSlam: "1,152,000", reload: "2.4s",  toFull: "12s",    unlockCoins: 2000000 }
+    ],
+    whereToGet: [
+      { source: "Legendary Chest", chance: "<strong>0.1%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>1%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>1%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>2.5%</strong> per chest" }
+    ]
+  },
+
   "Croc": {
     tags: ["LEGENDARY", "PET"],
     buffColumnLabel: "GEMS",

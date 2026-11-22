@@ -27,21 +27,10 @@ const LoadoutsUI = {
       this.updateClanBuffButton();
     }
 
-    const subBtns = document.querySelectorAll(".loadouts-sub-btn");
+    const subBtns = document.querySelectorAll("#clanBattleTab .loadouts-sub-btn");
     subBtns.forEach(btn => {
       btn.addEventListener("click", () => {
-        this.activeSubView = btn.dataset.loadoutView;
-        subBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-
-        const squadPanel = document.getElementById("squadLoadoutsPanel");
-        const cbPanel = document.getElementById("clanBattlePanel");
-        if (squadPanel) squadPanel.classList.toggle("active", this.activeSubView === "squad");
-        if (cbPanel) cbPanel.classList.toggle("active", this.activeSubView === "clanbattle");
-
-        if (this.activeSubView === "clanbattle" && typeof ClanBattleUI !== "undefined") {
-          ClanBattleUI.updateUI();
-        }
+        this.selectSubView(btn.dataset.loadoutView);
       });
     });
 
@@ -86,7 +75,24 @@ const LoadoutsUI = {
     }
 
     this.initPickerModal();
-    this.render();
+    this.selectSubView("squad");
+  },
+
+  selectSubView(view) {
+    this.activeSubView = view || "squad";
+    const subBtns = document.querySelectorAll("#clanBattleTab .loadouts-sub-btn");
+    subBtns.forEach(b => b.classList.toggle("active", b.dataset.loadoutView === this.activeSubView));
+
+    const squadPanel = document.getElementById("squadLoadoutsPanel");
+    const cbPanel = document.getElementById("clanBattlePanel");
+    if (squadPanel) squadPanel.classList.toggle("active", this.activeSubView === "squad");
+    if (cbPanel) cbPanel.classList.toggle("active", this.activeSubView === "clanbattle");
+
+    if (this.activeSubView === "clanbattle" && typeof ClanBattleUI !== "undefined") {
+      ClanBattleUI.updateUI();
+    } else {
+      this.render();
+    }
   },
 
   initPickerModal() {

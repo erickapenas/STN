@@ -137,6 +137,7 @@ const IndexUI = {
       const hasBlast = levels.some(lv => lv.blast !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
+      const isSlam = !!details.isSlam;
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
@@ -144,7 +145,10 @@ const IndexUI = {
         const bossDps = dps * bossMult;
         const rfDps = hasRapidFire ? dps * rfConfig.multiplier : 0;
         const rfBurstDmg = hasRapidFire ? rfDps * (rfConfig.duration || 5) : 0;
-        return { ...lv, dps, bossDps, rfDps, rfBurstDmg };
+        const fullDmg = isSlam ? parseNum(lv.fullSlam) : 0;
+        const fullRel = isSlam ? parseNum(lv.toFull) : 0;
+        const fullDps = isSlam && fullRel > 0 ? fullDmg / fullRel : 0;
+        return { ...lv, dps, bossDps, rfDps, rfBurstDmg, fullDps };
       });
 
       const firstLv = levelsWithDps[0];
@@ -181,6 +185,13 @@ const IndexUI = {
           dpsRows.push({
             label: `RAPID FIRE (${rfConfig.multiplier}x / ${rfConfig.duration}s)`,
             value: `<strong>${formatDps(maxLv.rfDps)} DPS</strong> (<strong>${formatDps(maxLv.rfBurstDmg)}</strong> dmg in ${rfConfig.duration}s) <span style="color:#94a3b8;">(${formatDps(firstLv.rfDps)} → ${formatDps(maxLv.rfDps)})</span>`,
+            highlight: true
+          });
+        }
+        if (isSlam && maxLv.fullDps > 0) {
+          dpsRows.push({
+            label: "FULL CHARGE DPS (6x)",
+            value: `<strong>${formatDps(maxLv.fullDps)} DPS</strong> at Max Level <span style="color:#94a3b8;">(${formatDps(firstLv.fullDps)} → ${formatDps(maxLv.fullDps)})</span>`,
             highlight: true
           });
         }
@@ -231,7 +242,56 @@ const IndexUI = {
       }
 
       // Every Level Table
-      if (levelsWithDps.length > 0) {
+      if (levelsWithDps.length > 0 && isSlam) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CASH COST</th>
+                    <th>HALF SLAM</th>
+                    <th>FULL SLAM</th>
+                    <th>TO HALF</th>
+                    <th>TO FULL</th>
+                    <th>HALF DPS</th>
+                    <th>FULL DPS</th>
+                    <th>UNLOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>$${lv.cashCost.toLocaleString()}</td>
+                      <td>${escapeXml(lv.damage)}</td>
+                      <td>${escapeXml(lv.fullSlam)}</td>
+                      <td>${escapeXml(lv.reload)}</td>
+                      <td>${escapeXml(lv.toFull)}</td>
+                      <td style="color:#60a5fa;">${formatDps(lv.dps)}</td>
+                      <td style="color:#fbbf24;">${formatDps(lv.fullDps)}</td>
+                      <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>$${totalMatchCash.toLocaleString()}</td>
+                    <td colspan="6">Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (levelsWithDps.length > 0) {
         const showDpsCols = levelsWithDps.some(lv => lv.dps > 0);
         const totalColSpan =
           3 +

@@ -25,8 +25,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     if (btn.dataset.tab === "indexTab" && typeof IndexUI !== "undefined") IndexUI.selectCategory("turrets");
     if (btn.dataset.tab === "inventoryTab") InventoryUI.updateUI();
     if (btn.dataset.tab === "clanBattleTab") {
-      if (typeof LoadoutsUI !== "undefined") LoadoutsUI.render();
-      ClanBattleUI.updateUI();
+      if (typeof LoadoutsUI !== "undefined") LoadoutsUI.selectSubView("squad");
     }
   });
 });
