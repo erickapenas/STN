@@ -179,6 +179,8 @@ const TOWER_PLACEMENT_LIMITS = {
 const ICON_FARMS = `<img src="images/icon-farms.png" class="stat-icon-img" alt="">`;
 const ICON_STARTCASH = `<img src="images/icon-startcash.png" class="stat-icon-img" alt="">`;
 const ICON_PULSE = `<img src="images/icon-pulse.png" class="stat-icon-img" alt="">`;
+const ICON_EXP = `<img src="images/icon-exp.png" class="stat-icon-img" alt="">`;
+const ICON_CLANSUPPLIES = `<img src="images/icon-clansupplies.png" class="stat-icon-img" alt="">`;
 
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {
@@ -202,7 +204,13 @@ const PET_BUFFS = {
   },
   "Hippo":         { stat: "doorhp",   label: "Door Health", value: 40, levels: [20, 25, 30, 35, 40], icon: "💚" },
   "Rhino":         { stat: "damage",   label: "Damage",    value: 20, icon: "⚔️" },
-  "Monkey":        { stat: "cash",     label: "Cash",      value: 20, icon: "💰" },
+  "Monkey":        {
+    stat: "exp", label: "EXP", value: 40, levels: [20, 25, 30, 35, 40], icon: ICON_EXP,
+    extraBuffs: [
+      { stat: "clansupplies", label: "Clan Supplies", value: 25, levels: [5, 10, 15, 20, 25], icon: ICON_CLANSUPPLIES },
+      { stat: "damage",       label: "Damage",        value: 0,  levels: [-20, -15, -10, -5, 0], icon: "⚔️" }
+    ]
+  },
   "Bunny":         { stat: "firerate", label: "Fire Rate", value: 20, icon: "⚡" },
   "Arctic Fox":    {
     stat: "firerate", label: "Fire Rate", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚡",
@@ -222,7 +230,12 @@ const PET_BUFFS = {
   "Elephant":      { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
   "Polar Bear":    { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
   "Dino":          { stat: "coins",    label: "Coins",     value: 40, levels: [20, 25, 30, 35, 40], icon: "🪙" },
-  "Tiger":         { stat: "firerate", label: "Fire Rate", value: 25, icon: "⚡" },
+  "Tiger":         {
+    stat: "damage", label: "Damage", value: 40, levels: [20, 25, 30, 35, 40], icon: "⚔️",
+    extraBuffs: [
+      { stat: "firerate", label: "Fire Rate", value: 30, levels: [20, 22.5, 25, 27.5, 30], icon: "⚡" }
+    ]
+  },
   "Jinx":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
   "Unicorn":       { stat: "firerate", label: "Fire Rate", value: 30, icon: "⚡" },
   "Lion":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },

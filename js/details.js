@@ -804,5 +804,72 @@ const INDEX_DETAILS = {
       { source: "Exclusive",   chance: "<strong>Thanksgiving Event</strong>" },
       { source: "Harvest Egg", chance: "<strong>27%</strong> per egg" }
     ]
+  },
+
+  "Monkey": {
+    tags: ["MYTHIC", "PET"],
+    buffColumnLabel: `${ICON_EXP} EXP`,
+    buff2ColumnLabel: "⚔️ DAMAGE",
+    buff3ColumnLabel: `${ICON_CLANSUPPLIES} CLAN SUPPLIES`,
+    summaryStats: [
+      { label: `${ICON_EXP} EXP`,                   value: "+20% → +40%" },
+      { label: "⚔️ DAMAGE",                          value: "-20% → 0%" },
+      { label: `${ICON_CLANSUPPLIES} CLAN SUPPLIES`, value: "+5% → +25%" }
+    ],
+    bullets: [
+      "You <strong>level up faster</strong> and earn <strong>more clan supplies</strong>, but your towers <strong>hit weaker</strong>",
+      "Upgrading the pet <strong>makes the downside smaller</strong>"
+    ],
+    keyNumbers: [
+      { label: "UPSIDE",               value: "More EXP and more clan supplies" },
+      { label: "DOWNSIDE",             value: "Your towers deal less damage. It is <strong>gone at level 5</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", buff2: "-20%", buff3: "+5%",  upgradeCoins: 0 },
+      { level: 2, buff: "+25%", buff2: "-15%", buff3: "+10%", upgradeCoins: 8000 },
+      { level: 3, buff: "+30%", buff2: "-10%", buff3: "+15%", upgradeCoins: 30000 },
+      { level: 4, buff: "+35%", buff2: "-5%",  buff3: "+20%", upgradeCoins: 125000 },
+      { level: 5, buff: "+40%", buff2: "0%",   buff3: "+25%", upgradeCoins: 500000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>1.2%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>2.6%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>3%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>15.3%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>14.1%</strong> per egg" }
+    ]
+  },
+
+  "Tiger": {
+    tags: ["LEGENDARY", "PET"],
+    buffColumnLabel: "⚔️ DAMAGE",
+    buff2ColumnLabel: "⚡ RELOAD",
+    summaryStats: [
+      { label: "⚔️ DAMAGE", value: "+20% → +40%" },
+      { label: "⚡ RELOAD", value: "+20% → +30%" }
+    ],
+    bullets: [
+      "Every tower <strong>hits harder</strong> and <strong>reloads faster</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The damage <strong>and</strong> reload of every tower" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", buff2: "+20%",   upgradeCoins: 0 },
+      { level: 2, buff: "+25%", buff2: "+22.5%", upgradeCoins: 15000 },
+      { level: 3, buff: "+30%", buff2: "+25%",   upgradeCoins: 60000 },
+      { level: 4, buff: "+35%", buff2: "+27.5%", upgradeCoins: 250000 },
+      { level: 5, buff: "+40%", buff2: "+30%",   upgradeCoins: 1000000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>0.22%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>0.43%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>1.18%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>4.27%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>5.38%</strong> per egg" },
+      { source: "Lava Egg",      chance: "<strong>19.09%</strong> per egg" }
+    ]
   }
 };

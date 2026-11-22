@@ -344,7 +344,7 @@ const CanvasManager = {
             <div style="background:#10121b; border:1px solid ${highlightBorder}; border-radius:8px; padding:9px 12px; min-width:195px; flex:1 1 200px; box-sizing:border-box;">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
                 <span style="font-size:0.84rem; font-weight:700; color:#e2e8f0; font-family:'Segoe UI', sans-serif;">${normalizeInlineIcon(b.icon)} ${escapeXml(b.label)}</span>
-                <span style="font-size:0.9rem; font-weight:800; color:#4ade80; font-family:'Consolas', monospace;">+${fmtStatVal(b.total, u)}</span>
+                <span style="font-size:0.9rem; font-weight:800; color:${b.total < 0 ? '#f87171' : '#4ade80'}; font-family:'Consolas', monospace;">${b.total >= 0 ? '+' : ''}${fmtStatVal(b.total, u)}</span>
               </div>
               <div style="font-size:0.72rem; color:#94a3b8; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(parts.join(" • "))}</div>
             </div>
@@ -407,10 +407,9 @@ const CanvasManager = {
           const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[def.name] : null;
           if (buff) {
             const allStr = [buff, ...(buff.extraBuffs || [])]
-              .map(pb => {
-                const val = typeof LoadoutsUI !== "undefined" ? LoadoutsUI.getPetBuffValue(pb, slot.lvl) : pb.value;
-                return `${normalizeInlineIcon(pb.icon)}+${fmtStatVal(val, pb.unit || "%")}`;
-              })
+              .map(pb => ({ pb, val: typeof LoadoutsUI !== "undefined" ? LoadoutsUI.getPetBuffValue(pb, slot.lvl) : pb.value }))
+              .filter(x => x.val !== 0)
+              .map(x => `${normalizeInlineIcon(x.pb.icon)}${x.val >= 0 ? "+" : ""}${fmtStatVal(x.val, x.pb.unit || "%")}`)
               .join(" ");
             metaHtml = `<span style="color:#c084fc; font-size:0.7rem; font-weight:700; font-family:'Consolas', monospace;">${allStr}</span>`;
           } else {
