@@ -334,7 +334,7 @@ const ClanBattleUI = {
       } catch {
         imgBox.innerHTML = `<div style="padding:15px; color:#ef4444;">Could not generate clan battle image preview.</div>`;
       }
-    }, 70);
+    }, 280);
   },
 
   async copyImage() {
