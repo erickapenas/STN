@@ -378,5 +378,134 @@ const INDEX_DETAILS = {
       { source: "Pumpkin Egg",   chance: "<strong>5.36%</strong> per egg" },
       { source: "Lava Egg",      chance: "<strong>19.08%</strong> per egg" }
     ]
+  },
+
+  "Bear": {
+    tags: ["RARE", "PET"],
+    buffColumnLabel: "RANGE",
+    summaryStats: [
+      { label: "RANGE", value: "+10% → +20%" }
+    ],
+    bullets: [
+      "All of your towers <strong>shoot further</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The range of <strong>every tower</strong> in your house" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", upgradeCoins: 1500 },
+      { level: 3, buff: "+15%",   upgradeCoins: 6000 },
+      { level: 4, buff: "+17.5%", upgradeCoins: 25000 },
+      { level: 5, buff: "+20%",   upgradeCoins: 100000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg", chance: "<strong>24.22%</strong> per egg" },
+      { source: "Epic Egg", chance: "<strong>66.98%</strong> per egg" }
+    ]
+  },
+
+  "Cat": {
+    tags: ["RARE", "PET"],
+    buffColumnLabel: "CASH",
+    summaryStats: [
+      { label: "CASH", value: "+10% → +20%" }
+    ],
+    bullets: [
+      "You earn <strong>more cash</strong> from everything during the match"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "All the cash you earn <strong>during a match</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", upgradeCoins: 1500 },
+      { level: 3, buff: "+15%",   upgradeCoins: 6000 },
+      { level: 4, buff: "+17.5%", upgradeCoins: 25000 },
+      { level: 5, buff: "+20%",   upgradeCoins: 100000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg",   chance: "<strong>24.21%</strong> per egg" },
+      { source: "Mythic Egg", chance: "<strong>32.99%</strong> per egg" }
+    ]
+  },
+
+  "Dog": {
+    tags: ["RARE", "PET"],
+    buffColumnLabel: "DAMAGE",
+    summaryStats: [
+      { label: "DAMAGE", value: "+10% → +20%" }
+    ],
+    bullets: [
+      "All of your towers <strong>hit harder</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The damage of <strong>every tower</strong> in your house" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", upgradeCoins: 1500 },
+      { level: 3, buff: "+15%",   upgradeCoins: 6000 },
+      { level: 4, buff: "+17.5%", upgradeCoins: 25000 },
+      { level: 5, buff: "+20%",   upgradeCoins: 100000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg", chance: "<strong>24.21%</strong> per egg" }
+    ]
+  },
+
+  "Squirrel": {
+    tags: ["RARE", "PET"],
+    buffColumnLabel: "RELOAD",
+    summaryStats: [
+      { label: "RELOAD", value: "+10% → +20%" }
+    ],
+    bullets: [
+      "All of your towers <strong>reload faster</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The reload of <strong>every tower</strong> in your house" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", upgradeCoins: 1500 },
+      { level: 3, buff: "+15%",   upgradeCoins: 6000 },
+      { level: 4, buff: "+17.5%", upgradeCoins: 25000 },
+      { level: 5, buff: "+20%",   upgradeCoins: 100000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg", chance: "<strong>24.21%</strong> per egg" }
+    ]
+  },
+
+  "Turkey": {
+    tags: ["RARE", "EXCLUSIVE", "PET"],
+    buffColumnLabel: "EVENT",
+    summaryStats: [
+      { label: "EVENT", value: "+10% → +20%" }
+    ],
+    bullets: [
+      "You earn <strong>more event currency</strong> from every event win"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The <strong>Drumsticks</strong> you earn by <strong>winning</strong> an event match" },
+      { label: "LEVEL UPS",            value: "Cost <strong>Drumsticks</strong> while the event runs" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", upgradeCoins: 1500 },
+      { level: 3, buff: "+15%",   upgradeCoins: 6000 },
+      { level: 4, buff: "+17.5%", upgradeCoins: 25000 },
+      { level: 5, buff: "+20%",   upgradeCoins: 100000 }
+    ],
+    whereToGet: [
+      { source: "Exclusive",   chance: "<strong>Thanksgiving Event</strong>" },
+      { source: "Harvest Egg", chance: "<strong>70%</strong> per egg" }
+    ]
   }
 };

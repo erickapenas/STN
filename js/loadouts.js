@@ -221,7 +221,8 @@ const LoadoutsUI = {
           { key: "range",    label: "🎯 Range",     color: "#38bdf8" },
           { key: "cash",     label: "💰 Cash",      color: "#22c55e" },
           { key: "coins",    label: "🪙 Coins",     color: "#facc15" },
-          { key: "gems",     label: "💎 Gems",      color: "#a855f7" }
+          { key: "gems",     label: "💎 Gems",      color: "#a855f7" },
+          { key: "event",    label: "🍗 Event",     color: "#f97316" }
         ];
 
     bar.innerHTML = "";
@@ -489,7 +490,8 @@ const LoadoutsUI = {
       range:    { label: "Range",     icon: "🎯" },
       cash:     { label: "Cash",      icon: "💰" },
       coins:    { label: "Coins",     icon: "🪙" },
-      gems:     { label: "Gems",      icon: "💎" }
+      gems:     { label: "Gems",      icon: "💎" },
+      event:    { label: "Event",     icon: "🍗" }
     };
 
     const buffsSummary = {};

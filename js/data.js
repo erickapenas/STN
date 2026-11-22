@@ -178,10 +178,10 @@ const TOWER_PLACEMENT_LIMITS = {
 
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {
-  "Bear":          { stat: "range",    label: "Range",     value: 20, icon: "🎯" },
-  "Cat":           { stat: "firerate", label: "Fire Rate", value: 10, icon: "⚡" },
-  "Dog":           { stat: "damage",   label: "Damage",    value: 10, icon: "⚔️" },
-  "Squirrel":      { stat: "cash",     label: "Cash",      value: 10, icon: "💰" },
+  "Bear":          { stat: "range",    label: "Range",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🎯" },
+  "Cat":           { stat: "cash",     label: "Cash",      value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "💰" },
+  "Dog":           { stat: "damage",   label: "Damage",    value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️" },
+  "Squirrel":      { stat: "firerate", label: "Fire Rate", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚡" },
   "Deer":          { stat: "range",    label: "Range",     value: 15, icon: "🎯" },
   "Beaver":        { stat: "cash",     label: "Cash",      value: 15, icon: "💰" },
   "Penguin":       { stat: "firerate", label: "Fire Rate", value: 15, icon: "⚡" },
@@ -203,7 +203,7 @@ const PET_BUFFS = {
   "Lion":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
   "Horse":         { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
   "Ghostie":       { stat: "damage",   label: "Damage",    value: 35, icon: "⚔️" },
-  "Turkey":        { stat: "cash",     label: "Cash",      value: 25, icon: "💰" },
+  "Turkey":        { stat: "event",    label: "Event",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🍗" },
   "Pilgrim Bear":  { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
   "Golden Turkey": { stat: "cash",     label: "Cash",      value: 35, icon: "💰" }
 };
