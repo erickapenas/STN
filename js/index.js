@@ -673,6 +673,9 @@ const IndexUI = {
         const buffColTitle = details.buffColumnLabel || "BUFF";
         const hasBuff2 = petLevels.some(lv => lv.buff2 !== undefined);
         const buff2ColTitle = details.buff2ColumnLabel || "BUFF 2";
+        const hasBuff3 = petLevels.some(lv => lv.buff3 !== undefined);
+        const buff3ColTitle = details.buff3ColumnLabel || "BUFF 3";
+        const extraCols = 1 + (hasBuff2 ? 1 : 0) + (hasBuff3 ? 1 : 0);
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
@@ -686,6 +689,7 @@ const IndexUI = {
                     <th>LEVEL</th>
                     <th>${buffColTitle}</th>
                     ${hasBuff2 ? `<th>${buff2ColTitle}</th>` : ""}
+                    ${hasBuff3 ? `<th>${buff3ColTitle}</th>` : ""}
                     <th>UPGRADE</th>
                   </tr>
                 </thead>
@@ -695,6 +699,7 @@ const IndexUI = {
                       <td class="col-lvl">${lv.level}</td>
                       <td style="color:#4ade80;">${escapeXml(lv.buff)}</td>
                       ${hasBuff2 ? `<td style="color:#38bdf8;">${escapeXml(lv.buff2)}</td>` : ""}
+                      ${hasBuff3 ? `<td style="color:#c084fc;">${escapeXml(lv.buff3)}</td>` : ""}
                       <td class="col-unlock">${lv.upgradeCoins === 0 ? "—" : lv.upgradeCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
@@ -702,7 +707,7 @@ const IndexUI = {
                 <tfoot>
                   <tr class="detail-table-total">
                     <td>TOTAL</td>
-                    <td colspan="${hasBuff2 ? 2 : 1}">Coins to Max (Upgrades)</td>
+                    <td colspan="${extraCols}">Coins to Max (Upgrades)</td>
                     <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
                   </tr>
                 </tfoot>

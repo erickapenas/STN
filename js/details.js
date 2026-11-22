@@ -712,5 +712,97 @@ const INDEX_DETAILS = {
       { source: "Epic Egg",   chance: "<strong>6.5%</strong> per egg" },
       { source: "Mythic Egg", chance: "<strong>13%</strong> per egg" }
     ]
+  },
+
+  "Deer": {
+    tags: ["EPIC", "PET"],
+    buffColumnLabel: "⚡ RELOAD",
+    buff2ColumnLabel: "⚔️ DAMAGE",
+    summaryStats: [
+      { label: "⚡ RELOAD", value: "+48% → +80%" },
+      { label: "⚔️ DAMAGE", value: "+48% → +80%" }
+    ],
+    bullets: [
+      "When any door drops below half health, all of your towers <strong>attack much faster</strong> and <strong>hit much harder</strong>"
+    ],
+    keyNumbers: [
+      { label: "SWITCHES ON",          value: "While any door is <strong>below 50%</strong> health" },
+      { label: "SWITCHES OFF",         value: "When every door is back at 50% or more" },
+      { label: "BROKEN DOORS",         value: "Do not count" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+48%", buff2: "+48%", upgradeCoins: 0 },
+      { level: 2, buff: "+56%", buff2: "+56%", upgradeCoins: 4000 },
+      { level: 3, buff: "+64%", buff2: "+64%", upgradeCoins: 15000 },
+      { level: 4, buff: "+72%", buff2: "+72%", upgradeCoins: 60000 },
+      { level: 5, buff: "+80%", buff2: "+80%", upgradeCoins: 250000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>6.5%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>13%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>39.66%</strong> per egg" }
+    ]
+  },
+
+  "Penguin": {
+    tags: ["EPIC", "PET"],
+    buffColumnLabel: "⚔️ DAMAGE",
+    buff2ColumnLabel: "⚡ RELOAD",
+    buff3ColumnLabel: "🎯 RANGE",
+    summaryStats: [
+      { label: "⚔️ DAMAGE", value: "+30% → +50%" },
+      { label: "⚡ RELOAD", value: "+30% → +50%" },
+      { label: "🎯 RANGE",  value: "+50%" }
+    ],
+    bullets: [
+      "Only your <strong>most expensive</strong> tower gets a boost: it <strong>hits harder</strong>, <strong>reloads faster</strong>, and <strong>shoots further</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",              value: "Only your <strong>most expensive</strong> damage tower" },
+      { label: "TWO THE SAME PRICE", value: "The one placed first" },
+      { label: "RANGE",              value: "<strong>+50%</strong> at every level" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+30%", buff2: "+30%", buff3: "+50%", upgradeCoins: 0 },
+      { level: 2, buff: "+35%", buff2: "+35%", buff3: "+50%", upgradeCoins: 4000 },
+      { level: 3, buff: "+40%", buff2: "+40%", buff3: "+50%", upgradeCoins: 15000 },
+      { level: 4, buff: "+45%", buff2: "+45%", buff3: "+50%", upgradeCoins: 60000 },
+      { level: 5, buff: "+50%", buff2: "+50%", buff3: "+50%", upgradeCoins: 250000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>6.5%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>13%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>39.65%</strong> per egg" }
+    ]
+  },
+
+  "Pilgrim Bear": {
+    tags: ["EPIC", "EXCLUSIVE", "PET"],
+    buffColumnLabel: "⚔️ DAMAGE",
+    buff2ColumnLabel: "🎯 RANGE",
+    summaryStats: [
+      { label: "⚔️ DAMAGE", value: "+10% → +20%" },
+      { label: "🎯 RANGE",  value: "+10% → +20%" }
+    ],
+    bullets: [
+      "Every one of your towers <strong>hits harder</strong> and <strong>shoots further</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The damage <strong>and</strong> range of <strong>every tower</strong> in your house" },
+      { label: "LEVEL UPS",            value: "Cost <strong>Drumsticks</strong> while the event runs" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   buff2: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", buff2: "+12.5%", upgradeCoins: 4000 },
+      { level: 3, buff: "+15%",   buff2: "+15%",   upgradeCoins: 15000 },
+      { level: 4, buff: "+17.5%", buff2: "+17.5%", upgradeCoins: 60000 },
+      { level: 5, buff: "+20%",   buff2: "+20%",   upgradeCoins: 250000 }
+    ],
+    whereToGet: [
+      { source: "Exclusive",   chance: "<strong>Thanksgiving Event</strong>" },
+      { source: "Harvest Egg", chance: "<strong>27%</strong> per egg" }
+    ]
   }
 };

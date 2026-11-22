@@ -186,9 +186,20 @@ const PET_BUFFS = {
   "Cat":           { stat: "cash",     label: "Cash",      value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "💰" },
   "Dog":           { stat: "damage",   label: "Damage",    value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️" },
   "Squirrel":      { stat: "firerate", label: "Fire Rate", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚡" },
-  "Deer":          { stat: "range",    label: "Range",     value: 15, icon: "🎯" },
+  "Deer":          {
+    stat: "firerate", label: "Fire Rate", value: 80, levels: [48, 56, 64, 72, 80], icon: "⚡",
+    extraBuffs: [
+      { stat: "damage", label: "Damage", value: 80, levels: [48, 56, 64, 72, 80], icon: "⚔️" }
+    ]
+  },
   "Beaver":        { stat: "doorlvl",  label: "Doors Start", value: 8,  levels: [3, 4, 6, 7, 8],      unit: "lvl", icon: "🚪" },
-  "Penguin":       { stat: "firerate", label: "Fire Rate",   value: 15, icon: "⚡" },
+  "Penguin":       {
+    stat: "damage", label: "Damage", value: 50, levels: [30, 35, 40, 45, 50], icon: "⚔️",
+    extraBuffs: [
+      { stat: "firerate", label: "Fire Rate", value: 50, levels: [30, 35, 40, 45, 50], icon: "⚡" },
+      { stat: "range",    label: "Range",     value: 50, levels: [50, 50, 50, 50, 50], icon: "🎯" }
+    ]
+  },
   "Hippo":         { stat: "doorhp",   label: "Door Health", value: 40, levels: [20, 25, 30, 35, 40], icon: "💚" },
   "Rhino":         { stat: "damage",   label: "Damage",    value: 20, icon: "⚔️" },
   "Monkey":        { stat: "cash",     label: "Cash",      value: 20, icon: "💰" },
@@ -218,7 +229,12 @@ const PET_BUFFS = {
   "Horse":         { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
   "Ghostie":       { stat: "damage",   label: "Damage",    value: 35, icon: "⚔️" },
   "Turkey":        { stat: "event",    label: "Event",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🍗" },
-  "Pilgrim Bear":  { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
+  "Pilgrim Bear":  {
+    stat: "damage", label: "Damage", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️",
+    extraBuffs: [
+      { stat: "range", label: "Range", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🎯" }
+    ]
+  },
   "Golden Turkey": { stat: "cash",     label: "Cash",      value: 35, icon: "💰" }
 };
 
