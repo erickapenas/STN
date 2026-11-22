@@ -135,6 +135,7 @@ const IndexUI = {
       const rfConfig = details.rapidFire || null;
       const hasRapidFire = !!(rfConfig && rfConfig.multiplier > 1);
       const hasBlast = levels.some(lv => lv.blast !== undefined);
+      const hasSlow = levels.some(lv => lv.slow !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const isSlam = !!details.isSlam;
@@ -542,7 +543,8 @@ const IndexUI = {
           (showDpsCols ? 1 : 0) +
           (showDpsCols && hasBossBonus ? 1 : 0) +
           (showDpsCols && hasRapidFire ? 1 : 0) +
-          (hasBlast ? 1 : 0);
+          (hasBlast ? 1 : 0) +
+          (hasSlow ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -563,6 +565,7 @@ const IndexUI = {
                     ${showDpsCols && hasRapidFire ? `<th>RAPID FIRE (${rfConfig.duration}s)</th>` : ""}
                     <th>RANGE</th>
                     ${hasBlast ? "<th>BLAST</th>" : ""}
+                    ${hasSlow ? "<th>🧊 SLOW</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -578,6 +581,7 @@ const IndexUI = {
                       ${showDpsCols && hasRapidFire ? `<td style="color:#fbbf24;" title="${formatDps(lv.rfDps)} DPS × ${rfConfig.duration}s">${formatDps(lv.rfDps)}/s <small style="color:#94a3b8;">(${formatDps(lv.rfBurstDmg)})</small></td>` : ""}
                       <td>${escapeXml(lv.range)}</td>
                       ${hasBlast ? `<td>${escapeXml(lv.blast)}</td>` : ""}
+                      ${hasSlow ? `<td style="color:#38bdf8;">🧊 ${escapeXml(lv.slow)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
@@ -599,6 +603,8 @@ const IndexUI = {
       // Pet Every Level Table (when petLevels is present)
       if (petLevels.length > 0) {
         const buffColTitle = details.buffColumnLabel || "BUFF";
+        const hasBuff2 = petLevels.some(lv => lv.buff2 !== undefined);
+        const buff2ColTitle = details.buff2ColumnLabel || "BUFF 2";
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
@@ -611,6 +617,7 @@ const IndexUI = {
                   <tr>
                     <th>LEVEL</th>
                     <th>${escapeXml(buffColTitle)}</th>
+                    ${hasBuff2 ? `<th>${escapeXml(buff2ColTitle)}</th>` : ""}
                     <th>UPGRADE</th>
                   </tr>
                 </thead>
@@ -619,6 +626,7 @@ const IndexUI = {
                     <tr>
                       <td class="col-lvl">${lv.level}</td>
                       <td style="color:#4ade80;">${escapeXml(lv.buff)}</td>
+                      ${hasBuff2 ? `<td style="color:#38bdf8;">${escapeXml(lv.buff2)}</td>` : ""}
                       <td class="col-unlock">${lv.upgradeCoins === 0 ? "—" : lv.upgradeCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
@@ -626,7 +634,7 @@ const IndexUI = {
                 <tfoot>
                   <tr class="detail-table-total">
                     <td>TOTAL</td>
-                    <td>Coins to Max (Upgrades)</td>
+                    <td colspan="${hasBuff2 ? 2 : 1}">Coins to Max (Upgrades)</td>
                     <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
                   </tr>
                 </tfoot>

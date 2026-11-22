@@ -152,7 +152,7 @@ const TOWER_PLACEMENT_LIMITS = {
   "Samurai": 4,
   "Railgun": 4,
   "Lava Launcher": 4,
-  "Ice Turret": 4,
+  "Ice Turret": 8,
   "Toxic Turret": 4,
   "Fire Spitter": 5,
   "Ballista": 5,
@@ -189,7 +189,12 @@ const PET_BUFFS = {
   "Rhino":         { stat: "damage",   label: "Damage",    value: 20, icon: "⚔️" },
   "Monkey":        { stat: "cash",     label: "Cash",      value: 20, icon: "💰" },
   "Bunny":         { stat: "firerate", label: "Fire Rate", value: 20, icon: "⚡" },
-  "Arctic Fox":    { stat: "range",    label: "Range",     value: 22, icon: "🎯" },
+  "Arctic Fox":    {
+    stat: "firerate", label: "Fire Rate", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚡",
+    extraBuffs: [
+      { stat: "slow", label: "Slow", value: 14, levels: [10, 11, 12, 13, 14], icon: "🧊" }
+    ]
+  },
   "Raccoon":       { stat: "cash",     label: "Cash",      value: 22, icon: "💰" },
   "Dragon":        { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
   "Croc":          { stat: "gems",     label: "Gems",      value: 40, levels: [20, 25, 30, 35, 40], icon: "💎" },

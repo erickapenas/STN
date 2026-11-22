@@ -318,6 +318,82 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Ice Turret": {
+    tags: ["LEGENDARY", "SLOW", "EVOLUTION"],
+    summaryStats: [
+      { label: "DAMAGE",     value: "222 → 3,900" },
+      { label: "RELOAD",     value: "1.6s → 0.9s" },
+      { label: "PLACE COST", value: "$8,000" }
+    ],
+    bullets: [
+      "<strong>Slows</strong> every zombie it hits for <strong>10 seconds</strong>, making them walk and attack slower"
+    ],
+    keyNumbers: [
+      { label: "🧊 SLOW",         value: "<strong>20% → 50%</strong> slower walking <strong>and</strong> attacking" },
+      { label: "LASTS",           value: "<strong>10 seconds</strong> after the last hit" },
+      { label: "SEVERAL SLOWS",   value: "Do not add up. The <strong>strongest</strong> one counts" },
+      { label: "CASH TO MAX IT",  value: "<strong>$3,090,000</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>8</strong> per player" }
+    ],
+    evolution: {
+      name: "Shatter",
+      description: "Zombies it slowed shatter when they die, and the ice shards hit and slow zombies nearby",
+      quest: "Evolution Quest: 32,500 zombie kills with a maxed Ice Turret"
+    },
+    levels: [
+      { level: 1, cashCost: 8000,    damage: "222",   reload: "1.6s", range: "35", slow: "20%", unlockCoins: 0 },
+      { level: 2, cashCost: 18000,   damage: "475",   reload: "1.5s", range: "38", slow: "25%", unlockCoins: 600 },
+      { level: 3, cashCost: 41000,   damage: "775",   reload: "1.4s", range: "41", slow: "30%", unlockCoins: 2000 },
+      { level: 4, cashCost: 92000,   damage: "1,150", reload: "1.3s", range: "44", slow: "35%", unlockCoins: 6400 },
+      { level: 5, cashCost: 209000,  damage: "1,620", reload: "1.2s", range: "46", slow: "40%", unlockCoins: 20000 },
+      { level: 6, cashCost: 472000,  damage: "2,225", reload: "1.1s", range: "49", slow: "45%", unlockCoins: 64000 },
+      { level: 7, cashCost: 850000,  damage: "3,000", reload: "1s",   range: "52", slow: "50%", unlockCoins: 137000 },
+      { level: 8, cashCost: 1400000, damage: "3,900", reload: "0.9s", range: "55", slow: "50%", unlockCoins: 270000 }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.03%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>0.27%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>0.55%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>1.51%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>5.47%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>6.87%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>23.63%</strong> per chest" }
+    ]
+  },
+
+  "Arctic Fox": {
+    tags: ["MYTHIC", "PET"],
+    buffColumnLabel: "RELOAD",
+    buff2ColumnLabel: "🧊 SLOWS",
+    summaryStats: [
+      { label: "RELOAD",   value: "+10% → +20%" },
+      { label: "🧊 SLOWS", value: "+10% → +14%" }
+    ],
+    bullets: [
+      "Your towers <strong>reload faster</strong> and zombies attacking your house <strong>walk and attack slower</strong>"
+    ],
+    keyNumbers: [
+      { label: "YOUR TOWERS",           value: "<strong>Reload faster</strong>" },
+      { label: "ZOMBIES AT YOUR HOUSE", value: "Walk <strong>and</strong> attack slower" },
+      { label: "MORE OF THE SAME PET",  value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+10%",   buff2: "+10%", upgradeCoins: 0 },
+      { level: 2, buff: "+12.5%", buff2: "+11%", upgradeCoins: 8000 },
+      { level: 3, buff: "+15%",   buff2: "+12%", upgradeCoins: 30000 },
+      { level: 4, buff: "+17.5%", buff2: "+13%", upgradeCoins: 125000 },
+      { level: 5, buff: "+20%",   buff2: "+14%", upgradeCoins: 500000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg",      chance: "<strong>0.55%</strong> per egg" },
+      { source: "Epic Egg",      chance: "<strong>1.2%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>2.6%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>3%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>15.3%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>14.1%</strong> per egg" }
+    ]
+  },
+
   "Dino": {
     tags: ["LEGENDARY", "PET"],
     buffColumnLabel: "COINS",

@@ -219,6 +219,7 @@ const LoadoutsUI = {
           { key: "damage",   label: "⚔️ Damage",    color: "#ef4444" },
           { key: "firerate", label: "⚡ Fire Rate", color: "#f59e0b" },
           { key: "range",    label: "🎯 Range",     color: "#38bdf8" },
+          { key: "slow",     label: "🧊 Slow",      color: "#67e8f9" },
           { key: "cash",     label: "💰 Cash",      color: "#22c55e" },
           { key: "coins",    label: "🪙 Coins",     color: "#facc15" },
           { key: "gems",     label: "💎 Gems",      color: "#a855f7" },
@@ -288,7 +289,9 @@ const LoadoutsUI = {
         if ((type === "towers" || type === "all") && it.role !== subFilter) return false;
         if (type === "pets") {
           const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[it.name] : null;
-          if (!buff || buff.stat !== subFilter) return false;
+          if (!buff) return false;
+          const allStats = [buff.stat, ...(buff.extraBuffs ? buff.extraBuffs.map(eb => eb.stat) : [])];
+          if (!allStats.includes(subFilter)) return false;
         }
       }
       if (query && !it.name.toLowerCase().includes(query) && !it.role.toLowerCase().includes(query)) return false;
@@ -330,7 +333,9 @@ const LoadoutsUI = {
         if (isEquipped) {
           subText = "✓ Equipped (Click to remove)";
         } else if (it.role === "PET" && PET_BUFFS[it.name]) {
-          subText = `${PET_BUFFS[it.name].icon} +${PET_BUFFS[it.name].value}% ${PET_BUFFS[it.name].label}`;
+          const b = PET_BUFFS[it.name];
+          const extra = b.extraBuffs ? b.extraBuffs.map(eb => `${eb.icon} +${eb.value}%`).join(" ") : "";
+          subText = `${b.icon} +${b.value}% ${b.label}${extra ? " • " + extra : ""}`;
         } else {
           const lim = (typeof TOWER_PLACEMENT_LIMITS !== "undefined" && TOWER_PLACEMENT_LIMITS[it.name]) || 1;
           subText = `Limit ×${lim}${it.canEvo ? " • ⚡EVO" : ""}`;
@@ -451,12 +456,15 @@ const LoadoutsUI = {
           totalPets += 1;
           const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[def.name] : null;
           if (buff) {
-            if (!buffEntriesByStat[buff.stat]) buffEntriesByStat[buff.stat] = [];
-            buffEntriesByStat[buff.stat].push({
-              petName: def.name,
-              label: buff.label,
-              icon: buff.icon,
-              base: this.getPetBuffValue(buff, s.lvl)
+            const allPetBuffs = [buff, ...(buff.extraBuffs || [])];
+            allPetBuffs.forEach(pb => {
+              if (!buffEntriesByStat[pb.stat]) buffEntriesByStat[pb.stat] = [];
+              buffEntriesByStat[pb.stat].push({
+                petName: def.name,
+                label: pb.label,
+                icon: pb.icon,
+                base: this.getPetBuffValue(pb, s.lvl)
+              });
             });
           }
         } else {
@@ -488,6 +496,7 @@ const LoadoutsUI = {
       damage:   { label: "Damage",    icon: "⚔️" },
       firerate: { label: "Fire Rate", icon: "⚡" },
       range:    { label: "Range",     icon: "🎯" },
+      slow:     { label: "Slow",      icon: "🧊" },
       cash:     { label: "Cash",      icon: "💰" },
       coins:    { label: "Coins",     icon: "🪙" },
       gems:     { label: "Gems",      icon: "💎" },
@@ -824,9 +833,14 @@ const LoadoutsUI = {
         if (def) {
           if (def.role === "PET") {
             const buff = PET_BUFFS[def.name];
-            badge.innerHTML = buff
-              ? `<span class="squad-meta-buff">${buff.icon} +${this.getPetBuffValue(buff, slot.lvl)}%</span>`
-              : `<span class="squad-meta-muted">PET</span>`;
+            if (buff) {
+              const allStr = [buff, ...(buff.extraBuffs || [])]
+                .map(pb => `${pb.icon}+${this.getPetBuffValue(pb, slot.lvl)}%`)
+                .join(" ");
+              badge.innerHTML = `<span class="squad-meta-buff">${allStr}</span>`;
+            } else {
+              badge.innerHTML = `<span class="squad-meta-muted">PET</span>`;
+            }
           } else {
             const stats = this.getTowerStatsForLevel(def, slot.lvl);
             badge.innerHTML = stats.hasStats
