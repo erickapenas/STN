@@ -136,6 +136,8 @@ const IndexUI = {
       const hasRapidFire = !!(rfConfig && rfConfig.multiplier > 1);
       const hasBlast = levels.some(lv => lv.blast !== undefined);
       const hasSlow = levels.some(lv => lv.slow !== undefined);
+      const hasSplat = levels.some(lv => lv.splat !== undefined);
+      const hasBlind = levels.some(lv => lv.blind !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const isSlam = !!details.isSlam;
@@ -348,8 +350,8 @@ const IndexUI = {
                   <tr>
                     <th>LVL</th>
                     <th>CASH COST</th>
-                    <th>HEALS / SEC</th>
-                    <th>RANGE</th>
+                    <th>💚 HEALS / SEC</th>
+                    <th>🎯 RANGE</th>
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -612,7 +614,9 @@ const IndexUI = {
           (showDpsCols && hasBossBonus ? 1 : 0) +
           (showDpsCols && hasRapidFire ? 1 : 0) +
           (hasBlast ? 1 : 0) +
-          (hasSlow ? 1 : 0);
+          (hasSlow ? 1 : 0) +
+          (hasSplat ? 1 : 0) +
+          (hasBlind ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -634,6 +638,8 @@ const IndexUI = {
                     <th>RANGE</th>
                     ${hasBlast ? "<th>BLAST</th>" : ""}
                     ${hasSlow ? "<th>🧊 SLOW</th>" : ""}
+                    ${hasSplat ? "<th>🥧 SPLAT</th>" : ""}
+                    ${hasBlind ? "<th>😵 BLIND</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -650,6 +656,8 @@ const IndexUI = {
                       <td>${escapeXml(lv.range)}</td>
                       ${hasBlast ? `<td>${escapeXml(lv.blast)}</td>` : ""}
                       ${hasSlow ? `<td style="color:#38bdf8;">🧊 ${escapeXml(lv.slow)}</td>` : ""}
+                      ${hasSplat ? `<td>${escapeXml(lv.splat)}</td>` : ""}
+                      ${hasBlind ? `<td style="color:#fbbf24;">${escapeXml(lv.blind)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}

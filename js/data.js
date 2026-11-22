@@ -156,7 +156,7 @@ const TOWER_PLACEMENT_LIMITS = {
   "Toxic Turret": 4,
   "Fire Spitter": 5,
   "Ballista": 5,
-  "Pie Launcher": 4,
+  "Pie Launcher": 6,
   "Rocketeer": 5,
   "Tesla": 5,
   "Corn Popper": 5,
@@ -309,7 +309,7 @@ const SUPPORT_BASE_BUFFS = {
   }
 };
 
-const IMAGE_VERSION = "7.4";
+const IMAGE_VERSION = "8.5";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

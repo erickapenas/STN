@@ -249,17 +249,19 @@ const INDEX_DETAILS = {
     tags: ["EPIC", "HEAL"],
     isHealBase: true,
     summaryStats: [
-      { label: "HEALS",      value: "0.2% → 2%" },
-      { label: "RELOAD",     value: "1s → 1s" },
-      { label: "PLACE COST", value: "$750" }
+      { label: "💚 HEALS",      value: "0.2% → 2%" },
+      { label: "⏳ RELOAD",     value: "1s → 1s" },
+      { label: "🎯 RANGE",      value: "12 → 20" },
+      { label: "💰 PLACE COST", value: "$750" }
     ],
     bullets: [
       "<strong>Repairs your house door</strong> over time with a healing beam",
       "The door must be <strong>in its range</strong>"
     ],
     keyNumbers: [
-      { label: "HEALS",           value: "<strong>0.2% → 2%</strong> of the door's <strong>max health</strong> every second" },
-      { label: "REACH",           value: "The door must be within <strong>12 → 20</strong> studs" },
+      { label: "💚 HEALS",        value: "<strong>0.2% → 2%</strong> of the door's <strong>max health</strong> every second" },
+      { label: "⏳ RELOAD",       value: "<strong>1s</strong> per tick" },
+      { label: "🎯 REACH",        value: "The door must be within <strong>12 → 20</strong> studs" },
       { label: "CASH TO MAX IT",  value: "<strong>$295,030</strong> in a match, for all <strong>6 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>4</strong> per player" }
     ],
@@ -1268,6 +1270,42 @@ const INDEX_DETAILS = {
       { source: "Divine Egg",  chance: "<strong>1%</strong> per egg" },
       { source: "Pumpkin Egg", chance: "<strong>1%</strong> per egg" },
       { source: "Lava Egg",    chance: "<strong>2.5%</strong> per egg" }
+    ]
+  },
+
+  "Pie Launcher": {
+    tags: ["MYTHIC", "EXCLUSIVE", "BLIND"],
+    summaryStats: [
+      { label: "⚔️ DAMAGE",     value: "300 → 4,800" },
+      { label: "🥧 BLIND",      value: "1s → 2s" },
+      { label: "💰 PLACE COST", value: "$4,000" }
+    ],
+    bullets: [
+      "Throws <strong>pumpkin pies</strong> that splat every zombie near where they land and get <strong>cream in their eyes</strong>: blinded zombies <strong>cannot hit the door</strong> and stumble slower"
+    ],
+    keyNumbers: [
+      { label: "SPLAT SIZE",      value: "<strong>12 → 18</strong> studs" },
+      { label: "AT THE EDGE",     value: "<strong>45%</strong> of the damage. Full damage in the middle" },
+      { label: "PIE IN THE FACE", value: "Zombies it hits <strong>cannot hit the door</strong> for <strong>1s → 2s</strong>" },
+      { label: "WHILE BLIND",     value: "They walk <strong>30%</strong> slower" },
+      { label: "AFTER",           value: "A zombie can't be blinded again for <strong>3s</strong>" },
+      { label: "BOSSES",          value: "Blinded for <strong>half as long</strong>" },
+      { label: "GET IT FROM",     value: "The <strong>Thanksgiving Event</strong> tower crate" },
+      { label: "CASH TO MAX IT",  value: "<strong>$1,013,500</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>6</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 4000,   damage: "300",   reload: "3s",   range: "46", splat: "12",   blind: "1s",   unlockCoins: 0 },
+      { level: 2, cashCost: 8500,   damage: "580",   reload: "2.8s", range: "49", splat: "13",   blind: "1.1s", unlockCoins: 0 },
+      { level: 3, cashCost: 17000,  damage: "950",   reload: "2.6s", range: "52", splat: "14",   blind: "1.2s", unlockCoins: 300 },
+      { level: 4, cashCost: 34000,  damage: "1,656", reload: "2.4s", range: "55", splat: "14.5", blind: "1.4s", unlockCoins: 1000 },
+      { level: 5, cashCost: 70000,  damage: "2,310", reload: "2.2s", range: "58", splat: "15",   blind: "1.5s", unlockCoins: 3400 },
+      { level: 6, cashCost: 140000, damage: "3,100", reload: "2s",   range: "61", splat: "16",   blind: "1.6s", unlockCoins: 10700 },
+      { level: 7, cashCost: 270000, damage: "3,960", reload: "1.8s", range: "64", splat: "17",   blind: "1.8s", unlockCoins: 34000 },
+      { level: 8, cashCost: 470000, damage: "4,800", reload: "1.6s", range: "68", splat: "18",   blind: "2s",   unlockCoins: 100600 }
+    ],
+    whereToGet: [
+      { source: "Harvest Crate", chance: "<strong>29%</strong> per chest" }
     ]
   }
 };
