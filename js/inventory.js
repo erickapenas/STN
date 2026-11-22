@@ -341,7 +341,7 @@ const InventoryUI = {
       userIgn,
       this.inv,
       userColors,
-      this.showUnowned,
+      false,
       this.sortMode,
       this.includeRoleTags
     ).then(canvas => {

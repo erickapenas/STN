@@ -197,6 +197,10 @@ const CanvasManager = {
       });
     }
 
+    if (!renderedSectionsHtml) {
+      renderedSectionsHtml = `<div style="color:#72767d; font-style:italic; padding:24px 0; text-align:center; font-family:'Consolas', monospace;">(No units selected)</div>`;
+    }
+
     const bannerColor = getAnsiHex(colors.BANNER || "36");
 
     return `
@@ -519,28 +523,28 @@ const CanvasManager = {
     const captureContainer = document.getElementById("teamCaptureContainer");
     captureContainer.innerHTML = this.buildTeamImageDom(headline, ign, loadouts, count, colors, includeRoleTag);
     const element = document.getElementById("teamCaptureCard");
-    return await html2canvas(element, { backgroundColor: "#151822", scale: 1.5, logging: false, useCORS: true });
+    return await html2canvas(element, { backgroundColor: "#151822", scale: 2, logging: false, useCORS: true });
   },
 
   async captureInventoryCanvas(headline, bannerSubtitle, ign, invData, colors, showUnowned, sortMode, includeRoleTag) {
     const captureContainer = document.getElementById("invCaptureContainer");
     captureContainer.innerHTML = this.buildInventoryImageDom(headline, bannerSubtitle, ign, invData, colors, showUnowned, sortMode, includeRoleTag);
     const element = document.getElementById("invCaptureCard");
-    return await html2canvas(element, { backgroundColor: "#151822", scale: 1.5, logging: false, useCORS: true });
+    return await html2canvas(element, { backgroundColor: "#151822", scale: 2, logging: false, useCORS: true });
   },
 
   async captureClanBattleCanvas(cbData, colors, includeRoleTag, sortMode) {
     const captureContainer = document.getElementById("cbCaptureContainer");
     captureContainer.innerHTML = this.buildClanBattleImageDom(cbData, colors, includeRoleTag, sortMode);
     const element = document.getElementById("cbCaptureCard");
-    return await html2canvas(element, { backgroundColor: "#151822", scale: 1.5, logging: false, useCORS: true });
+    return await html2canvas(element, { backgroundColor: "#151822", scale: 2, logging: false, useCORS: true });
   },
 
   async captureSquadLoadoutsCanvas(players, totals, clanBuffEnabled, colors) {
     const captureContainer = document.getElementById("squadCaptureContainer");
     captureContainer.innerHTML = this.buildSquadLoadoutsImageDom(players, totals, clanBuffEnabled, colors);
     const element = document.getElementById("squadCaptureCard");
-    return await html2canvas(element, { backgroundColor: "#151822", scale: 1.5, logging: false, useCORS: true });
+    return await html2canvas(element, { backgroundColor: "#151822", scale: 2, logging: false, useCORS: true });
   },
 
   canvasToBlob(canvas) {
