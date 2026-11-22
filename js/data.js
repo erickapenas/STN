@@ -159,7 +159,7 @@ const TOWER_PLACEMENT_LIMITS = {
   "Pie Launcher": 6,
   "Rocketeer": 5,
   "Tesla": 5,
-  "Corn Popper": 5,
+  "Corn Popper": 12,
   "Mortar": 5,
   "Flamethrower": 5,
   "Cannon": 6,

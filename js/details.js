@@ -1307,5 +1307,42 @@ const INDEX_DETAILS = {
     whereToGet: [
       { source: "Harvest Crate", chance: "<strong>29%</strong> per chest" }
     ]
+  },
+
+  "Corn Popper": {
+    tags: ["EPIC", "EXCLUSIVE", "POP"],
+    summaryStats: [
+      { label: "⚔️ DAMAGE",     value: "9 → 558" },
+      { label: "🍿 POP",        value: "6 → 10 studs" },
+      { label: "💰 PLACE COST", value: "$450" }
+    ],
+    bullets: [
+      "Shoots <strong>sticky kernels</strong> that heat up and <strong>pop all together</strong>, blasting every zombie around",
+      "Zombies that die with kernels in them <strong>pop too</strong>"
+    ],
+    keyNumbers: [
+      { label: "EVERY KERNEL",      value: "<strong>Sticks</strong> in the zombie. It does no damage yet" },
+      { label: "THE FUSE",          value: "<strong>1.6s → 1.2s</strong> after the first kernel, <strong>they all pop at once</strong>" },
+      { label: "THE ZOMBIE",        value: "Takes <strong>every kernel's damage</strong> when they pop" },
+      { label: "ZOMBIES AROUND IT", value: "Take <strong>35% → 50%</strong> of it, <strong>6 → 10</strong> studs around" },
+      { label: "MORE KERNELS",      value: "A <strong>bigger pop</strong>: +10% size per kernel, up to +30%" },
+      { label: "IF IT DIES FIRST",  value: "Its kernels <strong>pop where it fell</strong>" },
+      { label: "GET IT FROM",       value: "The <strong>Thanksgiving Event</strong> tower crate" },
+      { label: "CASH TO MAX IT",    value: "<strong>$417,950</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",   value: "<strong>12</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 450,    damage: "9",   reload: "0.7s",  range: "32", pop: "6",   fuse: "1.6s", unlockCoins: 0 },
+      { level: 2, cashCost: 1100,   damage: "18",  reload: "0.65s", range: "34", pop: "6.5", fuse: "1.6s", unlockCoins: 0 },
+      { level: 3, cashCost: 2600,   damage: "33",  reload: "0.6s",  range: "36", pop: "7",   fuse: "1.5s", unlockCoins: 0 },
+      { level: 4, cashCost: 6100,   damage: "60",  reload: "0.55s", range: "38", pop: "7.5", fuse: "1.5s", unlockCoins: 0 },
+      { level: 5, cashCost: 13700,  damage: "108", reload: "0.5s",  range: "41", pop: "8",   fuse: "1.4s", unlockCoins: 600 },
+      { level: 6, cashCost: 32000,  damage: "188", reload: "0.45s", range: "44", pop: "8.5", fuse: "1.4s", unlockCoins: 2400 },
+      { level: 7, cashCost: 100000, damage: "329", reload: "0.4s",  range: "47", pop: "9",   fuse: "1.3s", unlockCoins: 9500 },
+      { level: 8, cashCost: 262000, damage: "558", reload: "0.35s", range: "50", pop: "10",  fuse: "1.2s", unlockCoins: 37500 }
+    ],
+    whereToGet: [
+      { source: "Harvest Crate", chance: "<strong>70%</strong> per chest" }
+    ]
   }
 };

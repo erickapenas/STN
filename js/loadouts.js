@@ -686,6 +686,23 @@ const LoadoutsUI = {
     };
 
     Object.keys(buffEntriesByStat).forEach(stat => {
+      if (stat === "wish") {
+        // Each Unicorn has its own independent wish button at full strength (no stacking / no decay)
+        const list = buffEntriesByStat[stat].sort((a, b) => a.base - b.base);
+        const entryObj = ensureStat(stat, list[0].label, list[0].icon);
+        entryObj.petCount = list.length;
+        entryObj.noSign = true;
+        entryObj.noStack = true;
+        entryObj.steps = list.map(entry => ({
+          petName: entry.petName,
+          eff: entry.base,
+          pctOfBase: 100
+        }));
+        entryObj.petTotal = list[0].base;
+        entryObj.total = list[0].base;
+        return;
+      }
+
       const list = buffEntriesByStat[stat].sort((a, b) => b.base - a.base);
       const entryObj = ensureStat(stat, list[0].label, list[0].icon);
       let petTotal = 0;
@@ -809,8 +826,13 @@ const LoadoutsUI = {
           const u = b.unit || "%";
           const parts = [];
           if (b.petCount > 0) {
-            const petBreak = b.steps.map(st => `${this.formatStatVal(st.eff, u)}`).join(" + ");
-            parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
+            if (b.noStack) {
+              const petBreak = b.steps.map(st => `${this.formatStatVal(st.eff, u)}`).join(" / ");
+              parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak} (independent)`);
+            } else {
+              const petBreak = b.steps.map(st => `${this.formatStatVal(st.eff, u)}`).join(" + ");
+              parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
+            }
           }
           if (b.baseAdds && b.baseAdds.length > 0) {
             b.baseAdds.forEach(ba => parts.push(`🛡️ ${ba.name}: +${this.formatStatVal(ba.value, u)}`));
@@ -818,11 +840,12 @@ const LoadoutsUI = {
           if (b.clanAdd > 0 && b.clanInfo) {
             parts.push(`🏰 ${b.clanInfo}: +${this.formatStatVal(b.clanAdd, u)}`);
           }
+          const totalPrefix = b.noSign ? "" : (b.total >= 0 ? "+" : "");
           return `
             <div class="squad-buff-card${(b.clanAdd > 0 || (b.baseAdds && b.baseAdds.length > 0)) ? " has-clan" : ""}">
               <div class="squad-buff-top">
                 <span class="squad-buff-title">${b.icon} ${escapeXml(b.label)}</span>
-                <span class="squad-buff-total"${b.total < 0 ? ' style="color:#f87171;"' : ''}>${b.total >= 0 ? "+" : ""}${this.formatStatVal(b.total, u)}</span>
+                <span class="squad-buff-total"${b.total < 0 ? ' style="color:#f87171;"' : ''}>${totalPrefix}${this.formatStatVal(b.total, u)}</span>
               </div>
               <div class="squad-buff-breakdown">${parts.join(" • ")}</div>
             </div>

@@ -138,6 +138,8 @@ const IndexUI = {
       const hasSlow = levels.some(lv => lv.slow !== undefined);
       const hasSplat = levels.some(lv => lv.splat !== undefined);
       const hasBlind = levels.some(lv => lv.blind !== undefined);
+      const hasPop = levels.some(lv => lv.pop !== undefined);
+      const hasFuse = levels.some(lv => lv.fuse !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const isSlam = !!details.isSlam;
@@ -616,7 +618,9 @@ const IndexUI = {
           (hasBlast ? 1 : 0) +
           (hasSlow ? 1 : 0) +
           (hasSplat ? 1 : 0) +
-          (hasBlind ? 1 : 0);
+          (hasBlind ? 1 : 0) +
+          (hasPop ? 1 : 0) +
+          (hasFuse ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -640,6 +644,8 @@ const IndexUI = {
                     ${hasSlow ? "<th>🧊 SLOW</th>" : ""}
                     ${hasSplat ? "<th>🥧 SPLAT</th>" : ""}
                     ${hasBlind ? "<th>😵 BLIND</th>" : ""}
+                    ${hasPop ? "<th>🍿 POP</th>" : ""}
+                    ${hasFuse ? "<th>⏳ FUSE</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -658,6 +664,8 @@ const IndexUI = {
                       ${hasSlow ? `<td style="color:#38bdf8;">🧊 ${escapeXml(lv.slow)}</td>` : ""}
                       ${hasSplat ? `<td>${escapeXml(lv.splat)}</td>` : ""}
                       ${hasBlind ? `<td style="color:#fbbf24;">${escapeXml(lv.blind)}</td>` : ""}
+                      ${hasPop ? `<td>${escapeXml(lv.pop)}</td>` : ""}
+                      ${hasFuse ? `<td style="color:#fbbf24;">${escapeXml(lv.fuse)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}

@@ -353,8 +353,13 @@ const CanvasManager = {
           const u = b.unit || "%";
           const parts = [];
           if (b.petCount > 0) {
-            const petBreak = b.steps.map(st => fmtStatVal(st.eff, u)).join(" + ");
-            parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
+            if (b.noStack) {
+              const petBreak = b.steps.map(st => fmtStatVal(st.eff, u)).join(" / ");
+              parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak} (independent)`);
+            } else {
+              const petBreak = b.steps.map(st => fmtStatVal(st.eff, u)).join(" + ");
+              parts.push(`${b.petCount} pet${b.petCount > 1 ? "s" : ""}: ${petBreak}`);
+            }
           }
           if (b.baseAdds && b.baseAdds.length > 0) {
             b.baseAdds.forEach(ba => parts.push(`🛡️ ${ba.name}: +${fmtStatVal(ba.value, u)}`));
@@ -363,11 +368,12 @@ const CanvasManager = {
             parts.push(`🏰 ${b.clanInfo}: +${fmtStatVal(b.clanAdd, u)}`);
           }
           const highlightBorder = (b.clanAdd > 0 || (b.baseAdds && b.baseAdds.length > 0)) ? "#f59e0b88" : "#262c3f";
+          const totalPrefix = b.noSign ? "" : (b.total >= 0 ? "+" : "");
           return `
             <div style="background:#10121b; border:1px solid ${highlightBorder}; border-radius:8px; padding:9px 12px; min-width:195px; flex:1 1 200px; box-sizing:border-box;">
               <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
                 <span style="font-size:0.84rem; font-weight:700; color:#e2e8f0; font-family:'Segoe UI', sans-serif;">${normalizeInlineIcon(b.icon)} ${escapeXml(b.label)}</span>
-                <span style="font-size:0.9rem; font-weight:800; color:${b.total < 0 ? '#f87171' : '#4ade80'}; font-family:'Consolas', monospace;">${b.total >= 0 ? '+' : ''}${fmtStatVal(b.total, u)}</span>
+                <span style="font-size:0.9rem; font-weight:800; color:${b.total < 0 ? '#f87171' : '#4ade80'}; font-family:'Consolas', monospace;">${totalPrefix}${fmtStatVal(b.total, u)}</span>
               </div>
               <div style="font-size:0.72rem; color:#94a3b8; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(parts.join(" • "))}</div>
             </div>
