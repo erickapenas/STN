@@ -207,6 +207,79 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Military Base": {
+    tags: ["MYTHIC", "BOOST"],
+    isBoostBase: true,
+    summaryStats: [
+      { label: "DAMAGE",     value: "+15% → +40%" },
+      { label: "RANGE",      value: "+17% → +50%" },
+      { label: "PLACE COST", value: "$6,000" }
+    ],
+    bullets: [
+      "<strong>Buffs every tower next to it</strong> so they <strong>deal more damage</strong>",
+      "From <strong>level 4</strong> the buff also makes them <strong>shoot further</strong>"
+    ],
+    keyNumbers: [
+      { label: "DAMAGE BUFF",     value: "<strong>+15% → +40%</strong> for every tower in reach" },
+      { label: "RANGE BUFF",      value: "From <strong>level 4</strong>: +17%, then +33%, then +50%" },
+      { label: "REACH",           value: "<strong>15 → 29</strong> studs" },
+      { label: "SEVERAL BASES",   value: "Do not add up. The <strong>strongest</strong> one in reach counts" },
+      { label: "CASH TO MAX IT",  value: "<strong>$925,000</strong> in a match, for all <strong>6 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>4</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 6000,   dmgBuff: "+15%", rangeBuff: "+0%",  reach: "15", unlockCoins: 0 },
+      { level: 2, cashCost: 15000,  dmgBuff: "+20%", rangeBuff: "+0%",  reach: "21", unlockCoins: 0 },
+      { level: 3, cashCost: 39000,  dmgBuff: "+25%", rangeBuff: "+0%",  reach: "23", unlockCoins: 2000 },
+      { level: 4, cashCost: 101000, dmgBuff: "+30%", rangeBuff: "+17%", reach: "25", unlockCoins: 7000 },
+      { level: 5, cashCost: 259000, dmgBuff: "+35%", rangeBuff: "+33%", reach: "26", unlockCoins: 28000 },
+      { level: 6, cashCost: 505000, dmgBuff: "+40%", rangeBuff: "+50%", reach: "29", unlockCoins: 113000 }
+    ],
+    whereToGet: [
+      { source: "Rare Chest",      chance: "<strong>0.55%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>1.48%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>3.21%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>3.7%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>18.64%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>17.16%</strong> per chest" }
+    ]
+  },
+
+  "Medical Base": {
+    tags: ["EPIC", "HEAL"],
+    isHealBase: true,
+    summaryStats: [
+      { label: "HEALS",      value: "0.2% → 2%" },
+      { label: "RELOAD",     value: "1s → 1s" },
+      { label: "PLACE COST", value: "$750" }
+    ],
+    bullets: [
+      "<strong>Repairs your house door</strong> over time with a healing beam",
+      "The door must be <strong>in its range</strong>"
+    ],
+    keyNumbers: [
+      { label: "HEALS",           value: "<strong>0.2% → 2%</strong> of the door's <strong>max health</strong> every second" },
+      { label: "REACH",           value: "The door must be within <strong>12 → 20</strong> studs" },
+      { label: "CASH TO MAX IT",  value: "<strong>$295,030</strong> in a match, for all <strong>6 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>4</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 750,    healsPerSec: "0.2%",  range: "12", unlockCoins: 0 },
+      { level: 2, cashCost: 1280,   healsPerSec: "0.35%", range: "13", unlockCoins: 0 },
+      { level: 3, cashCost: 4000,   healsPerSec: "0.55%", range: "15", unlockCoins: 0 },
+      { level: 4, cashCost: 14000,  healsPerSec: "0.85%", range: "16", unlockCoins: 0 },
+      { level: 5, cashCost: 55000,  healsPerSec: "1.3%",  range: "18", unlockCoins: 5000 },
+      { level: 6, cashCost: 220000, healsPerSec: "2%",    range: "20", unlockCoins: 45000 }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.26%</strong> per chest" },
+      { source: "Rare Chest",      chance: "<strong>0.5%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>5.2%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>10.4%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>15.84%</strong> per chest" }
+    ]
+  },
+
   "Croc": {
     tags: ["LEGENDARY", "PET"],
     buffColumnLabel: "GEMS",

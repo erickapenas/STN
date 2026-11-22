@@ -140,6 +140,8 @@ const IndexUI = {
       const isSlam = !!details.isSlam;
       const isGolem = !!details.isGolem;
       const isEconomy = !!details.isEconomy;
+      const isBoostBase = !!details.isBoostBase;
+      const isHealBase = !!details.isHealBase;
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
@@ -244,7 +246,91 @@ const IndexUI = {
       }
 
       // Every Level Table
-      if (levelsWithDps.length > 0 && isEconomy) {
+      if (levelsWithDps.length > 0 && isBoostBase) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CASH COST</th>
+                    <th>DAMAGE BUFF</th>
+                    <th>RANGE BUFF</th>
+                    <th>REACH</th>
+                    <th>UNLOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>$${lv.cashCost.toLocaleString()}</td>
+                      <td style="color:#f87171;">${escapeXml(lv.dmgBuff)}</td>
+                      <td style="color:#60a5fa;">${escapeXml(lv.rangeBuff)}</td>
+                      <td>${escapeXml(lv.reach)}</td>
+                      <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>$${totalMatchCash.toLocaleString()}</td>
+                    <td colspan="3">Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (levelsWithDps.length > 0 && isHealBase) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CASH COST</th>
+                    <th>HEALS / SEC</th>
+                    <th>RANGE</th>
+                    <th>UNLOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>$${lv.cashCost.toLocaleString()}</td>
+                      <td style="color:#4ade80;">${escapeXml(lv.healsPerSec)}</td>
+                      <td>${escapeXml(lv.range)}</td>
+                      <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>$${totalMatchCash.toLocaleString()}</td>
+                    <td colspan="2">Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (levelsWithDps.length > 0 && isEconomy) {
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
