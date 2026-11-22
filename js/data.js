@@ -261,7 +261,7 @@ const PET_BUFFS = {
       { stat: "range",    label: "Range",     value: 25, levels: [25, 25, 25, 25, 25], icon: "🎯" }
     ]
   },
-  "Ghostie":       { stat: "range",     label: "Range",     value: 175, levels: [175, 175, 175, 175, 175], icon: "🎯" },
+  "Ghostie":       { stat: "range",     label: "Range",     value: 200, levels: [100, 125, 150, 175, 200], icon: "🎯" },
   "Turkey":        { stat: "event",    label: "Event",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🍗" },
   "Pilgrim Bear":  {
     stat: "damage", label: "Damage", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️",

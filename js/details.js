@@ -1419,8 +1419,8 @@ const INDEX_DETAILS = {
     buffColumnLabel: "🎯 RANGE",
     buff2ColumnLabel: "👻 DURATION",
     summaryStats: [
-      { label: "🎯 RANGE",    value: "+175%" },
-      { label: "👻 DURATION", value: "26s (Lvl 4)" },
+      { label: "🎯 RANGE",    value: "+100% → +200%" },
+      { label: "👻 DURATION", value: "15s → 30s" },
       { label: "⏱️ COOLDOWN", value: "30s" }
     ],
     bullets: [
@@ -1430,16 +1430,16 @@ const INDEX_DETAILS = {
     keyNumbers: [
       { label: "TRIGGERS",        value: "Every <strong>30 seconds</strong>" },
       { label: "TARGETS",         value: "<strong>1 random tower</strong>" },
-      { label: "RANGE BUFF",      value: "<strong>+175%</strong> range while haunted" },
-      { label: "HAUNT DURATION",  value: "<strong>26s</strong> at Level 4 (increases each level)" },
+      { label: "RANGE BUFF",      value: "<strong>+100% → +200%</strong> range while haunted" },
+      { label: "HAUNT DURATION",  value: "<strong>15s → 30s</strong> by level" },
       { label: "LEVEL 5 UPGRADE", value: "<strong>2,265,000 Coins</strong>" }
     ],
     petLevels: [
-      { level: 1, buff: "+175%", buff2: "~14s", upgradeCoins: 0 },
-      { level: 2, buff: "+175%", buff2: "~18s", upgradeCoins: 0 },
-      { level: 3, buff: "+175%", buff2: "~22s", upgradeCoins: 0 },
-      { level: 4, buff: "+175%", buff2: "26s",  upgradeCoins: 0 },
-      { level: 5, buff: "+175%", buff2: "~30s", upgradeCoins: 2265000 }
+      { level: 1, buff: "+100%", buff2: "15s", upgradeCoins: 0 },
+      { level: 2, buff: "+125%", buff2: "19s", upgradeCoins: 0 },
+      { level: 3, buff: "+150%", buff2: "22s", upgradeCoins: 0 },
+      { level: 4, buff: "+175%", buff2: "26s", upgradeCoins: 0 },
+      { level: 5, buff: "+200%", buff2: "30s", upgradeCoins: 2265000 }
     ],
     whereToGet: [
       { source: "Exclusive", chance: "<strong>Halloween Event</strong>" }
