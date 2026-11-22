@@ -842,6 +842,7 @@ const JinxCalcUI = {
           <div class="squad-kpi-label">💀 Total Curse (Zombie DMG)</div>
           <div class="squad-kpi-val" style="color:#f87171;">+${cursePct}%</div>
           <div class="squad-kpi-sub">${count} Jinx × +30% Zombie Damage</div>
+          ${overCap > 0 ? `<div class="squad-kpi-sub" style="color:#fbbf24;">⚠️ +${overCap}% over cap (extra Jinxes only add Curse!)</div>` : ""}
         </div>
         <div class="squad-kpi-card squad-kpi-dps">
           <div class="squad-kpi-label">🪙 Spin Base / 25× Jackpot</div>

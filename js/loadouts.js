@@ -907,7 +907,7 @@ const LoadoutsUI = {
             <span class="squad-buff-title">💀 Jinx Curse (Zombie DMG)</span>
             <span class="squad-buff-total" style="color:#f87171;">+${jx.cursePct}%</span>
           </div>
-          <div class="squad-buff-breakdown">${jx.count} Jinx × +30% = +${jx.cursePct}% Zombie Damage (no decay)</div>
+          <div class="squad-buff-breakdown">${jx.count} Jinx × +30% = +${jx.cursePct}% Zombie Damage (no decay)${jx.overCap > 0 ? ` • <span style="color:#fbbf24;">⚠️ +${this.formatStatVal(jx.overCap, "%")} over cap (extra Jinxes only add Curse!)</span>` : ""}</div>
         </div>
       `;
     }
