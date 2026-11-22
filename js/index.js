@@ -668,6 +668,34 @@ const IndexUI = {
         `;
       }
 
+      // Generic Extra Table (e.g. Horse Stampede Damage to a Boss)
+      if (details.extraTable && Array.isArray(details.extraTable.rows) && details.extraTable.rows.length > 0) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">${escapeXml(details.extraTable.title)}</div>
+              ${details.extraTable.note ? `<div class="detail-section-note">${escapeXml(details.extraTable.note)}</div>` : ""}
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    ${details.extraTable.headers.map(h => `<th>${escapeXml(h)}</th>`).join("")}
+                  </tr>
+                </thead>
+                <tbody>
+                  ${details.extraTable.rows.map(r => `
+                    <tr>
+                      ${r.map((cell, idx) => `<td${idx === 0 ? ' class="col-lvl"' : ''}>${escapeXml(cell)}</td>`).join("")}
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
       // Pet Every Level Table (when petLevels is present)
       if (petLevels.length > 0) {
         const buffColTitle = details.buffColumnLabel || "BUFF";

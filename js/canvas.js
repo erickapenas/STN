@@ -312,6 +312,7 @@ const CanvasManager = {
       if (unit === "$") return `$${num}`;
       if (unit === "lvl") return `${num} Lvl`;
       if (unit === "s") return `${num}s`;
+      if (unit === "%/s") return `${num}%/s`;
       return `${num}%`;
     };
     const normalizeInlineIcon = (htmlStr) =>

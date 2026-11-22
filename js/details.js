@@ -1010,5 +1010,128 @@ const INDEX_DETAILS = {
       { source: "Pumpkin Egg",   chance: "<strong>1.88%</strong> per egg" },
       { source: "Lava Egg",      chance: "<strong>6.68%</strong> per egg" }
     ]
+  },
+
+  "Bunny": {
+    tags: ["MYTHIC", "PET"],
+    buffColumnLabel: "💚 HEALS",
+    summaryStats: [
+      { label: "💚 HEALS", value: "0.5%/s → 1.5%/s" }
+    ],
+    bullets: [
+      "Repairs all of your doors <strong>a little every second</strong>, all match long"
+    ],
+    keyNumbers: [
+      { label: "HEALS",                value: "<strong>Every door</strong>, every second, all match long" },
+      { label: "AMOUNT",               value: "A share of the door's <strong>max health</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "0.5%/s",  upgradeCoins: 0 },
+      { level: 2, buff: "0.75%/s", upgradeCoins: 8000 },
+      { level: 3, buff: "1%/s",    upgradeCoins: 30000 },
+      { level: 4, buff: "1.25%/s", upgradeCoins: 125000 },
+      { level: 5, buff: "1.5%/s",  upgradeCoins: 500000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>1.2%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>2.6%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>3%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>15.3%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>14.1%</strong> per egg" }
+    ]
+  },
+
+  "Rhino": {
+    tags: ["MYTHIC", "PET"],
+    buffColumnLabel: "💥 RAM DAMAGE",
+    buff2ColumnLabel: "⏱️ COOLDOWN",
+    buff3ColumnLabel: "🛡️ DOOR ARMOR",
+    summaryStats: [
+      { label: "💥 RAM DAMAGE", value: "+20% → +40%" },
+      { label: "⏱️ COOLDOWN",   value: "18s → 10s" },
+      { label: "🛡️ DOOR ARMOR", value: "+10% → +20%" }
+    ],
+    bullets: [
+      "<strong>Charges</strong> across your doors, <strong>hitting zombies hard</strong> and <strong>knocking them back</strong> (bosses are immune)",
+      "Your doors also <strong>take less damage</strong>"
+    ],
+    keyNumbers: [
+      { label: "CHARGE",         value: "Every <strong>18s → 10s</strong>, when zombies are at a door" },
+      { label: "NORMAL ZOMBIES", value: "Lose <strong>20% → 40%</strong> of their max health" },
+      { label: "KNOCKBACK",      value: "<strong>16 studs</strong> back, then dazed for <strong>1.1s</strong>" },
+      { label: "BOSSES",         value: "Are not touched" },
+      { label: "DOOR ARMOR",     value: "Your doors take <strong>10% → 20%</strong> less damage" },
+      { label: "SEVERAL RHINOS", value: "All charge, but wait longer. Maxed: <strong>10s</strong>, <strong>17s</strong>, <strong>28s</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", buff2: "18s", buff3: "+10%",   upgradeCoins: 0 },
+      { level: 2, buff: "+25%", buff2: "16s", buff3: "+12.5%", upgradeCoins: 8000 },
+      { level: 3, buff: "+30%", buff2: "14s", buff3: "+15%",   upgradeCoins: 30000 },
+      { level: 4, buff: "+35%", buff2: "12s", buff3: "+17.5%", upgradeCoins: 125000 },
+      { level: 5, buff: "+40%", buff2: "10s", buff3: "+20%",   upgradeCoins: 500000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",      chance: "<strong>1.2%</strong> per egg" },
+      { source: "Mythic Egg",    chance: "<strong>2.6%</strong> per egg" },
+      { source: "Legendary Egg", chance: "<strong>3%</strong> per egg" },
+      { source: "Divine Egg",    chance: "<strong>15.3%</strong> per egg" },
+      { source: "Pumpkin Egg",   chance: "<strong>14.1%</strong> per egg" }
+    ]
+  },
+
+  "Horse": {
+    tags: ["DIVINE", "PET"],
+    buffColumnLabel: "💥 STAMPEDE",
+    buff2ColumnLabel: "💫 BOSS STUN",
+    buff3ColumnLabel: "🧲 PER CHARGE",
+    summaryStats: [
+      { label: "💥 STAMPEDE",   value: "+15% → +25%" },
+      { label: "💫 BOSS STUN",  value: "3s → 5s" },
+      { label: "🧲 PER CHARGE", value: "+10% (Max +50% DMG / +50% Reload / +25% Range)" }
+    ],
+    bullets: [
+      "Starts with <strong>3 stampede charges</strong> and earns more by <strong>killing zombies</strong>, up to 5. Each stored charge <strong>buffs all your towers</strong>",
+      "When a door drops below <strong>75% health</strong>, a charge is used to <strong>wipe out small zombies</strong>, stun and hurt bosses and <strong>repair your doors</strong>"
+    ],
+    keyNumbers: [
+      { label: "STARTS WITH",         value: "<strong>3 stampede charges</strong>" },
+      { label: "EARN 1 MORE",         value: "Every <strong>60 zombies</strong> killed at your house. A boss counts as 10" },
+      { label: "MOST STORED",         value: "<strong>5 charges</strong>" },
+      { label: "EVERY STORED CHARGE", value: "<strong>+10%</strong> damage, <strong>+10%</strong> reload and <strong>+5%</strong> range for all your towers" },
+      { label: "AT 5 CHARGES",        value: "<strong>+50%</strong> damage, <strong>+50%</strong> reload, <strong>+25%</strong> range" },
+      { label: "SEVERAL HORSES",      value: "The 2nd adds <strong>+6%</strong> a charge, the 3rd <strong>+3.6%</strong>" },
+      { label: "STAMPEDE TRIGGERS",   value: "When a door drops <strong>below 75%</strong> health and zombies are at it" },
+      { label: "STAMPEDE COSTS",      value: "<strong>1 charge</strong>, and its tower buff until you earn it back" },
+      { label: "NORMAL ZOMBIES",      value: "At your doors are <strong>killed</strong>" },
+      { label: "BOSSES",              value: "Stunned for <strong>3s → 5s</strong> by level, and hurt (see table)" },
+      { label: "DOORS",               value: "Every door heals <strong>20%</strong> of its health over <strong>10 seconds</strong>. Heals stack" },
+      { label: "BETWEEN TWO",         value: "At least <strong>3 seconds</strong>" }
+    ],
+    extraTable: {
+      title: "STAMPEDE DAMAGE TO A BOSS",
+      note: "SHARE OF ITS MAX HEALTH",
+      headers: ["BOSS FROM", "LVL 1", "LVL 2", "LVL 3", "LVL 4", "LVL 5"],
+      rows: [
+        ["Easy",           "15%", "17.5%", "20%", "22.5%", "25%"],
+        ["Hard",           "12%", "14%",   "16%", "18%",   "20%"],
+        ["Nightmare",      "9%",  "10.5%", "12%", "13.5%", "15%"],
+        ["Impossible",     "6%",  "7%",    "8%",  "9%",    "10%"],
+        ["Crazy",          "3%",  "3.5%",  "4%",  "4.5%",  "5%"],
+        ["Any other mode", "0%",  "0%",    "0%",  "0%",    "0%"]
+      ]
+    },
+    petLevels: [
+      { level: 1, buff: "+15%",   buff2: "3s",   buff3: "+10%", upgradeCoins: 0 },
+      { level: 2, buff: "+17.5%", buff2: "3.5s", buff3: "+10%", upgradeCoins: 45000 },
+      { level: 3, buff: "+20%",   buff2: "4s",   buff3: "+10%", upgradeCoins: 180000 },
+      { level: 4, buff: "+22.5%", buff2: "4.5s", buff3: "+10%", upgradeCoins: 750000 },
+      { level: 5, buff: "+25%",   buff2: "5s",   buff3: "+10%", upgradeCoins: 3000000 }
+    ],
+    whereToGet: [
+      { source: "Divine Egg",  chance: "<strong>0.5%</strong> per egg" },
+      { source: "Pumpkin Egg", chance: "<strong>0.5%</strong> per egg" },
+      { source: "Lava Egg",    chance: "<strong>1.25%</strong> per egg" }
+    ]
   }
 };

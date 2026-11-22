@@ -203,7 +203,7 @@ const PET_BUFFS = {
     ]
   },
   "Hippo":         { stat: "doorhp",   label: "Door Health", value: 40, levels: [20, 25, 30, 35, 40], icon: "💚" },
-  "Rhino":         { stat: "damage",   label: "Damage",    value: 20, icon: "⚔️" },
+  "Rhino":         { stat: "doorarmor", label: "Door Armor", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🛡️" },
   "Monkey":        {
     stat: "exp", label: "EXP", value: 40, levels: [20, 25, 30, 35, 40], icon: ICON_EXP,
     extraBuffs: [
@@ -211,7 +211,7 @@ const PET_BUFFS = {
       { stat: "damage",       label: "Damage",        value: 0,  levels: [-20, -15, -10, -5, 0], icon: "⚔️" }
     ]
   },
-  "Bunny":         { stat: "firerate", label: "Fire Rate", value: 20, icon: "⚡" },
+  "Bunny":         { stat: "doorheal",  label: "Door Heal",  value: 1.5, levels: [0.5, 0.75, 1, 1.25, 1.5], unit: "%/s", icon: "💚" },
   "Arctic Fox":    {
     stat: "firerate", label: "Fire Rate", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚡",
     extraBuffs: [
@@ -244,7 +244,13 @@ const PET_BUFFS = {
   "Jinx":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
   "Unicorn":       { stat: "firerate", label: "Fire Rate", value: 30, icon: "⚡" },
   "Lion":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
-  "Horse":         { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
+  "Horse":         {
+    stat: "damage", label: "Damage", value: 50, levels: [50, 50, 50, 50, 50], icon: "⚔️",
+    extraBuffs: [
+      { stat: "firerate", label: "Fire Rate", value: 50, levels: [50, 50, 50, 50, 50], icon: "⚡" },
+      { stat: "range",    label: "Range",     value: 25, levels: [25, 25, 25, 25, 25], icon: "🎯" }
+    ]
+  },
   "Ghostie":       { stat: "damage",   label: "Damage",    value: 35, icon: "⚔️" },
   "Turkey":        { stat: "event",    label: "Event",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🍗" },
   "Pilgrim Bear":  {

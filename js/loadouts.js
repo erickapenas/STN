@@ -237,6 +237,8 @@ const LoadoutsUI = {
           { key: "gems",      label: "💎 Gems",        color: "#a855f7" },
           { key: "doorlvl",      label: "🚪 Doors Start",                 color: "#d97706" },
           { key: "doorhp",       label: "💚 Door Health",                 color: "#4ade80" },
+          { key: "doorheal",     label: "💚 Door Heal",                   color: "#22c55e" },
+          { key: "doorarmor",    label: "🛡️ Door Armor",                  color: "#94a3b8" },
           { key: "lifesteal",    label: "🩸 Lifesteal",                   color: "#ef4444" },
           { key: "shield",       label: "🛡️ Door Shield",                 color: "#38bdf8" },
           { key: "bossstun",     label: "🛡️ Boss Stun",                   color: "#eab308" },
@@ -511,6 +513,7 @@ const LoadoutsUI = {
     if (unit === "$") return `$${num}`;
     if (unit === "lvl") return `${num} Lvl`;
     if (unit === "s") return `${num}s`;
+    if (unit === "%/s") return `${num}%/s`;
     return `${num}%`;
   },
 
@@ -627,6 +630,8 @@ const LoadoutsUI = {
       gems:      { label: "Gems",        icon: "💎", unit: "%" },
       doorlvl:      { label: "Doors Start",   icon: "🚪",              unit: "lvl" },
       doorhp:       { label: "Door Health",   icon: "💚",              unit: "%" },
+      doorheal:     { label: "Door Heal",     icon: "💚",              unit: "%/s" },
+      doorarmor:    { label: "Door Armor",    icon: "🛡️",              unit: "%" },
       lifesteal:    { label: "Lifesteal",     icon: "🩸",              unit: "%" },
       shield:       { label: "Door Shield",   icon: "🛡️",              unit: "s" },
       bossstun:     { label: "Boss Stun",     icon: "🛡️",              unit: "s" },
