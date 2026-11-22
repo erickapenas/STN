@@ -193,8 +193,20 @@ const IndexUI = {
           });
         }
         if (hasRapidFire) {
+          const calcAvgRf = (lv) => {
+            const cd = parseNum(lv.rfCooldown);
+            if (!cd || !lv.dps) return lv.dps;
+            return lv.dps * ((rfConfig.duration * rfConfig.multiplier + cd) / (rfConfig.duration + cd));
+          };
+          const firstAvgRf = calcAvgRf(firstLv);
+          const maxAvgRf = calcAvgRf(maxLv);
           dpsRows.push({
-            label: `RAPID FIRE (${rfConfig.multiplier}x / ${rfConfig.duration}s)`,
+            label: `EFFECTIVE AVG DPS (INCL. ${rfConfig.multiplier}x/${rfConfig.duration}s)`,
+            value: `<strong>${formatDps(maxAvgRf)} DPS</strong> at Max Level <span style="color:#94a3b8;">(${formatDps(firstAvgRf)} → ${formatDps(maxAvgRf)})</span>`,
+            highlight: true
+          });
+          dpsRows.push({
+            label: `RAPID FIRE BURST (${rfConfig.multiplier}x / ${rfConfig.duration}s)`,
             value: `<strong>${formatDps(maxLv.rfDps)} DPS</strong> (<strong>${formatDps(maxLv.rfBurstDmg)}</strong> dmg in ${rfConfig.duration}s) <span style="color:#94a3b8;">(${formatDps(firstLv.rfDps)} → ${formatDps(maxLv.rfDps)})</span>`,
             highlight: true
           });

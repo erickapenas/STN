@@ -557,12 +557,26 @@ const LoadoutsUI = {
     const lvData = details.levels.find(l => l.level === clampedLvl) || details.levels[details.levels.length - 1];
     const dmg = this.parseNum(lvData.damage);
     const rel = this.parseNum(lvData.reload);
-    const singleDps = rel > 0 ? dmg / rel : 0;
+    const baseSingleDps = rel > 0 ? dmg / rel : 0;
+    let singleDps = baseSingleDps;
+    let hasRapidFireAvg = false;
+    if (baseSingleDps > 0 && details.rapidFire && details.rapidFire.multiplier > 1 && details.rapidFire.duration > 0) {
+      const rfDur = details.rapidFire.duration;
+      const rfMult = details.rapidFire.multiplier;
+      const rfCd = this.parseNum(lvData.rfCooldown);
+      if (rfCd > 0) {
+        const avgFactor = (rfDur * rfMult + rfCd) / (rfDur + rfCd);
+        singleDps = baseSingleDps * avgFactor;
+        hasRapidFireAvg = true;
+      }
+    }
     const bossMult = details.bossMultiplier || 1;
     return {
       hasStats: singleDps > 0,
       limit,
       singleDps,
+      baseSingleDps,
+      hasRapidFireAvg,
       totalDps: singleDps * limit,
       bossMult
     };
@@ -1152,8 +1166,9 @@ const LoadoutsUI = {
             }
           } else {
             const stats = this.getTowerStatsForLevel(def, slot.lvl);
+            const rfTitleNote = stats.hasRapidFireAvg ? " avg (incl. 3x/5s Rapid Fire)" : "";
             badge.innerHTML = stats.hasStats
-              ? `<span class="squad-meta-dps" title="${this.formatNum(stats.singleDps)} DPS × ${stats.limit} limit">×${stats.limit} • ${this.formatNum(stats.totalDps)}</span>`
+              ? `<span class="squad-meta-dps" title="${this.formatNum(stats.singleDps)} DPS${rfTitleNote} × ${stats.limit} limit">×${stats.limit} • ${this.formatNum(stats.totalDps)}</span>`
               : `<span class="squad-meta-limit">×${stats.limit} limit</span>`;
           }
         } else {
