@@ -140,7 +140,75 @@ const INDEX_BOSSES = [
   { name: "Zombie Leader",     rarity: "common",    icon: "⚔️", trait: "Early Wave Boss" }
 ];
 
-const IMAGE_VERSION = "5.0";
+const TOWER_PLACEMENT_LIMITS = {
+  "Juggernaut": 3,
+  "Machine Mortar": 5,
+  "Scarecrow": 3,
+  "Crusher": 4,
+  "Golem Forge": 3,
+  "Drone Hangar": 3,
+  "World Ender": 3,
+  "Samurai": 4,
+  "Railgun": 4,
+  "Lava Launcher": 4,
+  "Ice Turret": 4,
+  "Toxic Turret": 4,
+  "Fire Spitter": 5,
+  "Ballista": 5,
+  "Pie Launcher": 4,
+  "Rocketeer": 5,
+  "Tesla": 5,
+  "Corn Popper": 5,
+  "Mortar": 5,
+  "Flamethrower": 5,
+  "Cannon": 6,
+  "Turret": 6,
+  "Crossbow": 6,
+  "Medical Base": 2,
+  "Military Base": 3,
+  "Protector Base": 2,
+  "The Bank": 3,
+  "Void Farm": 4,
+  "Vault": 4,
+  "Mining Cave": 5,
+  "Money Printer": 5,
+  "Farm": 6
+};
+
+// Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
+const PET_BUFFS = {
+  "Bear":          { stat: "range",    label: "Range",     value: 20, icon: "🎯" },
+  "Cat":           { stat: "firerate", label: "Fire Rate", value: 10, icon: "⚡" },
+  "Dog":           { stat: "damage",   label: "Damage",    value: 10, icon: "⚔️" },
+  "Squirrel":      { stat: "cash",     label: "Cash",      value: 10, icon: "💰" },
+  "Deer":          { stat: "range",    label: "Range",     value: 15, icon: "🎯" },
+  "Beaver":        { stat: "cash",     label: "Cash",      value: 15, icon: "💰" },
+  "Penguin":       { stat: "firerate", label: "Fire Rate", value: 15, icon: "⚡" },
+  "Hippo":         { stat: "damage",   label: "Damage",    value: 15, icon: "⚔️" },
+  "Rhino":         { stat: "damage",   label: "Damage",    value: 20, icon: "⚔️" },
+  "Monkey":        { stat: "cash",     label: "Cash",      value: 20, icon: "💰" },
+  "Bunny":         { stat: "firerate", label: "Fire Rate", value: 20, icon: "⚡" },
+  "Arctic Fox":    { stat: "range",    label: "Range",     value: 22, icon: "🎯" },
+  "Raccoon":       { stat: "cash",     label: "Cash",      value: 22, icon: "💰" },
+  "Dragon":        { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
+  "Turtle":        { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
+  "Elephant":      { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
+  "Polar Bear":    { stat: "range",    label: "Range",     value: 25, icon: "🎯" },
+  "Dino":          { stat: "damage",   label: "Damage",    value: 25, icon: "⚔️" },
+  "Tiger":         { stat: "firerate", label: "Fire Rate", value: 25, icon: "⚡" },
+  "Jinx":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
+  "Unicorn":       { stat: "firerate", label: "Fire Rate", value: 30, icon: "⚡" },
+  "Lion":          { stat: "damage",   label: "Damage",    value: 30, icon: "⚔️" },
+  "Horse":         { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
+  "Ghostie":       { stat: "damage",   label: "Damage",    value: 35, icon: "⚔️" },
+  "Turkey":        { stat: "cash",     label: "Cash",      value: 25, icon: "💰" },
+  "Pilgrim Bear":  { stat: "range",    label: "Range",     value: 30, icon: "🎯" },
+  "Golden Turkey": { stat: "cash",     label: "Cash",      value: 35, icon: "💰" }
+};
+
+const BUFF_DIMINISHING_FACTOR = 0.6;
+
+const IMAGE_VERSION = "6.0";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

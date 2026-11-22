@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=5.7">
+  <link rel="stylesheet" href="style.css?v=6.0">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -57,7 +57,7 @@
       <span class="nav-indicator" id="navIndicator" aria-hidden="true"></span>
       <button class="tab-btn active" data-tab="inventoryTab">🎒 Inventory</button>
       <button class="tab-btn" data-tab="indexTab">📖 Index</button>
-      <button class="tab-btn" data-tab="clanBattleTab">⚔️ Clan Battle</button>
+      <button class="tab-btn" data-tab="clanBattleTab">🛡️ Loadouts</button>
       <button class="tab-btn" data-tab="settingsTab">⚙️ Settings</button>
     </nav>
   </header>
@@ -140,6 +140,31 @@
   </main>
 
   <main id="clanBattleTab" class="tab-content">
+    <div class="index-subnav loadouts-subnav">
+      <button type="button" class="index-sub-btn loadouts-sub-btn active" data-loadout-view="squad">👥 Loadouts</button>
+      <button type="button" class="index-sub-btn loadouts-sub-btn" data-loadout-view="clanbattle">⚔️ Clan Battle</button>
+    </div>
+
+    <div id="squadLoadoutsPanel" class="sub-panel active">
+      <section class="card">
+        <div class="squad-top-bar">
+          <div>
+            <h2 style="margin-bottom: 4px;">Squad Loadouts &amp; Calculator</h2>
+            <p class="section-desc" style="margin-bottom: 0;">Assign towers &amp; pets for up to 10 players to calculate total units, stacked pet buffs (60% decay), and squad DPS with placement limits.</p>
+          </div>
+          <div class="squad-top-actions">
+            <button type="button" class="btn btn-primary-action squad-action-btn" id="btnAddSquadPlayer">➕ Add Player (1/10)</button>
+            <button type="button" class="btn btn-secondary squad-action-btn" id="btnClearSquadLoadouts">🗑️ Clear All</button>
+          </div>
+        </div>
+
+        <div id="squadSummaryContainer"></div>
+      </section>
+
+      <div id="squadPlayersContainer" class="squad-players-grid"></div>
+    </div>
+
+    <div id="clanBattlePanel" class="sub-panel">
     <section class="card">
       <div class="header-row">
         <div class="header-inputs-col">
@@ -204,6 +229,7 @@
         <div id="cbPreviewContainer"></div>
       </div>
     </section>
+    </div>
   </main>
 
   <main id="settingsTab" class="tab-content">
@@ -336,15 +362,16 @@
   </div>
 </div>
 
-<script src="js/data.js?v=5.4"></script>
+<script src="js/data.js?v=6.0"></script>
 <script src="js/details.js?v=5.6"></script>
-<script src="js/storage.js?v=5.2"></script>
+<script src="js/storage.js?v=6.0"></script>
 <script src="js/ansi.js?v=5.0"></script>
 <script src="js/canvas.js?v=5.0"></script>
 <script src="js/inventory.js?v=5.3"></script>
 <script src="js/index.js?v=5.6"></script>
+<script src="js/loadouts.js?v=6.0"></script>
 <script src="js/clanbattle.js?v=5.0"></script>
-<script src="js/app.js?v=5.0"></script>
+<script src="js/app.js?v=6.0"></script>
 <script src="js/effects.js?v=5.0"></script>
 
 </body>

@@ -23,7 +23,10 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
 
     if (btn.dataset.tab === "indexTab" && typeof IndexUI !== "undefined") IndexUI.render();
     if (btn.dataset.tab === "inventoryTab") InventoryUI.updateUI();
-    if (btn.dataset.tab === "clanBattleTab") ClanBattleUI.updateUI();
+    if (btn.dataset.tab === "clanBattleTab") {
+      if (typeof LoadoutsUI !== "undefined") LoadoutsUI.render();
+      ClanBattleUI.updateUI();
+    }
   });
 });
 
@@ -40,6 +43,7 @@ function initSettings() {
       updateSettingsLabels();
       updateIgnPreview();
       if (typeof IndexUI !== "undefined") IndexUI.render();
+      if (typeof LoadoutsUI !== "undefined") LoadoutsUI.render();
       InventoryUI.renderItems();
       InventoryUI.updateUI();
       ClanBattleUI.render();
@@ -177,4 +181,5 @@ document.getElementById("cbRoleTagBtnBottom").onclick = toggleRoleTags;
 initSettings();
 InventoryUI.init();
 IndexUI.init();
+LoadoutsUI.init();
 ClanBattleUI.init();

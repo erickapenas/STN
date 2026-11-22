@@ -191,15 +191,50 @@ const StorageManager = {
     if (invBanner !== undefined) localStorage.setItem('td_banner_inv', invBanner);
   },
 
+  loadSquadLoadouts() {
+    const defaultPlayer = (num) => ({
+      name: `Player ${num}`,
+      vip: false,
+      slots: [
+        { item: null, lvl: 1 },
+        { item: null, lvl: 1 },
+        { item: null, lvl: 1 },
+        { item: null, lvl: 1 },
+        { item: null, lvl: 1 }
+      ]
+    });
+
+    try {
+      const raw = localStorage.getItem('td_squad_loadouts');
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        if (Array.isArray(parsed) && parsed.length > 0) {
+          return parsed.slice(0, 10).map((p, i) => ({
+            name: typeof p.name === 'string' && p.name.trim() ? p.name : `Player ${i + 1}`,
+            vip: !!p.vip,
+            slots: Array.isArray(p.slots) && p.slots.length >= 5
+              ? p.slots.slice(0, 5).map(s => ({ item: s && s.item ? s.item : null, lvl: (s && s.lvl) || 1 }))
+              : defaultPlayer(i + 1).slots
+          }));
+        }
+      }
+    } catch {}
+    return [defaultPlayer(1)];
+  },
+  saveSquadLoadouts(players) {
+    localStorage.setItem('td_squad_loadouts', JSON.stringify(players.slice(0, 10)));
+  },
+
   exportAllData() {
     const backup = {
-      version: 5,
+      version: 6,
       timestamp: new Date().toISOString(),
       textOutput: this.loadTextOutput(),
       invSortMode: this.loadInvSortMode(),
       cbSortMode: this.loadCbSortMode(),
       colors: this.loadColors(),
       loadouts: this.loadLoadouts(),
+      squadLoadouts: this.loadSquadLoadouts(),
       vip: this.loadVip(),
       nitro: this.loadNitro(),
       ign: this.loadIgn(),
@@ -226,6 +261,7 @@ const StorageManager = {
       if (typeof data.cbSortMode === 'string') this.saveCbSortMode(data.cbSortMode);
       if (data.colors) this.saveColors(data.colors);
       if (data.loadouts) this.saveLoadouts(data.loadouts);
+      if (Array.isArray(data.squadLoadouts)) this.saveSquadLoadouts(data.squadLoadouts);
       if (typeof data.vip === 'boolean') this.saveVip(data.vip);
       if (typeof data.nitro === 'boolean') this.saveNitro(data.nitro);
       if (typeof data.ign === 'string') this.saveIgn(data.ign);

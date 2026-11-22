@@ -1,0 +1,459 @@
+const LoadoutsUI = {
+  activeSubView: "squad",
+  players: [],
+
+  init() {
+    this.players = StorageManager.loadSquadLoadouts();
+
+    const subBtns = document.querySelectorAll(".loadouts-sub-btn");
+    subBtns.forEach(btn => {
+      btn.addEventListener("click", () => {
+        this.activeSubView = btn.dataset.loadoutView;
+        subBtns.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+
+        const squadPanel = document.getElementById("squadLoadoutsPanel");
+        const cbPanel = document.getElementById("clanBattlePanel");
+        if (squadPanel) squadPanel.classList.toggle("active", this.activeSubView === "squad");
+        if (cbPanel) cbPanel.classList.toggle("active", this.activeSubView === "clanbattle");
+
+        if (this.activeSubView === "clanbattle" && typeof ClanBattleUI !== "undefined") {
+          ClanBattleUI.updateUI();
+        }
+      });
+    });
+
+    const addBtn = document.getElementById("btnAddSquadPlayer");
+    if (addBtn) {
+      addBtn.onclick = () => {
+        if (this.players.length >= 10) return;
+        this.players.push({
+          name: `Player ${this.players.length + 1}`,
+          vip: false,
+          slots: [
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 }
+          ]
+        });
+        this.save();
+        this.render();
+      };
+    }
+
+    const clearBtn = document.getElementById("btnClearSquadLoadouts");
+    if (clearBtn) {
+      clearBtn.onclick = () => {
+        if (!confirm("Clear all player loadouts?")) return;
+        this.players = [{
+          name: "Player 1",
+          vip: false,
+          slots: [
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 },
+            { item: null, lvl: 1 }
+          ]
+        }];
+        this.save();
+        this.render();
+      };
+    }
+
+    this.render();
+  },
+
+  save() {
+    StorageManager.saveSquadLoadouts(this.players);
+  },
+
+  parseNum(v) {
+    return parseFloat(String(v).replace(/[^0-9.]/g, "")) || 0;
+  },
+
+  formatNum(n) {
+    if (!isFinite(n) || n <= 0) return "0";
+    if (n >= 1000) return Math.round(n).toLocaleString();
+    return Number.isInteger(n) ? n.toLocaleString() : Number(n.toFixed(1)).toLocaleString();
+  },
+
+  formatPct(n) {
+    return Number.isInteger(n) ? `${n}%` : `${Number(n.toFixed(2))}%`;
+  },
+
+  getTowerStatsForLevel(itemDef, lvl) {
+    const details = (typeof INDEX_DETAILS !== "undefined") ? INDEX_DETAILS[itemDef.name] : null;
+    const limit = (typeof TOWER_PLACEMENT_LIMITS !== "undefined" && TOWER_PLACEMENT_LIMITS[itemDef.name]) || 1;
+    if (!details || !Array.isArray(details.levels) || details.levels.length === 0) {
+      return { hasStats: false, limit, singleDps: 0, totalDps: 0, bossMult: 1 };
+    }
+    const clampedLvl = Math.min(Math.max(1, lvl), details.levels.length);
+    const lvData = details.levels.find(l => l.level === clampedLvl) || details.levels[details.levels.length - 1];
+    const dmg = this.parseNum(lvData.damage);
+    const rel = this.parseNum(lvData.reload);
+    const singleDps = rel > 0 ? dmg / rel : 0;
+    const bossMult = details.bossMultiplier || 1;
+    return {
+      hasStats: singleDps > 0,
+      limit,
+      singleDps,
+      totalDps: singleDps * limit,
+      bossMult
+    };
+  },
+
+  computeSquadTotals() {
+    let totalTowers = 0;
+    let totalPets = 0;
+    let totalPlacements = 0;
+    let baseSquadDps = 0;
+    let baseBossDps = 0;
+    let towersMissingStats = 0;
+
+    const unitCounts = {}; // name -> { item, count, placements }
+    const buffEntriesByStat = {}; // stat -> [{ petName, label, icon, base }]
+
+    this.players.forEach(p => {
+      const slotCount = p.vip ? 5 : 4;
+      for (let i = 0; i < slotCount; i++) {
+        const s = p.slots[i];
+        if (!s || !s.item) continue;
+        const def = ITEMS.find(x => x.name === s.item);
+        if (!def) continue;
+
+        if (!unitCounts[def.name]) {
+          unitCounts[def.name] = { item: def, count: 0, placements: 0 };
+        }
+        unitCounts[def.name].count += 1;
+
+        if (def.role === "PET") {
+          totalPets += 1;
+          const buff = (typeof PET_BUFFS !== "undefined") ? PET_BUFFS[def.name] : null;
+          if (buff) {
+            if (!buffEntriesByStat[buff.stat]) buffEntriesByStat[buff.stat] = [];
+            buffEntriesByStat[buff.stat].push({
+              petName: def.name,
+              label: buff.label,
+              icon: buff.icon,
+              base: buff.value
+            });
+          }
+        } else {
+          totalTowers += 1;
+          const stats = this.getTowerStatsForLevel(def, s.lvl);
+          totalPlacements += stats.limit;
+          unitCounts[def.name].placements += stats.limit;
+          if (stats.hasStats) {
+            baseSquadDps += stats.totalDps;
+            baseBossDps += stats.totalDps * stats.bossMult;
+          } else if (def.role === "DAMAGE") {
+            towersMissingStats += 1;
+          }
+        }
+      }
+    });
+
+    // Apply geometric diminishing returns: base * (0.6 ^ index) per stat
+    const factor = (typeof BUFF_DIMINISHING_FACTOR !== "undefined") ? BUFF_DIMINISHING_FACTOR : 0.6;
+    const buffsSummary = {};
+    Object.keys(buffEntriesByStat).forEach(stat => {
+      const list = buffEntriesByStat[stat].sort((a, b) => b.base - a.base);
+      let total = 0;
+      const steps = [];
+      list.forEach((entry, idx) => {
+        const mult = Math.pow(factor, idx);
+        const eff = entry.base * mult;
+        total += eff;
+        steps.push({
+          petName: entry.petName,
+          eff,
+          pctOfBase: Math.round(mult * 1000) / 10
+        });
+      });
+      buffsSummary[stat] = {
+        stat,
+        label: list[0].label,
+        icon: list[0].icon,
+        count: list.length,
+        total,
+        steps
+      };
+    });
+
+    const dmgMult = 1 + ((buffsSummary.damage ? buffsSummary.damage.total : 0) / 100);
+    const rateMult = 1 + ((buffsSummary.firerate ? buffsSummary.firerate.total : 0) / 100);
+    const buffedSquadDps = baseSquadDps * dmgMult * rateMult;
+    const buffedBossDps = baseBossDps * dmgMult * rateMult;
+
+    return {
+      totalTowers,
+      totalPets,
+      totalPlacements,
+      baseSquadDps,
+      buffedSquadDps,
+      baseBossDps,
+      buffedBossDps,
+      towersMissingStats,
+      buffsSummary,
+      unitCounts
+    };
+  },
+
+  renderSummary() {
+    const box = document.getElementById("squadSummaryContainer");
+    if (!box) return;
+
+    const totals = this.computeSquadTotals();
+    const buffList = Object.values(totals.buffsSummary);
+
+    const buffsHtml = buffList.length > 0
+      ? buffList.map(b => {
+          const breakdown = b.steps.map(st => `${this.formatPct(st.eff)}`).join(" + ");
+          return `
+            <div class="squad-buff-card">
+              <div class="squad-buff-top">
+                <span class="squad-buff-title">${b.icon} ${escapeXml(b.label)}</span>
+                <span class="squad-buff-total">+${this.formatPct(b.total)}</span>
+              </div>
+              <div class="squad-buff-breakdown">${b.count} pet${b.count > 1 ? "s" : ""}: ${breakdown}</div>
+            </div>
+          `;
+        }).join("")
+      : `<div class="squad-empty-note">Add pets to players below to calculate stacked buffs (100% → 60% → 36%...).</div>`;
+
+    const rosterEntries = Object.values(totals.unitCounts);
+    const rosterHtml = rosterEntries.length > 0
+      ? rosterEntries.map(entry => {
+          const color = getAnsiHex(userColors[entry.item.rarity] || DEFAULT_COLORS[entry.item.rarity] || "37");
+          const placedNote = entry.item.role !== "PET" ? ` <small>(${entry.placements} placed)</small>` : "";
+          return `
+            <div class="squad-roster-pill" style="border-color:${color}66;">
+              <img src="${entry.item.img}" alt="" onerror="this.style.display='none'">
+              <span style="color:${color}; font-weight:700;">${entry.count}× ${escapeXml(entry.item.name)}</span>${placedNote}
+            </div>
+          `;
+        }).join("")
+      : `<div class="squad-empty-note">No towers or pets equipped yet.</div>`;
+
+    const hasBuffedDiff = totals.buffedSquadDps > totals.baseSquadDps + 0.5;
+    const missingNote = totals.towersMissingStats > 0
+      ? `<div class="squad-dps-note">ℹ️ ${totals.towersMissingStats} equipped damage tower(s) don't have Index DPS stats yet.</div>`
+      : "";
+
+    box.innerHTML = `
+      <div class="squad-kpi-grid">
+        <div class="squad-kpi-card">
+          <div class="squad-kpi-label">👥 Players</div>
+          <div class="squad-kpi-val">${this.players.length} <small>/ 10</small></div>
+        </div>
+        <div class="squad-kpi-card">
+          <div class="squad-kpi-label">🔫 Total Towers</div>
+          <div class="squad-kpi-val">${totals.totalTowers} <small>(${totals.totalPlacements} placed)</small></div>
+        </div>
+        <div class="squad-kpi-card">
+          <div class="squad-kpi-label">🐾 Total Pets</div>
+          <div class="squad-kpi-val">${totals.totalPets}</div>
+        </div>
+        <div class="squad-kpi-card squad-kpi-dps">
+          <div class="squad-kpi-label">⚡ Total Squad DPS</div>
+          <div class="squad-kpi-val">${this.formatNum(hasBuffedDiff ? totals.buffedSquadDps : totals.baseSquadDps)} <small>DPS</small></div>
+          ${hasBuffedDiff ? `<div class="squad-kpi-sub">Base: ${this.formatNum(totals.baseSquadDps)} DPS</div>` : ""}
+          ${totals.buffedBossDps > totals.buffedSquadDps + 0.5 ? `<div class="squad-kpi-sub" style="color:#fbbf24;">Boss: ${this.formatNum(totals.buffedBossDps)} DPS</div>` : ""}
+        </div>
+      </div>
+
+      ${missingNote}
+
+      <div class="squad-section-block">
+        <div class="squad-block-title">✨ Active Pet Buffs <span class="squad-decay-tag">60% diminishing returns per duplicate</span></div>
+        <div class="squad-buffs-grid">${buffsHtml}</div>
+      </div>
+
+      <div class="squad-section-block">
+        <div class="squad-block-title">📦 Squad Units Summary</div>
+        <div class="squad-roster-list">${rosterHtml}</div>
+      </div>
+    `;
+  },
+
+  buildItemSelectOptions(selectedName, takenNames) {
+    let html = `<option value="">— Empty Slot —</option>`;
+    CATEGORIES.forEach(cat => {
+      const catItems = ITEMS.filter(it => it.role === cat.id);
+      if (catItems.length === 0) return;
+      html += `<optgroup label="${cat.title}">`;
+      catItems.forEach(it => {
+        const disabled = takenNames.includes(it.name) && it.name !== selectedName ? "disabled" : "";
+        const selected = it.name === selectedName ? "selected" : "";
+        const suffix = it.role === "PET" && PET_BUFFS[it.name]
+          ? ` (+${PET_BUFFS[it.name].value}% ${PET_BUFFS[it.name].label})`
+          : (it.role !== "PET" && TOWER_PLACEMENT_LIMITS[it.name] ? ` (Limit ${TOWER_PLACEMENT_LIMITS[it.name]})` : "");
+        html += `<option value="${escapeXml(it.name)}" ${selected} ${disabled}>${escapeXml(it.name)}${suffix}</option>`;
+      });
+      html += `</optgroup>`;
+    });
+    return html;
+  },
+
+  render() {
+    const addBtn = document.getElementById("btnAddSquadPlayer");
+    if (addBtn) {
+      addBtn.textContent = `➕ Add Player (${this.players.length}/10)`;
+      addBtn.disabled = this.players.length >= 10;
+    }
+
+    this.renderSummary();
+
+    const listContainer = document.getElementById("squadPlayersContainer");
+    if (!listContainer) return;
+    listContainer.innerHTML = "";
+
+    this.players.forEach((player, pIdx) => {
+      const slotCount = player.vip ? 5 : 4;
+      const takenNames = player.slots.slice(0, slotCount).filter(s => s && s.item).map(s => s.item);
+
+      const card = document.createElement("div");
+      card.className = "squad-player-card";
+
+      const header = document.createElement("div");
+      header.className = "squad-player-header";
+
+      const nameInput = document.createElement("input");
+      nameInput.type = "text";
+      nameInput.className = "squad-player-name";
+      nameInput.value = player.name;
+      nameInput.placeholder = `Player ${pIdx + 1}`;
+      nameInput.oninput = () => {
+        player.name = nameInput.value;
+        this.save();
+      };
+
+      const controls = document.createElement("div");
+      controls.className = "squad-player-controls";
+
+      const vipBtn = document.createElement("button");
+      vipBtn.type = "button";
+      vipBtn.className = `status-toggle-btn squad-mini-btn ${player.vip ? "active" : "inactive"}`;
+      vipBtn.textContent = player.vip ? "⭐ 5 Slots" : "⭐ 4 Slots";
+      vipBtn.onclick = () => {
+        player.vip = !player.vip;
+        this.save();
+        this.render();
+      };
+      controls.appendChild(vipBtn);
+
+      if (this.players.length > 1) {
+        const rmBtn = document.createElement("button");
+        rmBtn.type = "button";
+        rmBtn.className = "squad-remove-btn";
+        rmBtn.title = "Remove Player";
+        rmBtn.textContent = "✕";
+        rmBtn.onclick = () => {
+          this.players.splice(pIdx, 1);
+          this.save();
+          this.render();
+        };
+        controls.appendChild(rmBtn);
+      }
+
+      header.appendChild(nameInput);
+      header.appendChild(controls);
+      card.appendChild(header);
+
+      const slotsWrap = document.createElement("div");
+      slotsWrap.className = "squad-slots-list";
+
+      for (let sIdx = 0; sIdx < slotCount; sIdx++) {
+        const slot = player.slots[sIdx] || { item: null, lvl: 1 };
+        const def = slot.item ? ITEMS.find(x => x.name === slot.item) : null;
+        const rarityColor = def ? getAnsiHex(userColors[def.rarity] || DEFAULT_COLORS[def.rarity] || "37") : "#64748b";
+        const isEvo = !!(def && def.canEvo && slot.lvl > def.max);
+
+        const row = document.createElement("div");
+        row.className = `squad-slot-row${isEvo ? " is-evo" : ""}`;
+
+        const thumb = document.createElement("div");
+        thumb.className = "squad-slot-thumb";
+        if (def) {
+          thumb.style.borderColor = isEvo ? "#a855f7" : rarityColor;
+          thumb.innerHTML = `<img src="${def.img}" alt="${escapeXml(def.name)}" onerror="this.style.display='none'">`;
+        } else {
+          thumb.innerHTML = `<span>${sIdx + 1}</span>`;
+        }
+
+        const itemSel = document.createElement("select");
+        itemSel.className = "squad-slot-select";
+        itemSel.innerHTML = this.buildItemSelectOptions(slot.item, takenNames);
+        if (def) itemSel.style.color = rarityColor;
+        itemSel.onchange = () => {
+          const val = itemSel.value || null;
+          if (val) {
+            const newDef = ITEMS.find(x => x.name === val);
+            player.slots[sIdx] = { item: val, lvl: newDef ? newDef.max : 1 };
+          } else {
+            player.slots[sIdx] = { item: null, lvl: 1 };
+          }
+          this.save();
+          this.render();
+        };
+
+        const lvlSel = document.createElement("select");
+        lvlSel.className = "squad-slot-lvl";
+        if (def) {
+          for (let l = 1; l <= def.max; l++) {
+            const opt = document.createElement("option");
+            opt.value = l;
+            opt.textContent = `Lvl ${l}${l === def.max ? " (MAX)" : ""}`;
+            if (slot.lvl === l) opt.selected = true;
+            lvlSel.appendChild(opt);
+          }
+          if (def.canEvo) {
+            const evoOpt = document.createElement("option");
+            evoOpt.value = def.max + 1;
+            evoOpt.textContent = "⚡ EVO";
+            if (slot.lvl > def.max) evoOpt.selected = true;
+            lvlSel.appendChild(evoOpt);
+          }
+          lvlSel.onchange = () => {
+            player.slots[sIdx].lvl = parseInt(lvlSel.value, 10) || 1;
+            this.save();
+            this.render();
+          };
+        } else {
+          lvlSel.innerHTML = `<option>—</option>`;
+          lvlSel.disabled = true;
+        }
+
+        const badge = document.createElement("div");
+        badge.className = "squad-slot-meta";
+        if (def) {
+          if (def.role === "PET") {
+            const buff = PET_BUFFS[def.name];
+            badge.innerHTML = buff
+              ? `<span class="squad-meta-buff">${buff.icon} +${buff.value}%</span>`
+              : `<span class="squad-meta-muted">PET</span>`;
+          } else {
+            const stats = this.getTowerStatsForLevel(def, slot.lvl);
+            badge.innerHTML = stats.hasStats
+              ? `<span class="squad-meta-dps" title="${this.formatNum(stats.singleDps)} DPS × ${stats.limit} limit">×${stats.limit} • ${this.formatNum(stats.totalDps)}</span>`
+              : `<span class="squad-meta-limit">×${stats.limit} limit</span>`;
+          }
+        } else {
+          badge.innerHTML = `<span class="squad-meta-muted">Empty</span>`;
+        }
+
+        row.appendChild(thumb);
+        row.appendChild(itemSel);
+        row.appendChild(lvlSel);
+        row.appendChild(badge);
+        slotsWrap.appendChild(row);
+      }
+
+      card.appendChild(slotsWrap);
+      listContainer.appendChild(card);
+    });
+  }
+};
