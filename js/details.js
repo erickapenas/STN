@@ -122,6 +122,91 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Golem Forge": {
+    tags: ["DIVINE", "GOLEM", "EVOLUTION"],
+    isGolem: true,
+    summaryStats: [
+      { label: "DAMAGE",     value: "2,500 → 76,000" },
+      { label: "RELOAD",     value: "1.4s → 1.2s" },
+      { label: "PLACE COST", value: "$15,000" }
+    ],
+    bullets: [
+      "Step on it and press <strong>Summon</strong> to send a <strong>golem</strong> to the door closest to it, where zombies near him <strong>attack him instead of the door</strong>",
+      "He punches them and <strong>throws small zombies</strong> into the crowd, and when he dies the forge cooks a new one"
+    ],
+    keyNumbers: [
+      { label: "SUMMON",            value: "Step on the forge and press <strong>Summon</strong>" },
+      { label: "GOLEM HEALTH",      value: "<strong>80% → 200%</strong> of your strongest door's max health" },
+      { label: "PUNCH",             value: "<strong>2,500 → 76,000</strong> to <strong>1 zombie</strong>, every <strong>1.4s → 1.2s</strong>" },
+      { label: "THROW",             value: "Every <strong>9s → 5s</strong>. <strong>9,000 → 270,000</strong> to zombies within <strong>14 → 20</strong> studs" },
+      { label: "THE THROWN ZOMBIE", value: "Takes the throw damage <strong>twice</strong>" },
+      { label: "NEW GOLEM",         value: "<strong>90s → 60s</strong> after the last one dies" },
+      { label: "CASH TO MAX IT",    value: "<strong>$5,515,000</strong> in a match, for all <strong>9 levels</strong>" },
+      { label: "PLACEMENT LIMIT",   value: "<strong>2</strong> per player" }
+    ],
+    evolution: {
+      name: "Molten Heart",
+      description: "The golem heals for 50% of the damage he deals and explodes when he dies",
+      quest: "Evolution Quest: 15,000 zombie kills with a maxed Golem Forge"
+    },
+    levels: [
+      { level: 1, cashCost: 15000,   damage: "2,500",  reload: "1.4s",  health: "80%",  unlockCoins: 0,       throwDmg: "9,000",   throwEvery: "9s",   splash: "14",   newGolem: "90s" },
+      { level: 2, cashCost: 30000,   damage: "4,800",  reload: "1.4s",  health: "90%",  unlockCoins: 15000,   throwDmg: "17,000",  throwEvery: "8.5s", splash: "14.5", newGolem: "87s" },
+      { level: 3, cashCost: 60000,   damage: "8,500",  reload: "1.35s", health: "100%", unlockCoins: 36000,   throwDmg: "30,000",  throwEvery: "8s",   splash: "15.5", newGolem: "84s" },
+      { level: 4, cashCost: 120000,  damage: "14,500", reload: "1.35s", health: "110%", unlockCoins: 78000,   throwDmg: "52,000",  throwEvery: "7.5s", splash: "16",   newGolem: "80s" },
+      { level: 5, cashCost: 240000,  damage: "23,500", reload: "1.3s",  health: "120%", unlockCoins: 156000,  throwDmg: "85,000",  throwEvery: "7s",   splash: "17",   newGolem: "76s" },
+      { level: 6, cashCost: 450000,  damage: "34,000", reload: "1.3s",  health: "140%", unlockCoins: 270000,  throwDmg: "122,000", throwEvery: "6.5s", splash: "17.5", newGolem: "72s" },
+      { level: 7, cashCost: 800000,  damage: "46,000", reload: "1.25s", health: "160%", unlockCoins: 465000,  throwDmg: "165,000", throwEvery: "6s",   splash: "18.5", newGolem: "68s" },
+      { level: 8, cashCost: 1400000, damage: "60,000", reload: "1.25s", health: "180%", unlockCoins: 780000,  throwDmg: "215,000", throwEvery: "5.5s", splash: "19",   newGolem: "64s" },
+      { level: 9, cashCost: 2400000, damage: "76,000", reload: "1.2s",  health: "200%", unlockCoins: 1200000, throwDmg: "270,000", throwEvery: "5s",   splash: "20",   newGolem: "60s" }
+    ],
+    whereToGet: [
+      { source: "Legendary Chest", chance: "<strong>0.1%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>1%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>1%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>2.5%</strong> per chest" }
+    ]
+  },
+
+  "Bank": {
+    tags: ["DIVINE", "ECONOMY"],
+    isEconomy: true,
+    summaryStats: [
+      { label: "HOLDS UP TO", value: "$4,000 → $1,400,000" },
+      { label: "PLACE COST",  value: "$200" }
+    ],
+    bullets: [
+      "Fills up with cash that <strong>grows faster the longer you wait</strong>",
+      "<strong>Withdraw</strong> it any time to take it all and start again from $0"
+    ],
+    keyNumbers: [
+      { label: "HOLDS UP TO",     value: "<strong>$4,000 → $1,400,000</strong>" },
+      { label: "FULL AFTER",      value: "<strong>4 min 30s</strong>, if you do not withdraw" },
+      { label: "HOW IT FILLS",    value: "Slow, then fast: <strong>33%</strong> full at half time, <strong>61%</strong> at three quarters" },
+      { label: "WITHDRAW",        value: "Takes <strong>everything</strong> and starts again from $0" },
+      { label: "UPGRADING",       value: "Keeps the cash inside and raises the max" },
+      { label: "CASH TO MAX IT",  value: "<strong>$278,000</strong> in a match, for all <strong>9 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>3</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 200,    holdsUpTo: "$4,000",     unlockCoins: 0 },
+      { level: 2, cashCost: 700,    holdsUpTo: "$11,000",    unlockCoins: 20000 },
+      { level: 3, cashCost: 1600,   holdsUpTo: "$23,000",    unlockCoins: 45000 },
+      { level: 4, cashCost: 3500,   holdsUpTo: "$45,000",    unlockCoins: 90000 },
+      { level: 5, cashCost: 7500,   holdsUpTo: "$85,000",    unlockCoins: 175000 },
+      { level: 6, cashCost: 13000,  holdsUpTo: "$175,000",   unlockCoins: 300000 },
+      { level: 7, cashCost: 29500,  holdsUpTo: "$350,000",   unlockCoins: 450000 },
+      { level: 8, cashCost: 67000,  holdsUpTo: "$700,000",   unlockCoins: 700000 },
+      { level: 9, cashCost: 155000, holdsUpTo: "$1,400,000", unlockCoins: 1200000 }
+    ],
+    whereToGet: [
+      { source: "Legendary Chest", chance: "<strong>0.1%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>1%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>1%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>2.5%</strong> per chest" }
+    ]
+  },
+
   "Croc": {
     tags: ["LEGENDARY", "PET"],
     buffColumnLabel: "GEMS",

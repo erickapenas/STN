@@ -138,6 +138,8 @@ const IndexUI = {
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const isSlam = !!details.isSlam;
+      const isGolem = !!details.isGolem;
+      const isEconomy = !!details.isEconomy;
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
@@ -242,7 +244,119 @@ const IndexUI = {
       }
 
       // Every Level Table
-      if (levelsWithDps.length > 0 && isSlam) {
+      if (levelsWithDps.length > 0 && isEconomy) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CASH COST</th>
+                    <th>HOLDS UP TO</th>
+                    <th>UNLOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>$${lv.cashCost.toLocaleString()}</td>
+                      <td style="color:#4ade80;">${escapeXml(lv.holdsUpTo)}</td>
+                      <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>$${totalMatchCash.toLocaleString()}</td>
+                    <td>Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (levelsWithDps.length > 0 && isGolem) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CASH COST</th>
+                    <th>PUNCH</th>
+                    <th>PUNCH EVERY</th>
+                    <th>PUNCH DPS</th>
+                    <th>HEALTH</th>
+                    <th>UNLOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>$${lv.cashCost.toLocaleString()}</td>
+                      <td>${escapeXml(lv.damage)}</td>
+                      <td>${escapeXml(lv.reload)}</td>
+                      <td style="color:#60a5fa;">${formatDps(lv.dps)}</td>
+                      <td style="color:#4ade80;">${escapeXml(lv.health)}</td>
+                      <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>$${totalMatchCash.toLocaleString()}</td>
+                    <td colspan="4">Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+
+          <div class="detail-section">
+            <div class="detail-section-title">THROW AND FORGE BY LEVEL</div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LEVEL</th>
+                    <th>THROW DAMAGE</th>
+                    <th>THROW EVERY</th>
+                    <th>SPLASH SIZE</th>
+                    <th>NEW GOLEM</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td style="color:#fbbf24;">${escapeXml(lv.throwDmg)}</td>
+                      <td>${escapeXml(lv.throwEvery)}</td>
+                      <td>${escapeXml(lv.splash)}</td>
+                      <td>${escapeXml(lv.newGolem)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      } else if (levelsWithDps.length > 0 && isSlam) {
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">

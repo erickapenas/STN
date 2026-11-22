@@ -124,10 +124,11 @@ const StorageManager = {
       if (data) {
         const parsed = JSON.parse(data);
         Object.keys(parsed).forEach(k => {
-          if (inv[k]) {
-            const cap = inv[k].canEvo ? inv[k].max + 1 : inv[k].max;
-            inv[k].owned = !!parsed[k].owned;
-            inv[k].lvl = Math.min(parsed[k].lvl || 1, cap);
+          const targetKey = k === "The Bank" ? "Bank" : k;
+          if (inv[targetKey]) {
+            const cap = inv[targetKey].canEvo ? inv[targetKey].max + 1 : inv[targetKey].max;
+            inv[targetKey].owned = !!parsed[k].owned;
+            inv[targetKey].lvl = Math.min(parsed[k].lvl || 1, cap);
           }
         });
         return inv;
@@ -214,7 +215,7 @@ const StorageManager = {
             name: typeof p.name === 'string' && p.name.trim() ? p.name : `Player ${i + 1}`,
             vip: migrateTo5 ? true : (p.vip !== undefined ? !!p.vip : true),
             slots: Array.isArray(p.slots) && p.slots.length >= 5
-              ? p.slots.slice(0, 5).map(s => ({ item: s && s.item ? s.item : null, lvl: (s && s.lvl) || 1 }))
+              ? p.slots.slice(0, 5).map(s => ({ item: s && s.item ? (s.item === "The Bank" ? "Bank" : s.item) : null, lvl: (s && s.lvl) || 1 }))
               : defaultPlayer(i + 1).slots
           }));
           if (migrateTo5) {
