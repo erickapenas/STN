@@ -659,5 +659,58 @@ const INDEX_DETAILS = {
       { source: "Exclusive",   chance: "<strong>Thanksgiving Event</strong>" },
       { source: "Harvest Egg", chance: "<strong>70%</strong> per egg" }
     ]
+  },
+
+  "Beaver": {
+    tags: ["EPIC", "PET"],
+    buffColumnLabel: "🚪 DOORS START",
+    summaryStats: [
+      { label: "🚪 DOORS START", value: "+3 Lvl → +8 Lvl" }
+    ],
+    bullets: [
+      "All doors in your house <strong>start at a higher level</strong>"
+    ],
+    keyNumbers: [
+      { label: "WORKS ON",             value: "<strong>Every door</strong> of your house, from the start of the match" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+3 Lvl", upgradeCoins: 0 },
+      { level: 2, buff: "+4 Lvl", upgradeCoins: 4000 },
+      { level: 3, buff: "+6 Lvl", upgradeCoins: 15000 },
+      { level: 4, buff: "+7 Lvl", upgradeCoins: 60000 },
+      { level: 5, buff: "+8 Lvl", upgradeCoins: 250000 }
+    ],
+    whereToGet: [
+      { source: "Epic Egg",   chance: "<strong>6.5%</strong> per egg" },
+      { source: "Mythic Egg", chance: "<strong>13%</strong> per egg" }
+    ]
+  },
+
+  "Hippo": {
+    tags: ["EPIC", "PET"],
+    buffColumnLabel: "💚 DOOR HEALTH",
+    summaryStats: [
+      { label: "💚 DOOR HEALTH", value: "+20% → +40%" }
+    ],
+    bullets: [
+      "Your door has <strong>more health</strong>"
+    ],
+    keyNumbers: [
+      { label: "BUFFS",                value: "The max health of <strong>every door</strong>" },
+      { label: "MORE OF THE SAME PET", value: "In one house the 2nd counts <strong>60%</strong>, the 3rd <strong>36%</strong>" }
+    ],
+    petLevels: [
+      { level: 1, buff: "+20%", upgradeCoins: 0 },
+      { level: 2, buff: "+25%", upgradeCoins: 4000 },
+      { level: 3, buff: "+30%", upgradeCoins: 15000 },
+      { level: 4, buff: "+35%", upgradeCoins: 60000 },
+      { level: 5, buff: "+40%", upgradeCoins: 250000 }
+    ],
+    whereToGet: [
+      { source: "Rare Egg",   chance: "<strong>2.5%</strong> per egg" },
+      { source: "Epic Egg",   chance: "<strong>6.5%</strong> per egg" },
+      { source: "Mythic Egg", chance: "<strong>13%</strong> per egg" }
+    ]
   }
 };

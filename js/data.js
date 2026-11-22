@@ -183,9 +183,9 @@ const PET_BUFFS = {
   "Dog":           { stat: "damage",   label: "Damage",    value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️" },
   "Squirrel":      { stat: "firerate", label: "Fire Rate", value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚡" },
   "Deer":          { stat: "range",    label: "Range",     value: 15, icon: "🎯" },
-  "Beaver":        { stat: "cash",     label: "Cash",      value: 15, icon: "💰" },
-  "Penguin":       { stat: "firerate", label: "Fire Rate", value: 15, icon: "⚡" },
-  "Hippo":         { stat: "damage",   label: "Damage",    value: 15, icon: "⚔️" },
+  "Beaver":        { stat: "doorlvl",  label: "Doors Start", value: 8,  levels: [3, 4, 6, 7, 8],      unit: "lvl", icon: "🚪" },
+  "Penguin":       { stat: "firerate", label: "Fire Rate",   value: 15, icon: "⚡" },
+  "Hippo":         { stat: "doorhp",   label: "Door Health", value: 40, levels: [20, 25, 30, 35, 40], icon: "💚" },
   "Rhino":         { stat: "damage",   label: "Damage",    value: 20, icon: "⚔️" },
   "Monkey":        { stat: "cash",     label: "Cash",      value: 20, icon: "💰" },
   "Bunny":         { stat: "firerate", label: "Fire Rate", value: 20, icon: "⚡" },
@@ -234,10 +234,13 @@ const SUPPORT_BASE_BUFFS = {
   },
   "Protector Base": {
     firerate: [15, 25, 35, 45, 60, 75]
+  },
+  "Ice Turret": {
+    slow: [20, 25, 30, 35, 40, 45, 50, 50]
   }
 };
 
-const IMAGE_VERSION = "7.0";
+const IMAGE_VERSION = "7.4";
 ITEMS.forEach(item => {
   if (item.img && !item.img.includes("?")) {
     item.img = `${item.img}?v=${IMAGE_VERSION}`;

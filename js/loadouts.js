@@ -223,9 +223,11 @@ const LoadoutsUI = {
           { key: "cash",      label: "💰 Cash",       color: "#22c55e" },
           { key: "startcash", label: "💵 Start Cash", color: "#4ade80" },
           { key: "farms",     label: "📡 Farms",      color: "#c084fc" },
-          { key: "coins",     label: "🪙 Coins",      color: "#facc15" },
-          { key: "gems",     label: "💎 Gems",      color: "#a855f7" },
-          { key: "event",    label: "🍗 Event",     color: "#f97316" }
+          { key: "coins",     label: "🪙 Coins",       color: "#facc15" },
+          { key: "gems",      label: "💎 Gems",        color: "#a855f7" },
+          { key: "doorlvl",   label: "🚪 Doors Start", color: "#d97706" },
+          { key: "doorhp",    label: "💚 Door Health", color: "#4ade80" },
+          { key: "event",     label: "🍗 Event",       color: "#f97316" }
         ];
 
     bar.innerHTML = "";
@@ -336,9 +338,9 @@ const LoadoutsUI = {
           subText = "✓ Equipped (Click to remove)";
         } else if (it.role === "PET" && PET_BUFFS[it.name]) {
           const b = PET_BUFFS[it.name];
-          const fmt = (pb) => `${pb.icon} +${pb.unit === "$" ? "$" + pb.value : pb.value + "%"} ${pb.label}`;
-          const extra = b.extraBuffs ? b.extraBuffs.map(eb => `${eb.icon} +${eb.unit === "$" ? "$" + eb.value : eb.value + "%"}`).join(" ") : "";
-          subText = `${fmt(b)}${extra ? " • " + extra : ""}`;
+          const fmtVal = (pb) => this.formatStatVal(pb.value, pb.unit || "%");
+          const extra = b.extraBuffs ? b.extraBuffs.map(eb => `${eb.icon} +${fmtVal(eb)}`).join(" ") : "";
+          subText = `${b.icon} +${fmtVal(b)} ${b.label}${extra ? " • " + extra : ""}`;
         } else {
           const lim = (typeof TOWER_PLACEMENT_LIMITS !== "undefined" && TOWER_PLACEMENT_LIMITS[it.name]) || 1;
           subText = `Limit ×${lim}${it.canEvo ? " • ⚡EVO" : ""}`;
@@ -398,7 +400,9 @@ const LoadoutsUI = {
 
   formatStatVal(n, unit = "%") {
     const num = Number.isInteger(n) ? n.toLocaleString() : Number(n.toFixed(2)).toLocaleString();
-    return unit === "$" ? `$${num}` : `${num}%`;
+    if (unit === "$") return `$${num}`;
+    if (unit === "lvl") return `${num} Lvl`;
+    return `${num}%`;
   },
 
   formatPct(n) {
@@ -508,9 +512,11 @@ const LoadoutsUI = {
       cash:      { label: "Cash",       icon: "💰", unit: "%" },
       startcash: { label: "Start Cash", icon: "💵", unit: "$" },
       farms:     { label: "Farms",      icon: "📡", unit: "%" },
-      coins:     { label: "Coins",      icon: "🪙", unit: "%" },
-      gems:     { label: "Gems",      icon: "💎" },
-      event:    { label: "Event",     icon: "🍗" }
+      coins:     { label: "Coins",       icon: "🪙", unit: "%" },
+      gems:      { label: "Gems",        icon: "💎", unit: "%" },
+      doorlvl:   { label: "Doors Start", icon: "🚪", unit: "lvl" },
+      doorhp:    { label: "Door Health", icon: "💚", unit: "%" },
+      event:     { label: "Event",       icon: "🍗", unit: "%" }
     };
 
     const buffsSummary = {};
@@ -847,10 +853,7 @@ const LoadoutsUI = {
             const buff = PET_BUFFS[def.name];
             if (buff) {
               const allStr = [buff, ...(buff.extraBuffs || [])]
-                .map(pb => {
-                  const v = this.getPetBuffValue(pb, slot.lvl);
-                  return `${pb.icon}+${pb.unit === "$" ? "$" + v : v + "%"}`;
-                })
+                .map(pb => `${pb.icon}+${this.formatStatVal(this.getPetBuffValue(pb, slot.lvl), pb.unit || "%")}`)
                 .join(" ");
               badge.innerHTML = `<span class="squad-meta-buff">${allStr}</span>`;
             } else {
