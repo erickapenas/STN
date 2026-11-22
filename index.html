@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Rajdhani:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=6.0">
+  <link rel="stylesheet" href="style.css?v=6.1">
   <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body class="hide-text-output">
@@ -362,14 +362,42 @@
   </div>
 </div>
 
+<!-- Squad Unit Picker Modal -->
+<div id="unitPickerModal" class="detail-modal-overlay" role="dialog" aria-modal="true" aria-labelledby="unitPickerTitle">
+  <div class="detail-modal-card picker-modal-card">
+    <div class="picker-modal-header">
+      <div>
+        <h2 id="unitPickerTitle" class="picker-modal-title">Select Tower or Pet</h2>
+        <div id="unitPickerSubtitle" class="picker-modal-subtitle"></div>
+      </div>
+      <div class="picker-header-actions">
+        <button type="button" id="unitPickerClearBtn" class="btn btn-danger picker-clear-btn">🚫 Clear Slot</button>
+        <button type="button" id="unitPickerCloseBtn" class="detail-modal-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+
+    <div class="index-subnav picker-subnav">
+      <button type="button" class="index-sub-btn picker-tab-btn active" data-picker-type="towers">🔫 Towers</button>
+      <button type="button" class="index-sub-btn picker-tab-btn" data-picker-type="pets">🐾 Pets</button>
+    </div>
+
+    <div class="picker-controls-row">
+      <input type="text" id="unitPickerSearch" class="picker-search-input" placeholder="🔍 Search tower or pet name...">
+      <div id="unitPickerRarityBar" class="picker-rarity-bar"></div>
+    </div>
+
+    <div id="unitPickerGridContainer" class="picker-grid-container"></div>
+  </div>
+</div>
+
 <script src="js/data.js?v=6.0"></script>
 <script src="js/details.js?v=5.6"></script>
-<script src="js/storage.js?v=6.0"></script>
+<script src="js/storage.js?v=6.1"></script>
 <script src="js/ansi.js?v=5.0"></script>
 <script src="js/canvas.js?v=5.0"></script>
 <script src="js/inventory.js?v=5.3"></script>
 <script src="js/index.js?v=5.6"></script>
-<script src="js/loadouts.js?v=6.0"></script>
+<script src="js/loadouts.js?v=6.1"></script>
 <script src="js/clanbattle.js?v=5.0"></script>
 <script src="js/app.js?v=6.0"></script>
 <script src="js/effects.js?v=5.0"></script>

@@ -2281,6 +2281,210 @@ select option {
   font-size: 0.84rem;
 }
 
+.squad-slot-picker-btn {
+  width: 100%;
+  background: rgba(6, 10, 22, 0.92);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 8px 11px;
+  color: #94a3b8;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  text-align: left;
+  transition: border-color 0.2s ease, background 0.2s ease, transform 0.16s ease;
+}
+
+.squad-slot-picker-btn:hover {
+  border-color: rgba(251, 191, 36, 0.55);
+  background: rgba(14, 21, 42, 0.98);
+  color: #ffffff;
+}
+
+.squad-slot-picker-btn .picker-caret {
+  font-size: 0.85rem;
+  color: var(--amber-bright);
+  flex-shrink: 0;
+}
+
+.squad-slot-thumb {
+  cursor: pointer;
+}
+
+/* Unit Picker Modal */
+.picker-modal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.picker-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.picker-modal-title {
+  margin: 0;
+  font-size: 1.55rem;
+}
+
+.picker-modal-subtitle {
+  font-size: 0.86rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+  font-weight: 600;
+}
+
+.picker-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.picker-header-actions .detail-modal-close {
+  position: static;
+  float: none;
+}
+
+.picker-clear-btn {
+  min-width: auto;
+  flex: 0 0 auto;
+  padding: 7px 13px;
+  font-size: 0.88rem;
+  border-radius: 9px;
+}
+
+.picker-subnav {
+  margin-bottom: 0;
+}
+
+.picker-controls-row {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.picker-search-input {
+  width: 100%;
+}
+
+.picker-rarity-bar {
+  display: flex;
+  gap: 7px;
+  flex-wrap: wrap;
+}
+
+.picker-rarity-chip {
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: rgba(15, 23, 42, 0.8);
+  color: #cbd5e1;
+  font-family: var(--font-display);
+  font-size: 0.86rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.16s ease;
+}
+
+.picker-rarity-chip:hover {
+  border-color: rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+}
+
+.picker-rarity-chip.active {
+  background: var(--chip-color, var(--amber));
+  border-color: var(--chip-color, var(--amber));
+  color: #0b0d14;
+  box-shadow: 0 0 14px color-mix(in srgb, var(--chip-color, var(--amber)) 45%, transparent);
+}
+
+.picker-grid-container {
+  max-height: 52vh;
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.picker-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(136px, 1fr));
+  gap: 10px;
+}
+
+.picker-unit-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 11px 9px;
+  border-radius: 12px;
+  background: rgba(8, 13, 27, 0.88);
+  border: 2px solid color-mix(in srgb, var(--rarity-color, #94a3b8) 45%, transparent);
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.picker-unit-card:hover:not(.disabled) {
+  transform: translateY(-3px) scale(1.02);
+  border-color: var(--rarity-color, #fbbf24);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.48), 0 0 16px color-mix(in srgb, var(--rarity-color, #fbbf24) 32%, transparent);
+}
+
+.picker-unit-card.selected {
+  border-color: #22c55e;
+  background: rgba(21, 128, 61, 0.18);
+  box-shadow: 0 0 18px rgba(34, 197, 94, 0.32);
+}
+
+.picker-unit-card.disabled {
+  opacity: 0.38;
+  filter: grayscale(0.8);
+  cursor: not-allowed;
+}
+
+.picker-unit-thumb {
+  width: 58px;
+  height: 58px;
+  border-radius: 10px;
+  background: rgba(5, 8, 18, 0.92);
+  border: 1px solid rgba(148, 163, 184, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px;
+}
+
+.picker-unit-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.picker-unit-name {
+  font-family: var(--font-display);
+  font-size: 0.96rem;
+  font-weight: 700;
+  line-height: 1.15;
+}
+
+.picker-unit-sub {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: #94a3b8;
+  font-weight: 700;
+}
+
 .squad-slot-meta {
   text-align: right;
   font-family: var(--font-mono);

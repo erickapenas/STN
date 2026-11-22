@@ -1,6 +1,14 @@
 const LoadoutsUI = {
   activeSubView: "squad",
   players: [],
+  pickerState: {
+    open: false,
+    playerIdx: 0,
+    slotIdx: 0,
+    type: "towers", // "towers" | "pets"
+    rarity: "all",
+    query: ""
+  },
 
   init() {
     this.players = StorageManager.loadSquadLoadouts();
@@ -29,7 +37,7 @@ const LoadoutsUI = {
         if (this.players.length >= 10) return;
         this.players.push({
           name: `Player ${this.players.length + 1}`,
-          vip: false,
+          vip: true,
           slots: [
             { item: null, lvl: 1 },
             { item: null, lvl: 1 },
@@ -49,7 +57,7 @@ const LoadoutsUI = {
         if (!confirm("Clear all player loadouts?")) return;
         this.players = [{
           name: "Player 1",
-          vip: false,
+          vip: true,
           slots: [
             { item: null, lvl: 1 },
             { item: null, lvl: 1 },
@@ -63,7 +71,222 @@ const LoadoutsUI = {
       };
     }
 
+    this.initPickerModal();
     this.render();
+  },
+
+  initPickerModal() {
+    const modal = document.getElementById("unitPickerModal");
+    const closeBtn = document.getElementById("unitPickerCloseBtn");
+    const clearBtn = document.getElementById("unitPickerClearBtn");
+    const searchInput = document.getElementById("unitPickerSearch");
+
+    if (closeBtn) closeBtn.onclick = () => this.closePicker();
+    if (modal) {
+      modal.addEventListener("click", (e) => {
+        if (e.target === modal) this.closePicker();
+      });
+    }
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && this.pickerState.open) this.closePicker();
+    });
+
+    if (clearBtn) {
+      clearBtn.onclick = () => {
+        const { playerIdx, slotIdx } = this.pickerState;
+        if (this.players[playerIdx]) {
+          this.players[playerIdx].slots[slotIdx] = { item: null, lvl: 1 };
+          this.save();
+          this.closePicker();
+          this.render();
+        }
+      };
+    }
+
+    document.querySelectorAll(".picker-tab-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        this.pickerState.type = btn.dataset.pickerType;
+        document.querySelectorAll(".picker-tab-btn").forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        this.renderPickerGrid();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener("input", () => {
+        this.pickerState.query = searchInput.value.trim().toLowerCase();
+        this.renderPickerGrid();
+      });
+    }
+  },
+
+  openPicker(playerIdx, slotIdx) {
+    const modal = document.getElementById("unitPickerModal");
+    if (!modal) return;
+
+    const player = this.players[playerIdx];
+    const currentSlot = player.slots[slotIdx] || { item: null, lvl: 1 };
+    const currentDef = currentSlot.item ? ITEMS.find(x => x.name === currentSlot.item) : null;
+
+    this.pickerState.open = true;
+    this.pickerState.playerIdx = playerIdx;
+    this.pickerState.slotIdx = slotIdx;
+    this.pickerState.type = currentDef && currentDef.role === "PET" ? "pets" : "towers";
+    this.pickerState.rarity = "all";
+    this.pickerState.query = "";
+
+    const subtitle = document.getElementById("unitPickerSubtitle");
+    if (subtitle) {
+      subtitle.textContent = `${player.name || `Player ${playerIdx + 1}`} • Slot ${slotIdx + 1}`;
+    }
+
+    const clearBtn = document.getElementById("unitPickerClearBtn");
+    if (clearBtn) {
+      clearBtn.style.display = currentDef ? "inline-flex" : "none";
+    }
+
+    document.querySelectorAll(".picker-tab-btn").forEach(b => {
+      b.classList.toggle("active", b.dataset.pickerType === this.pickerState.type);
+    });
+
+    const searchInput = document.getElementById("unitPickerSearch");
+    if (searchInput) {
+      searchInput.value = "";
+    }
+
+    this.renderPickerRarityBar();
+    this.renderPickerGrid();
+
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+    if (searchInput) setTimeout(() => searchInput.focus(), 50);
+  },
+
+  closePicker() {
+    const modal = document.getElementById("unitPickerModal");
+    if (modal && modal.classList.contains("open")) {
+      modal.classList.remove("open");
+      document.body.style.overflow = "";
+    }
+    this.pickerState.open = false;
+  },
+
+  renderPickerRarityBar() {
+    const bar = document.getElementById("unitPickerRarityBar");
+    if (!bar) return;
+
+    const chips = [
+      { key: "all", label: "All Rarities", color: "#fbbf24" },
+      ...RARITY_TIERS.map(t => ({
+        key: t.key,
+        label: t.key.charAt(0).toUpperCase() + t.key.slice(1),
+        color: getAnsiHex(userColors[t.key] || DEFAULT_COLORS[t.key] || "37")
+      }))
+    ];
+
+    bar.innerHTML = "";
+    chips.forEach(c => {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = `picker-rarity-chip${this.pickerState.rarity === c.key ? " active" : ""}`;
+      btn.style.setProperty("--chip-color", c.color);
+      btn.textContent = c.label;
+      btn.onclick = () => {
+        this.pickerState.rarity = c.key;
+        this.renderPickerRarityBar();
+        this.renderPickerGrid();
+      };
+      bar.appendChild(btn);
+    });
+  },
+
+  renderPickerGrid() {
+    const container = document.getElementById("unitPickerGridContainer");
+    if (!container) return;
+    container.innerHTML = "";
+
+    const { playerIdx, slotIdx, type, rarity, query } = this.pickerState;
+    const player = this.players[playerIdx];
+    const slotCount = player.vip ? 5 : 4;
+    const currentItemName = (player.slots[slotIdx] && player.slots[slotIdx].item) || null;
+    const takenNames = player.slots
+      .slice(0, slotCount)
+      .filter((s, idx) => idx !== slotIdx && s && s.item)
+      .map(s => s.item);
+
+    const pool = ITEMS.filter(it => (type === "pets" ? it.role === "PET" : it.role !== "PET"));
+    const filtered = pool.filter(it => {
+      if (rarity !== "all" && it.rarity !== rarity) return false;
+      if (query && !it.name.toLowerCase().includes(query) && !it.role.toLowerCase().includes(query)) return false;
+      return true;
+    });
+
+    let renderedAny = false;
+
+    // Strict order: Exclusive > Divine > Legendary > Mythic > Epic > Rare > Common
+    RARITY_TIERS.forEach(tier => {
+      const tierItems = filtered.filter(it => it.rarity === tier.key);
+      if (tierItems.length === 0) return;
+      renderedAny = true;
+
+      const tierColor = getAnsiHex(userColors[tier.key] || DEFAULT_COLORS[tier.key] || "37");
+      const block = document.createElement("div");
+      block.className = "inventory-category-block";
+
+      const title = document.createElement("div");
+      title.className = "inv-cat-title";
+      title.style.color = tierColor;
+      title.innerHTML = `<span>💎</span> <span>${tier.label}</span> <span class="index-tier-count">(${tierItems.length})</span>`;
+      block.appendChild(title);
+
+      const grid = document.createElement("div");
+      grid.className = "picker-grid";
+
+      tierItems.forEach(it => {
+        const isTaken = takenNames.includes(it.name);
+        const isSelected = it.name === currentItemName;
+
+        const card = document.createElement("div");
+        card.className = `picker-unit-card${isSelected ? " selected" : ""}${isTaken ? " disabled" : ""}`;
+        card.style.setProperty("--rarity-color", tierColor);
+
+        let subText = "";
+        if (isTaken) {
+          subText = "Equipped";
+        } else if (it.role === "PET" && PET_BUFFS[it.name]) {
+          subText = `${PET_BUFFS[it.name].icon} +${PET_BUFFS[it.name].value}% ${PET_BUFFS[it.name].label}`;
+        } else {
+          const lim = (typeof TOWER_PLACEMENT_LIMITS !== "undefined" && TOWER_PLACEMENT_LIMITS[it.name]) || 1;
+          subText = `Limit ×${lim}${it.canEvo ? " • ⚡EVO" : ""}`;
+        }
+
+        card.innerHTML = `
+          <div class="picker-unit-thumb">
+            <img src="${it.img}" alt="${escapeXml(it.name)}" onerror="this.style.display='none'">
+          </div>
+          <div class="picker-unit-name" style="color:${tierColor};">${escapeXml(it.name)}</div>
+          <div class="picker-unit-sub">${subText}</div>
+        `;
+
+        if (!isTaken) {
+          card.onclick = () => {
+            player.slots[slotIdx] = { item: it.name, lvl: it.max };
+            this.save();
+            this.closePicker();
+            this.render();
+          };
+        }
+
+        grid.appendChild(card);
+      });
+
+      block.appendChild(grid);
+      container.appendChild(block);
+    });
+
+    if (!renderedAny) {
+      container.innerHTML = `<div class="index-empty">No ${type} found matching your filter.</div>`;
+    }
   },
 
   save() {
@@ -377,28 +600,24 @@ const LoadoutsUI = {
 
         const thumb = document.createElement("div");
         thumb.className = "squad-slot-thumb";
+        thumb.title = "Click to pick Tower or Pet";
+        thumb.onclick = () => this.openPicker(pIdx, sIdx);
         if (def) {
           thumb.style.borderColor = isEvo ? "#a855f7" : rarityColor;
           thumb.innerHTML = `<img src="${def.img}" alt="${escapeXml(def.name)}" onerror="this.style.display='none'">`;
         } else {
-          thumb.innerHTML = `<span>${sIdx + 1}</span>`;
+          thumb.innerHTML = `<span>+</span>`;
         }
 
-        const itemSel = document.createElement("select");
-        itemSel.className = "squad-slot-select";
-        itemSel.innerHTML = this.buildItemSelectOptions(slot.item, takenNames);
-        if (def) itemSel.style.color = rarityColor;
-        itemSel.onchange = () => {
-          const val = itemSel.value || null;
-          if (val) {
-            const newDef = ITEMS.find(x => x.name === val);
-            player.slots[sIdx] = { item: val, lvl: newDef ? newDef.max : 1 };
-          } else {
-            player.slots[sIdx] = { item: null, lvl: 1 };
-          }
-          this.save();
-          this.render();
-        };
+        const pickerBtn = document.createElement("button");
+        pickerBtn.type = "button";
+        pickerBtn.className = "squad-slot-picker-btn";
+        pickerBtn.onclick = () => this.openPicker(pIdx, sIdx);
+        if (def) {
+          pickerBtn.innerHTML = `<span style="color:${rarityColor};">${escapeXml(def.name)}</span><span class="picker-caret">▾</span>`;
+        } else {
+          pickerBtn.innerHTML = `<span>+ Select Tower / Pet...</span><span class="picker-caret">▾</span>`;
+        }
 
         const lvlSel = document.createElement("select");
         lvlSel.className = "squad-slot-lvl";
@@ -446,7 +665,7 @@ const LoadoutsUI = {
         }
 
         row.appendChild(thumb);
-        row.appendChild(itemSel);
+        row.appendChild(pickerBtn);
         row.appendChild(lvlSel);
         row.appendChild(badge);
         slotsWrap.appendChild(row);

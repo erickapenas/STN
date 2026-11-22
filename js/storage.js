@@ -194,7 +194,7 @@ const StorageManager = {
   loadSquadLoadouts() {
     const defaultPlayer = (num) => ({
       name: `Player ${num}`,
-      vip: false,
+      vip: true,
       slots: [
         { item: null, lvl: 1 },
         { item: null, lvl: 1 },
@@ -209,16 +209,23 @@ const StorageManager = {
       if (raw) {
         const parsed = JSON.parse(raw);
         if (Array.isArray(parsed) && parsed.length > 0) {
-          return parsed.slice(0, 10).map((p, i) => ({
+          const migrateTo5 = !localStorage.getItem('td_squad_vip5_default_v1');
+          const result = parsed.slice(0, 10).map((p, i) => ({
             name: typeof p.name === 'string' && p.name.trim() ? p.name : `Player ${i + 1}`,
-            vip: !!p.vip,
+            vip: migrateTo5 ? true : (p.vip !== undefined ? !!p.vip : true),
             slots: Array.isArray(p.slots) && p.slots.length >= 5
               ? p.slots.slice(0, 5).map(s => ({ item: s && s.item ? s.item : null, lvl: (s && s.lvl) || 1 }))
               : defaultPlayer(i + 1).slots
           }));
+          if (migrateTo5) {
+            localStorage.setItem('td_squad_vip5_default_v1', 'true');
+            localStorage.setItem('td_squad_loadouts', JSON.stringify(result));
+          }
+          return result;
         }
       }
     } catch {}
+    localStorage.setItem('td_squad_vip5_default_v1', 'true');
     return [defaultPlayer(1)];
   },
   saveSquadLoadouts(players) {
