@@ -243,16 +243,18 @@ const LoadoutsUI = {
       grid.className = "picker-grid";
 
       tierItems.forEach(it => {
-        const isTaken = takenNames.includes(it.name);
-        const isSelected = it.name === currentItemName;
+        const equippedSlotIdx = player.slots
+          .slice(0, slotCount)
+          .findIndex(s => s && s.item === it.name);
+        const isEquipped = equippedSlotIdx !== -1;
 
         const card = document.createElement("div");
-        card.className = `picker-unit-card${isSelected ? " selected" : ""}${isTaken ? " disabled" : ""}`;
+        card.className = `picker-unit-card${isEquipped ? " selected" : ""}`;
         card.style.setProperty("--rarity-color", tierColor);
 
         let subText = "";
-        if (isTaken) {
-          subText = "Equipped";
+        if (isEquipped) {
+          subText = "✓ Equipped (Click to remove)";
         } else if (it.role === "PET" && PET_BUFFS[it.name]) {
           subText = `${PET_BUFFS[it.name].icon} +${PET_BUFFS[it.name].value}% ${PET_BUFFS[it.name].label}`;
         } else {
@@ -268,14 +270,16 @@ const LoadoutsUI = {
           <div class="picker-unit-sub">${subText}</div>
         `;
 
-        if (!isTaken) {
-          card.onclick = () => {
+        card.onclick = () => {
+          if (isEquipped) {
+            player.slots[equippedSlotIdx] = { item: null, lvl: 1 };
+          } else {
             player.slots[slotIdx] = { item: it.name, lvl: it.max };
-            this.save();
-            this.closePicker();
-            this.render();
-          };
-        }
+          }
+          this.save();
+          this.closePicker();
+          this.render();
+        };
 
         grid.appendChild(card);
       });
@@ -664,10 +668,27 @@ const LoadoutsUI = {
           badge.innerHTML = `<span class="squad-meta-muted">Empty</span>`;
         }
 
+        const removeSlotBtn = document.createElement("button");
+        removeSlotBtn.type = "button";
+        removeSlotBtn.className = "squad-slot-remove-btn";
+        removeSlotBtn.title = "Remove equipped unit";
+        removeSlotBtn.textContent = "✕";
+        if (!def) {
+          removeSlotBtn.disabled = true;
+          removeSlotBtn.style.visibility = "hidden";
+        } else {
+          removeSlotBtn.onclick = () => {
+            player.slots[sIdx] = { item: null, lvl: 1 };
+            this.save();
+            this.render();
+          };
+        }
+
         row.appendChild(thumb);
         row.appendChild(pickerBtn);
         row.appendChild(lvlSel);
         row.appendChild(badge);
+        row.appendChild(removeSlotBtn);
         slotsWrap.appendChild(row);
       }
 

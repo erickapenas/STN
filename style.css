@@ -2238,13 +2238,36 @@ select option {
 
 .squad-slot-row {
   display: grid;
-  grid-template-columns: 42px 1fr 112px 104px;
+  grid-template-columns: 42px 1fr 112px 96px 32px;
   gap: 8px;
   align-items: center;
   background: rgba(8, 12, 24, 0.84);
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 7px 9px;
+}
+
+.squad-slot-remove-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  border: 1px solid rgba(239, 68, 68, 0.35);
+  background: rgba(127, 29, 29, 0.5);
+  color: #fecaca;
+  font-size: 0.82rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.16s ease;
+}
+
+.squad-slot-remove-btn:hover:not(:disabled) {
+  background: #dc2626;
+  border-color: #ef4444;
+  color: #ffffff;
+  transform: scale(1.08);
 }
 
 .squad-slot-row.is-evo {
@@ -2445,6 +2468,12 @@ select option {
   border-color: #22c55e;
   background: rgba(21, 128, 61, 0.18);
   box-shadow: 0 0 18px rgba(34, 197, 94, 0.32);
+}
+
+.picker-unit-card.selected:hover {
+  border-color: #ef4444 !important;
+  background: rgba(153, 27, 27, 0.25);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.48), 0 0 18px rgba(239, 68, 68, 0.38) !important;
 }
 
 .picker-unit-card.disabled {
