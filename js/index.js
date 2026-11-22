@@ -3,13 +3,10 @@ const IndexUI = {
   searchQuery: "",
 
   init() {
-    const subBtns = document.querySelectorAll(".index-sub-btn");
+    const subBtns = document.querySelectorAll("#indexTab .index-sub-btn[data-index-cat]");
     subBtns.forEach(btn => {
       btn.addEventListener("click", () => {
-        this.activeCategory = btn.dataset.indexCat;
-        subBtns.forEach(b => b.classList.remove("active"));
-        btn.classList.add("active");
-        this.render();
+        this.selectCategory(btn.dataset.indexCat);
       });
     });
 
@@ -35,6 +32,15 @@ const IndexUI = {
       if (e.key === "Escape") this.closeModal();
     });
 
+    this.selectCategory("turrets");
+  },
+
+  selectCategory(cat) {
+    this.activeCategory = cat || "turrets";
+    const subBtns = document.querySelectorAll("#indexTab .index-sub-btn[data-index-cat]");
+    subBtns.forEach(b => {
+      b.classList.toggle("active", b.dataset.indexCat === this.activeCategory);
+    });
     this.render();
   },
 

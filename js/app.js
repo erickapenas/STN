@@ -22,7 +22,7 @@ document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.classList.add("active");
     document.getElementById(btn.dataset.tab).classList.add("active");
 
-    if (btn.dataset.tab === "indexTab" && typeof IndexUI !== "undefined") IndexUI.render();
+    if (btn.dataset.tab === "indexTab" && typeof IndexUI !== "undefined") IndexUI.selectCategory("turrets");
     if (btn.dataset.tab === "inventoryTab") InventoryUI.updateUI();
     if (btn.dataset.tab === "clanBattleTab") {
       if (typeof LoadoutsUI !== "undefined") LoadoutsUI.render();
