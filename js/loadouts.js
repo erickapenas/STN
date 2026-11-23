@@ -557,7 +557,8 @@ const LoadoutsUI = {
     const lvData = details.levels.find(l => l.level === clampedLvl) || details.levels[details.levels.length - 1];
     const dmg = this.parseNum(lvData.damage);
     const rel = this.parseNum(lvData.reload);
-    const baseSingleDps = rel > 0 ? dmg / rel : 0;
+    const poolMult = details.poolDuration || 1;
+    const baseSingleDps = rel > 0 ? (dmg * poolMult) / rel : 0;
     let singleDps = baseSingleDps;
     let hasRapidFireAvg = false;
     if (baseSingleDps > 0 && details.rapidFire && details.rapidFire.multiplier > 1 && details.rapidFire.duration > 0) {

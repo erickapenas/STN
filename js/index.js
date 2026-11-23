@@ -152,6 +152,8 @@ const IndexUI = {
       const hasBlind = levels.some(lv => lv.blind !== undefined);
       const hasPop = levels.some(lv => lv.pop !== undefined);
       const hasFuse = levels.some(lv => lv.fuse !== undefined);
+      const hasStartsAt = levels.some(lv => lv.startsAt !== undefined);
+      const hasPoolSize = levels.some(lv => lv.poolSize !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const isSlam = !!details.isSlam;
@@ -161,10 +163,11 @@ const IndexUI = {
       const isBoostBase = !!details.isBoostBase;
       const isProtectorBase = !!details.isProtectorBase;
       const isHealBase = !!details.isHealBase;
+      const poolMult = details.poolDuration || 1;
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
-        const dps = rel > 0 ? dmg / rel : 0;
+        const dps = rel > 0 ? (dmg * poolMult) / rel : 0;
         const bossDps = dps * bossMult;
         const rfDps = hasRapidFire ? dps * rfConfig.multiplier : 0;
         const rfBurstDmg = hasRapidFire ? rfDps * (rfConfig.duration || 5) : 0;
@@ -664,7 +667,9 @@ const IndexUI = {
           (hasSplat ? 1 : 0) +
           (hasBlind ? 1 : 0) +
           (hasPop ? 1 : 0) +
-          (hasFuse ? 1 : 0);
+          (hasFuse ? 1 : 0) +
+          (hasStartsAt ? 1 : 0) +
+          (hasPoolSize ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -690,6 +695,8 @@ const IndexUI = {
                     ${hasBlind ? "<th>😵 BLIND</th>" : ""}
                     ${hasPop ? "<th>🍿 POP</th>" : ""}
                     ${hasFuse ? "<th>⏳ FUSE</th>" : ""}
+                    ${hasStartsAt ? "<th>STARTS AT</th>" : ""}
+                    ${hasPoolSize ? "<th>🔥 POOL SIZE</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -710,6 +717,8 @@ const IndexUI = {
                       ${hasBlind ? `<td style="color:#fbbf24;">${escapeXml(lv.blind)}</td>` : ""}
                       ${hasPop ? `<td>${escapeXml(lv.pop)}</td>` : ""}
                       ${hasFuse ? `<td style="color:#fbbf24;">${escapeXml(lv.fuse)}</td>` : ""}
+                      ${hasStartsAt ? `<td style="color:#c084fc;">${escapeXml(lv.startsAt)}</td>` : ""}
+                      ${hasPoolSize ? `<td style="color:#fb923c;">${escapeXml(lv.poolSize)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}

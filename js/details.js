@@ -168,6 +168,85 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "World Ender": {
+    tags: ["LEGENDARY", "BEAM"],
+    summaryStats: [
+      { label: "DAMAGE",     value: "300 → 6,250" },
+      { label: "RELOAD",     value: "0.67s → 0.25s" },
+      { label: "PLACE COST", value: "$10,000" }
+    ],
+    bullets: [
+      "Holds a <strong>beam</strong> on a zombie that <strong>gets stronger the longer it fires</strong>, over <strong>8 seconds</strong>",
+      "It <strong>slowly loses power</strong> when it has nothing to shoot"
+    ],
+    keyNumbers: [
+      { label: "BEAM STARTS AT",  value: "<strong>40% → 12%</strong> of its damage" },
+      { label: "FULL POWER",      value: "After <strong>8 seconds</strong> on target" },
+      { label: "WITH NO TARGET",  value: "It loses <strong>25%</strong> of its charge a second" },
+      { label: "CASH TO MAX IT",  value: "<strong>$2,041,000</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>6</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 10000,  damage: "300",   reload: "0.67s", range: "33", startsAt: "40%", unlockCoins: 0 },
+      { level: 2, cashCost: 22000,  damage: "715",   reload: "0.6s",  range: "36", startsAt: "34%", unlockCoins: 600 },
+      { level: 3, cashCost: 50000,  damage: "1,310", reload: "0.53s", range: "39", startsAt: "28%", unlockCoins: 2000 },
+      { level: 4, cashCost: 112000, damage: "2,050", reload: "0.44s", range: "42", startsAt: "23%", unlockCoins: 6400 },
+      { level: 5, cashCost: 252000, damage: "2,965", reload: "0.36s", range: "44", startsAt: "18%", unlockCoins: 20000 },
+      { level: 6, cashCost: 425000, damage: "4,335", reload: "0.3s",  range: "47", startsAt: "15%", unlockCoins: 64000 },
+      { level: 7, cashCost: 500000, damage: "5,130", reload: "0.27s", range: "49", startsAt: "13%", unlockCoins: 70000 },
+      { level: 8, cashCost: 670000, damage: "6,250", reload: "0.25s", range: "50", startsAt: "12%", unlockCoins: 137000 }
+    ],
+    whereToGet: [
+      { source: "Rare Chest",      chance: "<strong>0.04%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>0.08%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>0.16%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>0.45%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>1.64%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>2.05%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>7.09%</strong> per chest" }
+    ]
+  },
+
+  "Lava Launcher": {
+    tags: ["LEGENDARY", "BURN"],
+    poolDuration: 20,
+    summaryStats: [
+      { label: "DAMAGE",     value: "150 → 2,500" },
+      { label: "RELOAD",     value: "4s → 2.5s" },
+      { label: "PLACE COST", value: "$8,500" }
+    ],
+    bullets: [
+      "Throws a <strong>ball of lava</strong> that leaves a <strong>burning pool</strong> on the ground for <strong>20 seconds</strong>",
+      "Zombies standing in it keep getting burned, and <strong>pools on top of each other stack</strong>"
+    ],
+    keyNumbers: [
+      { label: "DAMAGE IS",       value: "Per second, to <strong>every zombie</strong> standing in a pool" },
+      { label: "A POOL LASTS",    value: "<strong>20 seconds</strong>" },
+      { label: "POOL SIZE",       value: "<strong>8 → 13</strong> studs" },
+      { label: "POOLS ON TOP",    value: "<strong>All burn</strong> at once, no limit" },
+      { label: "CASH TO MAX IT",  value: "<strong>$2,092,500</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>6</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 8500,   damage: "150",   reload: "4s",   range: "40", poolSize: "8",    unlockCoins: 0 },
+      { level: 2, cashCost: 17000,  damage: "270",   reload: "3.8s", range: "42", poolSize: "8.5",  unlockCoins: 500 },
+      { level: 3, cashCost: 35000,  damage: "420",   reload: "3.6s", range: "44", poolSize: "9",    unlockCoins: 1400 },
+      { level: 4, cashCost: 72000,  damage: "635",   reload: "3.4s", range: "46", poolSize: "9.5",  unlockCoins: 3800 },
+      { level: 5, cashCost: 150000, damage: "900",   reload: "3.2s", range: "49", poolSize: "10.5", unlockCoins: 10500 },
+      { level: 6, cashCost: 300000, damage: "1,350", reload: "3s",   range: "52", poolSize: "11",   unlockCoins: 28000 },
+      { level: 7, cashCost: 560000, damage: "1,900", reload: "2.8s", range: "55", poolSize: "12",   unlockCoins: 76000 },
+      { level: 8, cashCost: 950000, damage: "2,500", reload: "2.5s", range: "58", poolSize: "13",   unlockCoins: 180000 }
+    ],
+    whereToGet: [
+      { source: "Epic Chest",      chance: "<strong>0.14%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>0.27%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>0.75%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>2.74%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>3.42%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>11.82%</strong> per chest" }
+    ]
+  },
+
   "Bank": {
     tags: ["DIVINE", "ECONOMY"],
     isEconomy: true,
