@@ -1498,5 +1498,72 @@ const INDEX_DETAILS = {
       "The <strong>strongest</strong> normal zombie in Easy",
       "Slow, but it <strong>takes a lot of hits</strong>"
     ]
+  },
+
+  "Ghoul": {
+    tags: ["HARD", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#ef4444" },
+      { label: "SPEED",  bars: 5, barColor: "#ef4444" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>weakest</strong> zombie in Hard, and the <strong>fastest</strong>",
+      "Comes in <strong>big groups</strong>"
+    ]
+  },
+
+  "Mummy": {
+    tags: ["HARD", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 2, barColor: "#ef4444" },
+      { label: "SPEED",  bars: 4, barColor: "#ef4444" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Ghoul and hits harder, but a bit <strong>slower</strong>"
+    ]
+  },
+
+  "Ripper": {
+    tags: ["HARD", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 3, barColor: "#ef4444" },
+      { label: "SPEED",  bars: 4, barColor: "#ef4444" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Mummy and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Raider": {
+    tags: ["HARD", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 4, barColor: "#ef4444" },
+      { label: "SPEED",  bars: 3, barColor: "#ef4444" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Ripper and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Thrower": {
+    tags: ["HARD", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 5, barColor: "#ef4444" },
+      { label: "SPEED",  bars: 2, barColor: "#ef4444" },
+      { label: "ATTACK", value: "FROM FAR AWAY" }
+    ],
+    bullets: [
+      "Stays back and <strong>hits your door from far away</strong>",
+      "The <strong>strongest</strong> normal zombie in Hard"
+    ]
   }
 };

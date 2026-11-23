@@ -123,7 +123,12 @@ const INDEX_ZOMBIES = [
   { name: "Walker",  rarity: "easy", img: "images/Walker.png",  trait: "UP CLOSE" },
   { name: "Biter",   rarity: "easy", img: "images/Biter.png",   trait: "UP CLOSE" },
   { name: "Watcher", rarity: "easy", img: "images/Watcher.png", trait: "UP CLOSE" },
-  { name: "Guard",   rarity: "easy", img: "images/Guard.png",   trait: "UP CLOSE" }
+  { name: "Guard",   rarity: "easy", img: "images/Guard.png",   trait: "UP CLOSE" },
+  { name: "Ghoul",   rarity: "hard", img: "images/Ghoul.png",   trait: "UP CLOSE" },
+  { name: "Mummy",   rarity: "hard", img: "images/Mummy.png",   trait: "UP CLOSE" },
+  { name: "Ripper",  rarity: "hard", img: "images/Ripper.png",  trait: "UP CLOSE" },
+  { name: "Raider",  rarity: "hard", img: "images/Raider.png",  trait: "UP CLOSE" },
+  { name: "Thrower", rarity: "hard", img: "images/Thrower.png", trait: "FROM FAR AWAY" }
 ];
 
 const INDEX_BOSSES = [
