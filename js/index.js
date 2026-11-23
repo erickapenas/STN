@@ -154,6 +154,7 @@ const IndexUI = {
       const hasFuse = levels.some(lv => lv.fuse !== undefined);
       const hasStartsAt = levels.some(lv => lv.startsAt !== undefined);
       const hasPoolSize = levels.some(lv => lv.poolSize !== undefined);
+      const hasCharge = levels.some(lv => lv.charge !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
 
       const isSlam = !!details.isSlam;
@@ -164,10 +165,20 @@ const IndexUI = {
       const isProtectorBase = !!details.isProtectorBase;
       const isHealBase = !!details.isHealBase;
       const poolMult = details.poolDuration || 1;
+      const comboCfg = details.combo || null;
+      const superShotCfg = details.superShot || null;
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
-        const dps = rel > 0 ? (dmg * poolMult) / rel : 0;
+        let dps = rel > 0 ? (dmg * poolMult) / rel : 0;
+        if (dps > 0 && comboCfg && comboCfg.every > 0 && comboCfg.hits > 0) {
+          const cycleHits = comboCfg.every + comboCfg.hits;
+          const cycleTime = comboCfg.every * rel + comboCfg.hits * (comboCfg.hitInterval || 0.14);
+          dps = cycleTime > 0 ? (cycleHits * dmg) / cycleTime : dps;
+        }
+        if (dps > 0 && superShotCfg && superShotCfg.every > 0 && superShotCfg.multiplier > 1) {
+          dps = dps * ((superShotCfg.every - 1 + superShotCfg.multiplier) / superShotCfg.every);
+        }
         const bossDps = dps * bossMult;
         const rfDps = hasRapidFire ? dps * rfConfig.multiplier : 0;
         const rfBurstDmg = hasRapidFire ? rfDps * (rfConfig.duration || 5) : 0;
@@ -669,7 +680,8 @@ const IndexUI = {
           (hasPop ? 1 : 0) +
           (hasFuse ? 1 : 0) +
           (hasStartsAt ? 1 : 0) +
-          (hasPoolSize ? 1 : 0);
+          (hasPoolSize ? 1 : 0) +
+          (hasCharge ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -697,6 +709,7 @@ const IndexUI = {
                     ${hasFuse ? "<th>⏳ FUSE</th>" : ""}
                     ${hasStartsAt ? "<th>STARTS AT</th>" : ""}
                     ${hasPoolSize ? "<th>🔥 POOL SIZE</th>" : ""}
+                    ${hasCharge ? "<th>⚡ CHARGE</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -719,6 +732,7 @@ const IndexUI = {
                       ${hasFuse ? `<td style="color:#fbbf24;">${escapeXml(lv.fuse)}</td>` : ""}
                       ${hasStartsAt ? `<td style="color:#c084fc;">${escapeXml(lv.startsAt)}</td>` : ""}
                       ${hasPoolSize ? `<td style="color:#fb923c;">${escapeXml(lv.poolSize)}</td>` : ""}
+                      ${hasCharge ? `<td style="color:#38bdf8;">${escapeXml(lv.charge)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}

@@ -247,6 +247,85 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Samurai": {
+    tags: ["LEGENDARY", "COMBO"],
+    combo: { every: 5, hits: 4, hitInterval: 0.14 },
+    summaryStats: [
+      { label: "DAMAGE",     value: "45 → 733" },
+      { label: "RELOAD",     value: "0.62s → 0.48s" },
+      { label: "PLACE COST", value: "$100" }
+    ],
+    bullets: [
+      "Slashes zombies <strong>up close</strong> with his <strong>two katanas</strong>, one at a time",
+      "After every 5 slashes he does a <strong>quick 4-hit combo</strong>"
+    ],
+    keyNumbers: [
+      { label: "COMBO",           value: "After every <strong>5 slashes</strong>, <strong>4 quick hits</strong>" },
+      { label: "COMBO SPEED",     value: "<strong>0.14s</strong> between its hits" },
+      { label: "CASH TO MAX IT",  value: "<strong>$9,690</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>9</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 100,  damage: "45",  reload: "0.62s", range: "24", unlockCoins: 0 },
+      { level: 2, cashCost: 190,  damage: "92",  reload: "0.6s",  range: "24", unlockCoins: 500 },
+      { level: 3, cashCost: 340,  damage: "167", reload: "0.58s", range: "25", unlockCoins: 1400 },
+      { level: 4, cashCost: 560,  damage: "271", reload: "0.56s", range: "25", unlockCoins: 3800 },
+      { level: 5, cashCost: 900,  damage: "391", reload: "0.54s", range: "26", unlockCoins: 10500 },
+      { level: 6, cashCost: 1250, damage: "518", reload: "0.52s", range: "26", unlockCoins: 28000 },
+      { level: 7, cashCost: 2600, damage: "654", reload: "0.5s",  range: "27", unlockCoins: 76000 },
+      { level: 8, cashCost: 3750, damage: "733", reload: "0.48s", range: "28", unlockCoins: 180000 }
+    ],
+    whereToGet: [
+      { source: "Epic Chest",      chance: "<strong>0.19%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>0.38%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>1.05%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>3.84%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>4.79%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>16.54%</strong> per chest" }
+    ]
+  },
+
+  "Railgun": {
+    tags: ["LEGENDARY", "CHARGE"],
+    superShot: { every: 5, multiplier: 2 },
+    summaryStats: [
+      { label: "DAMAGE",      value: "495 → 27,500" },
+      { label: "CHARGE TIME", value: "1s → 2.9s" },
+      { label: "PLACE COST",  value: "$9,000" }
+    ],
+    bullets: [
+      "<strong>Charges up</strong> and fires a huge shot that <strong>explodes</strong>, hurting every zombie near the target",
+      "Every <strong>5th shot deals double damage</strong>"
+    ],
+    keyNumbers: [
+      { label: "FIRES",           value: "Every <strong>3 seconds</strong>, at every level" },
+      { label: "EXPLOSION SIZE",  value: "<strong>9 → 18</strong> studs" },
+      { label: "AT THE EDGE",     value: "<strong>50%</strong> of the damage. Full damage in the middle" },
+      { label: "SUPER SHOT",      value: "Every <strong>5th shot</strong> deals <strong>2x damage</strong> after a longer charge" },
+      { label: "CASH TO MAX IT",  value: "<strong>$3,342,000</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>7</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 9000,    damage: "495",    reload: "3s", range: "45", charge: "1s",    unlockCoins: 0 },
+      { level: 2, cashCost: 20000,   damage: "1,280",  reload: "3s", range: "48", charge: "1.35s", unlockCoins: 600 },
+      { level: 3, cashCost: 45000,   damage: "2,500",  reload: "3s", range: "51", charge: "1.7s",  unlockCoins: 2000 },
+      { level: 4, cashCost: 101000,  damage: "4,450",  reload: "3s", range: "55", charge: "2.05s", unlockCoins: 6400 },
+      { level: 5, cashCost: 227000,  damage: "7,400",  reload: "3s", range: "58", charge: "2.35s", unlockCoins: 20000 },
+      { level: 6, cashCost: 510000,  damage: "11,900", reload: "3s", range: "62", charge: "2.65s", unlockCoins: 64000 },
+      { level: 7, cashCost: 930000,  damage: "18,900", reload: "3s", range: "66", charge: "2.9s",  unlockCoins: 137000 },
+      { level: 8, cashCost: 1500000, damage: "27,500", reload: "3s", range: "70", charge: "2.9s",  unlockCoins: 270000 }
+    ],
+    whereToGet: [
+      { source: "Rare Chest",      chance: "<strong>0.06%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>0.12%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>0.25%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>0.68%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>2.47%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>3.08%</strong> per chest" },
+      { source: "Lava Chest",      chance: "<strong>10.63%</strong> per chest" }
+    ]
+  },
+
   "Bank": {
     tags: ["DIVINE", "ECONOMY"],
     isEconomy: true,

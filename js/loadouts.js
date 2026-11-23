@@ -558,7 +558,15 @@ const LoadoutsUI = {
     const dmg = this.parseNum(lvData.damage);
     const rel = this.parseNum(lvData.reload);
     const poolMult = details.poolDuration || 1;
-    const baseSingleDps = rel > 0 ? (dmg * poolMult) / rel : 0;
+    let baseSingleDps = rel > 0 ? (dmg * poolMult) / rel : 0;
+    if (baseSingleDps > 0 && details.combo && details.combo.every > 0 && details.combo.hits > 0) {
+      const cycleHits = details.combo.every + details.combo.hits;
+      const cycleTime = details.combo.every * rel + details.combo.hits * (details.combo.hitInterval || 0.14);
+      if (cycleTime > 0) baseSingleDps = (cycleHits * dmg) / cycleTime;
+    }
+    if (baseSingleDps > 0 && details.superShot && details.superShot.every > 0 && details.superShot.multiplier > 1) {
+      baseSingleDps *= (details.superShot.every - 1 + details.superShot.multiplier) / details.superShot.every;
+    }
     let singleDps = baseSingleDps;
     let hasRapidFireAvg = false;
     if (baseSingleDps > 0 && details.rapidFire && details.rapidFire.multiplier > 1 && details.rapidFire.duration > 0) {
