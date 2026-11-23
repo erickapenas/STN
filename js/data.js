@@ -230,6 +230,15 @@ const ICON_STARTCASH = `<img src="images/icon-startcash.png" class="stat-icon-im
 const ICON_PULSE = `<img src="images/icon-pulse.png" class="stat-icon-img" alt="">`;
 const ICON_EXP = `<img src="images/icon-exp.png" class="stat-icon-img" alt="">`;
 const ICON_CLANSUPPLIES = `<img src="images/icon-clansupplies.png" class="stat-icon-img" alt="">`;
+const ICON_DMG = `<img src="images/icon-dmg.png" class="stat-icon-img" alt="">`;
+const ICON_DMG_PURPLE = `<img src="images/icon-dmg-purple.png" class="stat-icon-img" alt="">`;
+const ICON_DMG_CYAN = `<img src="images/icon-dmg-cyan.png" class="stat-icon-img" alt="">`;
+const ICON_RELOAD = `<img src="images/icon-reload.png" class="stat-icon-img" alt="">`;
+const ICON_RANGE = `<img src="images/icon-range.png" class="stat-icon-img" alt="">`;
+const ICON_BEAM_CHARGE = `<img src="images/icon-beam-charge.png" class="stat-icon-img" alt="">`;
+const ICON_POOL_SIZE = `<img src="images/icon-pool-size.png" class="stat-icon-img" alt="">`;
+const ICON_COMBO = `<img src="images/icon-combo.png" class="stat-icon-img" alt="">`;
+const ICON_CHARGE_CYAN = `<img src="images/icon-charge-cyan.png" class="stat-icon-img" alt="">`;
 
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {

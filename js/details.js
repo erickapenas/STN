@@ -171,17 +171,18 @@ const INDEX_DETAILS = {
   "World Ender": {
     tags: ["LEGENDARY", "BEAM"],
     summaryStats: [
-      { label: "⚔️ DAMAGE",     value: "300 → 6,250" },
-      { label: "⏳ RELOAD",     value: "0.67s → 0.25s" },
-      { label: "💰 PLACE COST", value: "$10,000" }
+      { label: `${ICON_DMG_PURPLE} DAMAGE`, value: "300 → 6,250" },
+      { label: `${ICON_RELOAD} RELOAD`,     value: "0.67s → 0.25s" },
+      { label: `${ICON_RANGE} RANGE`,       value: "33 → 50" },
+      { label: "💰 PLACE COST",             value: "$10,000" }
     ],
     bullets: [
       "Holds a <strong>beam</strong> on a zombie that <strong>gets stronger the longer it fires</strong>, over <strong>8 seconds</strong>",
       "It <strong>slowly loses power</strong> when it has nothing to shoot"
     ],
     keyNumbers: [
-      { label: "BEAM STARTS AT",  value: "<strong>40% → 12%</strong> of its damage" },
-      { label: "FULL POWER",      value: "After <strong>8 seconds</strong> on target" },
+      { label: `${ICON_DMG} BEAM STARTS AT`,  value: "<strong>40% → 12%</strong> of its damage" },
+      { label: `${ICON_BEAM_CHARGE} FULL POWER`, value: "After <strong>8 seconds</strong> on target" },
       { label: "WITH NO TARGET",  value: "It loses <strong>25%</strong> of its charge a second" },
       { label: "CASH TO MAX IT",  value: "<strong>$2,041,000</strong> in a match, for all <strong>8 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>6</strong> per player" }
@@ -211,9 +212,11 @@ const INDEX_DETAILS = {
     tags: ["LEGENDARY", "BURN"],
     poolDuration: 20,
     summaryStats: [
-      { label: "⚔️ DAMAGE",     value: "150 → 2,500" },
-      { label: "⏳ RELOAD",     value: "4s → 2.5s" },
-      { label: "💰 PLACE COST", value: "$8,500" }
+      { label: `${ICON_DMG} DAMAGE`,       value: "150 → 2,500" },
+      { label: `${ICON_RELOAD} RELOAD`,    value: "4s → 2.5s" },
+      { label: `${ICON_RANGE} RANGE`,      value: "40 → 58" },
+      { label: `${ICON_POOL_SIZE} POOL`,   value: "8 → 13" },
+      { label: "💰 PLACE COST",            value: "$8,500" }
     ],
     bullets: [
       "Throws a <strong>ball of lava</strong> that leaves a <strong>burning pool</strong> on the ground for <strong>20 seconds</strong>",
@@ -222,7 +225,7 @@ const INDEX_DETAILS = {
     keyNumbers: [
       { label: "DAMAGE IS",       value: "Per second, to <strong>every zombie</strong> standing in a pool" },
       { label: "A POOL LASTS",    value: "<strong>20 seconds</strong>" },
-      { label: "POOL SIZE",       value: "<strong>8 → 13</strong> studs" },
+      { label: `${ICON_POOL_SIZE} POOL SIZE`, value: "<strong>8 → 13</strong> studs" },
       { label: "POOLS ON TOP",    value: "<strong>All burn</strong> at once, no limit" },
       { label: "CASH TO MAX IT",  value: "<strong>$2,092,500</strong> in a match, for all <strong>8 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>6</strong> per player" }
@@ -251,16 +254,18 @@ const INDEX_DETAILS = {
     tags: ["LEGENDARY", "COMBO"],
     combo: { every: 5, hits: 4, hitInterval: 0.14 },
     summaryStats: [
-      { label: "⚔️ DAMAGE",     value: "45 → 733" },
-      { label: "⏳ RELOAD",     value: "0.62s → 0.48s" },
-      { label: "💰 PLACE COST", value: "$100" }
+      { label: `${ICON_DMG} DAMAGE`,    value: "45 → 733" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "0.62s → 0.48s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "24 → 28" },
+      { label: `${ICON_COMBO} COMBO`,   value: "x4" },
+      { label: "💰 PLACE COST",         value: "$100" }
     ],
     bullets: [
       "Slashes zombies <strong>up close</strong> with his <strong>two katanas</strong>, one at a time",
       "After every 5 slashes he does a <strong>quick 4-hit combo</strong>"
     ],
     keyNumbers: [
-      { label: "COMBO",           value: "After every <strong>5 slashes</strong>, <strong>4 quick hits</strong>" },
+      { label: `${ICON_COMBO} COMBO`, value: "After every <strong>5 slashes</strong>, <strong>4 quick hits</strong>" },
       { label: "COMBO SPEED",     value: "<strong>0.14s</strong> between its hits" },
       { label: "CASH TO MAX IT",  value: "<strong>$9,690</strong> in a match, for all <strong>8 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>9</strong> per player" }
@@ -289,19 +294,21 @@ const INDEX_DETAILS = {
     tags: ["LEGENDARY", "CHARGE"],
     superShot: { every: 5, multiplier: 2 },
     summaryStats: [
-      { label: "⚔️ DAMAGE",      value: "495 → 27,500" },
-      { label: "⏳ CHARGE TIME", value: "1s → 2.9s" },
-      { label: "💰 PLACE COST",  value: "$9,000" }
+      { label: `${ICON_DMG} DAMAGE`,            value: "495 → 27,500" },
+      { label: `${ICON_DMG_CYAN} SUPER SHOT`,   value: "990 → 55,000 (2x)" },
+      { label: `${ICON_CHARGE_CYAN} CHARGE`,    value: "1s → 2.9s" },
+      { label: `${ICON_RANGE} RANGE`,           value: "45 → 70" },
+      { label: "💰 PLACE COST",                 value: "$9,000" }
     ],
     bullets: [
       "<strong>Charges up</strong> and fires a huge shot that <strong>explodes</strong>, hurting every zombie near the target",
       "Every <strong>5th shot deals double damage</strong>"
     ],
     keyNumbers: [
-      { label: "FIRES",           value: "Every <strong>3 seconds</strong>, at every level" },
+      { label: `${ICON_RELOAD} FIRES`,  value: "Every <strong>3 seconds</strong>, at every level" },
       { label: "EXPLOSION SIZE",  value: "<strong>9 → 18</strong> studs" },
       { label: "AT THE EDGE",     value: "<strong>50%</strong> of the damage. Full damage in the middle" },
-      { label: "SUPER SHOT",      value: "Every <strong>5th shot</strong> deals <strong>2x damage</strong> after a longer charge" },
+      { label: `${ICON_DMG_CYAN} SUPER SHOT`, value: "Every <strong>5th shot</strong> deals <strong>2x damage</strong> after a longer charge" },
       { label: "CASH TO MAX IT",  value: "<strong>$3,342,000</strong> in a match, for all <strong>8 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>7</strong> per player" }
     ],
