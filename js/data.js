@@ -164,8 +164,18 @@ const INDEX_BOSSES = [
   { name: "Rift Stalker",        rarity: "nightmare", img: "images/BossRiftStalker.png",        trait: "Wave 5 • Fast" },
   { name: "Plague Mender",       rarity: "nightmare", img: "images/BossPlagueMender.png",       trait: "Wave 10 • Heal" },
   { name: "Crimson Herald",      rarity: "nightmare", img: "images/BossCrimsonHerald.png",      trait: "Wave 15 • Rage" },
-  { name: "Crystal King",        rarity: "nightmare", img: "images/BossCrystalKing.png",        trait: "Wave 20 • Crystal Cage" },
-  { name: "Nightmare Sovereign", rarity: "nightmare", img: "images/BossNightmareSovereign.png", trait: "Wave 25 • Final Boss" }
+  { name: "Crystal King",        rarity: "nightmare",  img: "images/BossCrystalKing.png",        trait: "Wave 20 • Crystal Cage" },
+  { name: "Nightmare Sovereign", rarity: "nightmare",  img: "images/BossNightmareSovereign.png", trait: "Wave 25 • Final Boss" },
+  { name: "Executioner",         rarity: "impossible", img: "images/BossExecutioner.png",        trait: "Wave 5 • Clans" },
+  { name: "Hook Warden",         rarity: "impossible", img: "images/BossHookWarden.png",         trait: "Wave 10 • Reel In" },
+  { name: "Coffin Bearer",       rarity: "impossible", img: "images/BossCoffinBearer.png",       trait: "Wave 15 • Dig" },
+  { name: "War Drummer",         rarity: "impossible", img: "images/BossWarDrummer.png",         trait: "Wave 20 • War Drums" },
+  { name: "Soul Mender",         rarity: "impossible", img: "images/BossSoulMender.png",         trait: "Wave 25 • Rage Circle" },
+  { name: "Pale Marksman",       rarity: "impossible", img: "images/BossPaleMarksman.png",       trait: "Wave 30 • Long Shot" },
+  { name: "Hollow Digger",       rarity: "impossible", img: "images/BossHollowDigger.png",       trait: "Wave 35 • Burrow" },
+  { name: "Lantern Wraith",      rarity: "impossible", img: "images/BossLanternWraith.png",      trait: "Wave 40 • Snuff" },
+  { name: "Bone Launcher",       rarity: "impossible", img: "images/BossBoneLauncher.png",       trait: "Wave 45 • Rocket Volley" },
+  { name: "Grave Bearer",        rarity: "impossible", img: "images/BossGraveBearer.png",        trait: "Wave 50 • Final Boss" }
 ];
 
 const TOWER_PLACEMENT_LIMITS = {

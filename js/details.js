@@ -2081,5 +2081,227 @@ const INDEX_DETAILS = {
         "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
       ]
     }
+  },
+
+  "Executioner": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 5" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Hook Warden": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 10" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Reel In",
+      bullets: [
+        "Throws his hook at <strong>2 of your towers</strong>, one after the other",
+        "A tower it grabs <strong>cannot shoot for 12 seconds</strong>"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>5 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield is not affected"
+      ]
+    }
+  },
+
+  "Coffin Bearer": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 15" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Dig",
+      bullets: [
+        "Digs into the ground and <strong>5 to 10 small zombies</strong> climb out around him",
+        "He can have up to 25 of them alive at once"
+      ],
+      when: [
+        "After his <strong>1st hit</strong> on your door, then after every <strong>3 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "No more climb out once he is dead"
+      ]
+    }
+  },
+
+  "War Drummer": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 20" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "War Drums",
+      bullets: [
+        "Beats his drums the whole way to your house, and zombies near him <strong>walk 30% faster</strong>",
+        "Once he reaches a door, zombies near him <strong>attack 40% faster</strong> too"
+      ],
+      when: [
+        "The whole time he is alive",
+        "The attack boost starts at his <strong>1st hit</strong> on your door"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "Both boosts end when he dies"
+      ]
+    }
+  },
+
+  "Soul Mender": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 25" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Rage Circle",
+      bullets: [
+        "Raises a <strong>red circle</strong> at your door",
+        "Every zombie inside it <strong>deals 40% more damage</strong>"
+      ],
+      when: [
+        "After his <strong>1st hit</strong> on your door",
+        "The circle stays up until he dies"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "<strong>Kill him</strong> and the circle is gone"
+      ]
+    }
+  },
+
+  "Pale Marksman": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 30" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Long Shot",
+      bullets: [
+        "<strong>Shoots your door from anywhere</strong> on the map while he walks in",
+        "One shot every 8 seconds, and each one hits <strong>3 times as hard</strong> as his normal attack"
+      ],
+      when: [
+        "From the moment he appears until he reaches your door"
+      ],
+      howToStop: [
+        "Nothing blocks the shots",
+        "They stop when he dies"
+      ]
+    }
+  },
+
+  "Hollow Digger": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 35" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Burrow",
+      bullets: [
+        "<strong>Digs underground</strong> and travels fast to your door",
+        "While he is under the ground <strong>no tower can hit him</strong>"
+      ],
+      when: [
+        "Once, about 3 seconds after he appears",
+        "He comes out right at your door"
+      ],
+      howToStop: [
+        "Nothing can hit him underground",
+        "Your towers shoot him again when he comes out"
+      ]
+    }
+  },
+
+  "Lantern Wraith": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 40" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Snuff",
+      bullets: [
+        "Lifts his lantern and it fires <strong>6 red rays</strong> very fast, each at a different tower",
+        "A tower that gets hit <strong>cannot shoot for 20 seconds</strong>"
+      ],
+      when: [
+        "After his <strong>1st hit</strong> on your door, then after every <strong>6 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield is not affected"
+      ]
+    }
+  },
+
+  "Bone Launcher": {
+    tags: ["IMPOSSIBLE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 45" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Rocket Volley",
+      bullets: [
+        "The launcher on his back fires <strong>10 rockets at your door</strong> from anywhere on the map",
+        "One volley hurts as much as 4 of his normal hits",
+        "Once he stands at a door he hits it himself, and the rockets fly to <strong>another door</strong> of your house"
+      ],
+      when: [
+        "Every <strong>10 seconds</strong>, starting right after he appears"
+      ],
+      howToStop: [
+        "Nothing blocks the rockets",
+        "They stop when he dies"
+      ]
+    }
+  },
+
+  "Grave Bearer": {
+    tags: ["IMPOSSIBLE", "FINAL BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 50" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "The <strong>final boss</strong> of Impossible",
+        "Huge and <strong>fast</strong>",
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
   }
 };
