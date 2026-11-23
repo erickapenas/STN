@@ -318,45 +318,45 @@ const CanvasManager = {
     const normalizeInlineIcon = (htmlStr) =>
       String(htmlStr || "").replace(
         /<img\b/g,
-        '<img style="width:15px;height:15px;vertical-align:-2px;object-fit:contain;display:inline-block;"'
+        '<img style="width:16px;height:16px;vertical-align:-3px;object-fit:contain;display:inline-block;"'
       );
 
     const hasBuffedDiff = totals.buffedSquadDps > totals.baseSquadDps + 0.5;
     const displayDps = fmtNum(hasBuffedDiff ? totals.buffedSquadDps : totals.baseSquadDps);
     const showBossDps = totals.buffedBossDps > totals.buffedSquadDps + 0.5;
 
-    // Active Buffs HTML
+    // Active Buffs HTML (wide compact cards)
     const buffList = Object.values(totals.buffsSummary || {});
     const jx = totals.jinxInfo;
     const ln = totals.lionInfo;
     let specialExportHtml = "";
     if (ln && ln.count > 0) {
       specialExportHtml += `
-        <div style="background:#21190c; border:1px solid #f59e0b88; border-radius:8px; padding:9px 12px; min-width:220px; flex:1 1 240px; box-sizing:border-box;">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
-            <span style="font-size:0.84rem; font-weight:700; color:#fef3c7; font-family:'Segoe UI', sans-serif;">🦁 Lion Spots (${ln.spotsUsed}/${ln.totalSpots} used • ${ln.spotsAvailable} free)</span>
-            <span style="font-size:0.9rem; font-weight:800; color:#fbbf24; font-family:'Consolas', monospace;">+${fmtStatVal(ln.totalFireRateOnSpot, "%")}</span>
+        <div style="background:#21190c; border:1px solid #f59e0b88; border-radius:8px; padding:8px 12px; min-width:300px; flex:1 1 320px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:3px;">
+            <span style="font-size:0.9rem; font-weight:700; color:#fef3c7; font-family:'Segoe UI', sans-serif;">🦁 Lion Spots (${ln.spotsUsed}/${ln.totalSpots} used • ${ln.spotsAvailable} free)</span>
+            <span style="font-size:0.96rem; font-weight:800; color:#fbbf24; font-family:'Consolas', monospace;">+${fmtStatVal(ln.totalFireRateOnSpot, "%")}</span>
           </div>
-          <div style="font-size:0.72rem; color:#fde68a; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(`Lion: +${ln.maxFireRate}% Fire Rate (no decay) • Farms: +${ln.maxFarms}% (Total: +${fmtStatVal(ln.totalFarmsOnSpot, "%")})`)}</div>
+          <div style="font-size:0.76rem; color:#fde68a; font-family:'Consolas', monospace; line-height:1.3;">${escapeXml(`Lion: +${ln.maxFireRate}% Fire Rate (no decay) • Farms: +${ln.maxFarms}% (Total: +${fmtStatVal(ln.totalFarmsOnSpot, "%")})`)}</div>
         </div>
       `;
     }
     if (jx && jx.count > 0) {
       const capTag = jx.overCap > 0 ? ` • ⚠️ +${fmtStatVal(jx.overCap, "%")} over cap` : "";
       specialExportHtml += `
-        <div style="background:#151024; border:1px solid #a855f788; border-radius:8px; padding:9px 12px; min-width:210px; flex:1 1 220px; box-sizing:border-box;">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
-            <span style="font-size:0.84rem; font-weight:700; color:#e9d5ff; font-family:'Segoe UI', sans-serif;">🔮 Jinx Luck (${escapeXml(jx.mode.name)})</span>
-            <span style="font-size:0.9rem; font-weight:800; color:#c084fc; font-family:'Consolas', monospace;">${fmtStatVal(jx.cappedLuck, "%")} / ${fmtStatVal(jx.maxLuck, "%")}</span>
+        <div style="background:#151024; border:1px solid #a855f788; border-radius:8px; padding:8px 12px; min-width:290px; flex:1 1 310px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:3px;">
+            <span style="font-size:0.9rem; font-weight:700; color:#e9d5ff; font-family:'Segoe UI', sans-serif;">🔮 Jinx Luck (${escapeXml(jx.mode.name)})</span>
+            <span style="font-size:0.96rem; font-weight:800; color:#c084fc; font-family:'Consolas', monospace;">${fmtStatVal(jx.cappedLuck, "%")} / ${fmtStatVal(jx.maxLuck, "%")}</span>
           </div>
-          <div style="font-size:0.72rem; color:#c4b5fd; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(`Mode: +${jx.mode.bonusLuck}% • ${jx.count} Jinx: +${fmtStatVal(jx.petLuck, "%")} • Jackpot: ${fmtStatVal(jx.jackpotChance, "%")}${capTag}`)}</div>
+          <div style="font-size:0.76rem; color:#c4b5fd; font-family:'Consolas', monospace; line-height:1.3;">${escapeXml(`Mode: +${jx.mode.bonusLuck}% • ${jx.count} Jinx: +${fmtStatVal(jx.petLuck, "%")} • Jackpot: ${fmtStatVal(jx.jackpotChance, "%")}${capTag}`)}</div>
         </div>
-        <div style="background:#201015; border:1px solid #ef444488; border-radius:8px; padding:9px 12px; min-width:195px; flex:1 1 200px; box-sizing:border-box;">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
-            <span style="font-size:0.84rem; font-weight:700; color:#fecaca; font-family:'Segoe UI', sans-serif;">💀 Jinx Curse (Zombie DMG)</span>
-            <span style="font-size:0.9rem; font-weight:800; color:#f87171; font-family:'Consolas', monospace;">+${jx.cursePct}%</span>
+        <div style="background:#201015; border:1px solid #ef444488; border-radius:8px; padding:8px 12px; min-width:260px; flex:1 1 280px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:3px;">
+            <span style="font-size:0.9rem; font-weight:700; color:#fecaca; font-family:'Segoe UI', sans-serif;">💀 Jinx Curse (Zombie DMG)</span>
+            <span style="font-size:0.96rem; font-weight:800; color:#f87171; font-family:'Consolas', monospace;">+${jx.cursePct}%</span>
           </div>
-          <div style="font-size:0.72rem; color:#fca5a5; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(`${jx.count} Jinx × +30% = +${jx.cursePct}% Zombie Damage`)}</div>
+          <div style="font-size:0.76rem; color:#fca5a5; font-family:'Consolas', monospace; line-height:1.3;">${escapeXml(`${jx.count} Jinx × +30% = +${jx.cursePct}% Zombie Damage`)}</div>
         </div>
       `;
     }
@@ -382,19 +382,19 @@ const CanvasManager = {
           const highlightBorder = (b.clanAdd > 0 || (b.baseAdds && b.baseAdds.length > 0)) ? "#f59e0b88" : "#262c3f";
           const totalPrefix = b.noSign ? "" : (b.total >= 0 ? "+" : "");
           return `
-            <div style="background:#10121b; border:1px solid ${highlightBorder}; border-radius:8px; padding:9px 12px; min-width:195px; flex:1 1 200px; box-sizing:border-box;">
-              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:4px;">
-                <span style="font-size:0.84rem; font-weight:700; color:#e2e8f0; font-family:'Segoe UI', sans-serif;">${normalizeInlineIcon(b.icon)} ${escapeXml(b.label)}</span>
-                <span style="font-size:0.9rem; font-weight:800; color:${b.total < 0 ? '#f87171' : '#4ade80'}; font-family:'Consolas', monospace;">${totalPrefix}${fmtStatVal(b.total, u)}</span>
+            <div style="background:#10121b; border:1px solid ${highlightBorder}; border-radius:8px; padding:8px 12px; min-width:265px; flex:1 1 285px; box-sizing:border-box;">
+              <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; margin-bottom:3px;">
+                <span style="font-size:0.9rem; font-weight:700; color:#e2e8f0; font-family:'Segoe UI', sans-serif;">${normalizeInlineIcon(b.icon)} ${escapeXml(b.label)}</span>
+                <span style="font-size:0.96rem; font-weight:800; color:${b.total < 0 ? '#f87171' : '#4ade80'}; font-family:'Consolas', monospace;">${totalPrefix}${fmtStatVal(b.total, u)}</span>
               </div>
-              <div style="font-size:0.72rem; color:#94a3b8; font-family:'Consolas', monospace; line-height:1.35;">${escapeXml(parts.join(" • "))}</div>
+              <div style="font-size:0.75rem; color:#94a3b8; font-family:'Consolas', monospace; line-height:1.3;">${escapeXml(parts.join(" • "))}</div>
             </div>
           `;
         }).join("");
 
     const buffsHtml = (specialExportHtml || regularBuffsExportHtml)
       ? `${specialExportHtml}${regularBuffsExportHtml}`
-      : `<div style="color:#64748b; font-size:0.82rem; font-style:italic; font-family:'Segoe UI', sans-serif;">No active buffs.</div>`;
+      : `<div style="color:#64748b; font-size:0.86rem; font-style:italic; font-family:'Segoe UI', sans-serif;">No active buffs.</div>`;
 
     // Squad Units Summary HTML
     const rosterEntries = Object.values(totals.unitCounts || {});
@@ -402,16 +402,24 @@ const CanvasManager = {
       ? rosterEntries.map(entry => {
           const color = getAnsiHex(colors[entry.item.rarity] || DEFAULT_COLORS[entry.item.rarity] || "37");
           const placedNote = entry.item.role !== "PET"
-            ? ` <span style="color:#94a3b8; font-size:0.74rem; font-weight:600;">(${entry.placements} placed)</span>`
+            ? ` <span style="color:#94a3b8; font-size:0.76rem; font-weight:600;">(${entry.placements} placed)</span>`
             : "";
           return `
-            <div style="display:inline-flex; align-items:center; gap:7px; background:#10121b; border:1px solid ${color}66; border-radius:8px; padding:5px 10px;">
+            <div style="display:inline-flex; align-items:center; gap:7px; background:#10121b; border:1px solid ${color}66; border-radius:8px; padding:5px 11px;">
               <img src="${entry.item.img}" alt="" style="width:22px; height:22px; object-fit:contain; display:block;">
-              <span style="color:${color}; font-weight:800; font-size:0.8rem; font-family:'Consolas', monospace;">${entry.count}× ${escapeXml(entry.item.name)}${placedNote}</span>
+              <span style="color:${color}; font-weight:800; font-size:0.84rem; font-family:'Consolas', monospace;">${entry.count}× ${escapeXml(entry.item.name)}${placedNote}</span>
             </div>
           `;
         }).join("")
-      : `<div style="color:#64748b; font-size:0.82rem; font-style:italic; font-family:'Segoe UI', sans-serif;">No towers or pets equipped yet.</div>`;
+      : `<div style="color:#64748b; font-size:0.86rem; font-style:italic; font-family:'Segoe UI', sans-serif;">No towers or pets equipped yet.</div>`;
+
+    // Dynamic widescreen column count (5 cols x 2 rows for 9-10 players -> fits 1920x1080!)
+    const pCount = players.length;
+    const gridCols = pCount <= 1 ? 1 : pCount === 2 ? 2 : pCount === 3 ? 3 : pCount === 4 ? 4 : pCount === 5 ? 5 : pCount === 6 ? 3 : pCount <= 8 ? 4 : 5;
+    const cardGap = 12;
+    const cardWidth = gridCols === 1
+      ? "100%"
+      : `calc(${(100 / gridCols).toFixed(4)}% - ${((cardGap * (gridCols - 1)) / gridCols).toFixed(2)}px)`;
 
     // Participant Inventories HTML
     const playersHtml = players.map((player, pIdx) => {
@@ -426,8 +434,8 @@ const CanvasManager = {
         const def = slot.item ? ITEMS.find(x => x.name === slot.item) : null;
         if (!def) {
           slotsHtml += `
-            <div style="display:flex; align-items:center; gap:8px; background:#0c0f18; border:1px dashed #262c3f; border-radius:7px; padding:5px 9px; min-height:38px; box-sizing:border-box;">
-              <span style="width:28px; height:28px; border-radius:6px; background:#141824; color:#475569; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-family:'Consolas', monospace;">${sIdx + 1}</span>
+            <div style="display:flex; align-items:center; gap:8px; background:#0c0f18; border:1px dashed #262c3f; border-radius:7px; padding:5px 8px; min-height:38px; box-sizing:border-box;">
+              <span style="width:26px; height:26px; border-radius:6px; background:#141824; color:#475569; display:flex; align-items:center; justify-content:center; font-size:0.78rem; font-family:'Consolas', monospace;">${sIdx + 1}</span>
               <span style="color:#475569; font-size:0.78rem; font-style:italic; font-family:'Consolas', monospace;">Empty Slot</span>
             </div>
           `;
@@ -467,14 +475,14 @@ const CanvasManager = {
         }
 
         slotsHtml += `
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:8px; background:${isEvo ? '#181129' : '#0f1320'}; border:1px solid ${borderColor}66; border-left:4px solid ${borderColor}; border-radius:7px; padding:5px 9px; min-height:38px; box-sizing:border-box;">
-            <div style="display:flex; align-items:center; gap:8px; min-width:0; flex:1;">
-              <div style="width:28px; height:28px; flex:0 0 28px; display:flex; align-items:center; justify-content:center; background:#090c14; border-radius:6px; border:1px solid ${borderColor}88; padding:2px; box-sizing:border-box;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; background:${isEvo ? '#181129' : '#0f1320'}; border:1px solid ${borderColor}66; border-left:4px solid ${borderColor}; border-radius:7px; padding:4px 8px; min-height:38px; box-sizing:border-box;">
+            <div style="display:flex; align-items:center; gap:7px; min-width:0; flex:1;">
+              <div style="width:26px; height:26px; flex:0 0 26px; display:flex; align-items:center; justify-content:center; background:#090c14; border-radius:6px; border:1px solid ${borderColor}88; padding:2px; box-sizing:border-box;">
                 <img src="${def.img}" alt="" style="width:100%; height:100%; object-fit:contain; display:block;">
               </div>
               <span style="color:${rarityColor}; font-weight:800; font-size:0.8rem; font-family:'Consolas', monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeXml(def.name)}</span>
             </div>
-            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+            <div style="display:flex; align-items:center; gap:5px; flex-shrink:0;">
               ${metaHtml}
               ${lvlBadge}
             </div>
@@ -482,17 +490,16 @@ const CanvasManager = {
         `;
       }
 
-      const cardWidth = players.length === 1 ? "100%" : "calc(50% - 7px)";
       return `
-        <div style="width:${cardWidth}; background:#10121b; border:1px solid #262c3f; border-radius:10px; padding:12px 14px; box-sizing:border-box;">
-          <div style="display:flex; justify-content:space-between; align-items:center; gap:8px; border-bottom:1px solid #1e2436; padding-bottom:8px; margin-bottom:9px;">
-            <div style="font-size:0.95rem; font-weight:800; color:#f8fafc; font-family:'Segoe UI', sans-serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">👤 ${escapeXml(pName)}</div>
-            <div style="display:flex; align-items:center; gap:6px; flex-shrink:0;">
+        <div style="width:${cardWidth}; background:#10121b; border:1px solid #262c3f; border-radius:10px; padding:10px 12px; box-sizing:border-box;">
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:6px; border-bottom:1px solid #1e2436; padding-bottom:7px; margin-bottom:8px;">
+            <div style="font-size:0.94rem; font-weight:800; color:#f8fafc; font-family:'Segoe UI', sans-serif; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">👤 ${escapeXml(pName)}</div>
+            <div style="display:flex; align-items:center; gap:5px; flex-shrink:0;">
               <span style="font-size:0.7rem; font-weight:700; color:#94a3b8; font-family:'Consolas', monospace;">🔫${pTowers} • 🐾${pPets}</span>
               <span style="font-size:0.68rem; font-weight:800; color:#fbbf24; background:#1c1917; border:1px solid #f59e0b55; border-radius:5px; padding:2px 6px; font-family:'Consolas', monospace;">${slotCount} Slots</span>
             </div>
           </div>
-          <div style="display:flex; flex-direction:column; gap:6px;">
+          <div style="display:flex; flex-direction:column; gap:5px;">
             ${slotsHtml}
           </div>
         </div>
@@ -500,63 +507,67 @@ const CanvasManager = {
     }).join("");
 
     return `
-      <div id="squadCaptureCard" style="background:#151822; padding:28px 30px; border-radius:12px; width:960px; box-sizing:border-box; color:#f8fafc; font-family:'Segoe UI', sans-serif;">
-        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid #262c3f; padding-bottom:14px; margin-bottom:18px;">
-          <div>
-            <div style="font-size:1.55rem; font-weight:800; color:#ffffff;">🛡️ Squad Loadouts</div>
-            <div style="font-size:0.84rem; color:#94a3b8; margin-top:3px;">Team Composition, Stacked Buffs &amp; Participant Inventories</div>
+      <div id="squadCaptureCard" style="background:#151822; padding:24px 28px; border-radius:0; width:1920px; min-height:1080px; box-sizing:border-box; color:#f8fafc; font-family:'Segoe UI', sans-serif; display:flex; flex-direction:column;">
+        <div style="display:flex; justify-content:space-between; align-items:center; gap:18px; border-bottom:1px solid #262c3f; padding-bottom:14px; margin-bottom:14px;">
+          <div style="display:flex; align-items:center; gap:14px; flex-shrink:0;">
+            <div>
+              <div style="font-size:1.75rem; font-weight:800; color:#ffffff; line-height:1.15;">🛡️ Squad Loadouts</div>
+              <div style="font-size:0.88rem; color:#94a3b8; margin-top:3px;">Team Composition, Stacked Buffs &amp; Participant Inventories</div>
+            </div>
+            ${clanBuffEnabled ? `<div style="background:#2e1d08; border:1px solid #f59e0b88; color:#fbbf24; font-weight:800; font-size:0.84rem; padding:7px 14px; border-radius:8px; font-family:'Consolas', monospace;">🏰 Clan Buff: ON</div>` : ""}
           </div>
-          ${clanBuffEnabled ? `<div style="background:#2e1d08; border:1px solid #f59e0b88; color:#fbbf24; font-weight:800; font-size:0.78rem; padding:6px 12px; border-radius:8px; font-family:'Consolas', monospace;">🏰 Clan Buff: ON</div>` : ""}
+
+          <div style="display:flex; gap:12px; flex:1; max-width:1120px;">
+            <div style="flex:0.8; background:#10121b; border:1px solid #262c3f; border-radius:9px; padding:8px 14px;">
+              <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:2px;">👥 Players</div>
+              <div style="font-size:1.25rem; font-weight:800; color:#f8fafc; font-family:'Consolas', monospace;">${players.length} <span style="font-size:0.84rem; color:#64748b;">/ 10</span></div>
+            </div>
+            <div style="flex:1.15; background:#10121b; border:1px solid #262c3f; border-radius:9px; padding:8px 14px;">
+              <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:2px;">🔫 Total Towers</div>
+              <div style="font-size:1.25rem; font-weight:800; color:#38bdf8; font-family:'Consolas', monospace;">${totals.totalTowers} <span style="font-size:0.8rem; color:#94a3b8;">(${totals.totalPlacements} placed)</span></div>
+            </div>
+            <div style="flex:0.75; background:#10121b; border:1px solid #262c3f; border-radius:9px; padding:8px 14px;">
+              <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:2px;">🐾 Total Pets</div>
+              <div style="font-size:1.25rem; font-weight:800; color:#c084fc; font-family:'Consolas', monospace;">${totals.totalPets}</div>
+            </div>
+            <div style="flex:1.55; background:#10121b; border:1px solid #f59e0b66; border-radius:9px; padding:8px 14px;">
+              <div style="font-size:0.72rem; color:#fbbf24; font-weight:700; text-transform:uppercase; margin-bottom:2px;">⚡ Total Squad DPS</div>
+              <div style="display:flex; align-items:baseline; gap:10px; flex-wrap:wrap;">
+                <span style="font-size:1.28rem; font-weight:800; color:#4ade80; font-family:'Consolas', monospace;">${displayDps} <span style="font-size:0.8rem; color:#94a3b8;">DPS</span></span>
+                ${hasBuffedDiff ? `<span style="font-size:0.72rem; color:#94a3b8; font-family:'Consolas', monospace;">Base: ${fmtNum(totals.baseSquadDps)}</span>` : ""}
+                ${showBossDps ? `<span style="font-size:0.72rem; color:#fbbf24; font-family:'Consolas', monospace;">Boss: ${fmtNum(totals.buffedBossDps)}</span>` : ""}
+              </div>
+            </div>
+          </div>
         </div>
 
-        <div style="display:flex; gap:12px; margin-bottom:18px;">
-          <div style="flex:1; background:#10121b; border:1px solid #262c3f; border-radius:9px; padding:10px 14px;">
-            <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:3px;">👥 Players</div>
-            <div style="font-size:1.22rem; font-weight:800; color:#f8fafc; font-family:'Consolas', monospace;">${players.length} <span style="font-size:0.82rem; color:#64748b;">/ 10</span></div>
-          </div>
-          <div style="flex:1; background:#10121b; border:1px solid #262c3f; border-radius:9px; padding:10px 14px;">
-            <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:3px;">🔫 Total Towers</div>
-            <div style="font-size:1.22rem; font-weight:800; color:#38bdf8; font-family:'Consolas', monospace;">${totals.totalTowers} <span style="font-size:0.76rem; color:#94a3b8;">(${totals.totalPlacements} placed)</span></div>
-          </div>
-          <div style="flex:1; background:#10121b; border:1px solid #262c3f; border-radius:9px; padding:10px 14px;">
-            <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase; margin-bottom:3px;">🐾 Total Pets</div>
-            <div style="font-size:1.22rem; font-weight:800; color:#c084fc; font-family:'Consolas', monospace;">${totals.totalPets}</div>
-          </div>
-          <div style="flex:1.25; background:#10121b; border:1px solid #f59e0b66; border-radius:9px; padding:10px 14px;">
-            <div style="font-size:0.72rem; color:#fbbf24; font-weight:700; text-transform:uppercase; margin-bottom:3px;">⚡ Total Squad DPS</div>
-            <div style="font-size:1.22rem; font-weight:800; color:#4ade80; font-family:'Consolas', monospace;">${displayDps} <span style="font-size:0.78rem; color:#94a3b8;">DPS</span></div>
-            ${hasBuffedDiff ? `<div style="font-size:0.7rem; color:#94a3b8; font-family:'Consolas', monospace; margin-top:2px;">Base: ${fmtNum(totals.baseSquadDps)} DPS</div>` : ""}
-            ${showBossDps ? `<div style="font-size:0.7rem; color:#fbbf24; font-family:'Consolas', monospace; margin-top:1px;">Boss: ${fmtNum(totals.buffedBossDps)} DPS</div>` : ""}
-          </div>
-        </div>
-
-        <div style="margin-bottom:18px;">
-          <div style="font-size:0.86rem; font-weight:800; color:#f8fafc; letter-spacing:0.4px; margin-bottom:8px; display:flex; align-items:center; gap:8px;">
+        <div style="margin-bottom:14px;">
+          <div style="font-size:0.9rem; font-weight:800; color:#f8fafc; letter-spacing:0.4px; margin-bottom:7px; display:flex; align-items:center; gap:8px;">
             <span>✨ Active Buffs</span>
-            <span style="font-size:0.7rem; font-weight:700; color:#94a3b8; background:#10121b; border:1px solid #262c3f; padding:2px 8px; border-radius:99px;">Pets: 60% decay per duplicate</span>
+            <span style="font-size:0.74rem; font-weight:700; color:#94a3b8; background:#10121b; border:1px solid #262c3f; padding:2px 9px; border-radius:99px;">Pets: 60% decay per duplicate</span>
           </div>
           <div style="display:flex; flex-wrap:wrap; gap:8px;">
             ${buffsHtml}
           </div>
         </div>
 
-        <div style="margin-bottom:18px;">
-          <div style="font-size:0.86rem; font-weight:800; color:#f8fafc; letter-spacing:0.4px; margin-bottom:8px;">📦 Squad Units Summary</div>
-          <div style="display:flex; flex-wrap:wrap; gap:8px;">
+        <div style="margin-bottom:14px;">
+          <div style="font-size:0.9rem; font-weight:800; color:#f8fafc; letter-spacing:0.4px; margin-bottom:7px;">📦 Squad Units Summary</div>
+          <div style="display:flex; flex-wrap:wrap; gap:7px;">
             ${rosterHtml}
           </div>
         </div>
 
-        <div>
-          <div style="font-size:0.86rem; font-weight:800; color:#f8fafc; letter-spacing:0.4px; margin-bottom:10px;">👥 Participant Inventories (${players.length})</div>
-          <div style="display:flex; flex-wrap:wrap; gap:14px;">
+        <div style="flex:1;">
+          <div style="font-size:0.9rem; font-weight:800; color:#f8fafc; letter-spacing:0.4px; margin-bottom:8px;">👥 Participant Inventories (${players.length})</div>
+          <div style="display:flex; flex-wrap:wrap; gap:${cardGap}px;">
             ${playersHtml}
           </div>
         </div>
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:20px; padding-top:12px; border-top:1px solid #262c3f; font-size:0.82rem; color:#64748b;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:14px; border-top:1px solid #262c3f; font-size:0.86rem; color:#64748b;">
           <span>⚡ Generated with STN Showcase</span>
-          <span style="color:#FFFFFF; font-weight:800; font-size:1.05rem;">erickapenas.github.io/STN</span>
+          <span style="color:#FFFFFF; font-weight:800; font-size:1.15rem;">erickapenas.github.io/STN</span>
         </div>
       </div>
     `;
@@ -587,7 +598,7 @@ const CanvasManager = {
     const captureContainer = document.getElementById("squadCaptureContainer");
     captureContainer.innerHTML = this.buildSquadLoadoutsImageDom(players, totals, clanBuffEnabled, colors);
     const element = document.getElementById("squadCaptureCard");
-    return await html2canvas(element, { backgroundColor: "#151822", scale: 2, logging: false, useCORS: true });
+    return await html2canvas(element, { backgroundColor: "#151822", scale: 1, width: 1920, windowWidth: 1920, logging: false, useCORS: true });
   },
 
   canvasToBlob(canvas) {
