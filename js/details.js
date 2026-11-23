@@ -2303,5 +2303,279 @@ const INDEX_DETAILS = {
         "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
       ]
     }
+  },
+
+  "Inferno Warlord": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 5" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Fissure",
+      bullets: [
+        "Slams his axe into the ground and a <strong>molten crack</strong> runs straight into your house",
+        "Every tower standing on the crack <strong>cannot shoot for 8 seconds</strong>"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield is not affected"
+      ]
+    }
+  },
+
+  "Pyre Inquisitor": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 10" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Purge",
+      bullets: [
+        "Plants his staff, and for <strong>15 seconds</strong> no door of your house can be healed or repaired",
+        "The Repair button, the Medical Base and pet heals all stop working"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "Healing works again after 15 seconds"
+      ]
+    }
+  },
+
+  "Magma Giant": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 15" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Rebirth",
+      bullets: [
+        "The first time he dies he falls into a <strong>molten pile</strong>",
+        "If the pile is still there after 6 seconds he <strong>stands up again</strong> with 40% of his health"
+      ],
+      when: [
+        "Once, the first time you kill him"
+      ],
+      howToStop: [
+        "The pile has 30% of his health",
+        "<strong>Destroy it within 6 seconds</strong> and he stays dead"
+      ]
+    }
+  },
+
+  "Flame Warden": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 20" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Taunt",
+      bullets: [
+        "Raises his guard for about 6 seconds",
+        "Every tower that can reach him is <strong>forced to shoot only him</strong>, and he <strong>takes 90% less damage</strong> while it lasts"
+      ],
+      when: [
+        "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield keeps picking its own targets"
+      ]
+    }
+  },
+
+  "Sunbreaker": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 25" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Flare",
+      bullets: [
+        "His halo flashes and every tower in your house <strong>loses half its range</strong> for 10 seconds"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield is not affected"
+      ]
+    }
+  },
+
+  "Ash Colossus": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 30" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Fire Ring",
+      bullets: [
+        "Slams his hammer and a <strong>ring of fire</strong> rolls along the ground toward your house",
+        "A player it touches is <strong>locked in a cage</strong> and cannot move for 20 seconds"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>5 hits</strong>"
+      ],
+      howToStop: [
+        "<strong>Jump over the ring</strong> when it reaches you, or stand up on the walls"
+      ]
+    }
+  },
+
+  "Magma Titan": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 35" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Eruption",
+      bullets: [
+        "The volcano on his back throws <strong>6 lava bombs</strong> into your house, at your towers first",
+        "Each one leaves a lava pool for 8 seconds",
+        "A tower in a pool <strong>shoots half as often</strong>, and a player a bomb lands on is caged for 3 seconds"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield keeps its speed"
+      ]
+    }
+  },
+
+  "Ashwing": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 40" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Skydive",
+      bullets: [
+        "<strong>Flies up</strong> and crashes down onto <strong>another door</strong> of your house, hitting it as hard as one and a half normal hits",
+        "No tower can hit him while he is in the air"
+      ],
+      when: [
+        "After his <strong>3rd hit</strong> on your door, then after every <strong>5 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "Your towers shoot him again when he lands"
+      ]
+    }
+  },
+
+  "Ember Shogun": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 45" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Flurry",
+      bullets: [
+        "Slices your door <strong>13 times</strong> in under 3 seconds",
+        "While it lasts he deals <strong>3 times his normal damage</strong>"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it"
+      ]
+    }
+  },
+
+  "Sabertooth": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 50" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Roar",
+      bullets: [
+        "His roar <strong>scares the pets</strong> of your house for 8 seconds",
+        "While they are scared their abilities <strong>do nothing</strong>: no Elephant bounce, no new Turtle shield, no thorns, no Rhino armor, no boss slow and no pet door heal"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>5 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "Your pets work again after 8 seconds"
+      ]
+    }
+  },
+
+  "Incinerator": {
+    tags: ["CRAZY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 55" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Burn",
+      bullets: [
+        "His flamethrower <strong>sets your door on fire</strong>",
+        "It burns for 10 seconds and does as much damage as 2 of his normal hits"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>5 hits</strong>"
+      ],
+      howToStop: [
+        "Anyone in your house can press <strong>Repair</strong> to put the fire out",
+        "Killing him puts it out too"
+      ]
+    }
+  },
+
+  "Sun Pharaoh": {
+    tags: ["CRAZY", "FINAL BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 60" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Ankh",
+      bullets: [
+        "The <strong>final boss</strong> of Crazy",
+        "He raises his ankh and the <strong>last boss that died</strong> at your house stands up again next to him with 30% of its health"
+      ],
+      when: [
+        "Once, after his <strong>1st hit</strong> on your door, if a boss has already died there"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "He can only do it once"
+      ]
+    }
   }
 };

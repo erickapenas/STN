@@ -175,7 +175,19 @@ const INDEX_BOSSES = [
   { name: "Hollow Digger",       rarity: "impossible", img: "images/BossHollowDigger.png",       trait: "Wave 35 • Burrow" },
   { name: "Lantern Wraith",      rarity: "impossible", img: "images/BossLanternWraith.png",      trait: "Wave 40 • Snuff" },
   { name: "Bone Launcher",       rarity: "impossible", img: "images/BossBoneLauncher.png",       trait: "Wave 45 • Rocket Volley" },
-  { name: "Grave Bearer",        rarity: "impossible", img: "images/BossGraveBearer.png",        trait: "Wave 50 • Final Boss" }
+  { name: "Grave Bearer",        rarity: "impossible", img: "images/BossGraveBearer.png",        trait: "Wave 50 • Final Boss" },
+  { name: "Inferno Warlord",     rarity: "crazy",      img: "images/BossInfernoWarlord.png",     trait: "Wave 5 • Fissure" },
+  { name: "Pyre Inquisitor",     rarity: "crazy",      img: "images/BossPyreInquisitor.png",     trait: "Wave 10 • Purge" },
+  { name: "Magma Giant",         rarity: "crazy",      img: "images/BossMagmaGiant.png",         trait: "Wave 15 • Rebirth" },
+  { name: "Flame Warden",        rarity: "crazy",      img: "images/BossFlameWarden.png",        trait: "Wave 20 • Taunt" },
+  { name: "Sunbreaker",          rarity: "crazy",      img: "images/BossSunbreaker.png",         trait: "Wave 25 • Flare" },
+  { name: "Ash Colossus",        rarity: "crazy",      img: "images/BossAshColossus.png",        trait: "Wave 30 • Fire Ring" },
+  { name: "Magma Titan",         rarity: "crazy",      img: "images/BossMagmaTitan.png",         trait: "Wave 35 • Eruption" },
+  { name: "Ashwing",             rarity: "crazy",      img: "images/BossAshwing.png",            trait: "Wave 40 • Skydive" },
+  { name: "Ember Shogun",        rarity: "crazy",      img: "images/BossEmberShogun.png",        trait: "Wave 45 • Flurry" },
+  { name: "Sabertooth",          rarity: "crazy",      img: "images/BossSabertooth.png",         trait: "Wave 50 • Roar" },
+  { name: "Incinerator",         rarity: "crazy",      img: "images/BossIncinerator.png",        trait: "Wave 55 • Burn" },
+  { name: "Sun Pharaoh",         rarity: "crazy",      img: "images/BossSunPharaoh.png",         trait: "Wave 60 • Final Boss" }
 ];
 
 const TOWER_PLACEMENT_LIMITS = {
