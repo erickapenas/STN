@@ -1473,7 +1473,7 @@ const INDEX_DETAILS = {
     ]
   },
 
-  "Watcher": {
+  "Stalker": {
     tags: ["EASY", "ZOMBIE"],
     hideLevelSub: true,
     summaryStats: [
@@ -1765,6 +1765,75 @@ const INDEX_DETAILS = {
     bullets: [
       "The <strong>strongest</strong> normal zombie in Crazy",
       "It <strong>takes a lot of hits</strong>"
+    ]
+  },
+
+  "Watcher": {
+    tags: ["CLANS APOCALYPSE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#10b981" },
+      { label: "SPEED",  bars: 1, barColor: "#10b981" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "A small eye the <strong>Seraph Eye</strong> opens at your doors",
+      "<strong>Kill every one</strong> to break his shield"
+    ]
+  },
+
+  "Scarecrow (Zombie)": {
+    tags: ["HARVEST FEAST", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#f59e0b" },
+      { label: "SPEED",  bars: 5, barColor: "#f59e0b" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>weakest</strong> zombie in the Harvest Feast, and the <strong>fastest</strong>",
+      "Comes in <strong>big groups</strong>"
+    ]
+  },
+
+  "Pilgrim": {
+    tags: ["HARVEST FEAST", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 2, barColor: "#f59e0b" },
+      { label: "SPEED",  bars: 4, barColor: "#f59e0b" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Scarecrow and hits harder, but a bit <strong>slower</strong>"
+    ]
+  },
+
+  "Pumpkin Head": {
+    tags: ["HARVEST FEAST", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 4, barColor: "#f59e0b" },
+      { label: "SPEED",  bars: 3, barColor: "#f59e0b" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Pilgrim and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Gobbler": {
+    tags: ["HARVEST FEAST", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 5, barColor: "#f59e0b" },
+      { label: "SPEED",  bars: 2, barColor: "#f59e0b" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>strongest</strong> normal zombie in the Harvest Feast",
+      "Slow, but it <strong>takes a lot of hits</strong>",
+      "The <strong>Turkey Tyrant</strong> calls more of them with his bell"
     ]
   }
 };

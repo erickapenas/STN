@@ -65,7 +65,7 @@ const IndexUI = {
     const body = document.getElementById("indexModalBody");
     if (!modal || !body) return;
 
-    const details = (typeof INDEX_DETAILS !== "undefined") ? INDEX_DETAILS[item.name] : null;
+    const details = (typeof INDEX_DETAILS !== "undefined") ? INDEX_DETAILS[item.detailKey || item.name] : null;
     const isOwned = !!(invEntry && invEntry.owned);
     const isEvo = !!(isOwned && item.canEvo && invEntry.lvl > item.max);
 
@@ -929,7 +929,7 @@ const IndexUI = {
         const invEntry = isPlayable ? inv[item.name] : null;
         const isOwned = !!(invEntry && invEntry.owned);
         const isEvo = !!(isOwned && item.canEvo && invEntry.lvl > item.max);
-        const hasDetails = (typeof INDEX_DETAILS !== "undefined") && !!INDEX_DETAILS[item.name];
+        const hasDetails = (typeof INDEX_DETAILS !== "undefined") && !!INDEX_DETAILS[item.detailKey || item.name];
 
         const card = document.createElement("div");
         card.className = `index-card${isEvo ? ' is-evo' : ''}${isPlayable && isOwned ? ' is-owned' : ''}${hasDetails ? ' has-details' : ''}`;
