@@ -707,9 +707,9 @@ const IndexUI = {
                     ${hasBlind ? "<th>😵 BLIND</th>" : ""}
                     ${hasPop ? "<th>🍿 POP</th>" : ""}
                     ${hasFuse ? "<th>⏳ FUSE</th>" : ""}
-                    ${hasStartsAt ? "<th>STARTS AT</th>" : ""}
+                    ${hasStartsAt ? "<th>⚡ STARTS AT</th>" : ""}
                     ${hasPoolSize ? "<th>🔥 POOL SIZE</th>" : ""}
-                    ${hasCharge ? "<th>⚡ CHARGE</th>" : ""}
+                    ${hasCharge ? "<th>⏳ CHARGE</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>

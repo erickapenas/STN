@@ -171,9 +171,9 @@ const INDEX_DETAILS = {
   "World Ender": {
     tags: ["LEGENDARY", "BEAM"],
     summaryStats: [
-      { label: "DAMAGE",     value: "300 → 6,250" },
-      { label: "RELOAD",     value: "0.67s → 0.25s" },
-      { label: "PLACE COST", value: "$10,000" }
+      { label: "⚔️ DAMAGE",     value: "300 → 6,250" },
+      { label: "⏳ RELOAD",     value: "0.67s → 0.25s" },
+      { label: "💰 PLACE COST", value: "$10,000" }
     ],
     bullets: [
       "Holds a <strong>beam</strong> on a zombie that <strong>gets stronger the longer it fires</strong>, over <strong>8 seconds</strong>",
@@ -211,9 +211,9 @@ const INDEX_DETAILS = {
     tags: ["LEGENDARY", "BURN"],
     poolDuration: 20,
     summaryStats: [
-      { label: "DAMAGE",     value: "150 → 2,500" },
-      { label: "RELOAD",     value: "4s → 2.5s" },
-      { label: "PLACE COST", value: "$8,500" }
+      { label: "⚔️ DAMAGE",     value: "150 → 2,500" },
+      { label: "⏳ RELOAD",     value: "4s → 2.5s" },
+      { label: "💰 PLACE COST", value: "$8,500" }
     ],
     bullets: [
       "Throws a <strong>ball of lava</strong> that leaves a <strong>burning pool</strong> on the ground for <strong>20 seconds</strong>",
@@ -251,9 +251,9 @@ const INDEX_DETAILS = {
     tags: ["LEGENDARY", "COMBO"],
     combo: { every: 5, hits: 4, hitInterval: 0.14 },
     summaryStats: [
-      { label: "DAMAGE",     value: "45 → 733" },
-      { label: "RELOAD",     value: "0.62s → 0.48s" },
-      { label: "PLACE COST", value: "$100" }
+      { label: "⚔️ DAMAGE",     value: "45 → 733" },
+      { label: "⏳ RELOAD",     value: "0.62s → 0.48s" },
+      { label: "💰 PLACE COST", value: "$100" }
     ],
     bullets: [
       "Slashes zombies <strong>up close</strong> with his <strong>two katanas</strong>, one at a time",
@@ -289,9 +289,9 @@ const INDEX_DETAILS = {
     tags: ["LEGENDARY", "CHARGE"],
     superShot: { every: 5, multiplier: 2 },
     summaryStats: [
-      { label: "DAMAGE",      value: "495 → 27,500" },
-      { label: "CHARGE TIME", value: "1s → 2.9s" },
-      { label: "PLACE COST",  value: "$9,000" }
+      { label: "⚔️ DAMAGE",      value: "495 → 27,500" },
+      { label: "⏳ CHARGE TIME", value: "1s → 2.9s" },
+      { label: "💰 PLACE COST",  value: "$9,000" }
     ],
     bullets: [
       "<strong>Charges up</strong> and fires a huge shot that <strong>explodes</strong>, hurting every zombie near the target",
