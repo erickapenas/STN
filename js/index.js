@@ -93,14 +93,26 @@ const IndexUI = {
     if (details && details.summaryStats) {
       summaryStatsHtml = `
         <div class="detail-summary-stats">
-          ${details.summaryStats.map(s => `
-            <div class="detail-summary-row">
-              <span class="detail-summary-label">${s.label}</span>
-              <span class="detail-summary-val">${escapeXml(s.value)}</span>
-            </div>
-          `).join("")}
+          ${details.summaryStats.map(s => {
+            let valHtml = "";
+            if (typeof s.bars === "number") {
+              const segColor = s.barColor || tierColor || "#4ade80";
+              const segs = Array.from({ length: 5 }, (_, i) =>
+                `<span class="detail-stat-seg${i < s.bars ? " filled" : ""}" ${i < s.bars ? `style="background:${segColor};"` : ""}></span>`
+              ).join("");
+              valHtml = `<span class="detail-stat-bars" title="${s.bars}/5">${segs}</span>`;
+            } else {
+              valHtml = `<span class="detail-summary-val">${escapeXml(s.value)}</span>`;
+            }
+            return `
+              <div class="detail-summary-row">
+                <span class="detail-summary-label">${s.label}</span>
+                ${valHtml}
+              </div>
+            `;
+          }).join("")}
         </div>
-        <div class="detail-summary-sub">LEVEL 1 → MAX LEVEL</div>
+        ${details.hideLevelSub ? "" : `<div class="detail-summary-sub">LEVEL 1 → MAX LEVEL</div>`}
       `;
     } else {
       summaryStatsHtml = `
@@ -886,8 +898,13 @@ const IndexUI = {
 
     let renderedAny = false;
 
-    // Strict order: Exclusive > Divine > Legendary > Mythic > Epic > Rare > Common
-    RARITY_TIERS.forEach(tier => {
+    // Use Difficulty tiers for Zombies (Easy > Hard > Nightmare > Impossible > Crazy > Event),
+    // and strict Rarity order for Turrets/Pets/Bosses
+    const tiersToUse = (this.activeCategory === "zombies" && typeof ZOMBIE_DIFFICULTY_TIERS !== "undefined")
+      ? ZOMBIE_DIFFICULTY_TIERS
+      : RARITY_TIERS;
+
+    tiersToUse.forEach(tier => {
       const tierItems = filtered.filter(it => it.rarity === tier.key);
       if (tierItems.length === 0) return;
       renderedAny = true;
@@ -895,7 +912,9 @@ const IndexUI = {
       const block = document.createElement("div");
       block.className = "inventory-category-block";
 
-      const tierColor = getAnsiHex(userColors[tier.key] || DEFAULT_COLORS[tier.key] || "37");
+      const tierColor = this.activeCategory === "zombies"
+        ? tier.color
+        : getAnsiHex(userColors[tier.key] || DEFAULT_COLORS[tier.key] || "37");
       const title = document.createElement("div");
       title.className = "inv-cat-title";
       title.style.color = tierColor;

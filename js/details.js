@@ -1444,5 +1444,59 @@ const INDEX_DETAILS = {
     whereToGet: [
       { source: "Exclusive", chance: "<strong>Halloween Event</strong>" }
     ]
+  },
+
+  "Walker": {
+    tags: ["EASY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#4ade80" },
+      { label: "SPEED",  bars: 2, barColor: "#4ade80" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>weakest</strong> zombie in Easy",
+      "Comes in <strong>big groups</strong>"
+    ]
+  },
+
+  "Biter": {
+    tags: ["EASY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 2, barColor: "#4ade80" },
+      { label: "SPEED",  bars: 2, barColor: "#4ade80" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Walker and hits harder, but a bit <strong>slower</strong>"
+    ]
+  },
+
+  "Watcher": {
+    tags: ["EASY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 4, barColor: "#4ade80" },
+      { label: "SPEED",  bars: 1, barColor: "#4ade80" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Biter and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Guard": {
+    tags: ["EASY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 5, barColor: "#4ade80" },
+      { label: "SPEED",  bars: 1, barColor: "#4ade80" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>strongest</strong> normal zombie in Easy",
+      "Slow, but it <strong>takes a lot of hits</strong>"
+    ]
   }
 };

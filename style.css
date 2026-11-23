@@ -3282,6 +3282,27 @@ select option {
 }
 
 /* =========================================================
+   ZOMBIE / BOSS 5-SEGMENT STAT BARS IN INDEX MODAL
+   ========================================================= */
+.detail-stat-bars {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.detail-stat-seg {
+  width: 22px;
+  height: 9px;
+  border-radius: 99px;
+  background: rgba(148, 163, 184, 0.22);
+  display: inline-block;
+}
+
+.detail-stat-seg.filled {
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.35);
+}
+
+/* =========================================================
    TEXT OUTPUT HIDE MODE
    ========================================================= */
 body.hide-text-output .discord-text-element,

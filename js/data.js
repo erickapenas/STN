@@ -110,21 +110,20 @@ const CATEGORIES = [
   { id: "PET",     title: "🐾 PETS",             cssClass: "cat-pet" }
 ];
 
+const ZOMBIE_DIFFICULTY_TIERS = [
+  { key: "easy",       label: "EASY",       color: "#22c55e" },
+  { key: "hard",       label: "HARD",       color: "#ef4444" },
+  { key: "nightmare",  label: "NIGHTMARE",  color: "#a855f7" },
+  { key: "impossible", label: "IMPOSSIBLE", color: "#38bdf8" },
+  { key: "crazy",      label: "CRAZY",      color: "#facc15" },
+  { key: "event",      label: "EVENT",      color: "#f97316" }
+];
+
 const INDEX_ZOMBIES = [
-  { name: "Pumpkin Zombie",  rarity: "exclusive", icon: "🎃", trait: "Event Raider" },
-  { name: "Pilgrim Zombie",  rarity: "exclusive", icon: "🦃", trait: "Event Raider" },
-  { name: "Void Walker",     rarity: "divine",    icon: "🌌", trait: "Endgame Threat" },
-  { name: "Shadow Stalker",  rarity: "divine",    icon: "👁️", trait: "High Speed & HP" },
-  { name: "Molten Zombie",   rarity: "legendary", icon: "🔥", trait: "Fire Resistant" },
-  { name: "Frost Zombie",    rarity: "legendary", icon: "❄️", trait: "Chilling Aura" },
-  { name: "Armored Brute",   rarity: "mythic",    icon: "🛡️", trait: "Heavy Armor" },
-  { name: "Toxic Spitter",   rarity: "mythic",    icon: "☣️", trait: "Acid Damage" },
-  { name: "Exploder",        rarity: "epic",      icon: "💥", trait: "Wall Breacher" },
-  { name: "Necromancer",     rarity: "epic",      icon: "💀", trait: "Summons Minions" },
-  { name: "Speedy Zombie",   rarity: "rare",      icon: "⚡", trait: "Fast Runner" },
-  { name: "Shield Zombie",   rarity: "rare",      icon: "🪖", trait: "Frontline Tank" },
-  { name: "Normal Zombie",   rarity: "common",    icon: "🧟", trait: "Standard Horde" },
-  { name: "Crawler",         rarity: "common",    icon: "🦴", trait: "Low-Profile Swarm" }
+  { name: "Walker",  rarity: "easy", img: "images/Walker.png",  trait: "UP CLOSE" },
+  { name: "Biter",   rarity: "easy", img: "images/Biter.png",   trait: "UP CLOSE" },
+  { name: "Watcher", rarity: "easy", img: "images/Watcher.png", trait: "UP CLOSE" },
+  { name: "Guard",   rarity: "easy", img: "images/Guard.png",   trait: "UP CLOSE" }
 ];
 
 const INDEX_BOSSES = [
