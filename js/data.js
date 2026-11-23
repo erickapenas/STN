@@ -153,17 +153,19 @@ const INDEX_ZOMBIES = [
 ];
 
 const INDEX_BOSSES = [
-  { name: "Headless Horseman", rarity: "exclusive", icon: "🎃", trait: "Limited Event Boss" },
-  { name: "Turkey Titan",      rarity: "exclusive", icon: "🦃", trait: "Thanksgiving Boss" },
-  { name: "Void Overlord",     rarity: "divine",    icon: "👑", trait: "Impossible Final Boss" },
-  { name: "Golden Zombie King",rarity: "divine",    icon: "🏆", trait: "Royal Crown Boss" },
-  { name: "Inferno Titan",     rarity: "legendary", icon: "🌋", trait: "Molten Siege Boss" },
-  { name: "Frost Colossus",    rarity: "legendary", icon: "🧊", trait: "Blizzard Siege Boss" },
-  { name: "Mecha Brute",       rarity: "mythic",    icon: "🤖", trait: "Armored Juggernaut" },
-  { name: "Plague Lord",       rarity: "mythic",    icon: "🧪", trait: "Toxic Area Boss" },
-  { name: "Demolition Boss",   rarity: "epic",      icon: "💣", trait: "Heavy Wall Breaker" },
-  { name: "Giant Zombie",      rarity: "rare",      icon: "🗿", trait: "Mid-Wave Mini-Boss" },
-  { name: "Zombie Leader",     rarity: "common",    icon: "⚔️", trait: "Early Wave Boss" }
+  { name: "Iron Fist",           rarity: "easy",      img: "images/BossIronFist.png",           trait: "Wave 5" },
+  { name: "Rotten Brute",        rarity: "easy",      img: "images/BossRottenBrute.png",        trait: "Wave 10" },
+  { name: "Golden King",         rarity: "easy",      img: "images/BossGoldenKing.png",         trait: "Wave 15 • Final Boss" },
+  { name: "Blood Destroyer",     rarity: "hard",      img: "images/BossBloodDestroyer.png",     trait: "Wave 5 • Clans" },
+  { name: "Thorn Guardian",      rarity: "hard",      img: "images/BossThornGuardian.png",      trait: "Wave 10 • Clans" },
+  { name: "Grave Mender",        rarity: "hard",      img: "images/BossGraveMender.png",        trait: "Wave 15 • Heal" },
+  { name: "Cursed Priest",       rarity: "hard",      img: "images/BossCursedPriest.png",       trait: "Wave 20 • Shield" },
+  { name: "Thorn King",          rarity: "hard",      img: "images/BossThornKing.png",          trait: "Wave 25 • Final Boss" },
+  { name: "Rift Stalker",        rarity: "nightmare", img: "images/BossRiftStalker.png",        trait: "Wave 5 • Fast" },
+  { name: "Plague Mender",       rarity: "nightmare", img: "images/BossPlagueMender.png",       trait: "Wave 10 • Heal" },
+  { name: "Crimson Herald",      rarity: "nightmare", img: "images/BossCrimsonHerald.png",      trait: "Wave 15 • Rage" },
+  { name: "Crystal King",        rarity: "nightmare", img: "images/BossCrystalKing.png",        trait: "Wave 20 • Crystal Cage" },
+  { name: "Nightmare Sovereign", rarity: "nightmare", img: "images/BossNightmareSovereign.png", trait: "Wave 25 • Final Boss" }
 ];
 
 const TOWER_PLACEMENT_LIMITS = {

@@ -186,6 +186,26 @@ const IndexUI = {
         `;
       }
 
+      // Boss Ability Card (when bossAbility is present)
+      if (details.bossAbility) {
+        const ab = details.bossAbility;
+        const whenHtml = Array.isArray(ab.when) && ab.when.length > 0
+          ? `<div class="boss-ability-subhead" style="color:${tierColor};">WHEN</div><ul class="detail-bullets">${ab.when.map(w => `<li>${w}</li>`).join("")}</ul>`
+          : "";
+        const stopHtml = Array.isArray(ab.howToStop) && ab.howToStop.length > 0
+          ? `<div class="boss-ability-subhead" style="color:#4ade80;">HOW TO STOP IT</div><ul class="detail-bullets">${ab.howToStop.map(s => `<li>${s}</li>`).join("")}</ul>`
+          : "";
+        sectionsHtml += `
+          <div class="detail-section boss-ability-box" style="border-color:${tierColor}88;">
+            <div class="boss-ability-eyebrow" style="color:${tierColor};">ABILITY</div>
+            <div class="boss-ability-title">${escapeXml(ab.name)}</div>
+            ${Array.isArray(ab.bullets) && ab.bullets.length > 0 ? `<ul class="detail-bullets">${ab.bullets.map(b => `<li>${b}</li>`).join("")}</ul>` : ""}
+            ${whenHtml}
+            ${stopHtml}
+          </div>
+        `;
+      }
+
       // Key Numbers (injecting TOTAL DPS, TOTAL DPS (BOSS) or RAPID FIRE, and COINS TO MAX IT)
       const keyNumbersList = [...(details.keyNumbers || [])];
       if (maxLv && maxLv.dps > 0) {
@@ -898,9 +918,10 @@ const IndexUI = {
 
     let renderedAny = false;
 
-    // Use Difficulty tiers for Zombies (Easy > Hard > Nightmare > Impossible > Crazy > Event),
-    // and strict Rarity order for Turrets/Pets/Bosses
-    const tiersToUse = (this.activeCategory === "zombies" && typeof ZOMBIE_DIFFICULTY_TIERS !== "undefined")
+    // Use Difficulty tiers for Zombies & Bosses (Easy > Hard > Nightmare > Impossible > Crazy > Clans Apocalypse > Harvest Feast),
+    // and strict Rarity order for Turrets/Pets
+    const isDifficultyCat = this.activeCategory === "zombies" || this.activeCategory === "bosses";
+    const tiersToUse = (isDifficultyCat && typeof ZOMBIE_DIFFICULTY_TIERS !== "undefined")
       ? ZOMBIE_DIFFICULTY_TIERS
       : RARITY_TIERS;
 
@@ -912,7 +933,7 @@ const IndexUI = {
       const block = document.createElement("div");
       block.className = "inventory-category-block";
 
-      const tierColor = this.activeCategory === "zombies"
+      const tierColor = isDifficultyCat
         ? tier.color
         : getAnsiHex(userColors[tier.key] || DEFAULT_COLORS[tier.key] || "37");
       const title = document.createElement("div");

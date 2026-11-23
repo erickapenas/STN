@@ -1835,5 +1835,251 @@ const INDEX_DETAILS = {
       "Slow, but it <strong>takes a lot of hits</strong>",
       "The <strong>Turkey Tyrant</strong> calls more of them with his bell"
     ]
+  },
+
+  "Iron Fist": {
+    tags: ["EASY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 5" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "The <strong>first boss</strong> you meet",
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Rotten Brute": {
+    tags: ["EASY", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 10" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Golden King": {
+    tags: ["EASY", "FINAL BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 15" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "The <strong>final boss</strong> of Easy",
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Blood Destroyer": {
+    tags: ["HARD", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 5" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Thorn Guardian": {
+    tags: ["HARD", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 10" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Grave Mender": {
+    tags: ["HARD", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 15" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Heal",
+      bullets: [
+        "Kneels and raises a <strong>healing circle</strong> around himself for about 7 seconds",
+        "Every zombie inside it <strong>keeps getting health back</strong>, small zombies fast and bosses slowly"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>3 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "<strong>Kill him first</strong>, or kill the zombies in his circle faster than he heals them"
+      ]
+    }
+  },
+
+  "Cursed Priest": {
+    tags: ["HARD", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 20" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Shield",
+      bullets: [
+        "Kneels and raises a <strong>blue circle</strong> around himself for about 7 seconds",
+        "Every zombie inside it <strong>takes 40% less damage</strong>"
+      ],
+      when: [
+        "After his <strong>2nd hit</strong> on your door, then after every <strong>3 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "The shield only lasts while the circle is up"
+      ]
+    }
+  },
+
+  "Thorn King": {
+    tags: ["HARD", "FINAL BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 25" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "The <strong>final boss</strong> of Hard",
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Rift Stalker": {
+    tags: ["NIGHTMARE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 5" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "<strong>Fast</strong> for a boss",
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
+  },
+
+  "Plague Mender": {
+    tags: ["NIGHTMARE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 10" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Heal",
+      bullets: [
+        "Kneels and raises a <strong>healing circle</strong> around himself for about 7 seconds",
+        "Every zombie inside it <strong>keeps getting health back</strong>, small zombies fast and bosses slowly"
+      ],
+      when: [
+        "After his <strong>1st hit</strong> on your door, then after every <strong>2 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "<strong>Kill him first</strong>, or kill the zombies in his circle faster than he heals them"
+      ]
+    }
+  },
+
+  "Crimson Herald": {
+    tags: ["NIGHTMARE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 15" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Rage",
+      bullets: [
+        "Kneels and raises a <strong>red circle</strong> around himself for about 7 seconds",
+        "Every zombie inside it <strong>deals 40% more damage</strong> to your door"
+      ],
+      when: [
+        "After his <strong>1st hit</strong> on your door, then after every <strong>2 hits</strong>"
+      ],
+      howToStop: [
+        "Nothing blocks it",
+        "The boost only lasts while the circle is up"
+      ]
+    }
+  },
+
+  "Crystal King": {
+    tags: ["NIGHTMARE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 20" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "Crystal Cage",
+      bullets: [
+        "Floats up and fires <strong>6 crystals</strong>, one after another, each at a random tower",
+        "A tower that gets hit <strong>cannot shoot for 15 seconds</strong>"
+      ],
+      when: [
+        "After his <strong>3rd hit</strong> on your door, then after every <strong>10 hits</strong>"
+      ],
+      howToStop: [
+        "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+        "A tower with a <strong>Protector Base</strong> shield is not affected"
+      ]
+    }
+  },
+
+  "Nightmare Sovereign": {
+    tags: ["NIGHTMARE", "FINAL BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "Wave 25" },
+      { label: "ALSO IN",    value: "CLANS" }
+    ],
+    bossAbility: {
+      name: "No special ability",
+      bullets: [
+        "The <strong>final boss</strong> of Nightmare",
+        "More of him arrive on every boss wave after his first",
+        "He walks up to your door and smashes it",
+        "He has <strong>far more health</strong> than a normal zombie and <strong>hits much harder</strong>"
+      ]
+    }
   }
 };
