@@ -333,6 +333,137 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Toxic Turret": {
+    tags: ["MYTHIC", "POISON", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,               value: "18.3 → 194.5" },
+      { label: `${ICON_RELOAD} RELOAD`,            value: "0.8s → 0.18s" },
+      { label: `${ICON_RANGE} RANGE`,              value: "35 → 54" },
+      { label: `${ICON_POISON} 1 STACK / SEC`,     value: "3 → 30" },
+      { label: `${ICON_POISON_SPLASH} SPLASH`,     value: "8 → 16" },
+      { label: "💰 PLACE COST",                    value: "$5,000" }
+    ],
+    bullets: [
+      "Every hit adds <strong>a stack of poison</strong> that hurts the zombie for <strong>60 seconds</strong>, and stacks have <strong>no limit</strong>",
+      "Each shot also <strong>splashes weaker poison</strong> on zombies nearby"
+    ],
+    keyNumbers: [
+      { label: "EVERY HIT",       value: "Adds <strong>1 poison stack</strong>. Stacks have <strong>no limit</strong>" },
+      { label: `${ICON_POISON} 1 STACK DEALS`, value: "<strong>3 → 30</strong> damage a second for <strong>60 seconds</strong>" },
+      { label: `${ICON_POISON_SPLASH} SPLASH`, value: "Up to <strong>4 zombies</strong> within <strong>8 → 16</strong> studs get a weaker stack" },
+      { label: "A SPLASH STACK IS", value: "<strong>15% → 25%</strong> of a full one" },
+      { label: "CASH TO MAX IT",  value: "<strong>$1,062,800</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>10</strong> per player" }
+    ],
+    evolution: {
+      name: "Pandemic",
+      description: "Every 2 seconds its poison jumps from each poisoned zombie to another one",
+      quest: "Evolution Quest: 22,500 zombie kills with a maxed Toxic Turret"
+    },
+    levels: [
+      { level: 1, cashCost: 5000,   damage: "18.3",  reload: "0.8s",  range: "35", unlockCoins: 0,      poisonStack: "3",  splashStack: "15%", splashSize: "8"  },
+      { level: 2, cashCost: 9800,   damage: "41.7",  reload: "0.75s", range: "38", unlockCoins: 0,      poisonStack: "6",  splashStack: "16%", splashSize: "9"  },
+      { level: 3, cashCost: 19000,  damage: "72",    reload: "0.7s",  range: "40", unlockCoins: 300,    poisonStack: "11", splashStack: "18%", splashSize: "10" },
+      { level: 4, cashCost: 38000,  damage: "105.5", reload: "0.6s",  range: "43", unlockCoins: 1000,   poisonStack: "16", splashStack: "19%", splashSize: "11" },
+      { level: 5, cashCost: 74000,  damage: "141.5", reload: "0.5s",  range: "46", unlockCoins: 3400,   poisonStack: "21", splashStack: "21%", splashSize: "12" },
+      { level: 6, cashCost: 145000, damage: "100.5", reload: "0.23s", range: "49", unlockCoins: 10700,  poisonStack: "15", splashStack: "22%", splashSize: "13" },
+      { level: 7, cashCost: 284000, damage: "139.5", reload: "0.2s",  range: "51", unlockCoins: 34000,  poisonStack: "21", splashStack: "24%", splashSize: "14" },
+      { level: 8, cashCost: 488000, damage: "194.5", reload: "0.18s", range: "54", unlockCoins: 100600, poisonStack: "30", splashStack: "25%", splashSize: "16" }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.07%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>1.48%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>3.21%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>3.7%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>18.64%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>17.16%</strong> per chest" }
+    ]
+  },
+
+  "Fire Spitter": {
+    tags: ["MYTHIC", "PIERCE"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,     value: "140 → 1,000" },
+      { label: `${ICON_RELOAD} RELOAD`,  value: "0.25s" },
+      { label: `${ICON_RANGE} RANGE`,    value: "25" },
+      { label: `${ICON_NOZZLE} NOZZLES`, value: "1 → 8" },
+      { label: "💰 PLACE COST",          value: "$4,500" }
+    ],
+    bullets: [
+      "Spins nonstop and shoots fire from <strong>each nozzle</strong>, burning every zombie the flames hit"
+    ],
+    keyNumbers: [
+      { label: `${ICON_NOZZLE} NOZZLES`, value: "<strong>1 → 8</strong>, one more every level" },
+      { label: "BURNS",            value: "Every <strong>0.25s</strong>, <strong>every zombie</strong> a flame passes through" },
+      { label: `${ICON_RANGE} RANGE`, value: "<strong>25 studs</strong> at every level" },
+      { label: "SPIN",             value: "One full turn every <strong>6 seconds</strong>" },
+      { label: "FIRES",            value: "While a zombie is in range, and <strong>0.5s</strong> after" },
+      { label: "CASH TO MAX IT",   value: "<strong>$1,019,500</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",  value: "<strong>10</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 4500,   damage: "140",   reload: "0.25s", range: "25", nozzles: "1", unlockCoins: 0 },
+      { level: 2, cashCost: 9000,   damage: "210",   reload: "0.25s", range: "25", nozzles: "2", unlockCoins: 0 },
+      { level: 3, cashCost: 18000,  damage: "300",   reload: "0.25s", range: "25", nozzles: "3", unlockCoins: 300 },
+      { level: 4, cashCost: 36000,  damage: "420",   reload: "0.25s", range: "25", nozzles: "4", unlockCoins: 1000 },
+      { level: 5, cashCost: 72000,  damage: "560",   reload: "0.25s", range: "25", nozzles: "5", unlockCoins: 3400 },
+      { level: 6, cashCost: 140000, damage: "720",   reload: "0.25s", range: "25", nozzles: "6", unlockCoins: 10700 },
+      { level: 7, cashCost: 270000, damage: "880",   reload: "0.25s", range: "25", nozzles: "7", unlockCoins: 34000 },
+      { level: 8, cashCost: 470000, damage: "1,000", reload: "0.25s", range: "25", nozzles: "8", unlockCoins: 100600 }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.08%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>1.7%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>3.69%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>4.26%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>21.44%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>19.74%</strong> per chest" }
+    ]
+  },
+
+  "Ballista": {
+    tags: ["MYTHIC", "PIERCE", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,         value: "380 → 25,000" },
+      { label: `${ICON_RELOAD} RELOAD`,      value: "5s → 6.25s" },
+      { label: `${ICON_RANGE} RANGE`,        value: "36 → 64" },
+      { label: `${ICON_CHARGE_CYAN} CHARGE`, value: "3s → 5.6s" },
+      { label: "💰 PLACE COST",              value: "$3,000" }
+    ],
+    bullets: [
+      "Slowly charges a <strong>giant arrow</strong> and fires it in a straight line, hurting <strong>every zombie it passes through</strong> until it leaves the map"
+    ],
+    keyNumbers: [
+      { label: "HITS",             value: "<strong>Every zombie</strong> the arrow flies through, no limit" },
+      { label: `${ICON_CHARGE_CYAN} CHARGE`, value: "<strong>3s → 5.6s</strong> of every reload" },
+      { label: "NOTHING IN RANGE", value: "It stays charged and fires when a zombie walks in" },
+      { label: "CASH TO MAX IT",   value: "<strong>$930,500</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",  value: "<strong>8</strong> per player" }
+    ],
+    evolution: {
+      name: "Overdraw",
+      description: "Keeps charging with no limit while no zombie is in range, and the next arrow hits that much harder",
+      quest: "Evolution Quest: 22,500 zombie kills with a maxed Ballista"
+    },
+    levels: [
+      { level: 1, cashCost: 3000,   damage: "380",    reload: "5s",    range: "36", charge: "3s",   unlockCoins: 0 },
+      { level: 2, cashCost: 6200,   damage: "720",    reload: "4.8s",  range: "40", charge: "3s",   unlockCoins: 0 },
+      { level: 3, cashCost: 12800,  damage: "1,365",  reload: "4.6s",  range: "44", charge: "3s",   unlockCoins: 300 },
+      { level: 4, cashCost: 26500,  damage: "2,410",  reload: "4.4s",  range: "48", charge: "3s",   unlockCoins: 1000 },
+      { level: 5, cashCost: 55000,  damage: "4,195",  reload: "4.2s",  range: "52", charge: "3s",   unlockCoins: 3400 },
+      { level: 6, cashCost: 113000, damage: "7,120",  reload: "4s",    range: "56", charge: "3s",   unlockCoins: 10700 },
+      { level: 7, cashCost: 234000, damage: "11,460", reload: "3.8s",  range: "60", charge: "3s",   unlockCoins: 34000 },
+      { level: 8, cashCost: 480000, damage: "25,000", reload: "6.25s", range: "64", charge: "5.6s", unlockCoins: 100600 }
+    ],
+    whereToGet: [
+      { source: "Epic Chest",      chance: "<strong>1.33%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>2.89%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>3.33%</strong> per chest" },
+      { source: "Divine Chest",    chance: "<strong>16.78%</strong> per chest" },
+      { source: "Pumpkin Chest",   chance: "<strong>15.44%</strong> per chest" }
+    ]
+  },
+
   "Bank": {
     tags: ["DIVINE", "ECONOMY"],
     isEconomy: true,

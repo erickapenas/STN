@@ -202,9 +202,9 @@ const TOWER_PLACEMENT_LIMITS = {
   "Railgun": 7,
   "Lava Launcher": 6,
   "Ice Turret": 8,
-  "Toxic Turret": 4,
-  "Fire Spitter": 5,
-  "Ballista": 5,
+  "Toxic Turret": 10,
+  "Fire Spitter": 10,
+  "Ballista": 8,
   "Pie Launcher": 6,
   "Rocketeer": 5,
   "Tesla": 5,
@@ -239,6 +239,9 @@ const ICON_BEAM_CHARGE = `<img src="images/icon-beam-charge.png" class="stat-ico
 const ICON_POOL_SIZE = `<img src="images/icon-pool-size.png" class="stat-icon-img" alt="">`;
 const ICON_COMBO = `<img src="images/icon-combo.png" class="stat-icon-img" alt="">`;
 const ICON_CHARGE_CYAN = `<img src="images/icon-charge-cyan.png" class="stat-icon-img" alt="">`;
+const ICON_POISON = `<img src="images/icon-poison.png" class="stat-icon-img" alt="">`;
+const ICON_POISON_SPLASH = `<img src="images/icon-poison-splash.png" class="stat-icon-img" alt="">`;
+const ICON_NOZZLE = `<img src="images/icon-nozzle.png" class="stat-icon-img" alt="">`;
 
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {

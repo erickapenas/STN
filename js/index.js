@@ -155,7 +155,9 @@ const IndexUI = {
       const hasStartsAt = levels.some(lv => lv.startsAt !== undefined);
       const hasPoolSize = levels.some(lv => lv.poolSize !== undefined);
       const hasCharge = levels.some(lv => lv.charge !== undefined);
+      const hasNozzles = levels.some(lv => lv.nozzles !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
+      const hasPoisonTable = levels.some(lv => lv.poisonStack !== undefined);
 
       const isSlam = !!details.isSlam;
       const isGolem = !!details.isGolem;
@@ -681,7 +683,8 @@ const IndexUI = {
           (hasFuse ? 1 : 0) +
           (hasStartsAt ? 1 : 0) +
           (hasPoolSize ? 1 : 0) +
-          (hasCharge ? 1 : 0);
+          (hasCharge ? 1 : 0) +
+          (hasNozzles ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -710,6 +713,7 @@ const IndexUI = {
                     ${hasStartsAt ? `<th>${ICON_DMG_PURPLE} STARTS AT</th>` : ""}
                     ${hasPoolSize ? `<th>${ICON_POOL_SIZE} POOL SIZE</th>` : ""}
                     ${hasCharge ? `<th>${ICON_CHARGE_CYAN} CHARGE</th>` : ""}
+                    ${hasNozzles ? `<th>${ICON_NOZZLE} NOZZLES</th>` : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -733,6 +737,7 @@ const IndexUI = {
                       ${hasStartsAt ? `<td style="color:#c084fc;">${escapeXml(lv.startsAt)}</td>` : ""}
                       ${hasPoolSize ? `<td style="color:#fb923c;">${escapeXml(lv.poolSize)}</td>` : ""}
                       ${hasCharge ? `<td style="color:#38bdf8;">${escapeXml(lv.charge)}</td>` : ""}
+                      ${hasNozzles ? `<td style="color:#fb923c;">${escapeXml(lv.nozzles)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
@@ -857,6 +862,37 @@ const IndexUI = {
                       <td class="col-lvl">${lv.level}</td>
                       <td>${lv.barrels}</td>
                       <td style="color:#fbbf24;">${escapeXml(lv.rfCooldown)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Poison by Level Table (when available)
+      if (hasPoisonTable) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-title">${ICON_POISON} POISON BY LEVEL</div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>${ICON_POISON} 1 STACK / SEC</th>
+                    <th>SPLASH STACK</th>
+                    <th>${ICON_POISON_SPLASH} SPLASH SIZE</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td style="color:#4ade80;">${escapeXml(lv.poisonStack)}</td>
+                      <td>${escapeXml(lv.splashStack)}</td>
+                      <td style="color:#86efac;">${escapeXml(lv.splashSize)}</td>
                     </tr>
                   `).join("")}
                 </tbody>
