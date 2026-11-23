@@ -111,24 +111,40 @@ const CATEGORIES = [
 ];
 
 const ZOMBIE_DIFFICULTY_TIERS = [
-  { key: "easy",       label: "EASY",       color: "#22c55e" },
-  { key: "hard",       label: "HARD",       color: "#ef4444" },
-  { key: "nightmare",  label: "NIGHTMARE",  color: "#a855f7" },
-  { key: "impossible", label: "IMPOSSIBLE", color: "#38bdf8" },
-  { key: "crazy",      label: "CRAZY",      color: "#facc15" },
-  { key: "event",      label: "EVENT",      color: "#f97316" }
+  { key: "easy",            label: "EASY",             color: "#22c55e" },
+  { key: "hard",            label: "HARD",             color: "#ef4444" },
+  { key: "nightmare",       label: "NIGHTMARE",        color: "#a855f7" },
+  { key: "impossible",      label: "IMPOSSIBLE",       color: "#f8fafc" },
+  { key: "crazy",           label: "CRAZY",            color: "#f97316" },
+  { key: "clans_apocalypse",label: "CLANS APOCALYPSE", color: "#10b981" },
+  { key: "harvest_feast",   label: "HARVEST FEAST",    color: "#f59e0b" }
 ];
 
 const INDEX_ZOMBIES = [
-  { name: "Walker",  rarity: "easy", img: "images/Walker.png",  trait: "UP CLOSE" },
-  { name: "Biter",   rarity: "easy", img: "images/Biter.png",   trait: "UP CLOSE" },
-  { name: "Watcher", rarity: "easy", img: "images/Watcher.png", trait: "UP CLOSE" },
-  { name: "Guard",   rarity: "easy", img: "images/Guard.png",   trait: "UP CLOSE" },
-  { name: "Ghoul",   rarity: "hard", img: "images/Ghoul.png",   trait: "UP CLOSE" },
-  { name: "Mummy",   rarity: "hard", img: "images/Mummy.png",   trait: "UP CLOSE" },
-  { name: "Ripper",  rarity: "hard", img: "images/Ripper.png",  trait: "UP CLOSE" },
-  { name: "Raider",  rarity: "hard", img: "images/Raider.png",  trait: "UP CLOSE" },
-  { name: "Thrower", rarity: "hard", img: "images/Thrower.png", trait: "FROM FAR AWAY" }
+  { name: "Walker",        rarity: "easy",       img: "images/Walker.png",       trait: "UP CLOSE" },
+  { name: "Biter",         rarity: "easy",       img: "images/Biter.png",        trait: "UP CLOSE" },
+  { name: "Watcher",       rarity: "easy",       img: "images/Watcher.png",      trait: "UP CLOSE" },
+  { name: "Guard",         rarity: "easy",       img: "images/Guard.png",        trait: "UP CLOSE" },
+  { name: "Ghoul",         rarity: "hard",       img: "images/Ghoul.png",        trait: "UP CLOSE" },
+  { name: "Mummy",         rarity: "hard",       img: "images/Mummy.png",        trait: "UP CLOSE" },
+  { name: "Ripper",        rarity: "hard",       img: "images/Ripper.png",       trait: "UP CLOSE" },
+  { name: "Raider",        rarity: "hard",       img: "images/Raider.png",       trait: "UP CLOSE" },
+  { name: "Thrower",       rarity: "hard",       img: "images/Thrower.png",      trait: "FROM FAR AWAY" },
+  { name: "Shade",         rarity: "nightmare",  img: "images/Shade.png",        trait: "UP CLOSE" },
+  { name: "Shard",         rarity: "nightmare",  img: "images/Shard.png",        trait: "UP CLOSE" },
+  { name: "Golem",         rarity: "nightmare",  img: "images/GolemZombie.png",  trait: "UP CLOSE" },
+  { name: "Slayer",        rarity: "nightmare",  img: "images/Slayer.png",       trait: "UP CLOSE" },
+  { name: "Caster",        rarity: "nightmare",  img: "images/Caster.png",       trait: "FROM FAR AWAY" },
+  { name: "Wraith",        rarity: "nightmare",  img: "images/Wraith.png",       trait: "UP CLOSE" },
+  { name: "Husk",          rarity: "impossible", img: "images/Husk.png",         trait: "UP CLOSE" },
+  { name: "Chainbound",    rarity: "impossible", img: "images/Chainbound.png",   trait: "UP CLOSE" },
+  { name: "Dread Guard",   rarity: "impossible", img: "images/DreadGuard.png",   trait: "UP CLOSE" },
+  { name: "Cinder",        rarity: "crazy",      img: "images/Cinder.png",       trait: "UP CLOSE" },
+  { name: "Stitch",        rarity: "crazy",      img: "images/Stitch.png",       trait: "UP CLOSE" },
+  { name: "Conehead",      rarity: "crazy",      img: "images/Conehead.png",     trait: "UP CLOSE" },
+  { name: "Rockback",      rarity: "crazy",      img: "images/Rockback.png",     trait: "UP CLOSE" },
+  { name: "Torch",         rarity: "crazy",      img: "images/Torch.png",        trait: "UP CLOSE" },
+  { name: "Cinder Knight", rarity: "crazy",      img: "images/CinderKnight.png", trait: "UP CLOSE" }
 ];
 
 const INDEX_BOSSES = [

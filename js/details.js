@@ -1565,5 +1565,206 @@ const INDEX_DETAILS = {
       "Stays back and <strong>hits your door from far away</strong>",
       "The <strong>strongest</strong> normal zombie in Hard"
     ]
+  },
+
+  "Shade": {
+    tags: ["NIGHTMARE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#a855f7" },
+      { label: "SPEED",  bars: 5, barColor: "#a855f7" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>weakest</strong> zombie in Nightmare, and the <strong>fastest</strong>",
+      "Comes in <strong>big groups</strong>"
+    ]
+  },
+
+  "Shard": {
+    tags: ["NIGHTMARE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 2, barColor: "#a855f7" },
+      { label: "SPEED",  bars: 5, barColor: "#a855f7" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Shade and hits harder, but a bit <strong>slower</strong>"
+    ]
+  },
+
+  "Golem": {
+    tags: ["NIGHTMARE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 3, barColor: "#a855f7" },
+      { label: "SPEED",  bars: 5, barColor: "#a855f7" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Shard and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Slayer": {
+    tags: ["NIGHTMARE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 3, barColor: "#a855f7" },
+      { label: "SPEED",  bars: 4, barColor: "#a855f7" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Golem and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Caster": {
+    tags: ["NIGHTMARE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 4, barColor: "#a855f7" },
+      { label: "SPEED",  bars: 3, barColor: "#a855f7" },
+      { label: "ATTACK", value: "FROM FAR AWAY" }
+    ],
+    bullets: [
+      "Stays back and <strong>hits your door from far away</strong>"
+    ]
+  },
+
+  "Wraith": {
+    tags: ["NIGHTMARE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 5, barColor: "#a855f7" },
+      { label: "SPEED",  bars: 2, barColor: "#a855f7" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>strongest</strong> normal zombie in Nightmare",
+      "Slow, but it <strong>takes a lot of hits</strong>"
+    ]
+  },
+
+  "Husk": {
+    tags: ["IMPOSSIBLE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#f8fafc" },
+      { label: "SPEED",  bars: 3, barColor: "#f8fafc" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>weakest</strong> zombie in Impossible, and the <strong>fastest</strong>",
+      "Comes in <strong>big groups</strong>"
+    ]
+  },
+
+  "Chainbound": {
+    tags: ["IMPOSSIBLE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 3, barColor: "#f8fafc" },
+      { label: "SPEED",  bars: 3, barColor: "#f8fafc" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Husk and hits harder, but a bit <strong>slower</strong>"
+    ]
+  },
+
+  "Dread Guard": {
+    tags: ["IMPOSSIBLE", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 5, barColor: "#f8fafc" },
+      { label: "SPEED",  bars: 1, barColor: "#f8fafc" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>strongest</strong> normal zombie in Impossible",
+      "Slow, but it <strong>takes a lot of hits</strong>"
+    ]
+  },
+
+  "Cinder": {
+    tags: ["CRAZY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 1, barColor: "#f97316" },
+      { label: "SPEED",  bars: 3, barColor: "#f97316" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>weakest</strong> zombie in Crazy",
+      "Comes in <strong>big groups</strong>"
+    ]
+  },
+
+  "Stitch": {
+    tags: ["CRAZY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 2, barColor: "#f97316" },
+      { label: "SPEED",  bars: 3, barColor: "#f97316" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Cinder and hits harder, and a bit <strong>faster</strong> too"
+    ]
+  },
+
+  "Conehead": {
+    tags: ["CRAZY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 3, barColor: "#f97316" },
+      { label: "SPEED",  bars: 3, barColor: "#f97316" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Stitch and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Rockback": {
+    tags: ["CRAZY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 3, barColor: "#f97316" },
+      { label: "SPEED",  bars: 2, barColor: "#f97316" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "<strong>Tougher</strong> than the Conehead and hits harder, but <strong>slower</strong>"
+    ]
+  },
+
+  "Torch": {
+    tags: ["CRAZY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 4, barColor: "#f97316" },
+      { label: "SPEED",  bars: 4, barColor: "#f97316" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>fastest</strong> zombie in Crazy, and <strong>tougher</strong> than the Rockback"
+    ]
+  },
+
+  "Cinder Knight": {
+    tags: ["CRAZY", "ZOMBIE"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "HEALTH", bars: 5, barColor: "#f97316" },
+      { label: "SPEED",  bars: 2, barColor: "#f97316" },
+      { label: "ATTACK", value: "UP CLOSE" }
+    ],
+    bullets: [
+      "The <strong>strongest</strong> normal zombie in Crazy",
+      "It <strong>takes a lot of hits</strong>"
+    ]
   }
 };
