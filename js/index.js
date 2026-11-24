@@ -156,6 +156,7 @@ const IndexUI = {
       const hasPoolSize = levels.some(lv => lv.poolSize !== undefined);
       const hasCharge = levels.some(lv => lv.charge !== undefined);
       const hasNozzles = levels.some(lv => lv.nozzles !== undefined);
+      const hasDrones = levels.some(lv => lv.drones !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
       const hasPoisonTable = levels.some(lv => lv.poisonStack !== undefined);
 
@@ -172,7 +173,8 @@ const IndexUI = {
       const levelsWithDps = levels.map(lv => {
         const dmg = parseNum(lv.damage);
         const rel = parseNum(lv.reload);
-        let dps = rel > 0 ? (dmg * poolMult) / rel : 0;
+        const droneMult = lv.drones ? (Number(lv.drones) || 1) : 1;
+        let dps = rel > 0 ? (dmg * poolMult * droneMult) / rel : 0;
         if (dps > 0 && comboCfg && comboCfg.every > 0 && comboCfg.hits > 0) {
           const cycleHits = comboCfg.every + comboCfg.hits;
           const cycleTime = comboCfg.every * rel + comboCfg.hits * (comboCfg.hitInterval || 0.14);
@@ -684,12 +686,13 @@ const IndexUI = {
           (hasStartsAt ? 1 : 0) +
           (hasPoolSize ? 1 : 0) +
           (hasCharge ? 1 : 0) +
-          (hasNozzles ? 1 : 0);
+          (hasNozzles ? 1 : 0) +
+          (hasDrones ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
-              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-title">${hasDrones ? "DRONES BY LEVEL" : "EVERY LEVEL"}</div>
               <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
             </div>
             <div class="detail-table-wrap">
@@ -698,8 +701,9 @@ const IndexUI = {
                   <tr>
                     <th>LVL</th>
                     <th>CASH COST</th>
+                    ${hasDrones ? `<th>${ICON_DRONE} DRONES</th>` : ""}
                     <th>DAMAGE</th>
-                    <th>RELOAD</th>
+                    <th>${hasDrones ? "FIRES EVERY" : "RELOAD"}</th>
                     ${showDpsCols ? "<th>TOTAL DPS</th>" : ""}
                     ${showDpsCols && hasBossBonus ? "<th>BOSS DPS</th>" : ""}
                     ${showDpsCols && hasRapidFire ? `<th>RAPID FIRE (${rfConfig.duration}s)</th>` : ""}
@@ -722,6 +726,7 @@ const IndexUI = {
                     <tr>
                       <td class="col-lvl">${lv.level}</td>
                       <td>$${lv.cashCost.toLocaleString()}</td>
+                      ${hasDrones ? `<td style="color:#f87171; font-weight:800;">${lv.drones}</td>` : ""}
                       <td>${escapeXml(lv.damage)}</td>
                       <td>${escapeXml(lv.reload)}</td>
                       ${showDpsCols ? `<td style="color:#60a5fa;">${formatDps(lv.dps)}</td>` : ""}

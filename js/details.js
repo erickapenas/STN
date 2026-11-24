@@ -168,6 +168,42 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Drone Hangar": {
+    tags: ["DIVINE", "DRONES"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,       value: "1,000 → 7,500" },
+      { label: `${ICON_DRONE} DRONES`,     value: "1 → 4" },
+      { label: `${ICON_RELOAD} FIRES EVERY`, value: "0.4s → 0.2s" },
+      { label: `${ICON_RANGE} RANGE`,      value: "∞" },
+      { label: "💰 PLACE COST",            value: "$25,000" }
+    ],
+    bullets: [
+      "Launches <strong>drones</strong> that fly to zombies <strong>anywhere on the map</strong>, hover over them and <strong>gun them down</strong>, with <strong>more drones</strong> as it levels up"
+    ],
+    keyNumbers: [
+      { label: `${ICON_DRONE} DRONES`, value: "<strong>1 → 4</strong>, flying to zombies <strong>anywhere on the map</strong>" },
+      { label: "EVERY DRONE",          value: "<strong>1,000 → 7,500</strong> damage every <strong>0.4s → 0.2s</strong>" },
+      { label: "TARGETS",              value: "Each drone takes <strong>its own zombie</strong> first" },
+      { label: "GET IT FROM",          value: "The <strong>Thanksgiving Event</strong> tower crate" },
+      { label: "CASH TO MAX IT",       value: "<strong>$7,268,000</strong> in a match, for all <strong>9 levels</strong>" },
+      { label: "PLACEMENT LIMIT",      value: "<strong>3</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 25000,   drones: 1, damage: "1,000", reload: "0.4s",  range: "∞", unlockCoins: 0 },
+      { level: 2, cashCost: 36000,   drones: 1, damage: "1,900", reload: "0.38s", range: "∞", unlockCoins: 25000 },
+      { level: 3, cashCost: 72000,   drones: 1, damage: "3,000", reload: "0.36s", range: "∞", unlockCoins: 60000 },
+      { level: 4, cashCost: 145000,  drones: 2, damage: "2,500", reload: "0.34s", range: "∞", unlockCoins: 130000 },
+      { level: 5, cashCost: 290000,  drones: 2, damage: "3,900", reload: "0.31s", range: "∞", unlockCoins: 260000 },
+      { level: 6, cashCost: 550000,  drones: 3, damage: "4,200", reload: "0.28s", range: "∞", unlockCoins: 450000 },
+      { level: 7, cashCost: 975000,  drones: 3, damage: "5,100", reload: "0.24s", range: "∞", unlockCoins: 775000 },
+      { level: 8, cashCost: 1775000, drones: 3, damage: "6,300", reload: "0.21s", range: "∞", unlockCoins: 1300000 },
+      { level: 9, cashCost: 3400000, drones: 4, damage: "7,500", reload: "0.2s",  range: "∞", unlockCoins: 2000000 }
+    ],
+    whereToGet: [
+      { source: "Harvest Crate", chance: "<strong>1%</strong> per chest" }
+    ]
+  },
+
   "World Ender": {
     tags: ["LEGENDARY", "BEAM"],
     summaryStats: [

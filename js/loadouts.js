@@ -558,7 +558,8 @@ const LoadoutsUI = {
     const dmg = this.parseNum(lvData.damage);
     const rel = this.parseNum(lvData.reload);
     const poolMult = details.poolDuration || 1;
-    let baseSingleDps = rel > 0 ? (dmg * poolMult) / rel : 0;
+    const droneMult = lvData.drones ? (Number(lvData.drones) || 1) : 1;
+    let baseSingleDps = rel > 0 ? (dmg * poolMult * droneMult) / rel : 0;
     if (baseSingleDps > 0 && details.combo && details.combo.every > 0 && details.combo.hits > 0) {
       const cycleHits = details.combo.every + details.combo.hits;
       const cycleTime = details.combo.every * rel + details.combo.hits * (details.combo.hitInterval || 0.14);

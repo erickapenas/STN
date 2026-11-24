@@ -242,6 +242,7 @@ const ICON_CHARGE_CYAN = `<img src="images/icon-charge-cyan.png" class="stat-ico
 const ICON_POISON = `<img src="images/icon-poison.png" class="stat-icon-img" alt="">`;
 const ICON_POISON_SPLASH = `<img src="images/icon-poison-splash.png" class="stat-icon-img" alt="">`;
 const ICON_NOZZLE = `<img src="images/icon-nozzle.png" class="stat-icon-img" alt="">`;
+const ICON_DRONE = `<img src="images/icon-drone.png" class="stat-icon-img" alt="">`;
 
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {
