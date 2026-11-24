@@ -42,7 +42,7 @@ const CanvasManager = {
             : `<div style="background:#1e2436; color:#e2e8f0; font-weight:800; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; border:1px solid #333a4d;">Lvl ${slot.lvl}/${def.max}</div>`;
 
           cardsList += `
-            <div style="width:130px; background:#10121b; border:5px solid ${itemColor}; border-radius:10px; padding:10px 8px; box-sizing:border-box; box-shadow:0 0 10px ${itemColor}33; display:flex; flex-direction:column; justify-content:space-between;">
+            <div style="width:130px; background:transparent; border:5px solid ${itemColor}; border-radius:10px; padding:10px 8px; box-sizing:border-box; box-shadow:0 0 10px ${itemColor}33; display:flex; flex-direction:column; justify-content:space-between;">
               ${roleHtml}
               <div style="width:68px; height:68px; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
                 <img src="${def.img}" alt="${escapeXml(def.name)}" style="width:100%; height:100%; object-fit:contain; display:block;">
@@ -117,7 +117,7 @@ const CanvasManager = {
       const itemColor = getAnsiHex(colors[item.rarity] || "37");
       const borderColor = isEvo ? "#a855f7" : (isOwned ? itemColor : "#262c3f");
       const cardGlow = isEvo ? "0 0 14px rgba(168,85,247,0.65)" : (isOwned ? `0 0 8px ${itemColor}33` : "none");
-      const cardBg = isEvo ? "#19112b" : "#10121b";
+      const cardBg = "transparent";
       const roleHtml = includeRoleTag ? `<div style="font-size:0.64rem; font-weight:800; color:${roleColor}; text-align:center; margin-bottom:2px; font-family:'Consolas', monospace; line-height:1.1;">[${item.role}]</div>` : '';
 
       let levelBadgeHtml = isOwned
@@ -254,7 +254,7 @@ const CanvasManager = {
       const roleHtml = includeRoleTag ? `<div style="font-size:0.68rem; font-weight:800; color:${roleColor}; text-align:center; margin-bottom:4px; font-family:'Consolas', monospace;">[${item.role}]</div>` : '';
 
       cardsList += `
-        <div style="width:130px; background:#10121b; border:5px solid ${itemColor}; border-radius:10px; padding:10px 8px; box-sizing:border-box; box-shadow:0 0 10px ${itemColor}33; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="width:130px; background:transparent; border:5px solid ${itemColor}; border-radius:10px; padding:10px 8px; box-sizing:border-box; box-shadow:0 0 10px ${itemColor}33; display:flex; flex-direction:column; justify-content:space-between;">
           ${roleHtml}
           <div style="width:68px; height:68px; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
             <img src="${item.img}" alt="${escapeXml(item.name)}" style="width:100%; height:100%; object-fit:contain; display:block;">
@@ -477,9 +477,9 @@ const CanvasManager = {
         }
 
         slotsHtml += `
-          <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; background:${isEvo ? '#181129' : '#0f1320'}; border:1px solid ${borderColor}66; border-left:4px solid ${borderColor}; border-radius:7px; padding:4px 8px; min-height:38px; box-sizing:border-box;">
+          <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; background:transparent; border:1px solid ${borderColor}66; border-left:4px solid ${borderColor}; border-radius:7px; padding:4px 8px; min-height:38px; box-sizing:border-box;">
             <div style="display:flex; align-items:center; gap:7px; min-width:0; flex:1;">
-              <div style="width:26px; height:26px; flex:0 0 26px; display:flex; align-items:center; justify-content:center; background:#090c14; border-radius:6px; border:1px solid ${borderColor}88; padding:2px; box-sizing:border-box;">
+              <div style="width:26px; height:26px; flex:0 0 26px; display:flex; align-items:center; justify-content:center; background:transparent; border-radius:6px; border:1px solid ${borderColor}88; padding:2px; box-sizing:border-box;">
                 <img src="${def.img}" alt="" style="width:100%; height:100%; object-fit:contain; display:block;">
               </div>
               <span style="color:${rarityColor}; font-weight:800; font-size:0.8rem; font-family:'Consolas', monospace; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">${escapeXml(def.name)}</span>
