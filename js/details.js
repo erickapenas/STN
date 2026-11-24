@@ -3058,5 +3058,247 @@ const INDEX_DETAILS = {
         "He can only do it once"
       ]
     }
+  },
+
+  "Emerald Dread Knight": {
+    tags: ["CLANS APOCALYPSE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "THE LATE WAVES" }
+    ],
+    bullets: [
+      "Changes form at <strong>2/3</strong> and at <strong>1/3</strong> of his health",
+      "He cannot be hurt while he changes, and every new form is <strong>faster and hits harder</strong>"
+    ],
+    bossAbilities: [
+      {
+        eyebrow: "FORM 1",
+        name: "Execution Mark",
+        bullets: [
+          "A ghost sword appears over <strong>2 of your strongest towers</strong>",
+          "After 7 seconds each sword falls, and every tower near it <strong>cannot shoot for 15 seconds</strong>"
+        ],
+        when: [
+          "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Tap a sword</strong> to break it before it falls",
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house"
+        ]
+      },
+      {
+        eyebrow: "FORM 2, BELOW 66% HEALTH",
+        name: "Dread Chains",
+        bullets: [
+          "Chains up to <strong>4 of your towers</strong> so they cannot shoot for 22 seconds",
+          "While any chain holds he <strong>takes 80% less damage</strong>"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "Walk up to a chained tower and <strong>hold the button</strong> to break its chain",
+          "Break them all and he is <strong>stunned for 5 seconds</strong>",
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house"
+        ]
+      },
+      {
+        eyebrow: "FORM 3, BELOW 33% HEALTH",
+        name: "Dread Requiem",
+        bullets: [
+          "A giant sword hangs over your house and <strong>3 runes</strong> light up on the floor",
+          "After 10 seconds the sword falls: every door <strong>loses 30% of its health</strong> and every tower cannot shoot for 10 seconds"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Step on all 3 runes</strong> before it falls",
+          "The sword breaks and he is <strong>stunned for 7 seconds</strong>"
+        ]
+      }
+    ]
+  },
+
+  "Necro Overlord": {
+    tags: ["CLANS APOCALYPSE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "THE LATE WAVES" }
+    ],
+    bullets: [
+      "Changes form at <strong>2/3</strong> and at <strong>1/3</strong> of his health",
+      "He cannot be hurt while he changes, and every new form is <strong>faster and hits harder</strong>"
+    ],
+    bossAbilities: [
+      {
+        eyebrow: "FORM 1",
+        name: "Soul Siphon",
+        bullets: [
+          "For about 5 seconds he <strong>drains health from every door</strong> of your house and <strong>heals himself</strong> the whole time"
+        ],
+        when: [
+          "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "Nothing blocks it",
+          "Hurt him faster than he heals"
+        ]
+      },
+      {
+        eyebrow: "FORM 2, BELOW 66% HEALTH",
+        name: "Phylacteries",
+        bullets: [
+          "<strong>3 healing jars</strong> rise inside your house",
+          "While any jar stands he <strong>takes 95% less damage</strong> and the jars keep healing him",
+          "They fall apart by themselves after 24 seconds"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>5 hits</strong>"
+        ],
+        howToStop: [
+          "Walk up to each jar and <strong>hold the button</strong> to break it",
+          "Break all 3 and he is <strong>stunned for 5 seconds</strong>"
+        ]
+      },
+      {
+        eyebrow: "FORM 3, BELOW 33% HEALTH",
+        name: "Soul Harvest",
+        bullets: [
+          "<strong>Turns off every tower</strong> in your house and pulls a glowing wisp out of each one",
+          "The wisps float to him for 7 seconds",
+          "Every wisp that reaches him <strong>heals him and makes him hit harder</strong>"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Tap a wisp</strong> to pop it and its tower turns back on",
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house"
+        ]
+      }
+    ]
+  },
+
+  "Swamp Leviathan": {
+    tags: ["CLANS APOCALYPSE", "BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "THE LATE WAVES" }
+    ],
+    bullets: [
+      "Changes form at <strong>2/3</strong> and at <strong>1/3</strong> of his health",
+      "He cannot be hurt while he changes, and every new form is <strong>faster and hits harder</strong>"
+    ],
+    bossAbilities: [
+      {
+        eyebrow: "FORM 1",
+        name: "Bog Tide",
+        bullets: [
+          "Sends a <strong>wave of swamp water</strong> over your house",
+          "A player it catches on the ground is <strong>stuck for 8 seconds</strong>, and every tower it passes <strong>loses 40% of its range</strong> for 12 seconds"
+        ],
+        when: [
+          "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Jump over the wave</strong> so it does not catch you",
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+          "A tower with a <strong>Protector Base</strong> shield keeps its range"
+        ]
+      },
+      {
+        eyebrow: "FORM 2, BELOW 66% HEALTH",
+        name: "Swamp Geysers",
+        bullets: [
+          "<strong>4 geysers</strong> open under the spots where most of your towers stand",
+          "After 6 seconds they blow, and every tower near one <strong>cannot shoot for 12 seconds</strong>"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Stand on a geyser</strong> when it blows to plug it",
+          "It throws you into the air, but your towers are safe",
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house"
+        ]
+      },
+      {
+        eyebrow: "FORM 3, BELOW 33% HEALTH",
+        name: "Primordial Roar",
+        bullets: [
+          "Roars and slams his tail",
+          "Every zombie at your house <strong>attacks 60% faster and hits 60% harder</strong> for 14 seconds, and a shockwave takes <strong>15% of every door's health</strong>"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "Nothing blocks it"
+        ]
+      }
+    ]
+  },
+
+  "Seraph Eye": {
+    tags: ["CLANS APOCALYPSE", "FINAL BOSS"],
+    hideLevelSub: true,
+    summaryStats: [
+      { label: "ARRIVES ON", value: "THE LAST WAVE" }
+    ],
+    bullets: [
+      "The <strong>final boss</strong> of Clans Apocalypse",
+      "Changes form at <strong>2/3</strong> and at <strong>1/3</strong> of his health",
+      "He cannot be hurt while he changes, and every new form is <strong>faster and hits harder</strong>"
+    ],
+    bossAbilities: [
+      {
+        eyebrow: "FORM 1",
+        name: "Seraph Gaze",
+        bullets: [
+          "His eye locks onto your <strong>3 strongest towers</strong>",
+          "Each one <strong>loses half its range</strong> for 14 seconds",
+          "When this form ends he <strong>teleports to another door</strong> of your house"
+        ],
+        when: [
+          "After his <strong>2nd hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house",
+          "A tower with a <strong>Protector Base</strong> shield is not affected"
+        ]
+      },
+      {
+        eyebrow: "FORM 2, BELOW 66% HEALTH",
+        name: "Watchers",
+        bullets: [
+          "Opens <strong>2 small eyes at every door</strong> of your house",
+          "While any of them is open he <strong>takes 90% less damage</strong>",
+          "They close by themselves after 45 seconds"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Kill every small eye</strong>",
+          "His shield breaks and he is <strong>stunned for 4 seconds</strong>"
+        ]
+      },
+      {
+        eyebrow: "FORM 3, BELOW 33% HEALTH",
+        name: "Judgement",
+        bullets: [
+          "<strong>4 circles of light</strong> appear over the spots where most of your towers stand",
+          "After 5 seconds a beam falls on each one, and every tower near it <strong>cannot shoot for 12 seconds</strong>"
+        ],
+        when: [
+          "After his <strong>1st hit</strong> on your door, then after every <strong>4 hits</strong>"
+        ],
+        howToStop: [
+          "<strong>Stand in a circle</strong> when its beam falls and you take the hit instead of your towers",
+          "A ready <strong>Elephant</strong> pet bounces it back and stuns every boss at your house"
+        ]
+      }
+    ]
   }
 };

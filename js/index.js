@@ -206,9 +206,11 @@ const IndexUI = {
         `;
       }
 
-      // Boss Ability Card (when bossAbility is present)
-      if (details.bossAbility) {
-        const ab = details.bossAbility;
+      // Boss Ability Cards (supports single bossAbility or multi-form bossAbilities[])
+      const bossAbList = Array.isArray(details.bossAbilities)
+        ? details.bossAbilities
+        : (details.bossAbility ? [details.bossAbility] : []);
+      bossAbList.forEach(ab => {
         const whenHtml = Array.isArray(ab.when) && ab.when.length > 0
           ? `<div class="boss-ability-subhead" style="color:${tierColor};">WHEN</div><ul class="detail-bullets">${ab.when.map(w => `<li>${w}</li>`).join("")}</ul>`
           : "";
@@ -217,14 +219,14 @@ const IndexUI = {
           : "";
         sectionsHtml += `
           <div class="detail-section boss-ability-box" style="border-color:${tierColor}88;">
-            <div class="boss-ability-eyebrow" style="color:${tierColor};">ABILITY</div>
+            <div class="boss-ability-eyebrow" style="color:${tierColor};">${escapeXml(ab.eyebrow || "ABILITY")}</div>
             <div class="boss-ability-title">${escapeXml(ab.name)}</div>
             ${Array.isArray(ab.bullets) && ab.bullets.length > 0 ? `<ul class="detail-bullets">${ab.bullets.map(b => `<li>${b}</li>`).join("")}</ul>` : ""}
             ${whenHtml}
             ${stopHtml}
           </div>
         `;
-      }
+      });
 
       // Key Numbers (injecting TOTAL DPS, TOTAL DPS (BOSS) or RAPID FIRE, and COINS TO MAX IT)
       const keyNumbersList = [...(details.keyNumbers || [])];

@@ -186,8 +186,12 @@ const INDEX_BOSSES = [
   { name: "Ashwing",             rarity: "crazy",      img: "images/BossAshwing.png",            trait: "Wave 40 • Skydive" },
   { name: "Ember Shogun",        rarity: "crazy",      img: "images/BossEmberShogun.png",        trait: "Wave 45 • Flurry" },
   { name: "Sabertooth",          rarity: "crazy",      img: "images/BossSabertooth.png",         trait: "Wave 50 • Roar" },
-  { name: "Incinerator",         rarity: "crazy",      img: "images/BossIncinerator.png",        trait: "Wave 55 • Burn" },
-  { name: "Sun Pharaoh",         rarity: "crazy",      img: "images/BossSunPharaoh.png",         trait: "Wave 60 • Final Boss" }
+  { name: "Incinerator",          rarity: "crazy",            img: "images/BossIncinerator.png",        trait: "Wave 55 • Burn" },
+  { name: "Sun Pharaoh",          rarity: "crazy",            img: "images/BossSunPharaoh.png",         trait: "Wave 60 • Final Boss" },
+  { name: "Emerald Dread Knight", rarity: "clans_apocalypse", img: "images/BossEmeraldDreadKnight.png", trait: "Late Waves • 3 Forms" },
+  { name: "Necro Overlord",       rarity: "clans_apocalypse", img: "images/BossNecroOverlord.png",      trait: "Late Waves • 3 Forms" },
+  { name: "Swamp Leviathan",      rarity: "clans_apocalypse", img: "images/BossSwampLeviathan.png",     trait: "Late Waves • 3 Forms" },
+  { name: "Seraph Eye",           rarity: "clans_apocalypse", img: "images/BossSeraphEye.png",          trait: "Last Wave • Final Boss" }
 ];
 
 const TOWER_PLACEMENT_LIMITS = {
