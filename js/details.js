@@ -500,6 +500,155 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Money Printer": {
+    tags: ["EPIC", "ECONOMY", "EVOLUTION"],
+    isFarmPayout: true,
+    summaryStats: [
+      { label: `${ICON_FARMS} EARNS`, value: "$30 → $5,000 / 5s" },
+      { label: `${ICON_RELOAD} PAYS`, value: "EVERY 5s" },
+      { label: "💰 PLACE COST",       value: "FREE" }
+    ],
+    bullets: [
+      "Comes <strong>free with your house</strong> and prints cash every <strong>5 seconds</strong>"
+    ],
+    keyNumbers: [
+      { label: `${ICON_RELOAD} PAYS`, value: "Every <strong>5 seconds</strong>" },
+      { label: "COMES WITH",          value: "Your house, for free. <strong>1 per player</strong>" },
+      { label: "CASH TO MAX IT",      value: "<strong>$79,790</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",     value: "<strong>1</strong> per player" }
+    ],
+    evolution: {
+      name: "Bounty",
+      description: "Every boss you kill makes all farms on the base pay out once",
+      quest: "Evolution Quest: earn $50,000,000 with a maxed Money Printer"
+    },
+    levels: [
+      { level: 1, cashCost: 0,     pays: "$30",    every: "5s", perMinute: "$360",    unlockCoins: 0 },
+      { level: 2, cashCost: 160,   pays: "$65",    every: "5s", perMinute: "$780",    unlockCoins: 0 },
+      { level: 3, cashCost: 335,   pays: "$125",   every: "5s", perMinute: "$1,500",  unlockCoins: 0 },
+      { level: 4, cashCost: 705,   pays: "$190",   every: "5s", perMinute: "$2,280",  unlockCoins: 0 },
+      { level: 5, cashCost: 1480,  pays: "$300",   every: "5s", perMinute: "$3,600",  unlockCoins: 0 },
+      { level: 6, cashCost: 3110,  pays: "$500",   every: "5s", perMinute: "$6,000",  unlockCoins: 0 },
+      { level: 7, cashCost: 24000, pays: "$2,000", every: "5s", perMinute: "$24,000", unlockCoins: 15000 },
+      { level: 8, cashCost: 50000, pays: "$5,000", every: "5s", perMinute: "$60,000", unlockCoins: 135000 }
+    ]
+  },
+
+  "Mining Cave": {
+    tags: ["RARE", "ECONOMY"],
+    isFarmPayout: true,
+    summaryStats: [
+      { label: `${ICON_FARMS} EARNS`, value: "$30 → $1,050 / 5s" },
+      { label: `${ICON_RELOAD} PAYS`, value: "EVERY 5s" },
+      { label: "💰 PLACE COST",       value: "$240" }
+    ],
+    bullets: [
+      "Mines ore with its minecart and earns cash every <strong>5 seconds</strong>"
+    ],
+    keyNumbers: [
+      { label: `${ICON_RELOAD} PAYS`, value: "Every <strong>5 seconds</strong>" },
+      { label: "CASH TO MAX IT",      value: "<strong>$66,720</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",     value: "<strong>26</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 240,   pays: "$30",    every: "5s", perMinute: "$360",    unlockCoins: 0 },
+      { level: 2, cashCost: 350,   pays: "$64",    every: "5s", perMinute: "$768",    unlockCoins: 0 },
+      { level: 3, cashCost: 680,   pays: "$116",   every: "5s", perMinute: "$1,392",  unlockCoins: 0 },
+      { level: 4, cashCost: 1450,  pays: "$180",   every: "5s", perMinute: "$2,160",  unlockCoins: 0 },
+      { level: 5, cashCost: 2900,  pays: "$272",   every: "5s", perMinute: "$3,264",  unlockCoins: 0 },
+      { level: 6, cashCost: 6200,  pays: "$406",   every: "5s", perMinute: "$4,872",  unlockCoins: 0 },
+      { level: 7, cashCost: 15300, pays: "$612",   every: "5s", perMinute: "$7,344",  unlockCoins: 2000 },
+      { level: 8, cashCost: 39600, pays: "$1,050", every: "5s", perMinute: "$12,600", unlockCoins: 18000 }
+    ],
+    whereToGet: [
+      { source: "Common Chest", chance: "<strong>24.62%</strong> per chest" },
+      { source: "Rare Chest",   chance: "<strong>24.21%</strong> per chest" },
+      { source: "Mythic Chest", chance: "<strong>33.01%</strong> per chest" }
+    ]
+  },
+
+  "Flamethrower": {
+    tags: ["RARE", "BURN", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "1.4 → 124" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "0.3s → 0.22s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "24 → 40" },
+      { label: "💰 PLACE COST",         value: "$200" }
+    ],
+    bullets: [
+      "Sprays fire in a <strong>wide cone</strong> and <strong>hits every zombie inside it</strong>",
+      "Weak per hit, and it <strong>does not reach far</strong>"
+    ],
+    keyNumbers: [
+      { label: "HITS",            value: "<strong>Every zombie</strong> in the cone, for the full damage" },
+      { label: `${ICON_RELOAD} BURNS`, value: "Once every <strong>0.3s → 0.22s</strong>" },
+      { label: "CONE WIDTH",      value: "<strong>30° → 48°</strong>" },
+      { label: "CASH TO MAX IT",  value: "<strong>$148,740</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>17</strong> per player" }
+    ],
+    evolution: {
+      name: "Combustion",
+      description: "Zombies it sets on fire explode when they die and ignite the zombies around them",
+      quest: "Evolution Quest: 10,000 zombie kills with a maxed Flamethrower"
+    },
+    levels: [
+      { level: 1, cashCost: 200,   damage: "1.4", reload: "0.3s",  range: "24", cone: "30°", unlockCoins: 0 },
+      { level: 2, cashCost: 410,   damage: "3.8", reload: "0.29s", range: "26", cone: "32°", unlockCoins: 0 },
+      { level: 3, cashCost: 830,   damage: "7.9", reload: "0.28s", range: "29", cone: "34°", unlockCoins: 0 },
+      { level: 4, cashCost: 1900,  damage: "15",  reload: "0.27s", range: "31", cone: "36°", unlockCoins: 0 },
+      { level: 5, cashCost: 4400,  damage: "27",  reload: "0.26s", range: "34", cone: "38°", unlockCoins: 0 },
+      { level: 6, cashCost: 11000, damage: "49",  reload: "0.25s", range: "36", cone: "41°", unlockCoins: 0 },
+      { level: 7, cashCost: 32000, damage: "79",  reload: "0.23s", range: "38", cone: "44°", unlockCoins: 2000 },
+      { level: 8, cashCost: 98000, damage: "124", reload: "0.22s", range: "40", cone: "48°", unlockCoins: 18000 }
+    ],
+    whereToGet: [
+      { source: "Common Chest", chance: "<strong>24.62%</strong> per chest" },
+      { source: "Rare Chest",   chance: "<strong>24.21%</strong> per chest" },
+      { source: "Epic Chest",   chance: "<strong>22.33%</strong> per chest" }
+    ]
+  },
+
+  "Cannon": {
+    tags: ["RARE", "HEAVY", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "20 → 2,800" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "4s → 2.3s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "29 → 50" },
+      { label: "💰 PLACE COST",         value: "$150" }
+    ],
+    bullets: [
+      "Shoots a <strong>heavy cannonball</strong> that <strong>deals big damage</strong> to one zombie",
+      "Strong early on, but it <strong>does not shoot far</strong>"
+    ],
+    keyNumbers: [
+      { label: "HITS",            value: "<strong>1 zombie</strong> per cannonball" },
+      { label: "CASH TO MAX IT",  value: "<strong>$149,490</strong> in a match, for all <strong>10 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>16</strong> per player" }
+    ],
+    evolution: {
+      name: "Grapeshot",
+      description: "Fires a cone of small cannonballs when no boss is in range",
+      quest: "Evolution Quest: 6,000 zombie kills with a maxed Cannon"
+    },
+    levels: [
+      { level: 1,  cashCost: 150,   damage: "20",    reload: "4s",    range: "29", unlockCoins: 0 },
+      { level: 2,  cashCost: 260,   damage: "51",    reload: "3.8s",  range: "31", unlockCoins: 0 },
+      { level: 3,  cashCost: 440,   damage: "97",    reload: "3.6s",  range: "32", unlockCoins: 0 },
+      { level: 4,  cashCost: 740,   damage: "170",   reload: "3.4s",  range: "35", unlockCoins: 0 },
+      { level: 5,  cashCost: 1250,  damage: "275",   reload: "3.2s",  range: "37", unlockCoins: 0 },
+      { level: 6,  cashCost: 2150,  damage: "445",   reload: "3s",    range: "40", unlockCoins: 0 },
+      { level: 7,  cashCost: 5500,  damage: "710",   reload: "2.8s",  range: "42", unlockCoins: 250 },
+      { level: 8,  cashCost: 14000, damage: "1,125", reload: "2.6s",  range: "45", unlockCoins: 1000 },
+      { level: 9,  cashCost: 35000, damage: "1,775", reload: "2.45s", range: "47", unlockCoins: 4000 },
+      { level: 10, cashCost: 90000, damage: "2,800", reload: "2.3s",  range: "50", unlockCoins: 15000 }
+    ],
+    whereToGet: [
+      { source: "Common Chest", chance: "<strong>24.64%</strong> per chest" },
+      { source: "Rare Chest",   chance: "<strong>24.22%</strong> per chest" },
+      { source: "Epic Chest",   chance: "<strong>22.36%</strong> per chest" }
+    ]
+  },
+
   "Bank": {
     tags: ["DIVINE", "ECONOMY"],
     isEconomy: true,

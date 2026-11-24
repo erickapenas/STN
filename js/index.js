@@ -157,12 +157,14 @@ const IndexUI = {
       const hasCharge = levels.some(lv => lv.charge !== undefined);
       const hasNozzles = levels.some(lv => lv.nozzles !== undefined);
       const hasDrones = levels.some(lv => lv.drones !== undefined);
+      const hasCone = levels.some(lv => lv.cone !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
       const hasPoisonTable = levels.some(lv => lv.poisonStack !== undefined);
 
       const isSlam = !!details.isSlam;
       const isGolem = !!details.isGolem;
       const isEconomy = !!details.isEconomy;
+      const isFarmPayout = !!details.isFarmPayout;
       const isVoidFarm = !!details.isVoidFarm;
       const isBoostBase = !!details.isBoostBase;
       const isProtectorBase = !!details.isProtectorBase;
@@ -509,6 +511,49 @@ const IndexUI = {
             </div>
           </div>
         `;
+      } else if (levelsWithDps.length > 0 && isFarmPayout) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-head">
+              <div class="detail-section-title">EVERY LEVEL</div>
+              <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
+            </div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CASH COST</th>
+                    <th>PAYS</th>
+                    <th>EVERY</th>
+                    <th>PER MINUTE</th>
+                    <th>UNLOCK</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td>$${lv.cashCost.toLocaleString()}</td>
+                      <td style="color:#4ade80; font-weight:800;">${escapeXml(lv.pays)}</td>
+                      <td>${escapeXml(lv.every)}</td>
+                      <td style="color:#fbbf24;">${escapeXml(lv.perMinute)}</td>
+                      <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+                <tfoot>
+                  <tr class="detail-table-total">
+                    <td>TOTAL</td>
+                    <td>$${totalMatchCash.toLocaleString()}</td>
+                    <td colspan="3">Coins to Max (Lobby Unlock)</td>
+                    <td class="col-unlock-total">${totalUnlockCoins.toLocaleString()}</td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        `;
       } else if (levelsWithDps.length > 0 && isEconomy) {
         sectionsHtml += `
           <div class="detail-section">
@@ -687,7 +732,8 @@ const IndexUI = {
           (hasPoolSize ? 1 : 0) +
           (hasCharge ? 1 : 0) +
           (hasNozzles ? 1 : 0) +
-          (hasDrones ? 1 : 0);
+          (hasDrones ? 1 : 0) +
+          (hasCone ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -718,6 +764,7 @@ const IndexUI = {
                     ${hasPoolSize ? `<th>${ICON_POOL_SIZE} POOL SIZE</th>` : ""}
                     ${hasCharge ? `<th>${ICON_CHARGE_CYAN} CHARGE</th>` : ""}
                     ${hasNozzles ? `<th>${ICON_NOZZLE} NOZZLES</th>` : ""}
+                    ${hasCone ? "<th>🔥 CONE</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -743,6 +790,7 @@ const IndexUI = {
                       ${hasPoolSize ? `<td style="color:#fb923c;">${escapeXml(lv.poolSize)}</td>` : ""}
                       ${hasCharge ? `<td style="color:#38bdf8;">${escapeXml(lv.charge)}</td>` : ""}
                       ${hasNozzles ? `<td style="color:#fb923c;">${escapeXml(lv.nozzles)}</td>` : ""}
+                      ${hasCone ? `<td style="color:#fb923c;">${escapeXml(lv.cone)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
