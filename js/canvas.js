@@ -116,25 +116,25 @@ const CanvasManager = {
       const roleColor = getAnsiHex(colors[item.role] || "37");
       const itemColor = getAnsiHex(colors[item.rarity] || "37");
       const borderColor = isEvo ? "#a855f7" : (isOwned ? itemColor : "#262c3f");
-      const cardGlow = isEvo ? "0 0 14px rgba(168,85,247,0.65)" : (isOwned ? `0 0 8px ${itemColor}33` : "none");
+      const cardGlow = isEvo ? "0 0 16px rgba(168,85,247,0.65)" : (isOwned ? `0 0 10px ${itemColor}33` : "none");
       const cardBg = "transparent";
-      const roleHtml = includeRoleTag ? `<div style="font-size:0.64rem; font-weight:800; color:${roleColor}; text-align:center; margin-bottom:2px; font-family:'Consolas', monospace; line-height:1.1;">[${item.role}]</div>` : '';
+      const roleHtml = includeRoleTag ? `<div style="font-size:0.68rem; font-weight:800; color:${roleColor}; text-align:center; margin-bottom:4px; font-family:'Consolas', monospace;">[${item.role}]</div>` : '';
 
       let levelBadgeHtml = isOwned
         ? (isEvo
-            ? `<div style="background:linear-gradient(135deg,#7e22ce,#a855f7); color:#ffffff; font-weight:900; font-size:0.72rem; padding:2px 5px; border-radius:5px; text-align:center; font-family:'Consolas', monospace; box-shadow:0 0 8px rgba(168,85,247,0.6);">⚡ EVO</div>`
+            ? `<div style="background:linear-gradient(135deg,#7e22ce,#a855f7); color:#ffffff; font-weight:900; font-size:0.78rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; box-shadow:0 0 10px rgba(168,85,247,0.6);">⚡ EVO</div>`
             : isMax
-            ? `<div style="background:#15803d; color:#ffffff; font-weight:900; font-size:0.7rem; padding:2px 5px; border-radius:5px; text-align:center; font-family:'Consolas', monospace; box-shadow:0 0 6px rgba(34,197,94,0.45);">MAX (${currentLvl}/${item.max})</div>`
-            : `<div style="background:#1e2436; color:#e2e8f0; font-weight:800; font-size:0.7rem; padding:2px 5px; border-radius:5px; text-align:center; font-family:'Consolas', monospace; border:1px solid #333a4d;">Lvl ${currentLvl}/${item.max}</div>`)
-        : `<div style="background:#181b26; color:#64748b; font-weight:700; font-size:0.7rem; padding:2px 5px; border-radius:5px; text-align:center; font-family:'Consolas', monospace;">Not Owned</div>`;
+            ? `<div style="background:#15803d; color:#ffffff; font-weight:900; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; box-shadow:0 0 8px rgba(34,197,94,0.45);">MAX (${currentLvl}/${item.max})</div>`
+            : `<div style="background:#1e2436; color:#e2e8f0; font-weight:800; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace; border:1px solid #333a4d;">Lvl ${currentLvl}/${item.max}</div>`)
+        : `<div style="background:#181b26; color:#64748b; font-weight:700; font-size:0.75rem; padding:3px 6px; border-radius:6px; text-align:center; font-family:'Consolas', monospace;">Not Owned</div>`;
 
       return `
-        <div style="width:134px; background:${cardBg}; border:4px solid ${borderColor}; border-radius:9px; padding:6px 6px; box-sizing:border-box; opacity:${isOwned ? '1' : '0.35'}; filter:${isOwned ? 'none' : 'grayscale(1)'}; box-shadow:${cardGlow}; display:flex; flex-direction:column; justify-content:space-between;">
+        <div style="width:130px; background:${cardBg}; border:5px solid ${borderColor}; border-radius:10px; padding:10px 8px; box-sizing:border-box; opacity:${isOwned ? '1' : '0.35'}; filter:${isOwned ? 'none' : 'grayscale(1)'}; box-shadow:${cardGlow}; display:flex; flex-direction:column; justify-content:space-between;">
           ${roleHtml}
-          <div style="width:46px; height:46px; margin:0 auto 4px auto; display:flex; align-items:center; justify-content:center;">
+          <div style="width:68px; height:68px; margin:0 auto 8px auto; display:flex; align-items:center; justify-content:center;">
             <img src="${item.img}" alt="${escapeXml(item.name)}" style="width:100%; height:100%; object-fit:contain; display:block;">
           </div>
-          <div style="font-size:0.78rem; font-weight:bold; color:${isOwned ? itemColor : '#64748b'}; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:4px; font-family:'Consolas', monospace;">${escapeXml(item.name)}</div>
+          <div style="font-size:0.82rem; font-weight:bold; color:${isOwned ? itemColor : '#64748b'}; text-align:center; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; margin-bottom:6px; font-family:'Consolas', monospace;">${escapeXml(item.name)}</div>
           ${levelBadgeHtml}
         </div>
       `;
@@ -156,12 +156,12 @@ const CanvasManager = {
         const tierColor = getAnsiHex(colors[tier.key] || "37");
 
         renderedSectionsHtml += `
-          <div style="margin-bottom:10px;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; border-bottom:1px solid #262c3f; padding-bottom:4px;">
-              <span style="font-size:0.88rem; font-weight:900; color:${tierColor}; font-family:'Consolas', monospace; letter-spacing:1px;">${tier.label}</span>
-              <span style="font-size:0.76rem; color:#94a3b8; font-weight:700;">(${displayItems.length} Units)</span>
+          <div style="margin-bottom:24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; border-bottom:1px solid #262c3f; padding-bottom:6px;">
+              <span style="font-size:0.95rem; font-weight:900; color:${tierColor}; font-family:'Consolas', monospace; letter-spacing:1px;">${tier.label}</span>
+              <span style="font-size:0.8rem; color:#94a3b8; font-weight:700;">(${displayItems.length} Units)</span>
             </div>
-            <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; flex-wrap:wrap; gap:12px;">
               ${cardsHtml}
             </div>
           </div>
@@ -184,12 +184,12 @@ const CanvasManager = {
         const catColor = getAnsiHex(colors[cat.id] || "37");
 
         renderedSectionsHtml += `
-          <div style="margin-bottom:10px;">
-            <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px; border-bottom:1px solid #262c3f; padding-bottom:4px;">
-              <span style="font-size:0.88rem; font-weight:900; color:${catColor}; font-family:'Consolas', monospace; letter-spacing:1px;">${cat.title}</span>
-              <span style="font-size:0.76rem; color:#94a3b8; font-weight:700;">(${displayItems.length} Units)</span>
+          <div style="margin-bottom:24px;">
+            <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px; border-bottom:1px solid #262c3f; padding-bottom:6px;">
+              <span style="font-size:0.95rem; font-weight:900; color:${catColor}; font-family:'Consolas', monospace; letter-spacing:1px;">${cat.title}</span>
+              <span style="font-size:0.8rem; color:#94a3b8; font-weight:700;">(${displayItems.length} Units)</span>
             </div>
-            <div style="display:flex; flex-wrap:wrap; gap:10px;">
+            <div style="display:flex; flex-wrap:wrap; gap:12px;">
               ${cardsHtml}
             </div>
           </div>
@@ -204,32 +204,30 @@ const CanvasManager = {
     const bannerColor = getAnsiHex(colors.BANNER || "36");
 
     return `
-      <div id="invCaptureCard" style="background:#151822; padding:22px 28px; border-radius:0; width:1920px; min-height:1080px; box-sizing:border-box; display:flex; flex-direction:column;">
-        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #262c3f; padding-bottom:12px; margin-bottom:12px;">
-          <div style="display:flex; align-items:baseline; gap:18px; flex-wrap:wrap;">
-            <div style="font-size:1.75rem; font-weight:800; color:#ffffff; font-family:'Segoe UI', sans-serif;">${escapeXml(headline)}</div>
-            ${bannerSubtitle && bannerSubtitle.trim() ? `<div style="font-size:1.15rem; font-weight:700; color:${bannerColor}; font-family:'Consolas', monospace;">${escapeXml(bannerSubtitle.trim())}</div>` : ''}
-            ${ign && ign.trim() ? `<div style="font-size:1.1rem; font-weight:700; color:#57f287; font-family:'Consolas', monospace;">Ingame Name: ${escapeXml(ign.trim())}</div>` : ''}
+      <div id="invCaptureCard" style="background:#151822; padding:32px; border-radius:12px; width:940px; box-sizing:border-box;">
+        <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #262c3f; padding-bottom:16px; margin-bottom:22px;">
+          <div>
+            <div style="font-size:1.65rem; font-weight:800; color:#ffffff; font-family:'Segoe UI', sans-serif;">${escapeXml(headline)}</div>
+            ${bannerSubtitle && bannerSubtitle.trim() ? `<div style="font-size:1.15rem; font-weight:700; color:${bannerColor}; margin-top:4px; font-family:'Consolas', monospace;">${escapeXml(bannerSubtitle.trim())}</div>` : ''}
+            ${ign && ign.trim() ? `<div style="font-size:1.05rem; font-weight:700; color:#57f287; margin-top:5px; font-family:'Consolas', monospace;">Ingame Name: ${escapeXml(ign.trim())}</div>` : ''}
           </div>
-          <div style="display:flex; gap:14px; flex-shrink:0;">
-            <div style="background:#10121b; border:1px solid #262c3f; border-radius:8px; padding:7px 18px; text-align:center;">
+          <div style="display:flex; gap:14px;">
+            <div style="background:#10121b; border:1px solid #262c3f; border-radius:8px; padding:8px 16px; text-align:center;">
               <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Owned Units</div>
-              <div style="font-size:1.2rem; font-weight:800; color:#38bdf8; font-family:'Consolas', monospace;">${totalOwned} / ${ITEMS.length}</div>
+              <div style="font-size:1.15rem; font-weight:800; color:#38bdf8; font-family:'Consolas', monospace;">${totalOwned} / ${ITEMS.length}</div>
             </div>
-            <div style="background:#10121b; border:1px solid #262c3f; border-radius:8px; padding:7px 18px; text-align:center;">
+            <div style="background:#10121b; border:1px solid #262c3f; border-radius:8px; padding:8px 16px; text-align:center;">
               <div style="font-size:0.72rem; color:#94a3b8; font-weight:700; text-transform:uppercase;">Max Level</div>
-              <div style="font-size:1.2rem; font-weight:800; color:#4ade80; font-family:'Consolas', monospace;">${totalMaxed}</div>
+              <div style="font-size:1.15rem; font-weight:800; color:#4ade80; font-family:'Consolas', monospace;">${totalMaxed}</div>
             </div>
           </div>
         </div>
 
-        <div style="flex:1;">
-          ${renderedSectionsHtml}
-        </div>
+        ${renderedSectionsHtml}
 
-        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:auto; padding-top:12px; border-top:1px solid #262c3f; font-size:0.86rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:22px; padding-top:14px; border-top:1px solid #262c3f; font-size:0.85rem; color:#64748b; font-family:'Segoe UI', sans-serif;">
           <span>⚡ Generated with STN Showcase</span>
-          <span style="color:#FFFFFF; font-weight:800; font-size:1.15rem;">erickapenas.github.io/STN</span>
+          <span style="color:#FFFFFF; font-weight:800; font-size:1.05rem;">erickapenas.github.io/STN</span>
         </div>
       </div>
     `;
@@ -586,7 +584,7 @@ const CanvasManager = {
     const captureContainer = document.getElementById("invCaptureContainer");
     captureContainer.innerHTML = this.buildInventoryImageDom(headline, bannerSubtitle, ign, invData, colors, showUnowned, sortMode, includeRoleTag);
     const element = document.getElementById("invCaptureCard");
-    return await html2canvas(element, { backgroundColor: "#151822", scale: 1, width: 1920, windowWidth: 1920, logging: false, useCORS: true });
+    return await html2canvas(element, { backgroundColor: "#151822", scale: 4, logging: false, useCORS: true });
   },
 
   async captureClanBattleCanvas(cbData, colors, includeRoleTag, sortMode) {
