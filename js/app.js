@@ -277,3 +277,73 @@ LoadoutsUI.init();
 if (typeof DoorUI !== "undefined") DoorUI.init();
 if (typeof JinxCalcUI !== "undefined") JinxCalcUI.init();
 ClanBattleUI.init();
+
+// Lightweight real-time online viewer counter (Cloudflare Worker + Durable Object WebSocket)
+(function initOnlineCounter() {
+  const WS_URL = "wss://stn-online.erick-martins2010.workers.dev/ws";
+  const textEl = document.getElementById("onlineCounterText");
+  if (!textEl || typeof WebSocket === "undefined") return;
+
+  let ws = null;
+  let pingTimer = null;
+  let retryDelay = 2000;
+  let closedByPage = false;
+
+  const setCount = (n) => {
+    const count = Math.max(1, Number(n) || 1);
+    textEl.textContent = `${count} online`;
+  };
+
+  const cleanup = () => {
+    if (pingTimer) { clearInterval(pingTimer); pingTimer = null; }
+  };
+
+  const connect = () => {
+    if (closedByPage) return;
+    try {
+      ws = new WebSocket(WS_URL);
+    } catch {
+      return;
+    }
+
+    ws.addEventListener("open", () => {
+      retryDelay = 2000;
+      try { ws.send("sync"); } catch {}
+      cleanup();
+      pingTimer = setInterval(() => {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          try { ws.send("ping"); } catch {}
+        }
+      }, 30000);
+    });
+
+    ws.addEventListener("message", (ev) => {
+      if (ev.data === "pong") return;
+      try {
+        const data = JSON.parse(ev.data);
+        if (typeof data.online === "number") setCount(data.online);
+      } catch {}
+    });
+
+    ws.addEventListener("close", () => {
+      cleanup();
+      if (!closedByPage) {
+        setTimeout(connect, retryDelay);
+        retryDelay = Math.min(retryDelay * 2, 30000);
+      }
+    });
+
+    ws.addEventListener("error", () => {
+      try { ws.close(); } catch {}
+    });
+  };
+
+  window.addEventListener("pagehide", () => {
+    closedByPage = true;
+    cleanup();
+    if (ws) { try { ws.close(1000, "bye"); } catch {} }
+  });
+
+  // Connect asynchronously after initial render so page load & FPS are untouched
+  setTimeout(connect, 250);
+})();
