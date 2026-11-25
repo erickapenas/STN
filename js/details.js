@@ -649,6 +649,227 @@ const INDEX_DETAILS = {
     ]
   },
 
+  "Scarecrow": {
+    tags: ["LEGENDARY", "EXCLUSIVE", "PIERCE"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "100 → 1,750" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "0.7s → 0.5s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "27 → 34" },
+      { label: "💰 PLACE COST",         value: "$9,000" }
+    ],
+    bullets: [
+      "Sends out <strong>crows</strong> that fly to zombies <strong>anywhere on the map</strong> and peck them, with <strong>more crows</strong> as he levels up",
+      "Swings his <strong>scythe</strong> to hit <strong>every zombie in front of him</strong>"
+    ],
+    keyNumbers: [
+      { label: "SCYTHE",           value: "Hits <strong>every zombie</strong> in a <strong>90° → 110°</strong> cone in front of him" },
+      { label: "CROWS",            value: "<strong>1 → 5</strong>, flying to zombies <strong>anywhere on the map</strong>" },
+      { label: "EVERY CROW PECKS", value: "<strong>35 → 500</strong> damage every <strong>1s → 0.65s</strong>" },
+      { label: "CASH TO MAX IT",   value: "<strong>$2,083,000</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",  value: "<strong>6</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 9000,   damage: "100",   reload: "0.7s",  range: "27", cone: "90°",  unlockCoins: 0,      crows: 1, peckDmg: "35",  peckEvery: "1s" },
+      { level: 2, cashCost: 18000,  damage: "210",   reload: "0.67s", range: "28", cone: "90°",  unlockCoins: 500,    crows: 1, peckDmg: "80",  peckEvery: "0.95s" },
+      { level: 3, cashCost: 38000,  damage: "380",   reload: "0.64s", range: "29", cone: "95°",  unlockCoins: 1400,   crows: 2, peckDmg: "120", peckEvery: "0.9s" },
+      { level: 4, cashCost: 78000,  damage: "635",   reload: "0.61s", range: "30", cone: "95°",  unlockCoins: 3800,   crows: 2, peckDmg: "215", peckEvery: "0.85s" },
+      { level: 5, cashCost: 160000, damage: "955",   reload: "0.58s", range: "31", cone: "100°", unlockCoins: 10500,  crows: 3, peckDmg: "300", peckEvery: "0.8s" },
+      { level: 6, cashCost: 320000, damage: "1,300", reload: "0.55s", range: "32", cone: "100°", unlockCoins: 28000,  crows: 3, peckDmg: "415", peckEvery: "0.75s" },
+      { level: 7, cashCost: 560000, damage: "1,545", reload: "0.52s", range: "33", cone: "105°", unlockCoins: 76000,  crows: 4, peckDmg: "465", peckEvery: "0.7s" },
+      { level: 8, cashCost: 900000, damage: "1,750", reload: "0.5s",  range: "34", cone: "110°", unlockCoins: 180000, crows: 5, peckDmg: "500", peckEvery: "0.65s" }
+    ],
+    whereToGet: [
+      { source: "Pumpkin Chest", chance: "<strong>1%</strong> per chest" },
+      { source: "Lava Chest",    chance: "<strong>2.5%</strong> per chest" }
+    ]
+  },
+
+  "Tesla": {
+    tags: ["EPIC", "CHAIN", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`, value: "24 → 1,450" },
+      { label: "⚡ HITS",            value: "3 → 6 ZOMBIES" },
+      { label: `${ICON_RANGE} RANGE`, value: "34 → 52" },
+      { label: "💰 PLACE COST",      value: "$450" }
+    ],
+    bullets: [
+      "<strong>Zaps several zombies at once</strong> with every strike",
+      "Upgrades let each strike <strong>hit more zombies</strong>"
+    ],
+    keyNumbers: [
+      { label: "ZOMBIES PER STRIKE", value: "<strong>3 → 6</strong>" },
+      { label: "FIRST ZOMBIE",       value: "Takes the <strong>full damage</strong>" },
+      { label: "EVERY JUMP AFTER",   value: "<strong>100% → 75%</strong> of the jump before it" },
+      { label: "JUMP DISTANCE",      value: "<strong>16 → 28</strong> studs from zombie to zombie" },
+      { label: "CASH TO MAX IT",     value: "<strong>$415,950</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",    value: "<strong>12</strong> per player" }
+    ],
+    evolution: {
+      name: "Stun Arc",
+      description: "Every 4th strike stuns every zombie it hits, bosses for a shorter time",
+      quest: "Evolution Quest: 15,000 zombie kills with a maxed Tesla"
+    },
+    levels: [
+      { level: 1, cashCost: 450,    damage: "24",    reload: "2s",    range: "34", zombies: "3", unlockCoins: 0 },
+      { level: 2, cashCost: 1100,   damage: "48",    reload: "1.9s",  range: "36", zombies: "3", unlockCoins: 0 },
+      { level: 3, cashCost: 2600,   damage: "91",    reload: "1.8s",  range: "38", zombies: "4", unlockCoins: 0 },
+      { level: 4, cashCost: 6100,   damage: "160",   reload: "1.6s",  range: "40", zombies: "4", unlockCoins: 0 },
+      { level: 5, cashCost: 13700,  damage: "286",   reload: "1.45s", range: "43", zombies: "5", unlockCoins: 600 },
+      { level: 6, cashCost: 32000,  damage: "494",   reload: "1.3s",  range: "46", zombies: "5", unlockCoins: 2400 },
+      { level: 7, cashCost: 100000, damage: "860",   reload: "1.15s", range: "49", zombies: "5", unlockCoins: 9500 },
+      { level: 8, cashCost: 260000, damage: "1,450", reload: "1s",    range: "52", zombies: "6", unlockCoins: 37500 }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.26%</strong> per chest" },
+      { source: "Rare Chest",      chance: "<strong>0.5%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>5.2%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>10.4%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>15.82%</strong> per chest" }
+    ]
+  },
+
+  "Rocketeer": {
+    tags: ["EPIC", "SPLASH", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "26 → 850" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "2.4s → 0.75s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "50 → 88" },
+      { label: "💰 PLACE COST",         value: "$500" }
+    ],
+    bullets: [
+      "Fires <strong>rockets</strong> at zombies from <strong>very far away</strong>",
+      "Each rocket <strong>explodes</strong> and hurts every zombie near where it lands"
+    ],
+    keyNumbers: [
+      { label: "EXPLOSION SIZE",  value: "<strong>7 → 11</strong> studs" },
+      { label: "AT THE EDGE",     value: "<strong>45%</strong> of the damage. Full damage in the middle" },
+      { label: "CASH TO MAX IT",  value: "<strong>$419,550</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>10</strong> per player" }
+    ],
+    evolution: {
+      name: "Full Salvo",
+      description: "Every 5th shot fires all 8 rockets at once, each at a different zombie",
+      quest: "Evolution Quest: 15,000 zombie kills with a maxed Rocketeer"
+    },
+    levels: [
+      { level: 1, cashCost: 500,    damage: "26",  reload: "2.4s",  range: "50", blast: "7",    unlockCoins: 0 },
+      { level: 2, cashCost: 1150,   damage: "50",  reload: "2.2s",  range: "54", blast: "7.5",  unlockCoins: 0 },
+      { level: 3, cashCost: 2700,   damage: "82",  reload: "1.6s",  range: "58", blast: "8",    unlockCoins: 0 },
+      { level: 4, cashCost: 6200,   damage: "145", reload: "1.45s", range: "62", blast: "8.5",  unlockCoins: 0 },
+      { level: 5, cashCost: 14000,  damage: "225", reload: "1.15s", range: "67", blast: "9",    unlockCoins: 600 },
+      { level: 6, cashCost: 33000,  damage: "375", reload: "1.05s", range: "72", blast: "10",   unlockCoins: 2400 },
+      { level: 7, cashCost: 100000, damage: "600", reload: "0.95s", range: "79", blast: "10.5", unlockCoins: 9500 },
+      { level: 8, cashCost: 262000, damage: "850", reload: "0.75s", range: "88", blast: "11",   unlockCoins: 37500 }
+    ],
+    whereToGet: [
+      { source: "Common Chest",    chance: "<strong>0.26%</strong> per chest" },
+      { source: "Rare Chest",      chance: "<strong>0.5%</strong> per chest" },
+      { source: "Epic Chest",      chance: "<strong>5.2%</strong> per chest" },
+      { source: "Mythic Chest",    chance: "<strong>10.4%</strong> per chest" },
+      { source: "Legendary Chest", chance: "<strong>15.82%</strong> per chest" }
+    ]
+  },
+
+  "Crossbow": {
+    tags: ["COMMON", "SNIPER", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "3.8 → 49.5" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "2.2s → 0.34s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "39 → 71" },
+      { label: "💰 PLACE COST",         value: "$25" }
+    ],
+    bullets: [
+      "Fires arrows at zombies from <strong>very far away</strong>"
+    ],
+    keyNumbers: [
+      { label: "HITS",            value: "<strong>1 zombie</strong> per arrow" },
+      { label: "CASH TO MAX IT",  value: "<strong>$38,820</strong> in a match, for all <strong>10 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>20</strong> per player" }
+    ],
+    evolution: {
+      name: "Spotter",
+      description: "Every tower inside its blue circle gets more range, and the circles stack",
+      quest: "Evolution Quest: 5,000 zombie kills with a maxed Crossbow"
+    },
+    levels: [
+      { level: 1,  cashCost: 25,    damage: "3.8",  reload: "2.2s",  range: "39", unlockCoins: 0 },
+      { level: 2,  cashCost: 50,    damage: "5.4",  reload: "2s",    range: "42", unlockCoins: 0 },
+      { level: 3,  cashCost: 105,   damage: "7.2",  reload: "1.8s",  range: "44", unlockCoins: 0 },
+      { level: 4,  cashCost: 210,   damage: "8.2",  reload: "1.15s", range: "48", unlockCoins: 0 },
+      { level: 5,  cashCost: 430,   damage: "12",   reload: "1s",    range: "51", unlockCoins: 0 },
+      { level: 6,  cashCost: 900,   damage: "15.2", reload: "0.78s", range: "55", unlockCoins: 0 },
+      { level: 7,  cashCost: 1900,  damage: "20.5", reload: "0.62s", range: "59", unlockCoins: 0 },
+      { level: 8,  cashCost: 4200,  damage: "25.8", reload: "0.46s", range: "64", unlockCoins: 0 },
+      { level: 9,  cashCost: 10000, damage: "35",   reload: "0.4s",  range: "67", unlockCoins: 0 },
+      { level: 10, cashCost: 21000, damage: "49.5", reload: "0.34s", range: "71", unlockCoins: 0 }
+    ]
+  },
+
+  "Farm": {
+    tags: ["COMMON", "ECONOMY"],
+    isFarmPayout: true,
+    summaryStats: [
+      { label: `${ICON_FARMS} EARNS`, value: "$6 → $380 / 5s" },
+      { label: `${ICON_RELOAD} PAYS`, value: "EVERY 5s" },
+      { label: "💰 PLACE COST",       value: "$30" }
+    ],
+    bullets: [
+      "Grows crops that earn cash every <strong>5 seconds</strong>"
+    ],
+    keyNumbers: [
+      { label: `${ICON_RELOAD} PAYS`, value: "Every <strong>5 seconds</strong>" },
+      { label: "CASH TO MAX IT",      value: "<strong>$26,925</strong> in a match, for all <strong>8 levels</strong>" },
+      { label: "PLACEMENT LIMIT",     value: "<strong>20</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 30,    pays: "$6",   every: "5s", perMinute: "$72",    unlockCoins: 0 },
+      { level: 2, cashCost: 55,    pays: "$14",  every: "5s", perMinute: "$168",   unlockCoins: 0 },
+      { level: 3, cashCost: 110,   pays: "$24",  every: "5s", perMinute: "$288",   unlockCoins: 0 },
+      { level: 4, cashCost: 210,   pays: "$37",  every: "5s", perMinute: "$444",   unlockCoins: 0 },
+      { level: 5, cashCost: 620,   pays: "$63",  every: "5s", perMinute: "$756",   unlockCoins: 0 },
+      { level: 6, cashCost: 2300,  pays: "$114", every: "5s", perMinute: "$1,368", unlockCoins: 0 },
+      { level: 7, cashCost: 6600,  pays: "$208", every: "5s", perMinute: "$2,496", unlockCoins: 0 },
+      { level: 8, cashCost: 17000, pays: "$380", every: "5s", perMinute: "$4,560", unlockCoins: 0 }
+    ]
+  },
+
+  "Turret": {
+    tags: ["COMMON", "MINIGUN", "EVOLUTION"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "2.8 → 8.45" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "1.3s → 0.075s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "33 → 66" },
+      { label: "💰 PLACE COST",         value: "$35" }
+    ],
+    bullets: [
+      "Weak and cheap early on, but at <strong>level 4</strong> it turns into a <strong>minigun</strong> and fires much faster"
+    ],
+    keyNumbers: [
+      { label: "HITS",            value: "<strong>1 zombie</strong> per bullet" },
+      { label: "MINIGUN",         value: "From <strong>level 4</strong>. Smaller bullets, fired far faster" },
+      { label: "SPIN UP",         value: "<strong>0.5s</strong> before its first shot, from level 4" },
+      { label: "CASH TO MAX IT",  value: "<strong>$29,675</strong> in a match, for all <strong>10 levels</strong>" },
+      { label: "PLACEMENT LIMIT", value: "<strong>20</strong> per player" }
+    ],
+    evolution: {
+      name: "War Bonds",
+      description: "Every 10th bullet earns cash",
+      quest: "Evolution Quest: 5,000 zombie kills with a maxed Turret"
+    },
+    levels: [
+      { level: 1,  cashCost: 35,    damage: "2.8",  reload: "1.3s",  range: "33", unlockCoins: 0 },
+      { level: 2,  cashCost: 70,    damage: "4",    reload: "1.2s",  range: "36", unlockCoins: 0 },
+      { level: 3,  cashCost: 135,   damage: "5.3",  reload: "1.1s",  range: "38", unlockCoins: 0 },
+      { level: 4,  cashCost: 265,   damage: "1.8",  reload: "0.25s", range: "42", unlockCoins: 0 },
+      { level: 5,  cashCost: 520,   damage: "2.3",  reload: "0.2s",  range: "45", unlockCoins: 0 },
+      { level: 6,  cashCost: 1000,  damage: "3.05", reload: "0.16s", range: "50", unlockCoins: 0 },
+      { level: 7,  cashCost: 1950,  damage: "3.8",  reload: "0.12s", range: "54", unlockCoins: 0 },
+      { level: 8,  cashCost: 3800,  damage: "4.9",  reload: "0.1s",  range: "59", unlockCoins: 0 },
+      { level: 9,  cashCost: 7400,  damage: "6.35", reload: "0.09s", range: "62", unlockCoins: 0 },
+      { level: 10, cashCost: 14500, damage: "8.45", reload: "0.07s", range: "66", unlockCoins: 0 }
+    ]
+  },
+
   "Bank": {
     tags: ["DIVINE", "ECONOMY"],
     isEconomy: true,

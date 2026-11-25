@@ -59,8 +59,8 @@ const ITEMS = [
   { name: "Mortar",         role: "DAMAGE",  max: 8,  rarity: "rare",      hex: "#38bdf8", img: "images/Mortar.png" },
   { name: "Flamethrower",   role: "DAMAGE",  max: 8,  rarity: "rare",      hex: "#38bdf8", img: "images/Flamethrower.png",  canEvo: true },
   { name: "Cannon",         role: "DAMAGE",  max: 10, rarity: "rare",      hex: "#38bdf8", img: "images/Cannon.png",        canEvo: true },
-  { name: "Turret",         role: "DAMAGE",  max: 8,  rarity: "common",    hex: "#22c55e", img: "images/Turret.png",        canEvo: true },
-  { name: "Crossbow",       role: "DAMAGE",  max: 8,  rarity: "common",    hex: "#22c55e", img: "images/CrossBow.png",      canEvo: true },
+  { name: "Turret",         role: "DAMAGE",  max: 10, rarity: "common",    hex: "#22c55e", img: "images/Turret.png",        canEvo: true },
+  { name: "Crossbow",       role: "DAMAGE",  max: 10, rarity: "common",    hex: "#22c55e", img: "images/CrossBow.png",      canEvo: true },
 
   { name: "Medical Base",   role: "SUPPORT", max: 6,  rarity: "epic",      hex: "#a855f7", img: "images/MedicalBase.png" },
   { name: "Military Base",  role: "SUPPORT", max: 6,  rarity: "mythic",    hex: "#ef4444", img: "images/MilitaryBase.png" },
@@ -197,7 +197,7 @@ const INDEX_BOSSES = [
 const TOWER_PLACEMENT_LIMITS = {
   "Juggernaut": 3,
   "Machine Mortar": 5,
-  "Scarecrow": 3,
+  "Scarecrow": 6,
   "Crusher": 4,
   "Golem Forge": 2,
   "Drone Hangar": 3,
@@ -210,14 +210,14 @@ const TOWER_PLACEMENT_LIMITS = {
   "Fire Spitter": 10,
   "Ballista": 8,
   "Pie Launcher": 6,
-  "Rocketeer": 5,
-  "Tesla": 5,
+  "Rocketeer": 10,
+  "Tesla": 12,
   "Corn Popper": 12,
   "Mortar": 5,
   "Flamethrower": 17,
   "Cannon": 16,
-  "Turret": 6,
-  "Crossbow": 6,
+  "Turret": 20,
+  "Crossbow": 20,
   "Medical Base": 4,
   "Military Base": 4,
   "Protector Base": 5,
@@ -226,7 +226,7 @@ const TOWER_PLACEMENT_LIMITS = {
   "Vault": 4,
   "Mining Cave": 26,
   "Money Printer": 1,
-  "Farm": 6
+  "Farm": 20
 };
 
 const ICON_FARMS = `<img src="images/icon-farms.png" class="stat-icon-img" alt="">`;

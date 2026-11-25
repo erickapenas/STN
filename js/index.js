@@ -158,8 +158,10 @@ const IndexUI = {
       const hasNozzles = levels.some(lv => lv.nozzles !== undefined);
       const hasDrones = levels.some(lv => lv.drones !== undefined);
       const hasCone = levels.some(lv => lv.cone !== undefined);
+      const hasZombies = levels.some(lv => lv.zombies !== undefined);
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
       const hasPoisonTable = levels.some(lv => lv.poisonStack !== undefined);
+      const hasCrowsTable = levels.some(lv => lv.crows !== undefined && lv.peckDmg !== undefined);
 
       const isSlam = !!details.isSlam;
       const isGolem = !!details.isGolem;
@@ -177,6 +179,11 @@ const IndexUI = {
         const rel = parseNum(lv.reload);
         const droneMult = lv.drones ? (Number(lv.drones) || 1) : 1;
         let dps = rel > 0 ? (dmg * poolMult * droneMult) / rel : 0;
+        if (lv.crows && lv.peckDmg && lv.peckEvery) {
+          const pDmg = parseNum(lv.peckDmg);
+          const pRel = parseNum(lv.peckEvery);
+          if (pRel > 0) dps += (Number(lv.crows) * pDmg) / pRel;
+        }
         if (dps > 0 && comboCfg && comboCfg.every > 0 && comboCfg.hits > 0) {
           const cycleHits = comboCfg.every + comboCfg.hits;
           const cycleTime = comboCfg.every * rel + comboCfg.hits * (comboCfg.hitInterval || 0.14);
@@ -735,7 +742,8 @@ const IndexUI = {
           (hasCharge ? 1 : 0) +
           (hasNozzles ? 1 : 0) +
           (hasDrones ? 1 : 0) +
-          (hasCone ? 1 : 0);
+          (hasCone ? 1 : 0) +
+          (hasZombies ? 1 : 0);
 
         sectionsHtml += `
           <div class="detail-section">
@@ -767,6 +775,7 @@ const IndexUI = {
                     ${hasCharge ? `<th>${ICON_CHARGE_CYAN} CHARGE</th>` : ""}
                     ${hasNozzles ? `<th>${ICON_NOZZLE} NOZZLES</th>` : ""}
                     ${hasCone ? "<th>🔥 CONE</th>" : ""}
+                    ${hasZombies ? "<th>⚡ ZOMBIES</th>" : ""}
                     <th>UNLOCK</th>
                   </tr>
                 </thead>
@@ -793,6 +802,7 @@ const IndexUI = {
                       ${hasCharge ? `<td style="color:#38bdf8;">${escapeXml(lv.charge)}</td>` : ""}
                       ${hasNozzles ? `<td style="color:#fb923c;">${escapeXml(lv.nozzles)}</td>` : ""}
                       ${hasCone ? `<td style="color:#fb923c;">${escapeXml(lv.cone)}</td>` : ""}
+                      ${hasZombies ? `<td style="color:#38bdf8; font-weight:800;">${escapeXml(lv.zombies)}</td>` : ""}
                       <td class="col-unlock">${lv.unlockCoins === 0 ? "FREE" : lv.unlockCoins.toLocaleString()}</td>
                     </tr>
                   `).join("")}
@@ -948,6 +958,37 @@ const IndexUI = {
                       <td style="color:#4ade80;">${escapeXml(lv.poisonStack)}</td>
                       <td>${escapeXml(lv.splashStack)}</td>
                       <td style="color:#86efac;">${escapeXml(lv.splashSize)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Crows by Level Table (for Scarecrow)
+      if (hasCrowsTable) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-title">🐦‍⬛ CROWS BY LEVEL</div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>CROWS</th>
+                    <th>PECK DAMAGE</th>
+                    <th>PECK EVERY</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td style="color:#c084fc; font-weight:800;">${lv.crows}</td>
+                      <td style="color:#fbbf24;">${escapeXml(lv.peckDmg)}</td>
+                      <td>${escapeXml(lv.peckEvery)}</td>
                     </tr>
                   `).join("")}
                 </tbody>

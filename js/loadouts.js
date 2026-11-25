@@ -560,6 +560,11 @@ const LoadoutsUI = {
     const poolMult = details.poolDuration || 1;
     const droneMult = lvData.drones ? (Number(lvData.drones) || 1) : 1;
     let baseSingleDps = rel > 0 ? (dmg * poolMult * droneMult) / rel : 0;
+    if (lvData.crows && lvData.peckDmg && lvData.peckEvery) {
+      const pDmg = this.parseNum(lvData.peckDmg);
+      const pRel = this.parseNum(lvData.peckEvery);
+      if (pRel > 0) baseSingleDps += (Number(lvData.crows) * pDmg) / pRel;
+    }
     if (baseSingleDps > 0 && details.combo && details.combo.every > 0 && details.combo.hits > 0) {
       const cycleHits = details.combo.every + details.combo.hits;
       const cycleTime = details.combo.every * rel + details.combo.hits * (details.combo.hitInterval || 0.14);
