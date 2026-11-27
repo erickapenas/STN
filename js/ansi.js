@@ -149,7 +149,7 @@ function chunkInventoryMessages(headline, bannerText, optionalSubLine, invData, 
   let owned = ITEMS.filter(it => invData[it.name] && invData[it.name].owned);
 
   if (sortMode === "rarity") {
-    const rarityRank = { exclusive: 0, divine: 1, legendary: 2, mythic: 3, epic: 4, rare: 5, common: 6 };
+    const rarityRank = { secret: 0, exclusive: 1, divine: 2, legendary: 3, mythic: 4, epic: 5, rare: 6, common: 7 };
     owned.sort((a, b) => rarityRank[a.rarity] - rarityRank[b.rarity]);
   }
 
@@ -225,7 +225,7 @@ function chunkClanBattleMessages(headline, bannerText, clanName, playersNeeded, 
   let activeItems = ITEMS.filter(it => cbData.units[it.name] && cbData.units[it.name].needed);
 
   if (sortMode === "rarity") {
-    const rarityRank = { exclusive: 0, divine: 1, legendary: 2, mythic: 3, epic: 4, rare: 5, common: 6 };
+    const rarityRank = { secret: 0, exclusive: 1, divine: 2, legendary: 3, mythic: 4, epic: 5, rare: 6, common: 7 };
     activeItems.sort((a, b) => rarityRank[a.rarity] - rarityRank[b.rarity]);
   }
 

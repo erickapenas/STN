@@ -565,6 +565,12 @@ const LoadoutsUI = {
       const pRel = this.parseNum(lvData.peckEvery);
       if (pRel > 0) baseSingleDps += (Number(lvData.crows) * pDmg) / pRel;
     }
+    let dmgOnlyDps = 0;
+    if (lvData.collapseBurst && lvData.collapseEvery) {
+      const cBurst = this.parseNum(lvData.collapseBurst);
+      const cEvery = this.parseNum(lvData.collapseEvery);
+      if (cEvery > 0) dmgOnlyDps = (cBurst * 1.4) / cEvery;
+    }
     if (baseSingleDps > 0 && details.combo && details.combo.every > 0 && details.combo.hits > 0) {
       const cycleHits = details.combo.every + details.combo.hits;
       const cycleTime = details.combo.every * rel + details.combo.hits * (details.combo.hitInterval || 0.14);
@@ -573,24 +579,32 @@ const LoadoutsUI = {
     if (baseSingleDps > 0 && details.superShot && details.superShot.every > 0 && details.superShot.multiplier > 1) {
       baseSingleDps *= (details.superShot.every - 1 + details.superShot.multiplier) / details.superShot.every;
     }
-    let singleDps = baseSingleDps;
+    const isEvo = !!(itemDef.canEvo && lvl > itemDef.max);
+    const evoMult = (isEvo && details.evoDpsMultiplier > 1) ? details.evoDpsMultiplier : 1;
+    let fireRateDps = baseSingleDps * evoMult;
     let hasRapidFireAvg = false;
     if (baseSingleDps > 0 && details.rapidFire && details.rapidFire.multiplier > 1 && details.rapidFire.duration > 0) {
       const rfDur = details.rapidFire.duration;
-      const rfMult = details.rapidFire.multiplier;
+      const rfEvoMult = (isEvo && details.rapidFire.evoBurstMultiplier > 1) ? details.rapidFire.evoBurstMultiplier : 1;
+      const rfMult = details.rapidFire.multiplier * rfEvoMult;
       const rfCd = this.parseNum(lvData.rfCooldown);
       if (rfCd > 0) {
         const avgFactor = (rfDur * rfMult + rfCd) / (rfDur + rfCd);
-        singleDps = baseSingleDps * avgFactor;
+        fireRateDps = baseSingleDps * evoMult * avgFactor;
         hasRapidFireAvg = true;
       }
     }
+    const singleDps = fireRateDps + dmgOnlyDps;
     const bossMult = details.bossMultiplier || 1;
     return {
       hasStats: singleDps > 0,
       limit,
       singleDps,
-      baseSingleDps,
+      fireRateDps,
+      dmgOnlyDps,
+      isEvo,
+      evoMult,
+      baseSingleDps: (baseSingleDps * evoMult) + dmgOnlyDps,
       hasRapidFireAvg,
       totalDps: singleDps * limit,
       bossMult
@@ -678,7 +692,10 @@ const LoadoutsUI = {
             for (let k = 0; k < stats.limit; k++) {
               placedDpsTowers.push({
                 singleDps: stats.singleDps,
-                bossSingleDps: stats.singleDps * stats.bossMult
+                fireRateDps: stats.fireRateDps,
+                dmgOnlyDps: stats.dmgOnlyDps,
+                bossFireRateDps: stats.fireRateDps * stats.bossMult,
+                bossDmgOnlyDps: stats.dmgOnlyDps * stats.bossMult
               });
             }
           } else if (def.role === "DAMAGE") {
@@ -713,7 +730,8 @@ const LoadoutsUI = {
       luck:         { label: "Luck",          icon: "🔮",              unit: "%" },
       curse:        { label: "Zombie DMG",    icon: "💀",              unit: "%" },
       wish:         { label: "Wish CD",       icon: "🎰",              unit: "s" },
-      event:        { label: "Event",         icon: "🍗",              unit: "%" }
+      event:        { label: "Event",         icon: "🍗",              unit: "%" },
+      sting:        { label: "Boss Sting",    icon: "🐝",              unit: "%" }
     };
 
     const buffsSummary = {};
@@ -821,17 +839,17 @@ const LoadoutsUI = {
     const globalFarmsPct = buffsSummary.farms ? buffsSummary.farms.total : 0;
     const dmgMult = 1 + (globalDmgPct / 100);
 
-    // Assign Lion Blessed Spots 1-to-1 to highest-DPS placed towers (no decay on other Fire Rate/Farms pets)
+    // Assign Lion Blessed Spots 1-to-1 to towers that benefit most from Fire Rate (excluding damage-only Collapse)
     lionSpots.sort((a, b) => b.fireRate - a.fireRate);
-    placedDpsTowers.sort((a, b) => b.singleDps - a.singleDps);
+    placedDpsTowers.sort((a, b) => b.fireRateDps - a.fireRateDps);
 
     let buffedSquadDps = 0;
     let buffedBossDps = 0;
     placedDpsTowers.forEach((tw, idx) => {
       const spotRate = idx < lionSpots.length ? lionSpots[idx].fireRate : 0;
       const towerRateMult = 1 + ((globalRatePct + spotRate) / 100);
-      buffedSquadDps += tw.singleDps * dmgMult * towerRateMult;
-      buffedBossDps += tw.bossSingleDps * dmgMult * towerRateMult;
+      buffedSquadDps += (tw.fireRateDps * dmgMult * towerRateMult) + (tw.dmgOnlyDps * dmgMult);
+      buffedBossDps += (tw.bossFireRateDps * dmgMult * towerRateMult) + (tw.bossDmgOnlyDps * dmgMult);
     });
 
     const totalLionSpots = lionSpots.length;

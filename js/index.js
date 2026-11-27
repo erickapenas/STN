@@ -162,6 +162,7 @@ const IndexUI = {
       const hasBarrelsTable = levels.some(lv => lv.barrels !== undefined && lv.rfCooldown !== undefined);
       const hasPoisonTable = levels.some(lv => lv.poisonStack !== undefined);
       const hasCrowsTable = levels.some(lv => lv.crows !== undefined && lv.peckDmg !== undefined);
+      const hasCollapseTable = levels.some(lv => lv.collapseBurst !== undefined);
 
       const isSlam = !!details.isSlam;
       const isGolem = !!details.isGolem;
@@ -183,6 +184,12 @@ const IndexUI = {
           const pDmg = parseNum(lv.peckDmg);
           const pRel = parseNum(lv.peckEvery);
           if (pRel > 0) dps += (Number(lv.crows) * pDmg) / pRel;
+        }
+        if (lv.collapseBurst && lv.collapseEvery) {
+          const cBurst = parseNum(lv.collapseBurst);
+          const cEvery = parseNum(lv.collapseEvery);
+          // 40% burst while pulled + 100% burst on collapse = 1.4x burst every cycle
+          if (cEvery > 0) dps += (cBurst * 1.4) / cEvery;
         }
         if (dps > 0 && comboCfg && comboCfg.every > 0 && comboCfg.hits > 0) {
           const cycleHits = comboCfg.every + comboCfg.hits;
@@ -253,6 +260,16 @@ const IndexUI = {
             highlight: true
           });
         }
+        if (details.evoDpsMultiplier && details.evoDpsMultiplier > 1) {
+          const evoDps = maxLv.dps * details.evoDpsMultiplier;
+          const evoBossDps = hasBossBonus ? maxLv.bossDps * details.evoDpsMultiplier : 0;
+          const evoName = (details.evolution && details.evolution.name) ? details.evolution.name : "Evolution";
+          dpsRows.push({
+            label: `⚡ EVO DPS (${evoName.toUpperCase()} ${details.evoDpsMultiplier}x)`,
+            value: `<strong>${formatDps(evoDps)} DPS</strong>${evoBossDps ? ` <span style="color:#fbbf24;">(${formatDps(evoBossDps)} Boss DPS)</span>` : ""}`,
+            highlight: true
+          });
+        }
         if (hasRapidFire) {
           const calcAvgRf = (lv) => {
             const cd = parseNum(lv.rfCooldown);
@@ -271,6 +288,18 @@ const IndexUI = {
             value: `<strong>${formatDps(maxLv.rfDps)} DPS</strong> (<strong>${formatDps(maxLv.rfBurstDmg)}</strong> dmg in ${rfConfig.duration}s) <span style="color:#94a3b8;">(${formatDps(firstLv.rfDps)} → ${formatDps(maxLv.rfDps)})</span>`,
             highlight: true
           });
+          if (rfConfig.evoBurstMultiplier > 1) {
+            const cd = parseNum(maxLv.rfCooldown);
+            const evoRfMult = rfConfig.multiplier * rfConfig.evoBurstMultiplier;
+            const evoAvg = cd > 0 ? maxLv.dps * ((rfConfig.duration * evoRfMult + cd) / (rfConfig.duration + cd)) : maxLv.dps;
+            const evoBurstDps = maxLv.dps * evoRfMult;
+            const evoName = (details.evolution && details.evolution.name) ? details.evolution.name : "Evolution";
+            dpsRows.push({
+              label: `⚡ EVO AVG DPS (${evoName.toUpperCase()})`,
+              value: `<strong>${formatDps(evoAvg)} DPS</strong> <span style="color:#fbbf24;">(${formatDps(evoBurstDps)} DPS during Rapid Fire)</span>`,
+              highlight: true
+            });
+          }
         }
         if (isSlam && maxLv.fullDps > 0) {
           dpsRows.push({
@@ -748,7 +777,7 @@ const IndexUI = {
         sectionsHtml += `
           <div class="detail-section">
             <div class="detail-section-head">
-              <div class="detail-section-title">${hasDrones ? "DRONES BY LEVEL" : "EVERY LEVEL"}</div>
+              <div class="detail-section-title">${hasDrones ? "DRONES BY LEVEL" : hasCollapseTable ? "GRAVITY ORBS" : "EVERY LEVEL"}</div>
               <div class="detail-section-note">UNLOCK = COINS IN THE LOBBY</div>
             </div>
             <div class="detail-table-wrap">
@@ -989,6 +1018,39 @@ const IndexUI = {
                       <td style="color:#c084fc; font-weight:800;">${lv.crows}</td>
                       <td style="color:#fbbf24;">${escapeXml(lv.peckDmg)}</td>
                       <td>${escapeXml(lv.peckEvery)}</td>
+                    </tr>
+                  `).join("")}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        `;
+      }
+
+      // Collapse Table (for Singularity)
+      if (hasCollapseTable) {
+        sectionsHtml += `
+          <div class="detail-section">
+            <div class="detail-section-title">🌀 COLLAPSE</div>
+            <div class="detail-table-wrap">
+              <table class="detail-table">
+                <thead>
+                  <tr>
+                    <th>LVL</th>
+                    <th>BURST</th>
+                    <th>EVERY</th>
+                    <th>PULL</th>
+                    <th>DELETES UNDER</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${levelsWithDps.map(lv => `
+                    <tr>
+                      <td class="col-lvl">${lv.level}</td>
+                      <td style="color:#f472b6; font-weight:800;">${escapeXml(lv.collapseBurst)}</td>
+                      <td>${escapeXml(lv.collapseEvery)}</td>
+                      <td style="color:#c084fc;">${escapeXml(lv.collapsePull)}</td>
+                      <td style="color:#fbbf24; font-weight:800;">${escapeXml(lv.deletesUnder)}</td>
                     </tr>
                   `).join("")}
                 </tbody>

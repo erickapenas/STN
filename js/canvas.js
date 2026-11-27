@@ -237,7 +237,7 @@ const CanvasManager = {
     let activeUnits = ITEMS.filter(it => cbData.units[it.name] && cbData.units[it.name].needed);
 
     if (sortMode === "rarity") {
-      const rarityRank = { exclusive: 0, divine: 1, legendary: 2, mythic: 3, epic: 4, rare: 5, common: 6 };
+      const rarityRank = { secret: 0, exclusive: 1, divine: 2, legendary: 3, mythic: 4, epic: 5, rare: 6, common: 7 };
       activeUnits.sort((a, b) => rarityRank[a.rarity] - rarityRank[b.rarity]);
     }
 

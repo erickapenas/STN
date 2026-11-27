@@ -18,6 +18,7 @@ const DEFAULT_COLORS = {
   SUPPORT: "32",
   FARM: "33",
   PET: "34",
+  secret: "35",
   exclusive: "orange",
   divine: "37",
   legendary: "33",
@@ -28,6 +29,7 @@ const DEFAULT_COLORS = {
 };
 
 const RARITY_TIERS = [
+  { key: "secret",    label: "SECRET",    color: "#ec4899", border: "#f472b6", bg: "rgba(236,72,153,0.10)" },
   { key: "exclusive", label: "EXCLUSIVE", color: "#f97316", border: "#f97316", bg: "rgba(249,115,22,0.08)" },
   { key: "divine",    label: "DIVINE",    color: "#ffffff", border: "#f8fafc", bg: "rgba(255,255,255,0.08)" },
   { key: "legendary", label: "LEGENDARY", color: "#facc15", border: "#facc15", bg: "rgba(250,204,21,0.08)" },
@@ -38,10 +40,11 @@ const RARITY_TIERS = [
 ];
 
 const ITEMS = [
+  { name: "Singularity",    role: "DAMAGE",  max: 9,  rarity: "secret",    hex: "#ec4899", img: "images/Singularity.png" },
   { name: "Scarecrow",      role: "DAMAGE",  max: 8,  rarity: "exclusive", hex: "#f97316", img: "images/Scarecrow.png" },
   { name: "Juggernaut",     role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/Juggernaut.png",    canEvo: true },
-  { name: "Machine Mortar", role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/MortarMachine.png" },
-  { name: "Crusher",        role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/Crusher.png" },
+  { name: "Machine Mortar", role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/MortarMachine.png", canEvo: true },
+  { name: "Crusher",        role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/Crusher.png",       canEvo: true },
   { name: "Golem Forge",    role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/GolemForge.png",    canEvo: true },
   { name: "Drone Hangar",   role: "DAMAGE",  max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/DroneHangar.png" },
   { name: "World Ender",    role: "DAMAGE",  max: 8,  rarity: "legendary", hex: "#f59e0b", img: "images/WorldEnder.png" },
@@ -66,13 +69,14 @@ const ITEMS = [
   { name: "Military Base",  role: "SUPPORT", max: 6,  rarity: "mythic",    hex: "#ef4444", img: "images/MilitaryBase.png" },
   { name: "Protector Base", role: "SUPPORT", max: 6,  rarity: "epic",      hex: "#a855f7", img: "images/ProtectorBase.png" },
 
-  { name: "Bank",           role: "FARM",    max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/TheBank.png" },
+  { name: "Bank",           role: "FARM",    max: 9,  rarity: "divine",    hex: "#ffffff", img: "images/TheBank.png",       canEvo: true },
   { name: "Void Farm",      role: "FARM",    max: 8,  rarity: "legendary", hex: "#f59e0b", img: "images/VoidFarm.png",      canEvo: true },
   { name: "Vault",          role: "FARM",    max: 8,  rarity: "epic",      hex: "#a855f7", img: "images/Vault.png" },
   { name: "Mining Cave",    role: "FARM",    max: 8,  rarity: "rare",      hex: "#38bdf8", img: "images/MiningCave.png" },
   { name: "Money Printer",  role: "FARM",    max: 8,  rarity: "epic",      hex: "#a855f7", img: "images/MoneyPrinter.png",  canEvo: true },
   { name: "Farm",           role: "FARM",    max: 8,  rarity: "common",    hex: "#22c55e", img: "images/Farm.png" },
 
+  { name: "Bee",            role: "PET",     max: 5,  rarity: "secret",    hex: "#ec4899", img: "images/Bee.png" },
   { name: "Ghostie",        role: "PET",     max: 5,  rarity: "exclusive", hex: "#f97316", img: "images/Ghostie.png" },
   { name: "Turkey",         role: "PET",     max: 5,  rarity: "exclusive", hex: "#f97316", img: "images/Turkey.png" },
   { name: "Pilgrim Bear",   role: "PET",     max: 5,  rarity: "exclusive", hex: "#f97316", img: "images/PilgrimBear.png" },
@@ -195,6 +199,7 @@ const INDEX_BOSSES = [
 ];
 
 const TOWER_PLACEMENT_LIMITS = {
+  "Singularity": 2,
   "Juggernaut": 3,
   "Machine Mortar": 5,
   "Scarecrow": 6,
@@ -250,6 +255,12 @@ const ICON_DRONE = `<img src="images/icon-drone.png" class="stat-icon-img" alt="
 
 // Base pet buff percentages (level scaling optional; duplicate pets decay by 0.6^(n-1): 100%, 60%, 36%, 21.6%...)
 const PET_BUFFS = {
+  "Bee":           {
+    stat: "damage", label: "Damage", value: 120, levels: [60, 75, 90, 105, 120], icon: "⚔️",
+    extraBuffs: [
+      { stat: "sting", label: "Boss Sting", value: 7, levels: [3, 4, 5, 6, 7], icon: "🐝", noDecay: true }
+    ]
+  },
   "Bear":          { stat: "range",    label: "Range",     value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "🎯" },
   "Cat":           { stat: "cash",     label: "Cash",      value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "💰" },
   "Dog":           { stat: "damage",   label: "Damage",    value: 20, levels: [10, 12.5, 15, 17.5, 20], icon: "⚔️" },

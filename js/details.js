@@ -1,7 +1,52 @@
 const INDEX_DETAILS = {
+  "Singularity": {
+    tags: ["SECRET", "GRAVITY"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,    value: "5,500 → 222,000" },
+      { label: "🌀 COLLAPSE",           value: "32,000 → 1,300,000" },
+      { label: `${ICON_RELOAD} RELOAD`, value: "2.8s → 1.8s" },
+      { label: `${ICON_RANGE} RANGE`,   value: "44 → 72" },
+      { label: "💰 PLACE COST",         value: "$60,000" }
+    ],
+    bullets: [
+      "Fires <strong>gravity orbs</strong> that damage and tug nearby zombies",
+      "When charged, it opens a <strong>black hole</strong> where zombies are most crowded, <strong>pulling them together</strong> and <strong>freezing bosses</strong> for 4 seconds before it <strong>collapses</strong>",
+      "Zombies left at low HP are <strong>deleted</strong>, and everything that survives, bosses included, is <strong>stunned for 3 seconds</strong>"
+    ],
+    keyNumbers: [
+      { label: "ORBS",             value: "Hit everything within <strong>8 → 11</strong> studs and <strong>tug</strong> small zombies <strong>4 → 7</strong> studs in" },
+      { label: "BLACK HOLE",       value: "Opens on the <strong>biggest group</strong> in range every <strong>10s → 6s</strong>" },
+      { label: "THE PULL",         value: "<strong>Drags small zombies</strong> within <strong>24 → 42</strong> studs to the middle and <strong>freezes bosses</strong> for <strong>4s</strong>" },
+      { label: "WHILE PULLED",     value: "Everything inside takes <strong>40%</strong> of the burst" },
+      { label: "COLLAPSE",         value: "<strong>32,000 → 1,300,000</strong> to <strong>everything still inside</strong>" },
+      { label: "EVENT HORIZON",    value: "Small zombies left under <strong>10% → 20%</strong> hp are <strong>deleted</strong>" },
+      { label: "DAZED",            value: "What it held and survives <strong>can't move</strong> for <strong>3s</strong>, bosses too" },
+      { label: "GRAVITY IMMUNITY", value: "Then <strong>6s</strong> before any black hole can hold it again" },
+      { label: "LEVELS",           value: "Each one is unlocked by a <strong>Secret quest</strong>" },
+      { label: "GET IT FROM",      value: "The <strong>Divine chest</strong> (0.1%), or <strong>#1</strong> on the Endless weekly board" },
+      { label: "CASH TO MAX IT",   value: "<strong>$15,000,000</strong> in a match, for all <strong>9 levels</strong>" },
+      { label: "PLACEMENT LIMIT",  value: "<strong>2</strong> per player" }
+    ],
+    levels: [
+      { level: 1, cashCost: 60000,   damage: "5,500",   reload: "2.8s",  range: "44", unlockCoins: 0,       collapseBurst: "32,000",    collapseEvery: "10s",  collapsePull: "24",   deletesUnder: "10%" },
+      { level: 2, cashCost: 120000,  damage: "11,000",  reload: "2.7s",  range: "47", unlockCoins: 60000,   collapseBurst: "68,000",    collapseEvery: "9.5s", collapsePull: "25.5", deletesUnder: "11%" },
+      { level: 3, cashCost: 240000,  damage: "22,000",  reload: "2.6s",  range: "50", unlockCoins: 125000,  collapseBurst: "130,000",   collapseEvery: "9s",   collapsePull: "27",   deletesUnder: "12%" },
+      { level: 4, cashCost: 480000,  damage: "38,000",  reload: "2.45s", range: "53", unlockCoins: 250000,  collapseBurst: "230,000",   collapseEvery: "8.5s", collapsePull: "30",   deletesUnder: "13%" },
+      { level: 5, cashCost: 850000,  damage: "60,000",  reload: "2.3s",  range: "56", unlockCoins: 500000,  collapseBurst: "360,000",   collapseEvery: "8s",   collapsePull: "31.5", deletesUnder: "14%" },
+      { level: 6, cashCost: 1450000, damage: "87,000",  reload: "2.2s",  range: "59", unlockCoins: 800000,  collapseBurst: "520,000",   collapseEvery: "7.5s", collapsePull: "33",   deletesUnder: "15%" },
+      { level: 7, cashCost: 2400000, damage: "122,000", reload: "2.1s",  range: "63", unlockCoins: 1200000, collapseBurst: "720,000",   collapseEvery: "7s",   collapsePull: "36",   deletesUnder: "16%" },
+      { level: 8, cashCost: 3800000, damage: "168,000", reload: "1.95s", range: "67", unlockCoins: 1900000, collapseBurst: "980,000",   collapseEvery: "6.5s", collapsePull: "39",   deletesUnder: "18%" },
+      { level: 9, cashCost: 5600000, damage: "222,000", reload: "1.8s",  range: "72", unlockCoins: 3200000, collapseBurst: "1,300,000", collapseEvery: "6s",   collapsePull: "42",   deletesUnder: "20%" }
+    ],
+    whereToGet: [
+      { source: "Divine Chest", chance: "<strong>0.1%</strong> per chest" }
+    ]
+  },
+
   "Juggernaut": {
     tags: ["DIVINE", "SPIN", "EVOLUTION"],
     bossMultiplier: 1.25,
+    evoDpsMultiplier: 2,
     summaryStats: [
       { label: "DAMAGE",     value: "250 → 10,000" },
       { label: "RELOAD",     value: "0.2s → 0.08s" },
@@ -43,8 +88,8 @@ const INDEX_DETAILS = {
   },
 
   "Machine Mortar": {
-    tags: ["DIVINE", "SPLASH"],
-    rapidFire: { multiplier: 3, duration: 5 },
+    tags: ["DIVINE", "SPLASH", "EVOLUTION"],
+    rapidFire: { multiplier: 3, duration: 5, evoBurstMultiplier: 2.6 },
     summaryStats: [
       { label: "DAMAGE",     value: "1,000 → 16,000" },
       { label: "RELOAD",     value: "3s → 0.6s" },
@@ -63,6 +108,11 @@ const INDEX_DETAILS = {
       { label: "CASH TO MAX IT",      value: "<strong>$8,500,000</strong> in a match, for all <strong>9 levels</strong>" },
       { label: "PLACEMENT LIMIT",     value: "<strong>5</strong> per player" }
     ],
+    evolution: {
+      name: "Cluster Barrage",
+      description: "During Rapid Fire every shell bursts into 4 bomblets that each hit for 40% of the shell",
+      quest: "Evolution Quest: 50,000 zombie kills with a maxed Machine Mortar"
+    },
     levels: [
       { level: 1, cashCost: 20000,   damage: "1,000",  reload: "3s",    range: "50", blast: "15", unlockCoins: 0,       barrels: 1, rfCooldown: "30s" },
       { level: 2, cashCost: 45000,   damage: "1,800",  reload: "3s",    range: "53", blast: "16", unlockCoins: 25000,   barrels: 1, rfCooldown: "28s" },
@@ -83,7 +133,7 @@ const INDEX_DETAILS = {
   },
 
   "Crusher": {
-    tags: ["DIVINE", "SLAM"],
+    tags: ["DIVINE", "SLAM", "EVOLUTION"],
     isSlam: true,
     summaryStats: [
       { label: "DAMAGE",     value: "6,000 → 192,000" },
@@ -103,6 +153,11 @@ const INDEX_DETAILS = {
       { label: "CASH TO MAX IT",  value: "<strong>$7,491,500</strong> in a match, for all <strong>9 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>4</strong> per player" }
     ],
+    evolution: {
+      name: "Aftershock",
+      description: "Every slam sends a shockwave out to twice its range that hits the zombies past its reach for half the slam",
+      quest: "Evolution Quest: 30,000 zombie kills with a maxed Crusher"
+    },
     levels: [
       { level: 1, cashCost: 19000,   damage: "6,000",   fullSlam: "36,000",    reload: "3s",    toFull: "15s",    unlockCoins: 0 },
       { level: 2, cashCost: 37500,   damage: "11,800",  fullSlam: "70,800",    reload: "2.95s", toFull: "14.5s",  unlockCoins: 25000 },
@@ -871,7 +926,7 @@ const INDEX_DETAILS = {
   },
 
   "Bank": {
-    tags: ["DIVINE", "ECONOMY"],
+    tags: ["DIVINE", "ECONOMY", "EVOLUTION"],
     isEconomy: true,
     summaryStats: [
       { label: "HOLDS UP TO", value: "$4,000 → $1,400,000" },
@@ -890,6 +945,11 @@ const INDEX_DETAILS = {
       { label: "CASH TO MAX IT",  value: "<strong>$278,000</strong> in a match, for all <strong>9 levels</strong>" },
       { label: "PLACEMENT LIMIT", value: "<strong>3</strong> per player" }
     ],
+    evolution: {
+      name: "Interest",
+      description: "Emptying a FULL bank pays 30% interest on top (15% in PvP)",
+      quest: "Evolution Quest: earn $750,000,000 with a maxed The Bank"
+    },
     levels: [
       { level: 1, cashCost: 200,    holdsUpTo: "$4,000",     unlockCoins: 0 },
       { level: 2, cashCost: 700,    holdsUpTo: "$11,000",    unlockCoins: 20000 },
@@ -1233,6 +1293,43 @@ const INDEX_DETAILS = {
       { source: "Divine Egg",    chance: "<strong>4.28%</strong> per egg" },
       { source: "Pumpkin Egg",   chance: "<strong>5.36%</strong> per egg" },
       { source: "Lava Egg",      chance: "<strong>19.08%</strong> per egg" }
+    ]
+  },
+
+  "Bee": {
+    tags: ["SECRET", "PET"],
+    summaryStats: [
+      { label: `${ICON_DMG} DAMAGE`,      value: "+60% → +120%" },
+      { label: "🐝 STING",                value: "+3% → +7%" },
+      { label: `${ICON_RELOAD} COOLDOWN`, value: "10s → 4s" }
+    ],
+    bullets: [
+      "Every few seconds it <strong>stings</strong> the zombie at your doors it can hurt most: small zombies <strong>die</strong>, <strong>bosses lose health</strong>",
+      "It also <strong>buffs all your towers</strong>",
+      "Each level is unlocked by a <strong>quest</strong>"
+    ],
+    keyNumbers: [
+      { label: "EVERY",          value: "<strong>10s → 4s</strong> by level, when a zombie is near your house" },
+      { label: "PICKS",          value: "The zombie within <strong>55 studs</strong> of a door it can <strong>hurt most</strong>" },
+      { label: "NORMAL ZOMBIES", value: "One sting <strong>kills it</strong>" },
+      { label: "BOSSES",         value: "Lose <strong>3% → 7%</strong> of their max health. Stronger bosses lose less" },
+      { label: "SEVERAL BEES",   value: "All sting, but wait longer. Maxed: <strong>4s, 7s, 11s</strong>" },
+      { label: "DAMAGE BUFF",    value: "<strong>+60% → +120%</strong> for every tower in your house" },
+      { label: "LEVELS",         value: "Each one is unlocked by a <strong>quest</strong> with the Bee equipped" },
+      { label: "GET IT FROM",    value: "The <strong>Divine egg</strong> (0.1%)" }
+    ],
+    buffColumnLabel: "⚔️ DAMAGE",
+    buff2ColumnLabel: "🐝 STING",
+    buff3ColumnLabel: "⏳ COOLDOWN",
+    petLevels: [
+      { level: 1, buff: "+60%",  buff2: "+3%", buff3: "10s",  upgradeCoins: 0 },
+      { level: 2, buff: "+75%",  buff2: "+4%", buff3: "8.5s", upgradeCoins: 90000 },
+      { level: 3, buff: "+90%",  buff2: "+5%", buff3: "7s",   upgradeCoins: 360000 },
+      { level: 4, buff: "+105%", buff2: "+6%", buff3: "5.5s", upgradeCoins: 1500000 },
+      { level: 5, buff: "+120%", buff2: "+7%", buff3: "4s",   upgradeCoins: 6000000 }
+    ],
+    whereToGet: [
+      { source: "Divine Egg", chance: "<strong>0.1%</strong> per egg" }
     ]
   },
 
